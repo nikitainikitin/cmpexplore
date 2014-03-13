@@ -1,0 +1,66 @@
+# Test Configuration file
+
+# Maximum area constraint [mm2]
+maxArea = 350
+
+# Global mesh dimensions
+gMeshDimX = [2-16]
+gMeshDimY = [2-16]
+
+# Cluster IC types
+clusterIcType = bus, uring, bring
+
+# Processor data: Name / Area[mm2] / OoO (1/0) / Freq[GHz] / Epi[nJ] / Pleak[W] / l1, l2 sizes
+processor 	P1	1.00	0	1.6	0.55	0.09 \
+    l1Size = 0.064, 0.096, 0.128 \
+    l2Size = 0.064, 0.096, 0.128, 0.256, 0.384, 0.512, 0.640, 0.768, 1.0
+
+processor 	P2	1.25	1	1.6	0.60	0.14 \
+    l1Size = 0.064, 0.096, 0.128 \
+    l2Size = 0.064, 0.096, 0.128, 0.256, 0.384, 0.512, 0.640, 0.768, 1.0
+
+processor 	P3	2.00	1	1.6	0.65	0.20 \
+    l1Size = 0.064, 0.096, 0.128 \
+    l2Size = 0.064, 0.096, 0.128, 0.256, 0.384, 0.512, 0.640, 0.768, 1.0
+
+# Memory density, i.e. area of 1Mb of memory [mm2]
+memDensity = 1
+
+# Workload description file
+wlFile = ./workloads/wl_spx_nmd_3cpu.txt
+
+# L3 latency of L3 memory size (function)
+l3LatencyOfSize = piecewise (0.064 2) (0.128 3) (0.256 4) (0.512 5) \
+                                (1 6) (2 7) (4 8) (8 9) (12 10)
+
+# L3 share degree (Number of processors using an L3 line on average)
+l3ShareDegreeOfPNum = linear 0.5 0.0
+
+# Bus access time dependency of cluster area (function)
+busTimeOfClusterArea = sqrt 0.9
+
+# Xbar access delay dependency of cluster area (function)
+xbarDelayOfClusterArea = sqrt 0.9
+
+# Mesh link delay dependency of cluster area (function)
+meshLinkDelayOfClusterArea = sqrt 0.9
+
+# L3 access energy dependency of L3 size (function)
+l3AccessEnergyOfSize = piecewise (0.064 0.08) (0.096 0.11) (0.128 0.11) (0.256 0.12) \
+                                 (0.512 0.13) (1.0 0.14) (2.0 0.18) (4.0 0.21) (8.0 0.27) (16.0 0.3)
+
+# L3 leakage power dependency of L3 size (function)
+l3LeakagePowerOfSize = piecewise (0.064 0.01) (0.096 0.02) (0.128 0.02) (0.256 0.03) \
+                                 (0.512 0.05) (1.0 0.08) (2.0 0.15) (4.0 0.31) (8.0 0.59) (16.0 1.18)
+
+# Energy of access to MC [nJ]
+memCtrlAccessEnergy = 0.13
+
+# Leakage power of MC [W]
+memCtrlLeakagePower = 0.1
+
+# Master clock frequency [GHz]
+frequency = 1.6
+
+# IC link width
+linkWidth = 256

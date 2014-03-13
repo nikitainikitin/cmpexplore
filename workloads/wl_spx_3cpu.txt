@@ -1,0 +1,7 @@
+wlName = soplexCPU2006
+wlShortName = spx
+missRatioOfMemSize = piecewise (0.064 0.7) (0.128 0.55) (0.256 0.45) \
+                               (0.512 0.3) (1 0.1) (2 0.001) (12 0.0001)
+IPC = 1.75, 2.00, 2.50
+MPI = 0.2, 0.2, 0.2
+
