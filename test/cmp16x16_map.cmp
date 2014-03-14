@@ -5,6 +5,7 @@ PARAM MemReplySize=3
 PARAM LinkWidth=256
 PARAM NiDelay=3
 PARAM WlFile=./workloads/wl_spx_1cpu.txt
+PARAM L3ClusterSize=16
 DEFINE Proc0 PROC Type=0 L1Size=0.064 L1Lat=3 L2Size=0.256 L2Lat=5 L3SizeEff=3.87879 OoO=1 Area=1.25 Freq=1.6 Epi=2.6 Pleak=0.3 L1Eacc=0.08 L1Pleak=0.01 L2Eacc=0.12 L2Pleak=0.03 Active=0
 DEFINE Proc1 PROC Type=0 L1Size=0.064 L1Lat=3 L2Size=0.256 L2Lat=5 L3SizeEff=3.87879 OoO=1 Area=1.25 Freq=1.6 Epi=2.6 Pleak=0.3 L1Eacc=0.08 L1Pleak=0.01 L2Eacc=0.12 L2Pleak=0.03 Active=1
 MESH Col=16 Row=16 ColWidth=6 RowHeight=5 LinkDelay=2 RouterDelay=3

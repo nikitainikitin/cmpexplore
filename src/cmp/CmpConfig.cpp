@@ -48,7 +48,7 @@ namespace cmpex {
 CmpConfig::CmpConfig ( void ) :
   cmp_ (0), unitLen_ (1.0e-3), memDensity_ (10),
   freq_ (1.6), mcFreq_ (1.6), memReplySize_(3),
-  niDelay_ (0), totalL3Size_ (0.0), subnCnt_ (1),
+  niDelay_ (0), L3ClusterSize_(0), totalL3Size_ (0.0), subnCnt_ (1),
   wlFile_(""), flatMeshIc_ (true), wlIdx_(-1) {}
 
 CmpConfig::~CmpConfig () {
@@ -257,24 +257,93 @@ void CmpConfig::InitRuntimeProperties()
 
 void CmpConfig::InitProcL3ProbDistr()
 {
-  for (int p = 0; p < ProcCnt(); ++p) {
-    Processor * proc = GetProcessor(p);
-    Cluster * cl = static_cast<Cluster*>(proc->Parent());
+  if (!L3ClusterSize()) {
+    // This is the default scenario when every core can access ALL L3 slices on chip.
+    // The code below calculates the probability of accessing every L3 slice
+    // depending on the distance to this slice.
+    for (int p = 0; p < ProcCnt(); ++p) {
+      Processor * proc = GetProcessor(p);
+      Cluster * cl = static_cast<Cluster*>(proc->Parent());
 
-    proc->L3ProbDistr().reserve(MemCnt());
+      proc->L3ProbDistr().reserve(MemCnt());
 
-    double sum = 0.0;
-    for (int m = 0; m < MemCnt(); ++m) {
-      double dist = cl->DistanceProcToMem(p, m);
-      proc->L3ProbDistr()[m] = GetMemory(m)->Size() / (dist*dist*dist);
-      sum += proc->L3ProbDistr()[m];
-    }
+      double sum = 0.0;
+      for (int m = 0; m < MemCnt(); ++m) {
+        double dist = cl->DistanceProcToMem(p, m);
+        proc->L3ProbDistr()[m] = GetMemory(m)->Size() / (dist*dist*dist);
+        sum += proc->L3ProbDistr()[m];
+      }
 
-    // normalize
-    for (int m = 0; m < MemCnt(); ++m) {
-      proc->L3ProbDistr()[m] /= sum;
+      // normalize
+      for (int m = 0; m < MemCnt(); ++m) {
+        proc->L3ProbDistr()[m] /= sum;
+      }
     }
   }
+  else {
+    // In this scenario we assume that every core can only access L3 slices
+    // within a predefined region, called an L3 cluster.
+    // The concept of L3 cluster is different from cmp::Cluster.
+    // The latter is essentially one physical tile, while L3 cluster
+    // is a logical a group of neighboring tiles sharing the L3 slices.
+    // E.g. for a 64-tile CMP and L3ClusterSize=4, the chip will be
+    // logically split into 64/4 = 16 L3 clusters of size 2x2 and
+    // every core will only access L3 slices within the cluster.
+    // Uniform probability within the cluster is assumed.
+
+    // NOTE: the code below has been designed and tested assuming a mesh of tiles
+    // architecture, so that every tile contains one core and one L3 slice.
+    // For simplicity of implementation,
+    // in this mode only square clusters are supported for now.
+    // The allowed sizes are: 1, 4, 16 and 64.
+
+    // sanity checks
+    Cluster * clCmp = static_cast<Cluster*>(Cmp());
+    MeshIc * mesh = static_cast<MeshIc*>(clCmp->Ic());
+    if (mesh->TCnt() < L3ClusterSize()) {
+      cout << "-E- L3ClusterSize can not exceed the mesh dimensions. Exiting..." << endl;
+      exit(1);
+    }
+    else if (!(L3ClusterSize() == 1 || L3ClusterSize() == 4 ||
+               L3ClusterSize() == 16 || L3ClusterSize() == 64)) {
+      cout << "-E- L3ClusterSize can only take values of 1, 4, 16 or 64. Exiting..." << endl;
+      exit(1);
+    }
+
+    double prob = 1.0/L3ClusterSize();
+    int l3ClusterWidth = int(sqrt(L3ClusterSize())+E_DOUBLE);
+    //cout << "prob = " << prob << endl;
+    //cout << "l3CLusterwidth = " << l3ClusterWidth << endl;
+
+    // calculate access probabilities for every processor
+    for (int p = 0; p < ProcCnt(); ++p) {
+      //cout << "-------> Proc = " << p << endl;
+      Processor * proc = GetProcessor(p);
+      Cluster * cl = static_cast<Cluster*>(proc->Parent());
+
+      proc->L3ProbDistr().assign(MemCnt(), 0.0);
+
+      // L3 cluster coordinates for this processor
+      int minCol = p%mesh->ColNum() - (p%mesh->ColNum())%l3ClusterWidth;
+      int maxCol = minCol + l3ClusterWidth - 1;
+      int minRow = p/mesh->ColNum() - (p/mesh->ColNum())%l3ClusterWidth;
+      int maxRow = minRow + l3ClusterWidth - 1;
+      /*cout << "minCol = " << minCol << endl;
+      cout << "maxCol = " << maxCol << endl;
+      cout << "minRow = " << minRow << endl;
+      cout << "maxRow = " << maxRow << endl;*/
+
+      for (int m = 0; m < MemCnt(); ++m) {
+        int memCol = m%mesh->ColNum();
+        int memRow = m/mesh->ColNum();
+        if (memCol >= minCol && memCol <= maxCol && memRow >= minRow && memRow <= maxRow) {
+          //cout << "mem " << m << " is active" << endl;
+          proc->L3ProbDistr()[m] = prob;
+        }
+      }
+    }
+  }
+
 }
 
 //=======================================================================

@@ -783,6 +783,9 @@ void CmpBuilder::ReadParameter (string& entry)
   else if (arg.name == "NiDelay") {
     cmpConfig.NiDelay(StrToDouble(arg.value));
   }
+  else if (arg.name == "L3ClusterSize") {
+    cmpConfig.L3ClusterSize(StrToInt(arg.value));
+  }
   else if (arg.name == "WlFile") {
     if (cmpConfig.WlFile() != arg.value) {
       // only read workload file if it is different from the previous one;

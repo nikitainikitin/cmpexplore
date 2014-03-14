@@ -169,6 +169,10 @@ namespace cmpex {
 
       inline void NiDelay ( double d );
       
+      inline int L3ClusterSize () const;
+
+      inline void L3ClusterSize ( int c );
+
       inline double TotalL3Size () const;
       
       inline UInt SubnCnt () const;
@@ -259,6 +263,11 @@ namespace cmpex {
       
       double niDelay_; // simulation delay of network interface upon injection/ejection
       
+      int L3ClusterSize_; // defines how many L3 slices that can be accessed by every core.
+                          // When == 0, every core can access all L3 slices on chip.
+                          // Note: an L3 cluster is different from cmp:Cluster.
+                          // For more info check CmpConfig::InitProcL3ProbDistr().
+
       double totalL3Size_;
 
       // number of physical subnetworks in the IC:
@@ -409,6 +418,14 @@ namespace cmpex {
       niDelay_ = d;
     }
     
+    int CmpConfig::L3ClusterSize () const {
+      return L3ClusterSize_;
+    }
+
+    void CmpConfig::L3ClusterSize ( int s ) {
+      L3ClusterSize_ = s;
+    }
+
     double CmpConfig::TotalL3Size () const {
       return totalL3Size_;
     }
