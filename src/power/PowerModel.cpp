@@ -89,11 +89,11 @@ double PowerModel::GetTotalPower(Component * cmp)
     corePower_[p] = proc->Active() ? proc->Epi()*proc->Thr()*proc->Freq() + proc->Pleak() : 0.0;
 
     // l1
-    L1Power_[p] = proc->Active() ? proc->L1Eacc()*proc->Lambda()*proc->L1AccessProbability()*cmpConfig.Freq() +
+    L1Power_[p] = proc->Active() ? proc->L1Eacc()*proc->Lambda()*proc->L1AccessProbability()*proc->Freq() +
         proc->L1Pleak() : 0.0;
 
     // l2
-    L2Power_[p] = proc->Active() ? proc->L2Eacc()*proc->Lambda()*proc->L2AccessProbability()*cmpConfig.Freq() +
+    L2Power_[p] = proc->Active() ? proc->L2Eacc()*proc->Lambda()*proc->L2AccessProbability()*proc->Freq() +
         proc->L2Pleak() : 0.0;
   }
 

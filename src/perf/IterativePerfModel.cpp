@@ -74,6 +74,18 @@ IterativePerfModel::~IterativePerfModel () {}
 
 StatMetrics * IterativePerfModel::Run ()
 {
+  // sanity check: there should be at least one actively running core
+  bool active_core_exists = false;
+  for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
+    Processor * proc = cmpConfig.GetProcessor(p);
+    if (proc->Active() && proc->Freq() > E_DOUBLE) active_core_exists = true;
+  }
+  if (!active_core_exists) {
+    cout << "-W- There are no actively runnning cores, throughput is 0" << endl;
+    InitModels(); // for the power model to work
+    return new StatMetrics(0.0, MAX_DOUBLE);
+  }
+
   //return RunBisectionFp();
   return RunSubgradientFp();
 }
@@ -133,20 +145,20 @@ StatMetrics * IterativePerfModel::RunFixedPoint(double statThr, double statInj)
     for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
       Processor * proc = cmpConfig.GetProcessor(p);
 
-      double lat = proc->Active() ? CalculateProcLatency(p, iter ? true : false) : 0.0;
+      double lat = (proc->Active() && proc->Freq() > E_DOUBLE) ?
+                     CalculateProcLatency(p, iter ? true : false) : 0.0;
       DEBUG(2, "P" << p << ": avg lat = " << lat << " cycles" << endl);
       systemLat += lat;
       procLat.push_back(lat);
 
-      double thr = proc->Active() ? CalcThr(proc->Ipc(), proc->Mpi(), lat) : 0.0;
-      //double thr = CalcThr(cmpConfig.GetCurWlIpc(proc->Type()), cmpConfig.GetCurWlMpi(proc->Type()), lat);
+      double thr = (proc->Active() && proc->Freq() > E_DOUBLE) ?
+                     CalcThr(proc->Ipc(), proc->Mpi(), lat) : 0.0;
       proc->Thr(thr);
       DEBUG(2, "P" << p << ": thr = " << thr << endl);
       systemThr += thr;
       procThr.push_back(thr);
 
       double totalTraffic = thr*proc->Mpi();
-      //double totalTraffic = thr*cmpConfig.GetCurWlMpi(proc->Type());
       proc->Lambda(totalTraffic);
       DEBUG(2, "P" << p << ": total memory traffic = " << totalTraffic << endl);
       systemTr += totalTraffic;
@@ -220,21 +232,20 @@ StatMetrics * IterativePerfModel::RunSubgradient ()
     for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
       Processor * proc = cmpConfig.GetProcessor(p);
 
-      double lat = proc->Active() ? CalculateProcLatency(p, true) : 0.0;
+      double lat = (proc->Active() && proc->Freq() > E_DOUBLE) ?
+                     CalculateProcLatency(p, true) : 0.0;
       systemLat += lat;
 
-      double thr = proc->Active() ? CalcThr(proc->Ipc(), proc->Mpi(), lat) : 0.0;
-      //double thr = CalcThr(cmpConfig.GetCurWlIpc(proc->Type()), cmpConfig.GetCurWlMpi(proc->Type()), lat);
+      double thr = (proc->Active() && proc->Freq() > E_DOUBLE) ?
+                     CalcThr(proc->Ipc(), proc->Mpi(), lat) : 0.0;
       proc->Thr(thr);
       systemThr += thr;
 
       double totalTraffic = thr*proc->Mpi();
-      //double totalTraffic = thr*cmpConfig.GetCurWlMpi(proc->Type());
       proc->Lambda(totalTraffic);
       systemTr += totalTraffic;
 
       double lat_star = 1.0/procRateCur[p] - 1.0/(proc->Mpi()*proc->Ipc());
-      //double lat_star = 1.0/procRateCur[p] - 1.0/(cmpConfig.GetCurWlMpi(proc->Type())*cmpConfig.GetCurWlIpc(proc->Type()));
 
       double gap = lat - lat_star;
       totalGap += fabs(gap);
@@ -262,7 +273,7 @@ StatMetrics * IterativePerfModel::RunSubgradient ()
     bool decrease = true;
     for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
       Processor * proc = cmpConfig.GetProcessor(p);
-      if (proc->Active() && !changedDir[p]) {
+      if (proc->Active() && proc->Freq() > E_DOUBLE && !changedDir[p]) {
         decrease = false; break;
       }
     }
@@ -349,20 +360,20 @@ StatMetrics * IterativePerfModel::RunBisectionFp ()
   for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
     Processor * proc = cmpConfig.GetProcessor(p);
 
-    double lat = proc->Active() ? CalculateProcLatency(p, false) : 0.0;
+    double lat = (proc->Active() && proc->Freq() > E_DOUBLE) ?
+                   CalculateProcLatency(p, false) : 0.0;
     DEBUG(2, "P" << p << ": avg lat = " << lat << " cycles" << endl);
     systemLat += lat;
     procLat.push_back(lat);
 
-    double thr = proc->Active() ? CalcThr(proc->Ipc(), proc->Mpi(), lat) : 0.0;
-    //double thr = CalcThr(cmpConfig.GetCurWlIpc(proc->Type()), cmpConfig.GetCurWlMpi(proc->Type()), lat);
+    double thr = (proc->Active() && proc->Freq() > E_DOUBLE) ?
+                   CalcThr(proc->Ipc(), proc->Mpi(), lat) : 0.0;
     proc->Thr(thr);
     DEBUG(2, "P" << p << ": thr = " << thr << endl);
     systemThr += thr;
     procThr.push_back(thr);
 
     double totalTraffic = thr*proc->Mpi();
-    //double totalTraffic = thr*cmpConfig.GetCurWlMpi(proc->Type());
     proc->Lambda(totalTraffic);
     DEBUG(2, "P" << p << ": total memory traffic = " << totalTraffic << endl);
     systemTr += totalTraffic;
@@ -456,14 +467,17 @@ StatMetrics * IterativePerfModel::RunBisectionFp ()
     for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
       Processor * proc = cmpConfig.GetProcessor(p);
 
-      double lat = proc->Active() ? CalculateProcLatency(p, true) : 0.0;
-      double lat_star = proc->Active() ? 1.0/procRateAvg[p] - 1.0/(proc->Mpi()*proc->Ipc()) : 0.0;
+      double lat = (proc->Active() && proc->Freq() > E_DOUBLE) ?
+                     CalculateProcLatency(p, true) : 0.0;
+      double lat_star = (proc->Active() && proc->Freq() > E_DOUBLE) ?
+                          1.0/procRateAvg[p] - 1.0/(proc->Mpi()*proc->Ipc()) : 0.0;
 
       double lat_avg = lat;
       DEBUG(2, "P" << p << ": avg lat = " << lat_avg << " cycles" << endl);
       systemLat += lat_avg;
 
-      double thr = proc->Active() ? CalcThr(proc->Ipc(), proc->Mpi(), lat_avg): 0.0;
+      double thr = (proc->Active() && proc->Freq() > E_DOUBLE) ?
+                     CalcThr(proc->Ipc(), proc->Mpi(), lat_avg): 0.0;
       proc->Thr(thr);
       DEBUG(2, "P" << p << ": thr = " << thr << endl);
       systemThr += thr;
