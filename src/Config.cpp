@@ -123,6 +123,9 @@ int Config::ParseCommandLine ( int argc, char ** argv )
     else if (!strcmp(argv[i], "-dump_ptsim_power")) {
       DumpPTsimPower(true);
     }
+    else if (!strcmp(argv[i], "-call_ptsim")) {
+      CallPTsim(true);
+    }
     else {
       cout << "Wrong argument: " << string(argv[i]) << endl;
       return 1;

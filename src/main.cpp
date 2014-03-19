@@ -35,6 +35,7 @@
 #include "perf/MatlabPerfModel.hpp"
 #include "power/PowerModel.hpp"
 #include "phys/PhysicalModel.hpp"
+#include "ptsim/PTsim.hpp"
 
 using namespace cmpex;
 using namespace cmpex::cmp;
@@ -42,6 +43,7 @@ using namespace cmpex::explore;
 using namespace cmpex::stat;
 using namespace cmpex::perf;
 using namespace cmpex::power;
+using namespace cmpex::temperature;
 using namespace cmpex::phys;
 using std::cout;
 using std::endl;
@@ -95,6 +97,9 @@ int main( int argc, char ** argv )
         //MatlabPerfModel m;
         StatMetrics * sm = m.Run();
         double power = PowerModel::GetTotalPower(cmpConfig.Cmp());
+
+	// calling PTsim
+	if (config.CallPTsim()) PTsim::CallHotSpot(cmpConfig.Cmp());
 
         avgThr += sm->Throughput();
         avgLat += sm->Latency();

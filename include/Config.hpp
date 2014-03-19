@@ -67,6 +67,10 @@ namespace cmpex {
 
     inline void DumpPTsimPower ( bool d );
 
+    inline bool CallPTsim ( void ) const;
+
+    inline void CallPTsim ( bool d );
+
     inline const string& Test ( void ) const;
 
     inline void Test ( string s );
@@ -221,6 +225,8 @@ namespace cmpex {
     bool dumpConfigs_; // write generated configurations to files
 
     bool dumpPTsimPower_; // dump power trace for ptsim simulator
+
+    bool callPTsim_; // call ptsim if true
     
     /*** ============== general parameters ================ ***/
 
@@ -322,6 +328,14 @@ namespace cmpex {
 
   void Config::DumpPTsimPower( bool d ) {
     dumpPTsimPower_ = d;
+  }
+
+  bool Config::CallPTsim() const {
+    return callPTsim_;
+  }
+
+  void Config::CallPTsim( bool d ) {
+    callPTsim_ = d;
   }
 
   const string& Config::Test () const {

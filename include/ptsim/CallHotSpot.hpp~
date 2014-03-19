@@ -1,0 +1,8 @@
+#ifndef _PTSIM_CALLHOTSPOT_H_
+#define _PTSIM_CALLHOTSPOT_H_
+
+namespace cmpex {
+
+  namespace ptsim {
+  }
+}

@@ -1,5 +1,7 @@
 CC = g++
 CFLAGS = -O2 -fomit-frame-pointer -fforce-addr -fexpensive-optimizations -falign-functions=32 -falign-loops=32
+CCHS = gcc
+CHSFLAGS = -O3 -msse4 -mmmx -DVERBOSE=1 -DMATHACCEL=0
 #CFLAGS = -O3 -ffast-math
 #CFLAGS = -gdwarf-2
 #CFLAGS = -pg -O2 -fforce-addr -fexpensive-optimizations -falign-functions=32 -falign-loops=32
@@ -13,9 +15,29 @@ NM_INC = -I./newmat10
 NM_LIB = -L./newmat10 -lnewmat
 INCLUDE = -I./include -I./include/ggraph -I./include/cmp -I./include/model \
         -I./include/arch -I./include/explore -I./include/stat -I./include/perf \
-        -I./include/phys -I./include/power -I../ggraph/include $(NM_INC)
+        -I./include/phys -I./include/power -I../ggraph/include \
+        -I./include/ptsim -I./include/hotspot $(NM_INC)
+
+#HotSpot Object Files
+HSOBJECTS = \
+	$(OBJ_DIR)/hotspot/flp.o \
+	$(OBJ_DIR)/hotspot/flp_desc.o \
+	$(OBJ_DIR)/hotspot/npe.o \
+	$(OBJ_DIR)/hotspot/shape.o \
+	$(OBJ_DIR)/hotspot/temperature.o \
+	$(OBJ_DIR)/hotspot/RCutil.o \
+	$(OBJ_DIR)/hotspot/package.o \
+	$(OBJ_DIR)/hotspot/temperature_block.o \
+	$(OBJ_DIR)/hotspot/temperature_grid.o \
+	$(OBJ_DIR)/hotspot/util.o \
+	$(OBJ_DIR)/hotspot/wire.o
+
 
 OBJECTS = \
+	$(HSOBJECTS) \
+	$(OBJ_DIR)/ptsim/PTsim.o \
+	$(OBJ_DIR)/ptsim/CreateCmpFloorplan.o \
+	$(OBJ_DIR)/ptsim/CallHotSpot.o \
 	$(OBJ_DIR)/ggraph/GVertex.o \
 	$(OBJ_DIR)/ggraph/GDEdge.o \
 	$(OBJ_DIR)/ggraph/GGraph.o \
@@ -60,6 +82,16 @@ OBJECTS = \
 	$(OBJ_DIR)/Debug.o \
 	$(OBJ_DIR)/Parser.o \
 	$(OBJ_DIR)/main.o
+
+
+$(OBJ_DIR)/hotspot/%.o: $(SRC_DIR)/hotspot/%.c
+	$(CCHS) $(CHSFLAGS) $(INCLUDE) -c $< -o $@
+
+$(OBJ_DIR)/ptsim/%.o: $(SRC_DIR)/ptsim/%.c
+	$(CCHS) $(CHSFLAGS) $(INCLUDE) -c $< -o $@
+
+$(OBJ_DIR)/ptsim/%.o: $(SRC_DIR)/ptsim/%.cpp
+	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
@@ -108,6 +140,8 @@ mkobjdir:
 	mkdir -p $(OBJ_DIR)/perf
 	mkdir -p $(OBJ_DIR)/phys
 	mkdir -p $(OBJ_DIR)/power
+	mkdir -p $(OBJ_DIR)/hotspot
+	mkdir -p $(OBJ_DIR)/ptsim
 
 clean:
 	rm -rf $(OBJ_DIR)
