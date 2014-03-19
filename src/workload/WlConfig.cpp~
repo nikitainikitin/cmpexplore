@@ -1,0 +1,90 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+#include "WlConfig.hpp"
+
+using std::vector;
+using std::string;
+using std::cout;
+using std::endl;
+
+namespace cmpex {
+
+  namespace workload {
+
+//=======================================================================
+/*
+ * Constructors and destructor
+ */
+
+WlConfig::WlConfig ( void ) {}
+
+WlConfig::~WlConfig () {
+
+  for (int i = 0; i < tasks.size(); ++i) {
+    for (int j = 0; j < tasks[i]->task_dop; ++j)
+      delete tasks[i]->task_threads[j];
+    delete tasks[i];
+  }
+
+}
+
+
+//=======================================================================
+/*
+ * Creates Tasks
+ */
+
+int WlConfig::CreateTasks ( int ntasks )
+{
+
+  Task * task = 0;
+  Thread * thread = 0;
+
+  for(int i = 0; i < ntasks; i++) {
+    task = new WlConfig::Task;
+    task->task_id = i;
+    int instr = 1000000+RandInt(1000001); // between 1M and 2M instructions
+    task->task_instructions = instr;
+    task->task_deadline = 100; // ms
+    task->task_progress = 0;
+    task->task_elapsed = 0;
+    int dop = 1 << RandInt(7);
+    task->task_dop = dop; 
+    for(int j = 0; j < dop; j++) {
+      thread = new WlConfig::Thread;
+      thread->thread_id = j;
+      thread->thread_xyloc[0]= -1; // unmapped default value
+      thread->thread_xyloc[1]= -1; // unmapped default value
+      thread->thread_instructions = instr;
+      thread->thread_progress = 0;
+      if (thread) AddThread(thread,i);
+    }
+    task->task_progress = 0;
+    if (task) AddTask(task);
+  }
+
+  return 0;
+
+}
+
+int WlConfig::PrintTasks ( int ntasks )
+{
+  int tot = TaskCnt();
+  for(int i = 0; (i < ntasks) && (i < tot); i++) {
+    cout << "Task " << i << " ID = " << tasks[i]->task_id << ", DOP = " << tasks[i]->task_dop << endl;
+  }
+
+  return tot;
+
+}
+
+
+void WlConfig::Cleanup()
+{
+  tasks.clear();
+}
+
+  } // namespace workload
+} // namespace cmpex

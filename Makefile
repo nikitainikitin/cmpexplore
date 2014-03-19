@@ -16,7 +16,7 @@ NM_LIB = -L./newmat10 -lnewmat
 INCLUDE = -I./include -I./include/ggraph -I./include/cmp -I./include/model \
         -I./include/arch -I./include/explore -I./include/stat -I./include/perf \
         -I./include/phys -I./include/power -I../ggraph/include \
-        -I./include/ptsim -I./include/hotspot $(NM_INC)
+        -I./include/workload -I./include/ptsim -I./include/hotspot $(NM_INC)
 
 #HotSpot Object Files
 HSOBJECTS = \
@@ -38,6 +38,7 @@ OBJECTS = \
 	$(OBJ_DIR)/ptsim/PTsim.o \
 	$(OBJ_DIR)/ptsim/CreateCmpFloorplan.o \
 	$(OBJ_DIR)/ptsim/CallHotSpot.o \
+	$(OBJ_DIR)/workload/WlConfig.o \
 	$(OBJ_DIR)/ggraph/GVertex.o \
 	$(OBJ_DIR)/ggraph/GDEdge.o \
 	$(OBJ_DIR)/ggraph/GGraph.o \
@@ -93,6 +94,9 @@ $(OBJ_DIR)/ptsim/%.o: $(SRC_DIR)/ptsim/%.c
 $(OBJ_DIR)/ptsim/%.o: $(SRC_DIR)/ptsim/%.cpp
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
+$(OBJ_DIR)/ptsim/%.o: $(SRC_DIR)/workload/%.cpp
+	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
@@ -142,6 +146,7 @@ mkobjdir:
 	mkdir -p $(OBJ_DIR)/power
 	mkdir -p $(OBJ_DIR)/hotspot
 	mkdir -p $(OBJ_DIR)/ptsim
+	mkdir -p $(OBJ_DIR)/workload
 
 clean:
 	rm -rf $(OBJ_DIR)

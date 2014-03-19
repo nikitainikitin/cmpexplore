@@ -87,7 +87,7 @@ int main( int argc, char ** argv )
   // end DEBUG
 
   if (config.Test() != "") {
-    if (config.A2wa()) {  // run conversion mode
+    if (config.A2wa())switch_tb {  // run conversion mode
       cmpConfig.WriteWorkloadArchFromArch(config.Test());
       return 0;
     }
