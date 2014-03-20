@@ -28,12 +28,19 @@ namespace cmpex {
 
     public:
 
+      struct XYloc {
+	int x;
+	int y;
+      };
+
+      typedef std::vector<XYloc*> XYlocArray;
+
       enum Status {PENDING, RUNNING, SUSPENDED, COMPLETED};
 
       // Data structure for a thread.
       struct Thread {
         int thread_id;
-	int thread_xyloc[2]; //0(1) is x(y) coordinate in cmp
+	XYloc thread_xyloc; //0(1) is x(y) coordinate in cmp
 	int thread_instructions;
 	int thread_progress;
 	Status thread_status;
@@ -46,8 +53,8 @@ namespace cmpex {
         ~Task() { delete missRatioOfMemSize; }
 	int task_id;
 	int task_dop; // degree of parallelism, i.e. number of threads
-	int task_cluster_id; 
-	std::vector<int[2]> task_cluster_xyloc; // coordinates of all threads forming a cluster
+	int task_cluster_id;
+	XYlocArray task_cluster_xyloc; // coordinates of all threads forming a cluster
         model::Function * missRatioOfMemSize;
         double ipc;
         double mpi;
@@ -78,6 +85,8 @@ namespace cmpex {
 
       inline void AddThread ( Thread * t, int i );
 
+      inline void AddThreadLoc ( XYloc * xy, int i );
+
       inline int TaskCnt () const;
 
       inline string TaskStatusString ( int i );
@@ -104,6 +113,10 @@ namespace cmpex {
 
     void WlConfig::AddThread ( WlConfig::Thread * t, int i ) {
       (tasks[i]->task_threads).push_back(t);
+    }
+
+    void WlConfig::AddThreadLoc ( WlConfig::XYloc * xy, int i ) {
+      (tasks[i]->task_cluster_xyloc).push_back(xy);
     }
 
     int WlConfig::TaskCnt () const {

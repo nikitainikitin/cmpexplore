@@ -42,6 +42,7 @@ int WlConfig::CreateTasks ( int ntasks )
   int i,j;
   Task * task = 0;
   Thread * thread = 0;
+  XYloc * xyloc = 0;
 
   for(i = 0; i < ntasks; i++) {
     task = new WlConfig::Task;
@@ -60,11 +61,15 @@ int WlConfig::CreateTasks ( int ntasks )
       thread = new WlConfig::Thread;
       thread->thread_id = j;
       thread->thread_status = PENDING;
-      thread->thread_xyloc[0]= -1; // unmapped default value
-      thread->thread_xyloc[1]= -1; // unmapped default value
+      thread->thread_xyloc.x= -1; // unmapped, default value
+      thread->thread_xyloc.y= -1; // unmapped, default value
       thread->thread_instructions = instr;
       thread->thread_progress = 0;
       if (thread) AddThread(thread,i);
+      xyloc = new WlConfig::XYloc;
+      xyloc->x = -1;
+      xyloc->y = -1;
+      if (xyloc) AddThreadLoc(xyloc,i);
     }
   }
 
@@ -79,7 +84,7 @@ int WlConfig::PrintTasks ( int ntasks )
     cout << "Task " << i << " ID = " << tasks[i]->task_id << ", DOP = " << tasks[i]->task_dop << ", instr = " << tasks[i]->task_instructions; 
     cout << ", status = " << TaskStatusString(i) << ", threads: ";
     for(int j = 0; j < tasks[i]->task_dop; j++) {
-      cout << tasks[i]->task_threads[j]->thread_id << ",";
+      cout << tasks[i]->task_threads[j]->thread_id << "(" << tasks[i]->task_cluster_xyloc[j]->x << "," << tasks[i]->task_cluster_xyloc[j]->y << "),";
     }
     cout << endl;
   }
