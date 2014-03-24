@@ -20,6 +20,7 @@
 #include <string>
 #include <vector>
 #include <cmath>
+#include <iostream>
 
 #include "Defs.hpp"
 
@@ -59,6 +60,8 @@ namespace cmpex {
       // Creates function from a descriptive string
       static Function * ParseFunction(string& fn);
 
+      virtual void Print() const = 0;
+
     private:
 
       // Deprecated methods: prevent usage
@@ -91,6 +94,8 @@ namespace cmpex {
       
       inline virtual double eval (double absciss) const;
 
+      inline virtual void Print() const;
+
     private:
 
       // Deprecated methods: prevent usage
@@ -122,6 +127,8 @@ namespace cmpex {
       virtual ~Powerlaw ();
 
       inline virtual double eval (double absciss) const;
+
+      inline virtual void Print() const;
 
     private:
 
@@ -161,6 +168,8 @@ namespace cmpex {
 
       virtual double eval (double absciss) const;
 
+      inline virtual void Print() const;
+
     private:
 
       // Deprecated methods: prevent usage
@@ -195,6 +204,8 @@ namespace cmpex {
 
       inline virtual double eval (double absciss) const;
 
+      inline virtual void Print() const;
+
     private:
 
       // Deprecated methods: prevent usage
@@ -228,6 +239,8 @@ namespace cmpex {
       virtual ~Const ();
 
       inline virtual double eval (double absciss) const;
+
+      inline virtual void Print() const;
 
     private:
 
@@ -266,6 +279,29 @@ namespace cmpex {
 
     double Const::eval(double absciss) const {
       return c_;
+    }
+
+    void Sqrt::Print() const {
+      std::cout << "Sqrt " << k_;
+    }
+
+    void Powerlaw::Print() const {
+      std::cout << "Powerlaw " << k_ << ' ' << e_;
+    }
+
+    void Piecewise::Print() const {
+      std::cout << "Piecewise";
+      for (vector<double>::const_iterator it = abs_.begin(); it != abs_.end(); ++it) {
+        std::cout << " (" << (*it) << "," << (*(ord_.begin() + (it - abs_.begin()))) << ")";
+      }
+    }
+
+    void Linear::Print() const {
+      std::cout << "Linear " << k1_ << ' ' << k0_;
+    }
+
+    void Const::Print() const {
+      std::cout << "Const " << c_;
     }
 
   } // namespace model

@@ -79,6 +79,10 @@ namespace cmpex {
 
     inline void A2wa ( bool a );
     
+    inline bool Tmap ( void ) const;
+
+    inline void Tmap ( bool m );
+
     inline const string& ConfigFile ( void ) const;
 
     inline void ConfigFile ( string s );
@@ -209,6 +213,8 @@ namespace cmpex {
     string expMode_; // exploration mode
 
     bool a2wa_; // conversion mode
+
+    bool tmap_; // mapping mode
 
     double eoTau_; // tau of extremal optimization
 
@@ -352,6 +358,14 @@ namespace cmpex {
 
   void Config::A2wa ( bool a ) {
     a2wa_ = a;
+  }
+
+  bool Config::Tmap () const {
+    return tmap_;
+  }
+
+  void Config::Tmap ( bool m ) {
+    tmap_ = m;
   }
 
   const string& Config::ConfigFile () const {

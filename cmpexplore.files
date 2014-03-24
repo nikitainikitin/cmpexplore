@@ -101,3 +101,6 @@ workloads/wl_spx_nmd_3cpu.txt
 a2wa.py
 conf_demo_1.5b.txt
 config.txt
+include/workload/WlManager.hpp
+include/workload/WlConfig.hpp
+src/workload/WlConfig.cpp

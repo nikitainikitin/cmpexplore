@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "WlConfig.hpp"
+#include "model/Function.hpp"
 
 using std::vector;
 using std::string;
@@ -10,6 +11,8 @@ using std::cout;
 using std::endl;
 
 namespace cmpex {
+
+  using model::Powerlaw;
 
   namespace workload {
 
@@ -59,7 +62,12 @@ int WlConfig::CreateTasks ( int ntasks )
     task->task_ipc = IPC_MIN+(IPC_MAX-IPC_MIN)*RandUDouble(); // in [IPC_MIN,IPC_MAX]
     task->task_mpi = MPI_MIN+(MPI_MAX-MPI_MIN)*RandUDouble(); // in [IPC_MIN,IPC_MAX]
     dop = 1 << RandInt(LOG2_DOP_MAX+1); // in [1,2**(LOG2_DOP_MAX)]
-    task->task_dop = dop; 
+    task->task_dop = dop;
+    // use randomly generated powerlaw functions for missRatioOfMemSize
+    double alpha = MR_ALPHA_MIN + (MR_ALPHA_MAX-MR_ALPHA_MIN)*RandUDouble();
+    double exp = MR_EXP_MIN + (MR_EXP_MAX-MR_EXP_MIN)*RandUDouble();
+    task->missRatioOfMemSize = new Powerlaw(alpha, exp);
+
     if (task) AddTask(task);
     for(j = 0; j < dop; j++) {
       thread = new WlConfig::Thread;
@@ -71,6 +79,7 @@ int WlConfig::CreateTasks ( int ntasks )
       thread->thread_progress = 0;
       thread->thread_ipc = task->task_ipc; // inherited
       thread->thread_mpi = task->task_mpi; // inherited
+      thread->missRatioOfMemSize = task->missRatioOfMemSize; // inherited
       if (thread) AddThread(thread,i);
       xyloc = new WlConfig::XYloc;
       xyloc->x = -1;
@@ -89,7 +98,9 @@ int WlConfig::PrintTasks ( int ntasks )
   for(int i = 0; (i < ntasks) && (i < tot); i++) {
     cout << "Task " << i << " ID = " << tasks[i]->task_id << ", DOP = " << tasks[i]->task_dop << ", instr = " << tasks[i]->task_instructions; 
     cout << ", status = " << TaskStatusString(i);
-    cout << ", ipc = " << tasks[i]->task_ipc << ", mpi = " << tasks[i]->task_mpi << ", threads: ";
+    cout << ", ipc = " << tasks[i]->task_ipc << ", mpi = " << tasks[i]->task_mpi << ", mr = ";
+    tasks[i]->missRatioOfMemSize->Print();
+    cout << ", threads: ";
     for(int j = 0; j < tasks[i]->task_dop; j++) {
       cout << tasks[i]->task_threads[j]->thread_id << "(" << tasks[i]->task_cluster_xyloc[j]->x << "," << tasks[i]->task_cluster_xyloc[j]->y << "),";
     }

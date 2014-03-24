@@ -22,10 +22,14 @@ namespace cmpex {
     const double IPC_MAX = 3.0;
     const double MPI_MIN = 0.1;
     const double MPI_MAX = 0.3;
+    const double MR_ALPHA_MIN = 0.05;
+    const double MR_ALPHA_MAX = 0.2;
+    const double MR_EXP_MIN = -0.5;
+    const double MR_EXP_MAX = -0.1;
     const int INSTR_MIN = 1000000;
     const int INSTR_MAX = 2000000;
     const int DEADLINE = 100; // ms
-    const int LOG2_DOP_MAX = 6; // max 2**6 = 64 threads per task
+    const int LOG2_DOP_MAX = 2; // max 2**6 = 64 threads per task
 
 
     //======================================================================
@@ -38,8 +42,8 @@ namespace cmpex {
     public:
 
       struct XYloc {
-	int x;
-	int y;
+        int x;
+        int y;
       };
 
       typedef std::vector<XYloc*> XYlocArray;
@@ -49,12 +53,12 @@ namespace cmpex {
       // Data structure for a thread.
       struct Thread {
         int thread_id;
-	XYloc thread_xyloc; //0(1) is x(y) coordinate in cmp
-	int thread_instructions;
-	int thread_progress;
-	Status thread_status;
-	double thread_ipc;
-	double thread_mpi;
+        XYloc thread_xyloc; //0(1) is x(y) coordinate in cmp
+        int thread_instructions;
+        int thread_progress;
+        Status thread_status;
+        double thread_ipc;
+        double thread_mpi;
         model::Function * missRatioOfMemSize;
       };
 
@@ -63,20 +67,20 @@ namespace cmpex {
       // Data structure for a task.
       struct Task {
         ~Task() { delete missRatioOfMemSize; }
-	int task_id;
-	int task_dop; // degree of parallelism, i.e. number of threads
-	int task_cluster_id;
-	XYlocArray task_cluster_xyloc; // coordinates of all threads forming a cluster
+        int task_id;
+        int task_dop; // degree of parallelism, i.e. number of threads
+        int task_cluster_id;
+        XYlocArray task_cluster_xyloc; // coordinates of all threads forming a cluster
         model::Function * missRatioOfMemSize;
         double task_ipc;
         double task_mpi;
-	int task_instructions; // total instructions to be executed
-	int task_progress; // instructions executed till NOW
-	int task_deadline; // deadline time in ms
-	int task_elapsed; // task runtime in ms
-	int task_slack; // remaining time from NOW till deadline in ms
-	ThreadArray task_threads;
-	Status task_status;
+        int task_instructions; // total instructions to be executed
+        int task_progress; // instructions executed till NOW
+        int task_deadline; // deadline time in ms
+        int task_elapsed; // task runtime in ms
+        int task_slack; // remaining time from NOW till deadline in ms
+        ThreadArray task_threads;
+        Status task_status;
       };
 
       typedef std::vector<Task*> TaskArray;
@@ -139,7 +143,7 @@ namespace cmpex {
       string status_string;
       switch (tasks[i]->task_status) {
         case PENDING:
-	  status_string = "PENDING"; break;
+    status_string = "PENDING"; break;
         case RUNNING:
 	  status_string = "RUNNING"; break;
         case SUSPENDED:

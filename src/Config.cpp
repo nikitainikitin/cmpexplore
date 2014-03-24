@@ -46,7 +46,7 @@ extern cmp::CmpConfig cmpConfig;
  */
 
 Config::Config ( void ) :
-  test_ (""), configFile_ (""), expMode_ ("ex"), a2wa_ (false),
+  test_ (""), configFile_ (""), expMode_ ("ex"), a2wa_ (false), tmap_ (false),
   eoTau_ (1.5), saAlpha_ (0.995),
   sEffort_ (5), maxPower_ (1.0e6), debug_ (0), dumpConfigs_ (false),
   tech_ (TECH_16NM), freq_ (1.6), mcFreq_ (0.3),
@@ -115,6 +115,9 @@ int Config::ParseCommandLine ( int argc, char ** argv )
     }
     else if (!strcmp(argv[i], "-a2wa")) { // conversion mode
       A2wa(true);
+    }
+    else if (!strcmp(argv[i], "-tmap")) { // mapping mode
+      Tmap(true);
     }
     else if (!strcmp(argv[i], "-simcc")) {
       SimulateCC(true);

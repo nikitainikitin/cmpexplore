@@ -79,17 +79,18 @@ int main( int argc, char ** argv )
   Timer timer;
   timer.Start();
 
-  // DEBUG
-  wlConfig.CreateTasks(20);
-  int tot =  wlConfig.PrintTasks(20);
-  cout << endl << "Total Tasks = " << tot << endl;
-  wlConfig.Cleanup();
-  // end DEBUG
-
   if (config.Test() != "") {
     if (config.A2wa()) {  // run conversion mode
       cmpConfig.WriteWorkloadArchFromArch(config.Test());
       return 0;
+    }
+    else if (config.Tmap()) { // mapping mode
+      // DEBUG
+      wlConfig.CreateTasks(5);
+      int tot =  wlConfig.PrintTasks(5);
+      cout << endl << "Total Tasks = " << tot << endl;
+      wlConfig.Cleanup();
+      // end DEBUG
     }
     else {                // run selected testcase
       cmpConfig.CreateCmp(config.Test());
@@ -107,8 +108,8 @@ int main( int argc, char ** argv )
         StatMetrics * sm = m.Run();
         double power = PowerModel::GetTotalPower(cmpConfig.Cmp());
 
-	// calling PTsim
-	if (config.CallPTsim()) PTsim::CallHotSpot(cmpConfig.Cmp());
+        // calling PTsim
+        if (config.CallPTsim()) PTsim::CallHotSpot(cmpConfig.Cmp());
 
         avgThr += sm->Throughput();
         avgLat += sm->Latency();
