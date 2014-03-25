@@ -48,6 +48,7 @@ int WlConfig::CreateTasks ( int ntasks )
   XYloc * xyloc = 0;
   int instr, dop;
 
+  int thread_gid = 0;
   for(i = 0; i < ntasks; i++) {
     task = new WlConfig::Task;
     task->task_id = i;
@@ -72,6 +73,7 @@ int WlConfig::CreateTasks ( int ntasks )
     for(j = 0; j < dop; j++) {
       thread = new WlConfig::Thread;
       thread->thread_id = j;
+      thread->thread_gid = thread_gid;
       thread->thread_status = PENDING;
       thread->thread_xyloc.x= -1; // unmapped, default value
       thread->thread_xyloc.y= -1; // unmapped, default value
@@ -85,6 +87,8 @@ int WlConfig::CreateTasks ( int ntasks )
       xyloc->x = -1;
       xyloc->y = -1;
       if (xyloc) AddThreadLoc(xyloc,i);
+
+      ++thread_gid;
     }
   }
 
@@ -102,7 +106,7 @@ int WlConfig::PrintTasks ( int ntasks )
     tasks[i]->missRatioOfMemSize->Print();
     cout << ", threads: ";
     for(int j = 0; j < tasks[i]->task_dop; j++) {
-      cout << tasks[i]->task_threads[j]->thread_id << "(" << tasks[i]->task_cluster_xyloc[j]->x << "," << tasks[i]->task_cluster_xyloc[j]->y << "),";
+      cout << tasks[i]->task_threads[j]->thread_gid << "(" << tasks[i]->task_cluster_xyloc[j]->x << "," << tasks[i]->task_cluster_xyloc[j]->y << "),";
     }
     cout << endl;
   }
@@ -117,5 +121,21 @@ void WlConfig::Cleanup()
   tasks.clear();
 }
 
+//=======================================================================
+/*
+ * Returns next pending task in the order of creation.
+ */
+
+WlConfig::Task * WlConfig::GetNextPendingTask ( void )
+{
+  for (TaskCIter it = tasks.begin(); it != tasks.end(); ++it) {
+    if ((*it)->task_status == PENDING) return *it;
+  }
+  return 0;
+}
+
+//=======================================================================
+
   } // namespace workload
+
 } // namespace cmpex

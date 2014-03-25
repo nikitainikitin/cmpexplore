@@ -104,3 +104,10 @@ config.txt
 include/workload/WlManager.hpp
 include/workload/WlConfig.hpp
 src/workload/WlConfig.cpp
+include/mapping/MapConf.hpp
+src/mapping/MapConf.cpp
+include/mapping/MapEngine.hpp
+include/mapping/SaMapEngine.hpp
+src/mapping/SaMapEngine.cpp
+src/mapping/MapEngine.cpp
+include/mapping/MapTransform.hpp

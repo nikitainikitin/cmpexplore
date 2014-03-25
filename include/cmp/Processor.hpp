@@ -22,12 +22,14 @@
 
 #include "Device.hpp"
 #include "CmpConfig.hpp"
+#include "Config.hpp"
 
 using std::vector;
 
 namespace cmpex {
   
   extern cmp::CmpConfig cmpConfig;
+  extern Config config;
 
   namespace cmp {
 
@@ -38,7 +40,7 @@ namespace cmpex {
     class Processor : public Device {
       
       friend class CmpBuilder;
-      
+
       // ---------------------------- Methods ------------------------------
 
     public:
@@ -141,11 +143,6 @@ namespace cmpex {
 
       inline double L2Pleak() const;
 
-      // Debug methods
-      //void Print () const;
-
-    protected:
-
       inline void SetL1Size ( double s );
 
       inline void SetL1Lat ( int l );
@@ -162,17 +159,17 @@ namespace cmpex {
 
       inline void SetActive ( bool a );
 
-      //inline void SetIpc ( double i );
+      inline void SetIpc ( double i );
 
-      //inline void SetMpi ( double m );
+      inline void SetMpi ( double m );
 
-      //inline void SetL1AccProb(double p);
+      inline void SetL1AccProb(double p);
       
-      //inline void SetL2AccProb(double p);
+      inline void SetL2AccProb(double p);
 
-      //inline void SetL3AccProb(double p);
+      inline void SetL3AccProb(double p);
 
-      //inline void SetMMAccProb(double p);
+      inline void SetMMAccProb(double p);
 
       inline void SetFreq(double f);
 
@@ -189,6 +186,8 @@ namespace cmpex {
       inline void SetL2Pleak(double p);
 
       inline void SetType(int t);
+
+      inline void SetMemAccessProbabilities ( model::Function * mr );
 
     private:
 
@@ -215,21 +214,20 @@ namespace cmpex {
 
       double area_; // processor area
 
-      // The ipc, mpi and cache probabilities are now
-      // functions of the workload;
-      // still, processor API is maintained
+      /// The ipc, mpi and cache probabilities are used ONLY in the mapping mode.
+      /// In the exploration mode those are obtained from the current workload.
 
-      //double ipc_; // # of instructions per second
+      double ipc_; // # of instructions per second
 
-      //double mpi_; // # of memory references per instruction
+      double mpi_; // # of memory references per instruction
 
-      //double l1AccProb_;
+      double l1AccProb_;
 
-      //double l2AccProb_;
+      double l2AccProb_;
 
-      //double l3AccProb_;
+      double l3AccProb_;
 
-      //double mmAccProb_;
+      double mmAccProb_;
 
       vector<double> l3ProbDistr_; // prob. to access distributed L3 p/cluster
 
@@ -322,20 +320,24 @@ namespace cmpex {
     }
 
     double Processor::Ipc () const {
-      //return ipc_;
-      return cmpConfig.GetCurWlIpc(Type());
+      if (config.Tmap())
+        return ipc_;
+      else
+        return cmpConfig.GetCurWlIpc(Type());
     }
 
-    /*void Processor::SetIpc ( double i ) {
+    void Processor::SetIpc ( double i ) {
       ipc_ = i;
-    }*/
+    }
 
     double Processor::Mpi () const {
-      //return mpi_;
-      return cmpConfig.GetCurWlMpi(Type());
+      if (config.Tmap())
+        return mpi_;
+      else
+        return cmpConfig.GetCurWlMpi(Type());
     }
     
-    /*void Processor::SetMpi ( double m ) {
+    void Processor::SetMpi ( double m ) {
       mpi_ = m;
     }
     
@@ -353,31 +355,50 @@ namespace cmpex {
 
     void Processor::SetMMAccProb(double p) {
       mmAccProb_ = p;
-    }*/
+    }
 
     double Processor::L1AccessProbability() const {
-      //return l1AccProb_;
-      return 1.0 - cmpConfig.EvalCurWlMissRate(L1Size());
+      if (config.Tmap())
+        return l1AccProb_;
+      else
+        return 1.0 - cmpConfig.EvalCurWlMissRate(L1Size());
     }
 
     double Processor::L2AccessProbability() const {
-      //return l2AccProb_;
-      return cmpConfig.EvalCurWlMissRate(L1Size()) -
+      if (config.Tmap())
+        return l2AccProb_;
+      else
+        return cmpConfig.EvalCurWlMissRate(L1Size()) -
                cmpConfig.EvalCurWlMissRate(L2Size()+L1Size());
     }
 
     double Processor::L3AccessProbability() const {
-      //return l3AccProb_;
-      return (L3SizeEff() < E_DOUBLE) ? 0.0 :
+      if (config.Tmap())
+        return l3AccProb_;
+      else
+        return (L3SizeEff() < E_DOUBLE) ? 0.0 :
                (cmpConfig.EvalCurWlMissRate(L2Size()+L1Size()) -
                 cmpConfig.EvalCurWlMissRate(L3SizeEff()+L2Size()+L1Size()));
     }
 
     double Processor::MainMemAccessProbability() const {
-      //return mmAccProb_;
-      return (L3SizeEff() < E_DOUBLE) ?
+      if (config.Tmap())
+        return mmAccProb_;
+      else
+        return (L3SizeEff() < E_DOUBLE) ?
                cmpConfig.EvalCurWlMissRate(L2Size()+L1Size()) :
                cmpConfig.EvalCurWlMissRate(L3SizeEff()+L2Size()+L1Size());
+    }
+
+    void Processor::SetMemAccessProbabilities ( model::Function * mr ) {
+      SetL1AccProb(1.0 - mr->eval(L1Size()));
+      SetL2AccProb(mr->eval(L1Size()) - mr->eval(L2Size()+L1Size()));
+      SetL3AccProb(L3SizeEff() < E_DOUBLE ? 0.0 :
+                   (mr->eval(L2Size()+L1Size()) -
+                    mr->eval(L3SizeEff()+L2Size()+L1Size())));
+      SetMMAccProb(L3SizeEff() < E_DOUBLE ?
+                    mr->eval(L2Size()+L1Size()) :
+                    mr->eval(L3SizeEff()+L2Size()+L1Size()));
     }
 
     const vector<double>& Processor::L3ProbDistr() const {

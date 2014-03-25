@@ -37,6 +37,7 @@
 #include "phys/PhysicalModel.hpp"
 #include "ptsim/PTsim.hpp"
 #include "workload/WlConfig.hpp"
+#include "mapping/SaMapEngine.hpp"
 
 using namespace cmpex;
 using namespace cmpex::cmp;
@@ -46,6 +47,7 @@ using namespace cmpex::perf;
 using namespace cmpex::power;
 using namespace cmpex::temperature;
 using namespace cmpex::phys;
+using namespace cmpex::mapping;
 using std::cout;
 using std::endl;
 using std::vector;
@@ -85,12 +87,15 @@ int main( int argc, char ** argv )
       return 0;
     }
     else if (config.Tmap()) { // mapping mode
-      // DEBUG
-      wlConfig.CreateTasks(5);
-      int tot =  wlConfig.PrintTasks(5);
-      cout << endl << "Total Tasks = " << tot << endl;
-      wlConfig.Cleanup();
-      // end DEBUG
+      cmpConfig.CreateCmp(config.Test());
+
+      wlConfig.CreateTasks(10);
+      int tot =  wlConfig.PrintTasks(10);
+      //cout << endl << "Total Tasks = " << tot << endl;
+      //wlConfig.Cleanup();
+
+      SaMapEngine me;
+      me.Map();
     }
     else {                // run selected testcase
       cmpConfig.CreateCmp(config.Test());

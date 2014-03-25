@@ -16,7 +16,8 @@ NM_LIB = -L./newmat10 -lnewmat
 INCLUDE = -I./include -I./include/ggraph -I./include/cmp -I./include/model \
         -I./include/arch -I./include/explore -I./include/stat -I./include/perf \
         -I./include/phys -I./include/power -I../ggraph/include \
-        -I./include/workload -I./include/ptsim -I./include/hotspot $(NM_INC)
+        -I./include/workload -I./include/ptsim -I./include/mapping \
+        -I./include/hotspot $(NM_INC)
 
 #HotSpot Object Files
 HSOBJECTS = \
@@ -78,6 +79,9 @@ OBJECTS = \
 	$(OBJ_DIR)/perf/MatlabPerfModel.o \
 	$(OBJ_DIR)/phys/PhysicalModel.o \
 	$(OBJ_DIR)/power/PowerModel.o \
+	$(OBJ_DIR)/mapping/MapConf.o \
+	$(OBJ_DIR)/mapping/MapEngine.o \
+	$(OBJ_DIR)/mapping/SaMapEngine.o \
 	$(OBJ_DIR)/Util.o \
 	$(OBJ_DIR)/Config.o \
 	$(OBJ_DIR)/Debug.o \
@@ -127,6 +131,9 @@ $(OBJ_DIR)/phys/%.o: $(SRC_DIR)/phys/%.cpp
 $(OBJ_DIR)/power/%.o: $(SRC_DIR)/power/%.cpp
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
+$(OBJ_DIR)/mapping/%.o: $(SRC_DIR)/mapping/%.cpp
+	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+
 all: newmat mkobjdir $(OBJECTS)
 	$(CC) $(OBJECTS) $(CFLAGS) $(NM_LIB) -o $(OBJ_TARGET)
 
@@ -147,6 +154,7 @@ mkobjdir:
 	mkdir -p $(OBJ_DIR)/hotspot
 	mkdir -p $(OBJ_DIR)/ptsim
 	mkdir -p $(OBJ_DIR)/workload
+	mkdir -p $(OBJ_DIR)/mapping
 
 clean:
 	rm -rf $(OBJ_DIR)

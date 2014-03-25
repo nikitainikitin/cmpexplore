@@ -52,7 +52,8 @@ namespace cmpex {
 
       // Data structure for a thread.
       struct Thread {
-        int thread_id;
+        int thread_id; // thread local id within the task
+        int thread_gid; // thread global id
         XYloc thread_xyloc; //0(1) is x(y) coordinate in cmp
         int thread_instructions;
         int thread_progress;
@@ -87,6 +88,8 @@ namespace cmpex {
 
       typedef TaskArray::const_iterator TaskCIter;
 
+      typedef vector<Thread*> MapIdxToThreads;
+
       TaskArray tasks;
 
       // ---------------------------- Methods ------------------------------
@@ -107,8 +110,14 @@ namespace cmpex {
 
       inline string TaskStatusString ( int i );
 
+      // Notice: this function is not safe, you have to be sure
+      // that gid actually points to some thread
+      inline Thread * GetThreadByGid ( int gid );
+
       // Create Tasks
       int CreateTasks ( int ntasks );
+
+      Task * GetNextPendingTask ();
 
       // DEBUG: Print Tasks
       int PrintTasks ( int ntasks );
@@ -116,6 +125,8 @@ namespace cmpex {
       void Cleanup();
 
     private:
+
+      MapIdxToThreads threads;
 
     };
 
@@ -129,6 +140,8 @@ namespace cmpex {
 
     void WlConfig::AddThread ( WlConfig::Thread * t, int i ) {
       (tasks[i]->task_threads).push_back(t);
+      if (threads.size() <= t->thread_gid) threads.resize(2*t->thread_gid+1);
+      threads[t->thread_gid] = t;
     }
 
     void WlConfig::AddThreadLoc ( WlConfig::XYloc * xy, int i ) {
@@ -139,7 +152,7 @@ namespace cmpex {
       return tasks.size();
     }
 
-    string WlConfig::TaskStatusString ( int i) {
+    string WlConfig::TaskStatusString ( int i ) {
       string status_string;
       switch (tasks[i]->task_status) {
         case PENDING:
@@ -152,6 +165,10 @@ namespace cmpex {
 	  status_string = "COMPLETED"; break;	  
       }
       return status_string;
+    }
+
+    WlConfig::Thread * WlConfig::GetThreadByGid ( int gid ) {
+      return threads[gid];
     }
 
   } // namespace workload
