@@ -60,7 +60,7 @@ namespace cmpex {
       virtual void Map() = 0;
 
       // Service functions
-      void EvalMappingCost(MapConf& mconf, double lambda) const;
+      void EvalMappingCost(MapConf * mconf, double lambda) const;
 
     private:
 

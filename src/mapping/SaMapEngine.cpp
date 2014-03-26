@@ -94,8 +94,10 @@ void SaMapEngine::Map()
   Task * nextTask = wlConfig.GetNextPendingTask();
   while (nextTask && nextTask->task_dop <= (coreCnt - busyCores)) {
     for (int th = 0; th < nextTask->task_dop; ++th) {
+      // assign thread to the next available core
       curMap->map[busyCores] = nextTask->task_threads[th]->thread_gid;
       ++busyCores;
+      // mark thread as running
       nextTask->task_threads[th]->thread_status = WlConfig::RUNNING;
     }
     nextTask->task_status = WlConfig::RUNNING;
@@ -109,42 +111,10 @@ void SaMapEngine::Map()
                         proc->Freq() : 0.0;
   }
 
-  curMap->Print();
-
   // 1b. Evaluate initial mapping
-
-  for (int p = 0; p < coreCnt; ++p) {
-    Processor * proc = cmpConfig.GetProcessor(p);
-    Thread * thread = (curMap->map[p] != MapConf::IDX_UNASSIGNED) ?
-        wlConfig.GetThreadByGid(curMap->map[p]) : 0;
-    if (thread) {
-      proc->SetIpc(thread->thread_ipc);
-      proc->SetMpi(thread->thread_mpi);
-      proc->SetMemAccessProbabilities(thread->missRatioOfMemSize);
-      proc->SetFreq(proc->Freq());
-    }
-    else {
-      proc->SetActive(false);
-      proc->SetFreq(0.0);
-    }
-  }
-
-  /*for (int p = 0; p < coreCnt; ++p) {
-    Processor * proc = cmpConfig.GetProcessor(p);
-    cout << "ProcIdx = " << p << ", ipc = " << proc->Ipc() << ", mpi = " << proc->Mpi()
-         << ", freq = " << proc->Freq()
-         << ", L1Prob = " << proc->L1AccessProbability()
-         << ", L2Prob = " << proc->L2AccessProbability()
-         << ", L3Prob = " << proc->L3AccessProbability()
-         << ", MMProb = " << proc->MainMemAccessProbability() << endl;
-  }*/
-
-  IterativePerfModel m;
-  StatMetrics * pSm = m.Run();
-  double power = PowerModel::GetTotalPower(cmpConfig.Cmp());
-  pSm->Power(power);
-  cout << "Thr = " << pSm->Throughput() << ", Pow = " << pSm->Power() << endl;
-  cmpConfig.Cleanup();
+  EvalMappingCost(curMap, lambda);
+  cout << "Thr = " << curMap->thr << ", Pow = " << curMap->power << endl;
+  curMap->Print();
 
   // 2. Run the annealing schedule
 

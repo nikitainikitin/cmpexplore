@@ -89,8 +89,8 @@ int main( int argc, char ** argv )
     else if (config.Tmap()) { // mapping mode
       cmpConfig.CreateCmp(config.Test());
 
-      wlConfig.CreateTasks(10);
-      int tot =  wlConfig.PrintTasks(10);
+      wlConfig.CreateTasks(20);
+      //int tot =  wlConfig.PrintTasks(20);
       //cout << endl << "Total Tasks = " << tot << endl;
       //wlConfig.Cleanup();
 

@@ -32,6 +32,10 @@
 #include "phys/PhysicalModel.hpp"
 #include "power/PowerModel.hpp"
 #include "RouterDefs.hpp"
+#include "MapConf.hpp"
+#include "MapTransform.hpp"
+#include "workload/WlConfig.hpp"
+#include "cmp/Processor.hpp"
 
 using namespace std;
 
@@ -40,14 +44,19 @@ namespace cmpex {
   extern Config config;
   extern cmp::CmpConfig cmpConfig;
   extern stat::Statistics stats;
+  extern workload::WlConfig wlConfig;
 
   using namespace cmp;
   using namespace stat;
   using namespace perf;
   using namespace phys;
   using namespace power;
+  using namespace workload;
 
   namespace mapping {
+
+  typedef WlConfig::Task Task;
+  typedef WlConfig::Thread Thread;
 
 //=======================================================================
 /*
@@ -70,9 +79,45 @@ MapEngine::~MapEngine() {
  * Evaluates cost of the provided mapping solution.
  */
 
-void MapEngine::EvalMappingCost(MapConf& mc, double lambda) const
+void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
 {
+  // 1. Prepare configuration: initialize processors according to the mapping
+  for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
+    Processor * proc = cmpConfig.GetProcessor(p);
+    Thread * thread = (mc->map[p] != MapConf::IDX_UNASSIGNED) ?
+        wlConfig.GetThreadByGid(mc->map[p]) : 0;
+    if (thread) {
+      proc->SetActive(true);
+      proc->SetIpc(thread->thread_ipc);
+      proc->SetMpi(thread->thread_mpi);
+      proc->SetMemAccessProbabilities(thread->missRatioOfMemSize);
+      proc->SetFreq(1.6);
+    }
+    else {
+      proc->SetActive(false);
+      proc->SetFreq(0.0);
+    }
+  }
 
+  /*for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
+    Processor * proc = cmpConfig.GetProcessor(p);
+    cout << "ProcIdx = " << p << ", ipc = " << proc->Ipc() << ", mpi = " << proc->Mpi()
+         << ", freq = " << proc->Freq()
+         << ", L1Prob = " << proc->L1AccessProbability()
+         << ", L2Prob = " << proc->L2AccessProbability()
+         << ", L3Prob = " << proc->L3AccessProbability()
+         << ", MMProb = " << proc->MainMemAccessProbability() << endl;
+  }*/
+
+  // 2. Run analytical models
+  IterativePerfModel m;
+  StatMetrics * pSm = m.Run();
+  double power = PowerModel::GetTotalPower(cmpConfig.Cmp());
+  pSm->Power(power);
+
+  // 3. Save evaluation within the mapping object
+  mc->thr = pSm->Throughput();
+  mc->power = power;
 }
 
 //=======================================================================
