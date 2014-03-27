@@ -77,8 +77,6 @@ SaMapEngine::~SaMapEngine() {}
 
 void SaMapEngine::Map()
 {
-  int coreCnt = cmpConfig.ProcCnt();
-
   MapConf *curMap, *bestMap;
 
   Timer timer;
@@ -86,39 +84,77 @@ void SaMapEngine::Map()
 
   double lambda = 0.5;
 
-  // 1a. Initialize mapping greedily
+  // 1. Initialize mapping greedily
   // For now, assume that all cores will be busy
-  curMap = bestMap = new MapConf(coreCnt);
-
-  int busyCores = 0;
-  Task * nextTask = wlConfig.GetNextPendingTask();
-  while (nextTask && nextTask->task_dop <= (coreCnt - busyCores)) {
-    for (int th = 0; th < nextTask->task_dop; ++th) {
-      // assign thread to the next available core
-      curMap->map[busyCores] = nextTask->task_threads[th]->thread_gid;
-      ++busyCores;
-      // mark thread as running
-      nextTask->task_threads[th]->thread_status = WlConfig::RUNNING;
-    }
-    nextTask->task_status = WlConfig::RUNNING;
-    nextTask = wlConfig.GetNextPendingTask();
-  }
-
-  // assign states (speeds) for all active cores
-  for (int p = 0; p < coreCnt; ++p) {
-    Processor * proc = cmpConfig.GetProcessor(p);
-    curMap->states[p] = (curMap->map[p] != MapConf::IDX_UNASSIGNED) ?
-                        proc->Freq() : 0.0;
-  }
-
-  // 1b. Evaluate initial mapping
+  curMap = bestMap = CreateGreedyMapping();
   EvalMappingCost(curMap, lambda);
-  cout << "Thr = " << curMap->thr << ", Pow = " << curMap->power << endl;
+  cout << "Initial Thr = " << curMap->thr << ", Pow = " << curMap->power << endl;
   curMap->Print();
 
   // 2. Run the annealing schedule
 
-  /// TODO
+  double tInit = 100;
+  double tCur = tInit;
+  double alpha = config.SaAlpha();
+
+  // number of local iterations
+  double lIterCnt = cmpConfig.ProcCnt()*4;
+
+  cout << "Number of local iters = " << lIterCnt << endl;
+
+  double no_impr_limit = lIterCnt*lIterCnt*config.SEffort();
+  double last_impr = 0;
+  int oIter = 0;
+
+  do { // outer cooling loop
+
+    for (int iter = 0; iter < lIterCnt; ++iter) { // inner cooling loop
+      // 2a. Generate new solution (apply transform)
+      MapConf * newMap = new MapConf(*curMap); // copy current mapping
+
+      // for now, only swapping tasks is a possible transformation
+      int idx = 0;//int(RandUDouble()*trCnt);
+      Transforms()[idx]->UpdateMap(*newMap);
+
+      // 2b. Estimate cost of new mapping
+      EvalMappingCost(newMap, lambda);
+
+      // 2c. Decide acceptance
+      lambda = 0.5*tInit/tCur;
+      double curC = curMap->cost;
+      double newC = newMap->cost;
+
+      if (newC > curC) { // accept
+        if (curMap != bestMap) delete curMap;
+        curMap = newMap;
+      }
+      else if ( RandUDouble() < // accept
+              std::exp(- curC/newC * curC/newC * tInit/tCur) ) {
+        if (curMap != bestMap) delete curMap;
+        curMap = newMap;
+      }
+      else { // reject
+        delete newMap;
+      }
+
+      // 2d. update best cost
+      if (curMap->thr > bestMap->thr && fabs(curMap->cost-curMap->thr) < E_DOUBLE) {
+        last_impr = oIter*lIterCnt + iter;
+        delete bestMap;
+        bestMap = curMap;
+        cout << "(Time " << timer.Current() << ") "; curMap->Print();
+      }
+    }
+
+    tCur = tCur*alpha;
+    ++oIter;
+  } while (oIter*lIterCnt - last_impr < no_impr_limit);
+
+  cout << "Finished search (no improvement during the last "
+       << no_impr_limit << " iterations)" << endl;
+
+  cout << "Best Thr = " << bestMap->thr << endl;
+  cout << "Params: tCur = " << tCur << endl;
 
 }
 

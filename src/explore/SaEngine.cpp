@@ -94,8 +94,6 @@ void SaEngine::Explore()
   double tCur = tInit;
   double alpha = config.SaAlpha();
 
-  int last_impr_iter = 0;
-
   // number of local iterations
   double lIterCnt = config.GMeshDimXVec().size() + config.GMeshDimYVec().size();
   for (int ptype = 0; ptype < config.ProcCnt(); ++ptype) {

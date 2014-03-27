@@ -76,6 +76,46 @@ MapEngine::~MapEngine() {
 
 //=======================================================================
 /*
+ * Create a greedy mapping solution.
+ * Take pending tasks from the workload config sequentially and
+ * assign them to the CMP cores.
+ * Notice: a new mapping object is created and its ownership is
+ * transferred to the calling function.
+ */
+
+MapConf * MapEngine::CreateGreedyMapping() const
+{
+  int coreCnt = cmpConfig.ProcCnt();
+
+  MapConf * newMap = new MapConf(coreCnt);
+
+  int busyCores = 0;
+  Task * nextTask = wlConfig.GetNextPendingTask();
+  while (nextTask && nextTask->task_dop <= (coreCnt - busyCores)) {
+    cout << "GreedyMapping: next task with DOP = " << nextTask->task_dop << endl;
+    for (int th = 0; th < nextTask->task_dop; ++th) {
+      // assign thread to the next available core
+      newMap->map[busyCores] = nextTask->task_threads[th]->thread_gid;
+      ++busyCores;
+      // mark thread as running
+      nextTask->task_threads[th]->thread_status = WlConfig::RUNNING;
+    }
+    nextTask->task_status = WlConfig::RUNNING;
+    nextTask = wlConfig.GetNextPendingTask();
+  }
+
+  // assign states (speeds) for all active cores
+  for (int p = 0; p < coreCnt; ++p) {
+    Processor * proc = cmpConfig.GetProcessor(p);
+    newMap->states[p] = (newMap->map[p] != MapConf::IDX_UNASSIGNED) ?
+                        proc->Freq() : 0.0;
+  }
+
+  return newMap;
+}
+
+//=======================================================================
+/*
  * Evaluates cost of the provided mapping solution.
  */
 
@@ -114,10 +154,15 @@ void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
   StatMetrics * pSm = m.Run();
   double power = PowerModel::GetTotalPower(cmpConfig.Cmp());
   pSm->Power(power);
+  double powerPen = max(0.0, power - config.MaxPower());
 
   // 3. Save evaluation within the mapping object
   mc->thr = pSm->Throughput();
   mc->power = power;
+
+  // cost including penalty
+  double cost = mc->thr / (1.0 + lambda*powerPen/config.MaxPower());
+  mc->cost = cost;
 }
 
 //=======================================================================

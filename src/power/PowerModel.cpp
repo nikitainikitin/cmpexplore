@@ -103,7 +103,7 @@ double PowerModel::GetTotalPower(Component * cmp)
   core_power += accumulate(L2Power_.begin(), L2Power_.end(), 0.0);
   power += core_power;
 
-  cout << "Core power = " << core_power << "W; ";
+  //cout << "Core power = " << core_power << "W; ";
 
   // L3 leakage and dynamic
   double l3PowerTot = 0.0;
@@ -117,7 +117,7 @@ double PowerModel::GetTotalPower(Component * cmp)
   l3Power += accumulate(L3Power_.begin(), L3Power_.end(), 0.0);
   power += l3Power;
 
-  cout << "L3 power = " << l3Power << "W; ";
+  //cout << "L3 power = " << l3Power << "W; ";
 
   // MC leakage and dynamic
   for (int mc = 0; mc < cmpConfig.MemCtrlCnt(); ++mc) {
@@ -130,13 +130,13 @@ double PowerModel::GetTotalPower(Component * cmp)
   mcPower += accumulate(MCPower_.begin(), MCPower_.end(), 0.0);
   power += mcPower;
 
-  cout << "MC power = " << mcPower << "W; ";
+  //cout << "MC power = " << mcPower << "W; ";
 
   double icPower = GetIcPower(cmp);
   power += icPower;
 
-  cout << "IC power = " << icPower << "W; ";
-  cout << "Total power = " << power << "W" << endl;
+  //cout << "IC power = " << icPower << "W; ";
+  //cout << "Total power = " << power << "W" << endl;
 
   if (config.DumpPTsimPower()) DumpPTsimPower(cmp);
 

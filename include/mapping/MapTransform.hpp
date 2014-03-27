@@ -52,12 +52,19 @@ namespace cmpex {
 
 
     //======================================================================
-    // -1- Swap random pair of tasks.
+    // -1- Swap the workload of two random processors.
+    // Note: this transformation currently updates the mapping only.
     //======================================================================
     struct MapTrSwapTaskPair : public MapTransform {
       bool UpdateMap(MapConf& mConf) const {
-        /// TODO: IMPLEMENT THE TRANSFORMATION
-        return false;
+        // generate two different core indices
+        int core1_idx = int(RandUDouble()*mConf.coreCnt);
+        int core2_idx = int(RandUDouble()*mConf.coreCnt);
+        while (core1_idx == core2_idx)
+          core2_idx = int(RandUDouble()*mConf.coreCnt);
+
+        std::swap(mConf.map[core1_idx], mConf.map[core2_idx]);
+        return true;
       }
     };
 

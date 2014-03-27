@@ -87,13 +87,17 @@ int main( int argc, char ** argv )
       return 0;
     }
     else if (config.Tmap()) { // mapping mode
+      // create CMP architecture
       cmpConfig.CreateCmp(config.Test());
 
+      // create task stream
       wlConfig.CreateTasks(20);
+
       //int tot =  wlConfig.PrintTasks(20);
       //cout << endl << "Total Tasks = " << tot << endl;
       //wlConfig.Cleanup();
 
+      // start mapping
       SaMapEngine me;
       me.Map();
     }

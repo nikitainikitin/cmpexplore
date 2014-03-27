@@ -59,7 +59,12 @@ namespace cmpex {
       // Main method that invokes mapping.
       virtual void Map() = 0;
 
-      // Service functions
+      // --- Service functions ---
+
+      // Create a greedy mapping solution
+      MapConf * CreateGreedyMapping () const;
+
+      // Evaluate cost of the provided mapping
       void EvalMappingCost(MapConf * mconf, double lambda) const;
 
     private:
