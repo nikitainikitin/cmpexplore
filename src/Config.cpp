@@ -49,7 +49,7 @@ Config::Config ( void ) :
   test_ (""), configFile_ (""), expMode_ ("ex"), a2wa_ (false), tmap_ (false),
   eoTau_ (1.5), saAlpha_ (0.995),
   sEffort_ (5), maxPower_ (1.0e6), debug_ (0), dumpConfigs_ (false),
-  tech_ (TECH_16NM), freq_ (1.6), mcFreq_ (0.3),
+  tech_ (TECH_16NM), uFreq_ (1.6), mcFreq_ (0.3),
   maxProcAreaPerCluster_ (1.0), wlFile_(""), maxArea_ (350.0),
   linkWidth_ (256),  simulateCC_ (false)
 {
@@ -203,8 +203,11 @@ void Config::ParseParamValues(const string& name, string& value)
     value.erase(0, eqIdx);
   }
 
-  if (name == "frequency") {
-    Freq(StrToDouble(value));
+  if (name == "uFrequency") {
+    UFreq(StrToDouble(value));
+  }
+  else if (name == "uVoltage") {
+    UVolt(StrToDouble(value));
   }
   else if (name == "mcFrequency") {
     McFreq(StrToDouble(value));
@@ -223,12 +226,13 @@ void Config::ParseParamValues(const string& name, string& value)
   }
   else if (name == "processor") {
     string pName;
-    double area, freq, epi, pleak;
+    double area, freq, volt, epi, pleak;
     int ooo;
     ValueParser::ExtractValue(value, pName);
     ValueParser::ExtractValue(value, area);
     ValueParser::ExtractValue(value, ooo);
     ValueParser::ExtractValue(value, freq);
+    ValueParser::ExtractValue(value, volt);
     ValueParser::ExtractValue(value, epi);
     ValueParser::ExtractValue(value, pleak);
 
@@ -241,7 +245,7 @@ void Config::ParseParamValues(const string& name, string& value)
     value.erase(0, value.find('=')+1);
     ValueParser::GetVectorOfValues(value, l2Size);
 
-    AddProc(pName, area, ooo, freq, epi, pleak, l1Size, l2Size);
+    AddProc(pName, area, ooo, freq, volt, epi, pleak, l1Size, l2Size);
   }
   else if (name == "maxProcAreaPerCluster") {
     double val = StrToDouble(value);
@@ -326,10 +330,13 @@ void Config::Print() const
   }
   cout << endl;
 
+  cout << "uFreq = " << UFreq() << ", uVolt = " << UVolt() << endl;
+
   for (int p = 0; p < ProcCnt(); ++p) {
     cout << "processor " << ProcName(p) << ": area = " << ProcArea(p)
          << "mm^2" /*<< ", ipc = " << ProcIpc(p) << ", mpi = " << ProcMpi(p)*/
-         << ", freq = " << ProcFreq(p) << "GHz, epi = " << ProcEpi(p)
+         << ", freq = " << ProcFreq(p) << "GHz, volt = "
+         << ProcVolt(p) << "V, epi = " << ProcEpi(p)
          << "nJ, pleak = " << ProcPleak(p) << "W" << endl;
   }
 

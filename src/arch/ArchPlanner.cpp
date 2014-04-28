@@ -185,12 +185,14 @@ ArchConfig * ArchPlanner::GenerateCurrentArchConfig()
 
   (*ac) << "PARAM UnitLen=1.0e-3\n"
         << "PARAM MemDensity=" << config.MemDensity() << "\n"
-//        << "PARAM Frequency=" << config.Freq() << "\n"
         << "PARAM L3LatencyDef=" << config.L3LatencyOfSize(L3Size) << "\n"
         << "PARAM MemReplySize=" << packetLength << "\n"
         << "PARAM LinkWidth=" << config.LinkWidth() << "\n"
         << "PARAM NiDelay=3\n"
-        << "PARAM WlFile=" << config.WlFile() << "\n";
+        << "PARAM WlFile=" << config.WlFile() << "\n"
+        //<< "PARAM L3ClusterSize=0\n"
+        << "PARAM UFrequency=" << config.UFreq() << "\n"
+        << "PARAM UVoltage=" << config.UVolt() << "\n";
 
   // ----- start processor defines
   for (int ptype = 0; ptype < config.ProcCnt(); ++ptype) {
@@ -238,7 +240,7 @@ ArchConfig * ArchPlanner::GenerateCurrentArchConfig()
           /*<< " L3AccProb=" << L3AccProb << " MMAccProb=" << MMAccProb*/
           << " OoO=" << config.ProcOoO(ptype) << " Area=" << config.ProcArea(ptype)
           /*<< " Ipc=" << config.ProcIpc(ptype) << " Mpi=" << config.ProcMpi(ptype)*/
-          << " Freq=" << config.ProcFreq(ptype) << " Epi=" << config.ProcEpi(ptype)
+          << " Freq=" << config.ProcFreq(ptype) << " Volt=" << config.ProcVolt(ptype) << " Epi=" << config.ProcEpi(ptype)
           << " Pleak=" << config.ProcPleak(ptype) << " L1Eacc=" << L1Eacc
           << " L1Pleak=" << L1Pleak << " L2Eacc=" << L2Eacc << " L2Pleak=" << L2Pleak << "\n";
   }

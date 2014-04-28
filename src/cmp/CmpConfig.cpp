@@ -47,7 +47,7 @@ namespace cmpex {
 
 CmpConfig::CmpConfig ( void ) :
   cmp_ (0), unitLen_ (1.0e-3), memDensity_ (10),
-  freq_ (1.6), mcFreq_ (1.6), memReplySize_(3),
+  uFreq_ (1.6), uVolt_(0.8), mcFreq_ (1.6), memReplySize_(3),
   niDelay_ (0), L3ClusterSize_(0), totalL3Size_ (0.0), subnCnt_ (1),
   wlFile_(""), flatMeshIc_ (true), wlIdx_(-1) {}
 

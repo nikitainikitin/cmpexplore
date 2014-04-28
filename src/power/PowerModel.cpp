@@ -110,7 +110,7 @@ double PowerModel::GetTotalPower(Component * cmp)
   for (int m = 0; m < cmpConfig.MemCnt(); ++m) {
     Memory * mem = cmpConfig.GetMemory(m);
 
-    L3Power_[m] = mem->Eacc()*mem->Lambda()*cmpConfig.Freq() + mem->Pleak();
+    L3Power_[m] = mem->Eacc()*mem->Lambda()*cmpConfig.UFreq() + mem->Pleak();
   }
 
   double l3Power = 0.0;
@@ -123,7 +123,7 @@ double PowerModel::GetTotalPower(Component * cmp)
   for (int mc = 0; mc < cmpConfig.MemCtrlCnt(); ++mc) {
     CmpConfig::MemCtrl * memCtrl = cmpConfig.GetMemCtrl(mc);
 
-    MCPower_[mc] = memCtrl->eacc*memCtrl->lambda*cmpConfig.Freq() + memCtrl->pleak;
+    MCPower_[mc] = memCtrl->eacc*memCtrl->lambda*cmpConfig.UFreq() + memCtrl->pleak;
   }
 
   double mcPower = 0.0;
@@ -218,7 +218,7 @@ double PowerModel::MeshPower(MeshIc * ic)
         // add power of the link connected to this input port
         if (RouteDir(i) != RDPRIMARY) {
           //cout << "r = " << r << ", traffic to input port " << i << " = " << iTraffic << endl;
-          double link_power = ( LinkEpf(config.Tech(), config.LinkWidth())*iTraffic*cmpConfig.Freq()
+          double link_power = ( LinkEpf(config.Tech(), config.LinkWidth())*iTraffic*cmpConfig.UFreq()
                      + LinkPleak(config.Tech(), config.LinkWidth()) ) * linkLen;
           power += link_power;
           //cout << "r = " << r << ", power of link at input port " << i << " = " << link_power << endl;
@@ -240,7 +240,7 @@ double PowerModel::MeshPower(MeshIc * ic)
         portNum = 5;
       }*/
 
-      double router_power = RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*cmpConfig.Freq()
+      double router_power = RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*cmpConfig.UFreq()
                + RouterPleak(config.Tech(), portNum, config.LinkWidth());
       power += router_power;
       MeshRouterPower_[r] += router_power;
@@ -283,12 +283,12 @@ double PowerModel::BusPower(BusIc * ic)
       traffic += iTraffic;
       // add power of the buffer connected to this input port
       //cout << "r = " << r << ", traffic to input port " << i << " = " << iTraffic << endl;
-      power += BufferEpf(config.Tech(), config.LinkWidth())*iTraffic*cmpConfig.Freq()
+      power += BufferEpf(config.Tech(), config.LinkWidth())*iTraffic*cmpConfig.UFreq()
                  + BufferPleak(config.Tech(), config.LinkWidth());
     }
 
     // add link power
-    power += ( LinkEpf(config.Tech(), config.LinkWidth())*traffic*cmpConfig.Freq()
+    power += ( LinkEpf(config.Tech(), config.LinkWidth())*traffic*cmpConfig.UFreq()
                + LinkPleak(config.Tech(), config.LinkWidth()) ) * busLen;
   }
 
@@ -332,13 +332,13 @@ double PowerModel::URingPower(URingIc * ic)
         // add power of the link connected to this input port
         if (i != 0) { // if not a component port
           //cout << "r = " << r << ", traffic to input port " << i << " = " << iTraffic << endl;
-          power += ( LinkEpf(config.Tech(), config.LinkWidth())*iTraffic*cmpConfig.Freq()
+          power += ( LinkEpf(config.Tech(), config.LinkWidth())*iTraffic*cmpConfig.UFreq()
                      + LinkPleak(config.Tech(), config.LinkWidth()) ) * linkLen;
         }
       }
 
       const int portNum = 2; // power of 2x2 routers (with 2 VCs)
-      power += RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*cmpConfig.Freq()
+      power += RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*cmpConfig.UFreq()
                + RouterPleak(config.Tech(), portNum, config.LinkWidth());
     }
   }
@@ -383,13 +383,13 @@ double PowerModel::BRingPower(BRingIc * ic)
         // add power of the link connected to this input port
         if (i != 0) { // if not a component port
           //cout << "r = " << r << ", traffic to input port " << i << " = " << iTraffic << endl;
-          power += ( LinkEpf(config.Tech(), config.LinkWidth())*iTraffic*cmpConfig.Freq()
+          power += ( LinkEpf(config.Tech(), config.LinkWidth())*iTraffic*cmpConfig.UFreq()
                      + LinkPleak(config.Tech(), config.LinkWidth()) ) * linkLen;
         }
       }
 
       const int portNum = 3; // power of 3x3 routers (with 2 VCs)
-      power += RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*cmpConfig.Freq()
+      power += RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*cmpConfig.UFreq()
                + RouterPleak(config.Tech(), portNum, config.LinkWidth());
     }
   }
@@ -438,7 +438,7 @@ double PowerModel::XBarPower(XBarIc * ic)
       traffic += iTraffic;
     }
 
-    power += RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*cmpConfig.Freq()
+    power += RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*cmpConfig.UFreq()
              + RouterPleak(config.Tech(), portNum, config.LinkWidth());
   }
 

@@ -328,7 +328,7 @@ StatMetrics * IterativePerfModel::RunSubgradient ()
 
 StatMetrics * IterativePerfModel::RunBisectionFp ()
 {
-  if (fabs(cmpConfig.McFreq() - cmpConfig.Freq()) > E_DOUBLE ) {
+  if (fabs(cmpConfig.McFreq() - cmpConfig.UFreq()) > E_DOUBLE ) {
     cout << "Bisection is obsolete with MC BW, check subgradient instead" << endl;
     exit(1);
   }
@@ -830,7 +830,7 @@ bool IterativePerfModel::EstimateDelays(bool fixNegDelays)
     CmpConfig::MemCtrl * memCtrl = cmpConfig.GetMemCtrl(mc);
 
     // Pollaczek-Khinchin formula for an M/D/1 server.
-    double sTime = cmpConfig.Freq()/cmpConfig.McFreq();
+    double sTime = cmpConfig.UFreq()/cmpConfig.McFreq();
     double delay = memCtrl->lambda*sTime*sTime/(2.0*(1.0-memCtrl->lambda*sTime));
 
     if (delay < -E_DOUBLE) {

@@ -119,9 +119,13 @@ namespace cmpex {
 
       inline void MemDensity ( double d );
       
-      inline double Freq () const;
+      inline double UFreq () const;
 
-      inline void Freq ( double f );
+      inline void UFreq ( double f );
+
+      inline double UVolt () const;
+
+      inline void UVolt ( double v );
 
       inline double McFreq () const;
 
@@ -245,7 +249,9 @@ namespace cmpex {
       
       double memDensity_; // area of 1Mb of memory (in units^2)
       
-      double freq_; // master clock frequency (NoC & caches) [GHz]
+      double uFreq_; // uncore frequency (NoC & shared caches) [GHz]
+
+      double uVolt_; // uncore voltage (NoC & shared caches) [V]
 
       double mcFreq_; // frequency of MCs [GHz]
 
@@ -318,12 +324,20 @@ namespace cmpex {
       memDensity_ = d;
     }
     
-    double CmpConfig::Freq () const {
-      return freq_;
+    double CmpConfig::UFreq () const {
+      return uFreq_;
     }
 
-    void CmpConfig::Freq ( double f ) {
-      freq_ = f;
+    void CmpConfig::UFreq ( double f ) {
+      uFreq_ = f;
+    }
+
+    double CmpConfig::UVolt () const {
+      return uVolt_;
+    }
+
+    void CmpConfig::UVolt ( double v ) {
+      uVolt_ = v;
     }
 
     double CmpConfig::McFreq () const {

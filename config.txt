@@ -10,8 +10,8 @@ gMeshDimY = 8
 # Cluster IC types
 clusterIcType = bus
 
-# Processor data: Name / Area[mm2] / OoO (1/0) / Freq[GHz] / Epi[nJ] / Pleak[W] / l1, l2 sizes
-processor 	P1	1.25	1	1.6	0.60	0.14 \
+# Processor data: Name / Area[mm2] / OoO (1/0) / Freq[GHz] / Volt[V] / Epi[nJ] / Pleak[W] / l1, l2 sizes
+processor 	P1	1.25	1	1.6	0.8	0.60	0.14 \
     l1Size = 0.064 \
     l2Size = 0.256
 
@@ -51,8 +51,11 @@ memCtrlAccessEnergy = 0.13
 # Leakage power of MC [W]
 memCtrlLeakagePower = 0.1
 
-# Master clock frequency [GHz]
-frequency = 1.6
+# Uncore frequency [GHz]
+uFrequency = 1.6
+
+# Uncore voltage [V]
+uVoltage = 0.8
 
 # IC link width
 linkWidth = 256

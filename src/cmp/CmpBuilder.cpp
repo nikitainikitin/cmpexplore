@@ -407,6 +407,9 @@ Component * CmpBuilder::ReadProcessor (
     else if (arg.name == "Freq") {
       p->SetFreq(StrToDouble(arg.value));
     }
+    else if (arg.name == "Volt") {
+      p->SetVolt(StrToDouble(arg.value));
+    }
     else if (arg.name == "Epi") {
       p->SetEpi(StrToDouble(arg.value));
     }
@@ -765,8 +768,11 @@ void CmpBuilder::ReadParameter (string& entry)
   else if (arg.name == "MemDensity") {
     cmpConfig.MemDensity(StrToDouble(arg.value));
   }
-  else if (arg.name == "Frequency") {
-    cmpConfig.Freq(StrToDouble(arg.value));
+  else if (arg.name == "UFrequency") {
+    cmpConfig.UFreq(StrToDouble(arg.value));
+  }
+  else if (arg.name == "UVoltage") {
+    cmpConfig.UVolt(StrToDouble(arg.value));
   }
   else if (arg.name == "McFrequency") {
     cmpConfig.McFreq(StrToDouble(arg.value));

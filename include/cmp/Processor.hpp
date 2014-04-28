@@ -71,6 +71,8 @@ namespace cmpex {
 
       inline double Freq() const;
 
+      inline double Volt() const;
+
       inline double Thr () const;
 
       inline void Thr (double t);
@@ -173,6 +175,8 @@ namespace cmpex {
 
       inline void SetFreq(double f);
 
+      inline void SetVolt(double v);
+
       inline void SetEpi(double e);
 
       inline void SetPleak(double p);
@@ -231,7 +235,9 @@ namespace cmpex {
 
       vector<double> l3ProbDistr_; // prob. to access distributed L3 p/cluster
 
-      double freq_;
+      double freq_; // frequency/voltage come as input-defined pairs
+
+      double volt_;
 
       int type_; // type index
 
@@ -431,6 +437,14 @@ namespace cmpex {
 
     void Processor::SetFreq ( double f ) {
       freq_ = f;
+    }
+
+    double Processor::Volt () const {
+      return volt_;
+    }
+
+    void Processor::SetVolt ( double v ) {
+      volt_ = v;
     }
 
     double Processor::Epi () const {

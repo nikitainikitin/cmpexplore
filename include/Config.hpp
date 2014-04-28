@@ -111,9 +111,13 @@ namespace cmpex {
 
     inline void Tech (Technology t);
 
-    inline double Freq () const;
+    inline double UFreq () const;
 
-    inline void Freq (double f);
+    inline void UFreq (double f);
+
+    inline double UVolt () const;
+
+    inline void UVolt (double v);
 
     inline double McFreq () const;
 
@@ -153,6 +157,8 @@ namespace cmpex {
 
     inline double ProcFreq (int idx) const;
 
+    inline double ProcVolt (int idx) const;
+
     inline double ProcEpi (int idx) const;
 
     inline double ProcPleak (int idx) const;
@@ -166,7 +172,8 @@ namespace cmpex {
     inline double ProcL2Size (int pIdx, int sIdx) const;
 
     inline void AddProc(const string& name, double area, int ooo,
-                        double freq, double epi, double pleak,
+                        double freq, double volt,
+                        double epi, double pleak,
                         const vector<double>& l1Size,
                         const vector<double>& l2Size);
 
@@ -238,7 +245,9 @@ namespace cmpex {
 
     Technology tech_;
 
-    double freq_; // master clock frequency (NoC and caches) [GHz]
+    double uFreq_; // uncore frequency (NoC and shared caches) [GHz]
+
+    double uVolt_; // uncore voltage (NoC and shared caches) [V]
 
     double mcFreq_; // MC frequency [GHz]
 
@@ -281,6 +290,8 @@ namespace cmpex {
     vector<int> procOoO_;
 
     vector<double> procFreq_;
+
+    vector<double> procVolt_;
 
     vector<double> procEpi_;
 
@@ -424,12 +435,20 @@ namespace cmpex {
     tech_ = t;
   }
 
-  double Config::Freq() const {
-    return freq_;
+  double Config::UFreq() const {
+    return uFreq_;
   }
 
-  void Config::Freq(double f) {
-    freq_ = f;
+  void Config::UFreq(double f) {
+    uFreq_ = f;
+  }
+
+  double Config::UVolt() const {
+    return uVolt_;
+  }
+
+  void Config::UVolt(double v) {
+    uVolt_ = v;
   }
 
   double Config::McFreq() const {
@@ -508,6 +527,10 @@ namespace cmpex {
     return procFreq_[idx];
   }
 
+  double Config::ProcVolt(int idx) const {
+    return procVolt_[idx];
+  }
+
   double Config::ProcEpi(int idx) const {
     return procEpi_[idx];
   }
@@ -533,7 +556,7 @@ namespace cmpex {
   }
 
   void Config::AddProc(const string &name, double area,
-                       int ooo, double freq,
+                       int ooo, double freq, double volt,
                        double epi, double pleak,
                        const vector<double>& l1Size,
                        const vector<double>& l2Size) {
@@ -541,6 +564,7 @@ namespace cmpex {
     procArea_.push_back(area);
     procOoO_.push_back(ooo);
     procFreq_.push_back(freq);
+    procVolt_.push_back(volt);
     procEpi_.push_back(epi);
     procPleak_.push_back(pleak);
     procl1Size_.push_back(l1Size);
