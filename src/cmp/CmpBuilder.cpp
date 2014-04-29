@@ -505,7 +505,7 @@ Component * CmpBuilder::ReadMesh (
 {
   Cluster * c = new Cluster(cmpConfig.ClusterCnt(), clIdx, parent);
   cmpConfig.AddCluster(c);
-  MeshIc * mesh = new MeshIc(c, cmpConfig.SubnCnt());
+  MeshIc * mesh = new MeshIc(c, cmpConfig.SubnCnt(), cmpConfig.UFreq(), cmpConfig.UVolt());
   c->SetIc(mesh);
   
   DEBUG(5, "Created a mesh" << endl);
@@ -562,7 +562,7 @@ Component * CmpBuilder::ReadBus (
 {
   Cluster * c = new Cluster(cmpConfig.ClusterCnt(), clIdx, parent);
   cmpConfig.AddCluster(c);
-  BusIc * bus = new BusIc(c, cmpConfig.SubnCnt());
+  BusIc * bus = new BusIc(c, cmpConfig.SubnCnt(), cmpConfig.UFreq(), cmpConfig.UVolt());
   c->SetIc(bus);
   
   DEBUG(5, "Created a bus" << endl);
@@ -610,7 +610,7 @@ Component * CmpBuilder::ReadURing (
   Cluster * c = new Cluster(cmpConfig.ClusterCnt(), clIdx, parent);
   cmpConfig.AddCluster(c);
 
-  URingIc * ring = new URingIc(c, cmpConfig.SubnCnt());
+  URingIc * ring = new URingIc(c, cmpConfig.SubnCnt(), cmpConfig.UFreq(), cmpConfig.UVolt());
   c->SetIc(ring);
 
   DEBUG(5, "Created a u-ring" << endl);
@@ -662,7 +662,7 @@ Component * CmpBuilder::ReadBRing (
   Cluster * c = new Cluster(cmpConfig.ClusterCnt(), clIdx, parent);
   cmpConfig.AddCluster(c);
 
-  BRingIc * ring = new BRingIc(c, cmpConfig.SubnCnt());
+  BRingIc * ring = new BRingIc(c, cmpConfig.SubnCnt(), cmpConfig.UFreq(), cmpConfig.UVolt());
   c->SetIc(ring);
 
   DEBUG(5, "Created a b-ring" << endl);
@@ -713,7 +713,7 @@ Component * CmpBuilder::ReadXBar (
 {
   Cluster * c = new Cluster(cmpConfig.ClusterCnt(), clIdx, parent);
   cmpConfig.AddCluster(c);
-  XBarIc * xbar = new XBarIc(c, cmpConfig.SubnCnt());
+  XBarIc * xbar = new XBarIc(c, cmpConfig.SubnCnt(), cmpConfig.UFreq(), cmpConfig.UVolt());
   c->SetIc(xbar);
 
   DEBUG(5, "Created an xbar" << endl);

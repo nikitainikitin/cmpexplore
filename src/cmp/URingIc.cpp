@@ -40,7 +40,8 @@ namespace cmpex {
  * Constructors and destructor
  */
 
-URingIc::URingIc (Cluster * c, UInt subnCnt) : Interconnect (ITURING, c, subnCnt),
+URingIc::URingIc (Cluster * c, UInt subnCnt, double freq, double volt) :
+  Interconnect (ITURING, c, freq, volt, subnCnt),
   routerDelay_ (1), linkDelay_ (1) {}
 
 URingIc::~URingIc () {}
@@ -75,6 +76,7 @@ int URingIc::DistanceCompToIface (UShort idx)
 /*
  * Returns latency from component with index 'srcIdx' to
  * another component with index 'dstIdx'.
+ * Note: latency unit is [ns]
  */
 
 double URingIc::LatencyCompToComp (UShort srcIdx, UShort dstIdx, UShort pSize, bool dynamic, UShort subnIdx)
@@ -85,7 +87,7 @@ double URingIc::LatencyCompToComp (UShort srcIdx, UShort dstIdx, UShort pSize, b
   double latency = 0.0;
 
   while (curIdx != dstIdx) {
-    latency += LinkDelay() + RouterDelay() +
+    latency += LinkDelayNs() + RouterDelayNs() +
                  (dynamic ? BufDelay(subnIdx, curIdx, curInPort) : 0.0);
     // move to next router
     if (curIdx < TotalCompCnt()-1) { // not reached NI
@@ -103,7 +105,8 @@ double URingIc::LatencyCompToComp (UShort srcIdx, UShort dstIdx, UShort pSize, b
   }
 
   // at the destination router
-  latency += RouterDelay() + (dynamic ? BufDelay(subnIdx, curIdx, curInPort) : 0.0) + pSize-1.0;
+  latency += RouterDelayNs() + (dynamic ? BufDelay(subnIdx, curIdx, curInPort) : 0.0) +
+             (pSize-1.0)/Freq();
 
   return latency;
 }
@@ -139,6 +142,7 @@ double URingIc::LatencyMemCtrlToComp (UShort mcIdx, UShort idx, UShort pSize, bo
  * Returns latency from component with index 'idx' to
  * the interface component.
  * Assume that the interface component is the last one in the list.
+ * Note: latency unit is [ns]
  */
 
 double URingIc::LatencyCompToIface (UShort idx, UShort pSize, bool dynamic, UShort subnIdx)
@@ -151,6 +155,7 @@ double URingIc::LatencyCompToIface (UShort idx, UShort pSize, bool dynamic, USho
  * Returns latency from the interface component to
  * component with index 'idx'.
  * Assume that the interface component is the last one in the list.
+ * Note: latency unit is [ns]
  */
 
 double URingIc::LatencyIfaceToComp (UShort idx, UShort pSize, bool dynamic, UShort subnIdx)
@@ -268,12 +273,14 @@ int URingIc::EstimateBufferDelays(bool fixNegDelays)
   //   use Req service time for Req, Ack and Reply time for Data
   vector<RouterModel*> rms;
   if (!config.SimulateCC()) {
-    rms.push_back(new RouterModel(IPORT_NUM, OPORT_NUM, (cmpConfig.MemReplySize()+1.0)/2.0+RouterDelay()-1.0));
+    rms.push_back(new RouterModel(IPORT_NUM, OPORT_NUM,
+                                  ((cmpConfig.MemReplySize()+1.0)/2.0+RouterDelay()-1.0)/Freq()));
   }
   else {
-    rms.push_back(new RouterModel(IPORT_NUM, OPORT_NUM, RouterDelay())); // REQ
-    rms.push_back(new RouterModel(IPORT_NUM, OPORT_NUM, RouterDelay())); // ACK
-    rms.push_back(new RouterModel(IPORT_NUM, OPORT_NUM, RouterDelay()+cmpConfig.MemReplySize()-1.0)); // DATA
+    rms.push_back(new RouterModel(IPORT_NUM, OPORT_NUM, RouterDelay()/Freq())); // REQ
+    rms.push_back(new RouterModel(IPORT_NUM, OPORT_NUM, RouterDelay()/Freq())); // ACK
+    rms.push_back(new RouterModel(IPORT_NUM, OPORT_NUM,
+                                  (RouterDelay()+cmpConfig.MemReplySize()-1.0)/Freq())); // DATA
   }
 
   double max_adj = 1.0;

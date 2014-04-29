@@ -70,7 +70,7 @@ namespace cmpex {
     public:
 
       // Constructors & destructor
-      BRingIc (Cluster * c, UInt subnCnt);
+      BRingIc (Cluster * c, UInt subnCnt, double freq, double volt);
 
       virtual ~BRingIc ();
 
@@ -87,9 +87,13 @@ namespace cmpex {
 
       inline void RouterDelay ( int d );
 
+      inline double RouterDelayNs () const;
+
       inline int LinkDelay () const;
 
       inline void LinkDelay ( int d );
+
+      inline double LinkDelayNs () const;
 
       // Implementation of the Interconnect interface
 
@@ -243,12 +247,20 @@ namespace cmpex {
       routerDelay_ = d;
     }
 
+    double BRingIc::RouterDelayNs () const {
+      return routerDelay_/Freq();
+    }
+
     int BRingIc::LinkDelay () const {
       return linkDelay_;
     }
 
     void BRingIc::LinkDelay (int d) {
       linkDelay_ = d;
+    }
+
+    double BRingIc::LinkDelayNs () const {
+      return linkDelay_/Freq();
     }
 
     double& BRingIc::Traffic (UShort subnIdx, UShort rIdx, UShort iPort, UShort oPort) {

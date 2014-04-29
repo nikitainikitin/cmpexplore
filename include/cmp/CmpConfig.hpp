@@ -72,10 +72,10 @@ namespace cmpex {
       // once MC placement has to be investigated.
       struct MemCtrl {
         std::string name;
-        double latency;
+        double latency; // latency unit is [ns]
         double eacc; // access energy
         double pleak; // leakage power
-        double lambda; // runtime parameter: probability of access per cycle
+        double lambda; // runtime parameter: number of accesses per ns
         double bufDelay; // contention delay in the input queue
         MemCtrl (std::string n, double l, double e, double p) :
           name (n), latency (l), eacc (e), pleak (p), lambda (0.0) {}
@@ -173,6 +173,8 @@ namespace cmpex {
 
       inline void NiDelay ( double d );
       
+      inline double NiDelayNs () const;
+
       inline int L3ClusterSize () const;
 
       inline void L3ClusterSize ( int c );
@@ -432,6 +434,10 @@ namespace cmpex {
       niDelay_ = d;
     }
     
+    double CmpConfig::NiDelayNs () const {
+      return niDelay_/UFreq();
+    }
+
     int CmpConfig::L3ClusterSize () const {
       return L3ClusterSize_;
     }

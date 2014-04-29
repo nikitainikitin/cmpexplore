@@ -53,7 +53,7 @@ namespace cmpex {
 
       virtual ~CmpAnalytPerfModel ();
 
-      inline double CalcThr (double ipc, double mpi, double lat) const;
+      inline double CalcThr (double ideal_thr, double mpi, double lat) const;
       
       // Interface
       
@@ -109,11 +109,8 @@ namespace cmpex {
     // Inline functions
     //----------------------------------------------------------------------
 
-    double CmpAnalytPerfModel::CalcThr (double ipc, double mpi, double lat) const {
-      // cycles for executing LOAD instruction are included into the lat
-      //return ipc / (1.0 + (lat*ipc-1.0)*mpi);
-      /// cycles for executing LOAD instruction are NOT included into the lat
-      return 1.0 / (1.0/ipc + lat*mpi);
+    double CmpAnalytPerfModel::CalcThr (double ideal_thr, double mpi, double lat) const {
+      return 1.0 / (1.0/ideal_thr + lat*mpi);
     }
 
     vector<double>& CmpAnalytPerfModel::L3ToMcLat() {

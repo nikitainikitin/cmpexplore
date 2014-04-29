@@ -29,7 +29,7 @@ namespace cmpex {
   extern cmp::CmpConfig cmpConfig;
   
   namespace cmp {
-  
+
 //=======================================================================
 /*
  * Constructors and destructor
@@ -92,6 +92,7 @@ int Cluster::DistanceMemToIface (UShort mIdx)
 /*
  * Returns uni-directional latency from the processor 'pIdx'
  * to the interface of cluster.
+ * NOTE: latency unit is [ns]
  */
 
 double Cluster::ULatProcToIface (UShort pIdx, bool dynamic, UShort pSize, UShort subnIdx)
@@ -102,7 +103,7 @@ double Cluster::ULatProcToIface (UShort pIdx, bool dynamic, UShort pSize, UShort
   DASSERT(Parent()); // TODO: for top-component there's no Iface
   
   return ProcOwner(pIdx)->ULatProcToIface(pIdx, dynamic, pSize, subnIdx) +
-         cmpConfig.NiDelay() +                 // NI delay
+         cmpConfig.NiDelayNs() +                 // NI delay
          Ic()->LatencyCompToIface(ProcOwner(pIdx)->ClIdx(), pSize, dynamic, subnIdx);
 }
 
@@ -110,6 +111,7 @@ double Cluster::ULatProcToIface (UShort pIdx, bool dynamic, UShort pSize, UShort
 /*
  * Returns uni-directional latency from the interface of cluster
  * to the processor 'pIdx'.
+ * NOTE: latency unit is [ns]
  */
 
 double Cluster::ULatIfaceToProc (UShort pIdx, bool dynamic, UShort pSize, UShort subnIdx)
@@ -120,7 +122,7 @@ double Cluster::ULatIfaceToProc (UShort pIdx, bool dynamic, UShort pSize, UShort
   DASSERT(Parent()); // TODO: for top-component there's no Iface
   
   return Ic()->LatencyIfaceToComp(ProcOwner(pIdx)->ClIdx(), pSize, dynamic, subnIdx) +
-         cmpConfig.NiDelay() +                 // NI delay
+         cmpConfig.NiDelayNs() +                 // NI delay
          ProcOwner(pIdx)->ULatIfaceToProc(pIdx, dynamic, pSize, subnIdx);
 }
 
@@ -128,6 +130,7 @@ double Cluster::ULatIfaceToProc (UShort pIdx, bool dynamic, UShort pSize, UShort
 /*
  * Returns uni-directional latency from the memory 'mIdx'
  * to the interface of component.
+ * NOTE: latency unit is [ns]
  */
 
 double Cluster::ULatMemToIface (UShort mIdx, bool dynamic, UShort pSize, UShort subnIdx)
@@ -138,7 +141,7 @@ double Cluster::ULatMemToIface (UShort mIdx, bool dynamic, UShort pSize, UShort 
   DASSERT(Parent()); // TODO: for top-component there's no Iface
   
   return MemOwner(mIdx)->ULatMemToIface(mIdx, dynamic, pSize, subnIdx) +
-         cmpConfig.NiDelay() +                 // NI delay
+         cmpConfig.NiDelayNs() +                 // NI delay
          Ic()->LatencyCompToIface(MemOwner(mIdx)->ClIdx(), pSize, dynamic, subnIdx);
 }
 
@@ -146,6 +149,7 @@ double Cluster::ULatMemToIface (UShort mIdx, bool dynamic, UShort pSize, UShort 
 /*
  * Returns uni-directional latency from the interface of component
  * to the memory 'mIdx'.
+ * NOTE: latency unit is [ns]
  */
 
 double Cluster::ULatIfaceToMem (UShort mIdx, bool dynamic, UShort pSize, UShort subnIdx)
@@ -156,7 +160,7 @@ double Cluster::ULatIfaceToMem (UShort mIdx, bool dynamic, UShort pSize, UShort 
   DASSERT(Parent()); // TODO: for top-component there's no Iface
   
   return Ic()->LatencyIfaceToComp(MemOwner(mIdx)->ClIdx(), pSize, dynamic, subnIdx) +
-         cmpConfig.NiDelay() +                 // NI delay
+         cmpConfig.NiDelayNs() +                 // NI delay
          MemOwner(mIdx)->ULatIfaceToMem(mIdx, dynamic, pSize, subnIdx);
 }
 
@@ -165,6 +169,7 @@ double Cluster::ULatIfaceToMem (UShort mIdx, bool dynamic, UShort pSize, UShort 
  * Returns uni-directional latency from the processor 'pIdx' to access
  * the memory with index 'mIdx', if both are in cluster;
  * otw returns MAX_DOUBLE.
+ * NOTE: latency unit is [ns]
  */
 
 double Cluster::ULatProcToMem (UShort pIdx, UShort mIdx, bool dynamic, UShort pSize, UShort subnIdx)
@@ -183,6 +188,7 @@ double Cluster::ULatProcToMem (UShort pIdx, UShort mIdx, bool dynamic, UShort pS
  * Returns uni-directional latency from the memory 'mIdx' to access
  * the processor with index 'pIdx', if both are in cluster;
  * otw returns MAX_DOUBLE.
+ * NOTE: latency unit is [ns]
  */
 
 double Cluster::ULatMemToProc (UShort mIdx, UShort pIdx, bool dynamic, UShort pSize, UShort subnIdx)
@@ -203,6 +209,7 @@ double Cluster::ULatMemToProc (UShort mIdx, UShort pIdx, bool dynamic, UShort pS
  * otw returns MAX_DOUBLE.
  * Full latency is the sum of request, access and reply latencies.
  * !! NOTE: This function only works when cache coherence is not considered.
+ * NOTE: latency unit is [ns]
  */
 
 double Cluster::FLatProcToMem (UShort pIdx, UShort mIdx, bool dynamic)
@@ -211,9 +218,9 @@ double Cluster::FLatProcToMem (UShort pIdx, UShort mIdx, bool dynamic)
     return MAX_DOUBLE;
 
   return ULatProcToMem(pIdx, mIdx, dynamic, 1, UShort(MSGNOCC)) +    // request
-         cmpConfig.GetMemory(mIdx)->Latency() +  // access (static)
-         (dynamic ? cmpConfig.GetMemory(mIdx)->BufDelay() : 0.0) + // access (dynamic)
-         ULatMemToProc(mIdx, pIdx, dynamic, cmpConfig.MemReplySize(), UShort(MSGNOCC)); // reply
+         cmpConfig.GetMemory(mIdx)->Latency() / cmpConfig.UFreq() +  // access (static)
+         ULatMemToProc(mIdx, pIdx, dynamic, cmpConfig.MemReplySize(), UShort(MSGNOCC)) + // reply
+         (dynamic ? cmpConfig.GetMemory(mIdx)->BufDelay() : 0.0); // access (dynamic)
 }
 
 //=======================================================================
@@ -221,6 +228,7 @@ double Cluster::FLatProcToMem (UShort pIdx, UShort mIdx, bool dynamic)
  * Returns uni-directional latency from the processor 'pIdx' to access
  * the memory controller with index 'mcIdx', if processor is in cluster;
  * otw returns MAX_DOUBLE.
+ * NOTE: latency unit is [ns]
  */
 
 double Cluster::ULatProcToMemCtrl (UShort pIdx, UShort mcIdx, bool dynamic, UShort pSize, UShort subnIdx)
@@ -240,6 +248,7 @@ double Cluster::ULatProcToMemCtrl (UShort pIdx, UShort mcIdx, bool dynamic, USho
  * Returns uni-directional latency from the memory controller 'mcIdx' to access
  * the processor with index 'pIdx', if processor is in cluster;
  * otw returns MAX_DOUBLE.
+ * NOTE: latency unit is [ns]
  */
 
 double Cluster::ULatMemCtrlToProc (UShort mcIdx, UShort pIdx, bool dynamic, UShort pSize, UShort subnIdx)
@@ -261,6 +270,7 @@ double Cluster::ULatMemCtrlToProc (UShort mcIdx, UShort pIdx, bool dynamic, USho
  * otw returns MAX_DOUBLE.
  * Full latency is the sum of request, access and reply latencies.
  * !! NOTE: This function only works when cache coherence is not considered.
+ * NOTE: latency unit is [ns]
  */
 
 double Cluster::FLatProcToMemCtrl (UShort pIdx, UShort mcIdx, bool dynamic)
@@ -284,6 +294,7 @@ double Cluster::FLatProcToMemCtrl (UShort pIdx, UShort mcIdx, bool dynamic)
  * Returns uni-directional latency from the memory 'mIdx' to access
  * the memory controller with index 'mcIdx', if memory is in cluster;
  * otw returns MAX_DOUBLE.
+ * NOTE: latency unit is [ns]
  */
 
 double Cluster::ULatMemToMemCtrl (UShort mIdx, UShort mcIdx, bool dynamic, UShort pSize, UShort subnIdx)
@@ -303,6 +314,7 @@ double Cluster::ULatMemToMemCtrl (UShort mIdx, UShort mcIdx, bool dynamic, UShor
  * Returns uni-directional latency from the memory controller 'mcIdx' to access
  * the memory with index 'mIdx', if memory is in cluster;
  * otw returns MAX_DOUBLE.
+ * NOTE: latency unit is [ns]
  */
 
 double Cluster::ULatMemCtrlToMem (UShort mcIdx, UShort mIdx, bool dynamic, UShort pSize, UShort subnIdx)

@@ -86,15 +86,19 @@ double PowerModel::GetTotalPower(Component * cmp)
     Processor * proc = cmpConfig.GetProcessor(p);
 
     // core
-    corePower_[p] = proc->Active() ? proc->Epi()*proc->Thr()*proc->Freq() + proc->Pleak() : 0.0;
+    corePower_[p] = proc->Active() ?
+                      proc->Epi() * VScalDynPower(proc->Volt()) * proc->Thr() +
+                      proc->Pleak() * VScalLeakPower(proc->Volt()) : 0.0;
 
     // l1
-    L1Power_[p] = proc->Active() ? proc->L1Eacc()*proc->Lambda()*proc->L1AccessProbability()*proc->Freq() +
-        proc->L1Pleak() : 0.0;
+    L1Power_[p] = proc->Active() ?
+                    proc->L1Eacc() * VScalDynPower(proc->Volt()) * proc->Lambda()*proc->L1AccessProbability() +
+                    proc->L1Pleak() * VScalLeakPower(proc->Volt()) : 0.0;
 
     // l2
-    L2Power_[p] = proc->Active() ? proc->L2Eacc()*proc->Lambda()*proc->L2AccessProbability()*proc->Freq() +
-        proc->L2Pleak() : 0.0;
+    L2Power_[p] = proc->Active() ?
+                    proc->L2Eacc() * VScalDynPower(proc->Volt()) * proc->Lambda()*proc->L2AccessProbability() +
+                    proc->L2Pleak() * VScalLeakPower(proc->Volt()) : 0.0;
   }
 
   double core_power = 0.0;
@@ -110,7 +114,8 @@ double PowerModel::GetTotalPower(Component * cmp)
   for (int m = 0; m < cmpConfig.MemCnt(); ++m) {
     Memory * mem = cmpConfig.GetMemory(m);
 
-    L3Power_[m] = mem->Eacc()*mem->Lambda()*cmpConfig.UFreq() + mem->Pleak();
+    L3Power_[m] = mem->Eacc() * VScalDynPower(cmpConfig.UVolt()) * mem->Lambda() +
+                  mem->Pleak() * VScalLeakPower(cmpConfig.UVolt());
   }
 
   double l3Power = 0.0;
@@ -123,7 +128,8 @@ double PowerModel::GetTotalPower(Component * cmp)
   for (int mc = 0; mc < cmpConfig.MemCtrlCnt(); ++mc) {
     CmpConfig::MemCtrl * memCtrl = cmpConfig.GetMemCtrl(mc);
 
-    MCPower_[mc] = memCtrl->eacc*memCtrl->lambda*cmpConfig.UFreq() + memCtrl->pleak;
+    MCPower_[mc] = memCtrl->eacc * VScalDynPower(cmpConfig.UVolt()) * memCtrl->lambda +
+                   memCtrl->pleak * VScalLeakPower(cmpConfig.UVolt());
   }
 
   double mcPower = 0.0;
@@ -218,8 +224,8 @@ double PowerModel::MeshPower(MeshIc * ic)
         // add power of the link connected to this input port
         if (RouteDir(i) != RDPRIMARY) {
           //cout << "r = " << r << ", traffic to input port " << i << " = " << iTraffic << endl;
-          double link_power = ( LinkEpf(config.Tech(), config.LinkWidth())*iTraffic*cmpConfig.UFreq()
-                     + LinkPleak(config.Tech(), config.LinkWidth()) ) * linkLen;
+          double link_power = ( LinkEpf(config.Tech(), config.LinkWidth())*iTraffic*VScalDynPower(cmpConfig.UVolt())
+                     + LinkPleak(config.Tech(), config.LinkWidth())*VScalLeakPower(cmpConfig.UVolt()) ) * linkLen;
           power += link_power;
           //cout << "r = " << r << ", power of link at input port " << i << " = " << link_power << endl;
           MeshLinkPower_[r*4+i] += link_power;
@@ -240,8 +246,8 @@ double PowerModel::MeshPower(MeshIc * ic)
         portNum = 5;
       }*/
 
-      double router_power = RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*cmpConfig.UFreq()
-               + RouterPleak(config.Tech(), portNum, config.LinkWidth());
+      double router_power = RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*VScalDynPower(cmpConfig.UVolt())
+               + RouterPleak(config.Tech(), portNum, config.LinkWidth())*VScalLeakPower(cmpConfig.UVolt());
       power += router_power;
       MeshRouterPower_[r] += router_power;
     }
@@ -283,13 +289,13 @@ double PowerModel::BusPower(BusIc * ic)
       traffic += iTraffic;
       // add power of the buffer connected to this input port
       //cout << "r = " << r << ", traffic to input port " << i << " = " << iTraffic << endl;
-      power += BufferEpf(config.Tech(), config.LinkWidth())*iTraffic*cmpConfig.UFreq()
-                 + BufferPleak(config.Tech(), config.LinkWidth());
+      power += BufferEpf(config.Tech(), config.LinkWidth())*iTraffic*VScalDynPower(cmpConfig.UVolt())
+                 + BufferPleak(config.Tech(), config.LinkWidth())*VScalLeakPower(cmpConfig.UVolt());
     }
 
     // add link power
-    power += ( LinkEpf(config.Tech(), config.LinkWidth())*traffic*cmpConfig.UFreq()
-               + LinkPleak(config.Tech(), config.LinkWidth()) ) * busLen;
+    power += ( LinkEpf(config.Tech(), config.LinkWidth())*traffic*VScalDynPower(cmpConfig.UVolt())
+               + LinkPleak(config.Tech(), config.LinkWidth())*VScalLeakPower(cmpConfig.UVolt()) ) * busLen;
   }
 
   return power;
@@ -332,14 +338,14 @@ double PowerModel::URingPower(URingIc * ic)
         // add power of the link connected to this input port
         if (i != 0) { // if not a component port
           //cout << "r = " << r << ", traffic to input port " << i << " = " << iTraffic << endl;
-          power += ( LinkEpf(config.Tech(), config.LinkWidth())*iTraffic*cmpConfig.UFreq()
-                     + LinkPleak(config.Tech(), config.LinkWidth()) ) * linkLen;
+          power += ( LinkEpf(config.Tech(), config.LinkWidth())*iTraffic*VScalDynPower(cmpConfig.UVolt())
+                     + LinkPleak(config.Tech(), config.LinkWidth())*VScalLeakPower(cmpConfig.UVolt()) ) * linkLen;
         }
       }
 
       const int portNum = 2; // power of 2x2 routers (with 2 VCs)
-      power += RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*cmpConfig.UFreq()
-               + RouterPleak(config.Tech(), portNum, config.LinkWidth());
+      power += RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*VScalDynPower(cmpConfig.UVolt())
+               + RouterPleak(config.Tech(), portNum, config.LinkWidth())*VScalLeakPower(cmpConfig.UVolt());
     }
   }
 
@@ -383,14 +389,14 @@ double PowerModel::BRingPower(BRingIc * ic)
         // add power of the link connected to this input port
         if (i != 0) { // if not a component port
           //cout << "r = " << r << ", traffic to input port " << i << " = " << iTraffic << endl;
-          power += ( LinkEpf(config.Tech(), config.LinkWidth())*iTraffic*cmpConfig.UFreq()
-                     + LinkPleak(config.Tech(), config.LinkWidth()) ) * linkLen;
+          power += ( LinkEpf(config.Tech(), config.LinkWidth())*iTraffic*VScalDynPower(cmpConfig.UVolt())
+                     + LinkPleak(config.Tech(), config.LinkWidth())*VScalLeakPower(cmpConfig.UVolt()) ) * linkLen;
         }
       }
 
       const int portNum = 3; // power of 3x3 routers (with 2 VCs)
-      power += RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*cmpConfig.UFreq()
-               + RouterPleak(config.Tech(), portNum, config.LinkWidth());
+      power += RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*VScalDynPower(cmpConfig.UVolt())
+               + RouterPleak(config.Tech(), portNum, config.LinkWidth())*VScalLeakPower(cmpConfig.UVolt());
     }
   }
 
@@ -438,8 +444,8 @@ double PowerModel::XBarPower(XBarIc * ic)
       traffic += iTraffic;
     }
 
-    power += RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*cmpConfig.UFreq()
-             + RouterPleak(config.Tech(), portNum, config.LinkWidth());
+    power += RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*VScalDynPower(cmpConfig.UVolt())
+             + RouterPleak(config.Tech(), portNum, config.LinkWidth())*VScalLeakPower(cmpConfig.UVolt());
   }
 
   return power;
@@ -521,6 +527,28 @@ double PowerModel::DumpPTsimPower(Component * cmp)
   }
 
   out.close();
+}
+
+//=======================================================================
+/*
+ * Returns voltage scaling coefficient for dynamic power.
+ * Nominal voltage is assumed to be fixed (0.8 V).
+ */
+
+double PowerModel::VScalDynPower ( double volt )
+{
+  return volt*volt/(0.8*0.8);
+}
+
+//=======================================================================
+/*
+ * Returns voltage scaling coefficient for leakage power.
+ * Nominal voltage is assumed to be fixed (0.8 V).
+ */
+
+double PowerModel::VScalLeakPower ( double volt )
+{
+  return volt/0.8;
 }
 
 //=======================================================================

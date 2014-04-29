@@ -41,7 +41,8 @@ namespace cmpex {
  * Constructors and destructor
  */
 
-MeshIc::MeshIc (Cluster * c, UInt subnCnt) : Interconnect (ITMESH, c, subnCnt), GGraph (),
+MeshIc::MeshIc (Cluster * c, UInt subnCnt, double freq, double volt) :
+  Interconnect (ITMESH, c, freq, volt, subnCnt), GGraph (),
   linkDelay_ (1), routerDelay_ (3) {}
 
 MeshIc::~MeshIc () {}
@@ -95,11 +96,12 @@ int MeshIc::DistanceCompToIface (UShort idx)
 /*
  * Returns latency from component with index 'srcIdx' to
  * another component with latency 'dstIdx'.
+ * Note: latency unit is [ns]
  */
 
 double MeshIc::LatencyCompToComp (UShort srcIdx, UShort dstIdx, UShort pSize, bool dynamic, UShort subnIdx)
 {
-  return Latency(srcIdx, RDPRIMARY, dstIdx, RDPRIMARY, dynamic, subnIdx) + pSize-1.0;
+  return Latency(srcIdx, RDPRIMARY, dstIdx, RDPRIMARY, dynamic, subnIdx) + (pSize-1.0)/Freq();
 }
 
 //=======================================================================
@@ -107,6 +109,7 @@ double MeshIc::LatencyCompToComp (UShort srcIdx, UShort dstIdx, UShort pSize, bo
  * Returns latency from component with index 'idx' to the memory
  * controller 'mcIdx'.
  * Assume routers are placed in the top-right corner of the tile.
+ * Note: latency unit is [ns]
  */
 
 double MeshIc::LatencyCompToMemCtrl (UShort idx, UShort mcIdx, UShort pSize, bool dynamic, UShort subnIdx)
@@ -146,7 +149,7 @@ double MeshIc::LatencyCompToMemCtrl (UShort idx, UShort mcIdx, UShort pSize, boo
 
   DASSERT(dstIdx != MAX_USHORT);
 
-  return latency + Latency(idx, RDPRIMARY, dstIdx, dstPort, dynamic, subnIdx) + pSize-1.0;
+  return latency + Latency(idx, RDPRIMARY, dstIdx, dstPort, dynamic, subnIdx) + (pSize-1.0)/Freq();
 }
 
 //=======================================================================
@@ -154,6 +157,7 @@ double MeshIc::LatencyCompToMemCtrl (UShort idx, UShort mcIdx, UShort pSize, boo
  * Returns latency from memory controller with index 'mcIdx' to
  * component with index 'idx'.
  * Assume routers are placed in the top-right corner of the tile.
+ * Note: latency unit is [ns]
  */
 
 double MeshIc::LatencyMemCtrlToComp (UShort mcIdx, UShort idx, UShort pSize, bool dynamic, UShort subnIdx)
@@ -193,7 +197,7 @@ double MeshIc::LatencyMemCtrlToComp (UShort mcIdx, UShort idx, UShort pSize, boo
 
   DASSERT(srcIdx != MAX_USHORT);
 
-  return latency + Latency(srcIdx, srcPort, idx, RDPRIMARY, dynamic, subnIdx) + pSize-1.0;
+  return latency + Latency(srcIdx, srcPort, idx, RDPRIMARY, dynamic, subnIdx) + (pSize-1.0)/Freq();
 }
 
 //=======================================================================
@@ -201,13 +205,14 @@ double MeshIc::LatencyMemCtrlToComp (UShort mcIdx, UShort idx, UShort pSize, boo
  * Returns latency from component with index 'idx' to
  * the interface component.
  * Assume that the interface component is the top-right tile.
+ * Note: latency unit is [ns]
  */
 
 double MeshIc::LatencyCompToIface (UShort idx, UShort pSize, bool dynamic, UShort subnIdx)
 {
   UShort dstIdx = ColNum()-1;
   
-  return Latency(idx, RDPRIMARY, dstIdx, RDIFACE, dynamic, subnIdx) + pSize-1.0;
+  return Latency(idx, RDPRIMARY, dstIdx, RDIFACE, dynamic, subnIdx) + (pSize-1.0)/Freq();
 }
 
 //=======================================================================
@@ -215,13 +220,14 @@ double MeshIc::LatencyCompToIface (UShort idx, UShort pSize, bool dynamic, UShor
  * Returns latency from the interface component to
  * component with index 'idx'.
  * Assume that the interface component is the top-right tile.
+ * Note: latency unit is [ns]
  */
 
 double MeshIc::LatencyIfaceToComp (UShort idx, UShort pSize, bool dynamic, UShort subnIdx)
 {
   UShort srcIdx = ColNum()-1;
   
-  return Latency(srcIdx, RDIFACE, idx, RDPRIMARY, dynamic, subnIdx) + pSize-1.0;
+  return Latency(srcIdx, RDIFACE, idx, RDPRIMARY, dynamic, subnIdx) + (pSize-1.0)/Freq();
 }
 
 //=======================================================================
@@ -354,6 +360,7 @@ void MeshIc::MarkPathIfaceToComp (UShort idx, double traffic, UShort subnIdx)
  * and returns the latency between two ports. Assume XY routing.
  * TODO: merge with MarkPath() to have only one path traversal method
  * parametrizable by functors (like traffic filling and latency calculation).
+ * Note: latency unit is [ns]
  */
 
 double MeshIc::Latency (UShort srcRouter, RouteDir srcPort,
@@ -370,7 +377,7 @@ double MeshIc::Latency (UShort srcRouter, RouteDir srcPort,
   while (curTile->ColIdx() != dstTile->ColIdx()) {
     /*RouteDir curOutPort = (curTile->ColIdx() > dstTile->ColIdx()) ?
                             RDWEST : RDEAST;*/
-    latency += LinkDelay() + RouterDelay() +
+    latency += LinkDelayNs() + RouterDelayNs() +
                  (dynamic ? BufDelay(subnIdx, curTile->Idx(), curInPort) : 0.0);
     // move to next tile
     if (curTile->ColIdx() > dstTile->ColIdx()) {
@@ -387,7 +394,7 @@ double MeshIc::Latency (UShort srcRouter, RouteDir srcPort,
   while (curTile->RowIdx() != dstTile->RowIdx()) {
     /*RouteDir curOutPort = (curTile->RowIdx() > dstTile->RowIdx()) ?
                             RDNORTH : RDSOUTH;*/
-    latency += LinkDelay() + RouterDelay() +
+    latency += LinkDelayNs() + RouterDelayNs() +
                  (dynamic ? BufDelay(subnIdx, curTile->Idx(), curInPort) : 0.0);
     // move to next tile
     if (curTile->RowIdx() > dstTile->RowIdx()) {
@@ -401,7 +408,7 @@ double MeshIc::Latency (UShort srcRouter, RouteDir srcPort,
   }
 
   // mark last tile
-  latency += RouterDelay() + (dynamic ? BufDelay(subnIdx, curTile->Idx(), curInPort) : 0.0);
+  latency += RouterDelayNs() + (dynamic ? BufDelay(subnIdx, curTile->Idx(), curInPort) : 0.0);
   
   return latency;
 }
@@ -483,12 +490,14 @@ int MeshIc::EstimateBufferDelays(bool fixNegDelays)
   //   use Req service time for Req, Ack and Reply time for Data
   vector<RouterModel*> rms;
   if (!config.SimulateCC()) {
-    rms.push_back(new RouterModel(PORT_NUM, PORT_NUM, (cmpConfig.MemReplySize()+1.0)/2.0+RouterDelay()-1.0));
+    rms.push_back(new RouterModel(PORT_NUM, PORT_NUM,
+                                  ((cmpConfig.MemReplySize()+1.0)/2.0+RouterDelay()-1.0)/Freq()));
   }
   else {
-    rms.push_back(new RouterModel(PORT_NUM, PORT_NUM, RouterDelay())); // REQ
-    rms.push_back(new RouterModel(PORT_NUM, PORT_NUM, RouterDelay())); // ACK
-    rms.push_back(new RouterModel(PORT_NUM, PORT_NUM, RouterDelay()+cmpConfig.MemReplySize()-1.0)); // DATA
+    rms.push_back(new RouterModel(PORT_NUM, PORT_NUM, RouterDelay()/Freq())); // REQ
+    rms.push_back(new RouterModel(PORT_NUM, PORT_NUM, RouterDelay()/Freq())); // ACK
+    rms.push_back(new RouterModel(PORT_NUM, PORT_NUM,
+                                  (RouterDelay()+cmpConfig.MemReplySize()-1.0)/Freq())); // DATA
   }
 
   double max_adj = 1.0;

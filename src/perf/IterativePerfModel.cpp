@@ -114,6 +114,7 @@ StatMetrics * IterativePerfModel::RunSubgradientFp ()
 //=======================================================================
 /*
  * Estimate CMP performance using fixed-point iteration.
+ * Units: latency [ns], throughput [instr. per ns], traffic [req. per ns]
  */
 
 StatMetrics * IterativePerfModel::RunFixedPoint(double statThr, double statInj)
@@ -152,7 +153,7 @@ StatMetrics * IterativePerfModel::RunFixedPoint(double statThr, double statInj)
       procLat.push_back(lat);
 
       double thr = (proc->Active() && proc->Freq() > E_DOUBLE) ?
-                     CalcThr(proc->Ipc(), proc->Mpi(), lat) : 0.0;
+                     CalcThr(proc->Ipc()*proc->Freq(), proc->Mpi(), lat) : 0.0;
       proc->Thr(thr);
       DEBUG(2, "P" << p << ": thr = " << thr << endl);
       systemThr += thr;
@@ -194,6 +195,7 @@ StatMetrics * IterativePerfModel::RunFixedPoint(double statThr, double statInj)
 //=======================================================================
 /*
  * Estimate CMP performance using subgradient method.
+ * Units: latency [ns], throughput [instr. per ns], traffic [req. per ns]
  */
 
 StatMetrics * IterativePerfModel::RunSubgradient ()
@@ -237,7 +239,7 @@ StatMetrics * IterativePerfModel::RunSubgradient ()
       systemLat += lat;
 
       double thr = (proc->Active() && proc->Freq() > E_DOUBLE) ?
-                     CalcThr(proc->Ipc(), proc->Mpi(), lat) : 0.0;
+                     CalcThr(proc->Ipc()*proc->Freq(), proc->Mpi(), lat) : 0.0;
       proc->Thr(thr);
       systemThr += thr;
 
@@ -245,7 +247,7 @@ StatMetrics * IterativePerfModel::RunSubgradient ()
       proc->Lambda(totalTraffic);
       systemTr += totalTraffic;
 
-      double lat_star = 1.0/procRateCur[p] - 1.0/(proc->Mpi()*proc->Ipc());
+      double lat_star = 1.0/procRateCur[p] - 1.0/(proc->Mpi()*proc->Ipc()*proc->Freq());
 
       double gap = lat - lat_star;
       totalGap += fabs(gap);
@@ -324,6 +326,7 @@ StatMetrics * IterativePerfModel::RunSubgradient ()
 //=======================================================================
 /*
  * Estimate CMP performance using bisection or fixed-point iteration.
+ * Units: latency [ns], throughput [instr. per ns], traffic [req. per ns]
  */
 
 StatMetrics * IterativePerfModel::RunBisectionFp ()
@@ -367,7 +370,7 @@ StatMetrics * IterativePerfModel::RunBisectionFp ()
     procLat.push_back(lat);
 
     double thr = (proc->Active() && proc->Freq() > E_DOUBLE) ?
-                   CalcThr(proc->Ipc(), proc->Mpi(), lat) : 0.0;
+                   CalcThr(proc->Ipc()*proc->Freq(), proc->Mpi(), lat) : 0.0;
     proc->Thr(thr);
     DEBUG(2, "P" << p << ": thr = " << thr << endl);
     systemThr += thr;
@@ -470,14 +473,14 @@ StatMetrics * IterativePerfModel::RunBisectionFp ()
       double lat = (proc->Active() && proc->Freq() > E_DOUBLE) ?
                      CalculateProcLatency(p, true) : 0.0;
       double lat_star = (proc->Active() && proc->Freq() > E_DOUBLE) ?
-                          1.0/procRateAvg[p] - 1.0/(proc->Mpi()*proc->Ipc()) : 0.0;
+                          1.0/procRateAvg[p] - 1.0/(proc->Mpi()*proc->Ipc()*proc->Freq()) : 0.0;
 
       double lat_avg = lat;
       DEBUG(2, "P" << p << ": avg lat = " << lat_avg << " cycles" << endl);
       systemLat += lat_avg;
 
       double thr = (proc->Active() && proc->Freq() > E_DOUBLE) ?
-                     CalcThr(proc->Ipc(), proc->Mpi(), lat_avg): 0.0;
+                     CalcThr(proc->Ipc()*proc->Freq(), proc->Mpi(), lat_avg): 0.0;
       proc->Thr(thr);
       DEBUG(2, "P" << p << ": thr = " << thr << endl);
       systemThr += thr;
@@ -808,7 +811,10 @@ bool IterativePerfModel::EstimateDelays(bool fixNegDelays)
     // Pollaczek-Khinchin formula for an M/D/1 server.
     // Memory service time is assumed to be 1 cycle;
     // should be changed if Fmem != Fnoc
-    double delay = mem->Lambda()/(2.0*(1.0-mem->Lambda()));
+    //double delay = mem->Lambda()/(2.0*(1.0-mem->Lambda())); // [uncore cycles]
+    double sTime = 1.0/cmpConfig.UFreq(); // [ns]
+    DASSERT(mem->Lambda()*sTime < 1.0);
+    double delay = mem->Lambda()*sTime*sTime/(2.0*(1.0-mem->Lambda()*sTime));
 
     if (delay < -E_DOUBLE) {
       if (fixNegDelays) {
@@ -830,7 +836,9 @@ bool IterativePerfModel::EstimateDelays(bool fixNegDelays)
     CmpConfig::MemCtrl * memCtrl = cmpConfig.GetMemCtrl(mc);
 
     // Pollaczek-Khinchin formula for an M/D/1 server.
-    double sTime = cmpConfig.UFreq()/cmpConfig.McFreq();
+    //double sTime = cmpConfig.UFreq()/cmpConfig.McFreq(); // [uncore cycles]
+    double sTime = 1.0/cmpConfig.McFreq(); // [ns]
+    DASSERT(memCtrl->lambda*sTime < 1.0);
     double delay = memCtrl->lambda*sTime*sTime/(2.0*(1.0-memCtrl->lambda*sTime));
 
     if (delay < -E_DOUBLE) {

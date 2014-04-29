@@ -1040,5 +1040,5 @@ MESH Col=16 Row=16 ColWidth=6 RowHeight=5 LinkDelay=2 RouterDelay=3
     ProcOn
     MEM Size=2 Eacc=0.18 Pleak=0.15
     NI
-MEMCTRL Location=West Latency=100 Eacc=0.13 Pleak=0.1
-MEMCTRL Location=East Latency=100 Eacc=0.13 Pleak=0.1
+MEMCTRL Location=West Latency=62.5 Eacc=0.13 Pleak=0.1
+MEMCTRL Location=East Latency=62.5 Eacc=0.13 Pleak=0.1

@@ -88,6 +88,10 @@ namespace cmpex {
 
       static double DumpPTsimPower(cmp::Component * cmp);
 
+      static double VScalDynPower ( double volt );
+
+      static double VScalLeakPower ( double volt );
+
     public:
 
       // Constructors & destructor

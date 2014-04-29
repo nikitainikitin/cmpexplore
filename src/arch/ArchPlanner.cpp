@@ -289,13 +289,13 @@ ArchConfig * ArchPlanner::GenerateCurrentArchConfig()
     }
   }
 
-  (*ac) << "MEMCTRL Location=West Latency=100 Eacc=" << config.MemCtrlAccessEnergy()
+  (*ac) << "MEMCTRL Location=West Latency=62.5 Eacc=" << config.MemCtrlAccessEnergy()
         << " Pleak=" << config.MemCtrlLeakagePower() << "\n"
-        << "MEMCTRL Location=North Latency=100 Eacc=" << config.MemCtrlAccessEnergy()
+        << "MEMCTRL Location=North Latency=62.5 Eacc=" << config.MemCtrlAccessEnergy()
         << " Pleak=" << config.MemCtrlLeakagePower() << "\n"
-        << "MEMCTRL Location=South Latency=100 Eacc=" << config.MemCtrlAccessEnergy()
+        << "MEMCTRL Location=South Latency=62.5 Eacc=" << config.MemCtrlAccessEnergy()
         << " Pleak=" << config.MemCtrlLeakagePower() << "\n"
-        << "MEMCTRL Location=East Latency=100 Eacc=" << config.MemCtrlAccessEnergy()
+        << "MEMCTRL Location=East Latency=62.5 Eacc=" << config.MemCtrlAccessEnergy()
         << " Pleak=" << config.MemCtrlLeakagePower() << "\n";
 
 

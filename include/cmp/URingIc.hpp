@@ -65,7 +65,7 @@ namespace cmpex {
     public:
 
       // Constructors & destructor
-      URingIc (Cluster * c, UInt subnCnt);
+      URingIc (Cluster * c, UInt subnCnt, double freq, double volt);
 
       virtual ~URingIc ();
 
@@ -82,9 +82,13 @@ namespace cmpex {
 
       inline void RouterDelay ( int d );
 
+      inline double RouterDelayNs () const;
+
       inline int LinkDelay () const;
 
       inline void LinkDelay ( int d );
+
+      inline double LinkDelayNs () const;
 
       // Implementation of the Interconnect interface
 
@@ -236,12 +240,20 @@ namespace cmpex {
       routerDelay_ = d;
     }
 
+    double URingIc::RouterDelayNs () const {
+      return routerDelay_/Freq();
+    }
+
     int URingIc::LinkDelay () const {
       return linkDelay_;
     }
 
     void URingIc::LinkDelay (int d) {
       linkDelay_ = d;
+    }
+
+    double URingIc::LinkDelayNs () const {
+      return linkDelay_/Freq();
     }
 
     double& URingIc::Traffic (UShort subnIdx, UShort rIdx, UShort iPort, UShort oPort) {

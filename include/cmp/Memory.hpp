@@ -132,7 +132,7 @@ namespace cmpex {
 
       // Runtime parameters
 
-      double lambda_; // probability of request per cycle
+      double lambda_; // number of requests per ns
 
       double bufDelay_; // contention delays in the input buffer
 

@@ -30,8 +30,9 @@ namespace cmpex {
  * Constructors and destructor
  */
 
-Interconnect::Interconnect ( IcType type, Cluster * parent, UInt subnCnt ) :
-  type_ (type), parent_ (parent), subnCnt_ (subnCnt) {}
+Interconnect::Interconnect ( IcType type, Cluster * parent,
+                             double freq, double volt, UInt subnCnt ) :
+  type_ (type), parent_ (parent), subnCnt_ (subnCnt), freq_ (freq), volt_ (volt) {}
 
 Interconnect::~Interconnect () {}
 

@@ -259,9 +259,9 @@ namespace cmpex {
 
       // Runtime parameters
 
-      double thr_; // real throughput
+      double thr_; // real throughput, instructions per ns
 
-      double lambda_; // probability of memory request per cycle
+      double lambda_; // number of memory requests per ns
       
     };
 

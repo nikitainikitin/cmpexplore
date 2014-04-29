@@ -46,7 +46,7 @@ namespace cmpex {
     public:
 
       // Constructors & destructor
-      XBarIc (Cluster * c, UInt subnCnt);
+      XBarIc (Cluster * c, UInt subnCnt, double freq, double volt);
 
       virtual ~XBarIc ();
 
@@ -62,6 +62,8 @@ namespace cmpex {
       inline int Delay () const;
 
       inline void Delay ( int d );
+
+      inline double DelayNs () const;
 
       // Implementation of the Interconnect interface
 
@@ -209,6 +211,10 @@ namespace cmpex {
 
     void XBarIc::Delay (int d) {
       delay_ = d;
+    }
+
+    double XBarIc::DelayNs () const {
+      return delay_/Freq();
     }
 
     double& XBarIc::Traffic (UShort subnIdx, UShort iPort, UShort oPort) {

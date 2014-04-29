@@ -56,6 +56,10 @@ namespace cmpex {
 
       inline UInt SubnCnt () const;
       
+      inline double Freq () const;
+
+      inline double Volt () const;
+
       // Pure virtual methods
 
       // Returns hop-count distance from component with index 'srcIdx' to
@@ -139,7 +143,7 @@ namespace cmpex {
 
     protected:
 
-      Interconnect ( IcType type, Cluster * parent, UInt subnCnt = 1 );
+      Interconnect ( IcType type, Cluster * parent, double freq, double volt, UInt subnCnt = 1 );
 
     private:
 
@@ -157,6 +161,10 @@ namespace cmpex {
       Cluster * parent_;
 
       UInt subnCnt_; // number of physical subnetworks in the IC
+
+      double freq_; // IC operating frequency
+
+      double volt_; // IC operating voltage
       
     };
 
@@ -182,6 +190,14 @@ namespace cmpex {
     
     UInt Interconnect::SubnCnt () const {
       return subnCnt_;
+    }
+
+    double Interconnect::Freq () const {
+      return freq_;
+    }
+
+    double Interconnect::Volt () const {
+      return volt_;
     }
 
   } // namespace cmp

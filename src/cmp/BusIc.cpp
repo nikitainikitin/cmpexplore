@@ -39,7 +39,8 @@ namespace cmpex {
  * Constructors and destructor
  */
 
-BusIc::BusIc (Cluster * c, UInt subnCnt) : Interconnect (ITBUS, c, subnCnt),
+BusIc::BusIc (Cluster * c, UInt subnCnt, double freq, double volt) :
+  Interconnect (ITBUS, c, freq, volt, subnCnt),
   accessTime_ (1) {}
 
 BusIc::~BusIc () {}
@@ -73,11 +74,12 @@ int BusIc::DistanceCompToIface (UShort idx)
 /*
  * Returns latency from component with index 'srcIdx' to
  * another component with latency 'dstIdx'.
+ * Note: latency unit is [ns]
  */
 
 double BusIc::LatencyCompToComp (UShort srcIdx, UShort dstIdx, UShort pSize, bool dynamic, UShort subnIdx)
 {
-  return AccessTime()*pSize + (dynamic ? BufDelay(subnIdx, srcIdx) : 0.0);
+  return AccessTimeNs()*pSize + (dynamic ? BufDelay(subnIdx, srcIdx) : 0.0);
 }
 
 //=======================================================================
@@ -85,11 +87,12 @@ double BusIc::LatencyCompToComp (UShort srcIdx, UShort dstIdx, UShort pSize, boo
  * Returns latency from component with index 'idx' to the memory
  * controller 'mcIdx'.
  * Assume routers are placed in the top-right corner of the tile.
+ * Note: latency unit is [ns]
  */
 
 double BusIc::LatencyCompToMemCtrl (UShort idx, UShort mcIdx, UShort pSize, bool dynamic, UShort subnIdx)
 {
-  return AccessTime()*pSize + (dynamic ? BufDelay(subnIdx, idx) : 0.0);
+  return AccessTimeNs()*pSize + (dynamic ? BufDelay(subnIdx, idx) : 0.0);
 }
 
 //=======================================================================
@@ -97,13 +100,14 @@ double BusIc::LatencyCompToMemCtrl (UShort idx, UShort mcIdx, UShort pSize, bool
  * Returns latency from memory controller with index 'mcIdx' to
  * component with index 'idx'.
  * Assume routers are placed in the top-right corner of the tile.
+ * Note: latency unit is [ns]
  */
 
 double BusIc::LatencyMemCtrlToComp (UShort mcIdx, UShort idx, UShort pSize, bool dynamic, UShort subnIdx)
 {
   cout << "Warning: memory controllers are not fully supported in connection with buses" << endl;
   cout << "Warning: buffers for MCs should be added to BusIC for dynamic latency" << endl;
-  return AccessTime()*pSize; // + dynamic latency in MC buffer
+  return AccessTimeNs()*pSize; // + dynamic latency in MC buffer
 }
 
 //=======================================================================
@@ -111,11 +115,12 @@ double BusIc::LatencyMemCtrlToComp (UShort mcIdx, UShort idx, UShort pSize, bool
  * Returns latency from component with index 'idx' to
  * the interface component.
  * Assume that the interface component is the last one in the list.
+ * Note: latency unit is [ns]
  */
 
 double BusIc::LatencyCompToIface (UShort idx, UShort pSize, bool dynamic, UShort subnIdx)
 {
-  return AccessTime()*pSize + (dynamic ? BufDelay(subnIdx, idx) : 0.0);
+  return AccessTimeNs()*pSize + (dynamic ? BufDelay(subnIdx, idx) : 0.0);
 }
 
 //=======================================================================
@@ -123,11 +128,12 @@ double BusIc::LatencyCompToIface (UShort idx, UShort pSize, bool dynamic, UShort
  * Returns latency from the interface component to
  * component with index 'idx'.
  * Assume that the interface component is the last one in the list.
+ * Note: latency unit is [ns]
  */
 
 double BusIc::LatencyIfaceToComp (UShort idx, UShort pSize, bool dynamic, UShort subnIdx)
 {
-  return AccessTime()*pSize + (dynamic ? BufDelay(subnIdx, TotalCompCnt()-1) : 0.0);
+  return AccessTimeNs()*pSize + (dynamic ? BufDelay(subnIdx, TotalCompCnt()-1) : 0.0);
 }
 
 //=======================================================================
@@ -219,12 +225,13 @@ int BusIc::EstimateBufferDelays(bool fixNegDelays)
   //   use Req service time for Req, Ack and Reply time for Data
   vector<BusModel*> bms;
   if (!config.SimulateCC()) {
-    bms.push_back(new BusModel(TotalCompCnt(), (cmpConfig.MemReplySize()+1.0)*AccessTime()/2.0));
+    bms.push_back(new BusModel(TotalCompCnt(),
+                               ((cmpConfig.MemReplySize()+1.0)*AccessTime()/2.0)/Freq()));
   }
   else {
-    bms.push_back(new BusModel(TotalCompCnt(), AccessTime())); // REQ
-    bms.push_back(new BusModel(TotalCompCnt(), AccessTime())); // ACK
-    bms.push_back(new BusModel(TotalCompCnt(), cmpConfig.MemReplySize()*AccessTime())); // DATA
+    bms.push_back(new BusModel(TotalCompCnt(), AccessTime()/Freq())); // REQ
+    bms.push_back(new BusModel(TotalCompCnt(), AccessTime()/Freq())); // ACK
+    bms.push_back(new BusModel(TotalCompCnt(), cmpConfig.MemReplySize()*AccessTime()/Freq())); // DATA
   }
 
   bool error = false;

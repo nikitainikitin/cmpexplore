@@ -40,7 +40,8 @@ namespace cmpex {
  * Constructors and destructor
  */
 
-XBarIc::XBarIc (Cluster * c, UInt subnCnt) : Interconnect (ITXBAR, c, subnCnt) {}
+XBarIc::XBarIc (Cluster * c, UInt subnCnt, double freq, double volt) :
+  Interconnect (ITXBAR, c, freq, volt, subnCnt) {}
 
 XBarIc::~XBarIc () {}
 
@@ -70,11 +71,12 @@ int XBarIc::DistanceCompToIface (UShort idx)
 /*
  * Returns latency from component with index 'srcIdx' to
  * another component with index 'dstIdx'.
+ * Note: latency unit is [ns]
  */
 
 double XBarIc::LatencyCompToComp (UShort srcIdx, UShort dstIdx, UShort pSize, bool dynamic, UShort subnIdx)
 {
-  return Delay() + (dynamic ? BufDelay(subnIdx, srcIdx) : 0.0) + pSize-1.0;
+  return DelayNs() + (dynamic ? BufDelay(subnIdx, srcIdx) : 0.0) + (pSize-1.0)/Freq();
 }
 
 //=======================================================================
@@ -108,11 +110,12 @@ double XBarIc::LatencyMemCtrlToComp (UShort mcIdx, UShort idx, UShort pSize, boo
  * Returns latency from component with index 'idx' to
  * the interface component.
  * Assume that the interface component is the last one in the list.
+ * Note: latency unit is [ns]
  */
 
 double XBarIc::LatencyCompToIface (UShort idx, UShort pSize, bool dynamic, UShort subnIdx)
 {
-  return Delay() + (dynamic ? BufDelay(subnIdx, idx) : 0.0) + pSize-1.0;
+  return DelayNs() + (dynamic ? BufDelay(subnIdx, idx) : 0.0) + (pSize-1.0)/Freq();
 }
 
 //=======================================================================
@@ -120,11 +123,12 @@ double XBarIc::LatencyCompToIface (UShort idx, UShort pSize, bool dynamic, UShor
  * Returns latency from the interface component to
  * component with index 'idx'.
  * Assume that the interface component is the last one in the list.
+ * Note: latency unit is [ns]
  */
 
 double XBarIc::LatencyIfaceToComp (UShort idx, UShort pSize, bool dynamic, UShort subnIdx)
 {
-  return Delay() + (dynamic ? BufDelay(subnIdx, TotalCompCnt()-1) : 0.0) + pSize-1.0;
+  return DelayNs() + (dynamic ? BufDelay(subnIdx, TotalCompCnt()-1) : 0.0) + (pSize-1.0)/Freq();
 }
 
 //=======================================================================
@@ -216,12 +220,14 @@ int XBarIc::EstimateBufferDelays(bool fixNegDelays)
   //   use Req service time for Req, Ack and Reply time for Data
   vector<RouterModel*> rms;
   if (!config.SimulateCC()) {
-    rms.push_back(new RouterModel(TotalCompCnt(), TotalCompCnt(), (cmpConfig.MemReplySize()+1.0)/2.0+Delay()-1.0));
+    rms.push_back(new RouterModel(TotalCompCnt(), TotalCompCnt(),
+                                  ((cmpConfig.MemReplySize()+1.0)/2.0+Delay()-1.0)/Freq()));
   }
   else {
-    rms.push_back(new RouterModel(TotalCompCnt(), TotalCompCnt(), Delay())); // REQ
-    rms.push_back(new RouterModel(TotalCompCnt(), TotalCompCnt(), Delay())); // ACK
-    rms.push_back(new RouterModel(TotalCompCnt(), TotalCompCnt(), Delay()+cmpConfig.MemReplySize()-1.0)); // DATA
+    rms.push_back(new RouterModel(TotalCompCnt(), TotalCompCnt(), Delay()/Freq())); // REQ
+    rms.push_back(new RouterModel(TotalCompCnt(), TotalCompCnt(), Delay()/Freq())); // ACK
+    rms.push_back(new RouterModel(TotalCompCnt(), TotalCompCnt(),
+                                  (Delay()+cmpConfig.MemReplySize()-1.0)/Freq())); // DATA
   }
 
   double max_adj = 1.0;

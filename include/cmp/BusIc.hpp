@@ -46,7 +46,7 @@ namespace cmpex {
     public:
 
       // Constructors & destructor
-      BusIc (Cluster * c, UInt subnCnt);
+      BusIc (Cluster * c, UInt subnCnt, double freq, double volt);
 
       virtual ~BusIc ();
 
@@ -62,6 +62,8 @@ namespace cmpex {
       inline int AccessTime () const;
 
       inline void AccessTime ( int t );
+
+      inline double AccessTimeNs () const;
 
       // Implementation of the Interconnect interface
 
@@ -209,6 +211,10 @@ namespace cmpex {
 
     void BusIc::AccessTime (int t) {
       accessTime_ = t;
+    }
+
+    double BusIc::AccessTimeNs () const {
+      return accessTime_/Freq();
     }
 
     double& BusIc::Traffic (UShort subnIdx, UShort iPort, UShort oPort) {

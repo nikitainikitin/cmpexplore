@@ -54,6 +54,7 @@ CmpAnalytPerfModel::~CmpAnalytPerfModel () {}
 //=======================================================================
 /*
  * Calculates average latency for processor 'idx'.
+ * NOTE: latency unit is [ns]
  */
 
 double CmpAnalytPerfModel::CalculateProcLatency (
@@ -73,6 +74,7 @@ double CmpAnalytPerfModel::CalculateProcLatency (
  * Cache coherence is not considered.
  * Accesses to L3 and MC are done independently and
  * only Request and Reply transactions are considered.
+ * NOTE: latency unit is [ns]
  */
 
 double CmpAnalytPerfModel::CalculateProcLatencyNoCC (
@@ -80,13 +82,13 @@ double CmpAnalytPerfModel::CalculateProcLatencyNoCC (
 {
   Processor * proc = cmpConfig.GetProcessor(idx);
 
-  // L1 latency
-  double l1Latency = proc->L1Lat();
+  // L1 latency [ns]
+  double l1Latency = proc->L1Lat() / proc->Freq();
 
-  // L2 latency
-  double l2Latency = proc->L2Lat();
+  // L2 latency [ns]
+  double l2Latency = proc->L2Lat() / proc->Freq();
 
-  // L3 latency
+  // L3 latency [ns]
   double l3Latency = 0.0;
   for (int m = 0; m < cmpConfig.MemCnt(); ++m) {
     if (idx == 0)
@@ -95,7 +97,7 @@ double CmpAnalytPerfModel::CalculateProcLatencyNoCC (
     l3Latency += proc->L3ProbDistr()[m]*LatencyProcToMem(idx, m, dynamic);
   }
 
-  // Main memory latency
+  // Main memory latency [ns]
   double mainMemLatency = 0.0;
   for (int mc = 0; mc < cmpConfig.MemCtrlCnt(); ++mc) {
     if (idx == 0)
@@ -126,6 +128,7 @@ double CmpAnalytPerfModel::CalculateProcLatencyNoCC (
 //=======================================================================
 /*
  * Calculates average latency for processor 'idx' with cache coherence.
+ * NOTE: latency unit is [ns]
  */
 
 double CmpAnalytPerfModel::CalculateProcLatencyCC (
@@ -133,18 +136,18 @@ double CmpAnalytPerfModel::CalculateProcLatencyCC (
 {
   Processor * proc = cmpConfig.GetProcessor(idx);
 
-  // L1 latency
-  double l1Latency = proc->L1Lat();
+  // L1 latency [ns]
+  double l1Latency = proc->L1Lat() / proc->Freq();
 
-  // L2 latency
-  double l2Latency = proc->L2Lat();
+  // L2 latency [ns]
+  double l2Latency = proc->L2Lat() / proc->Freq();
 
-  // L3 latency - L3 hit
+  // L3 latency - L3 hit [ns]
   double l3Latency = 0.0;
   double mainMemLatency = 0.0;
   for (int m = 0; m < cmpConfig.MemCnt(); ++m) {
     Memory * mem = cmpConfig.GetMemory(m);
-    const double dirLat = mem->Latency()/3.0; // directory latency (approx.)
+    const double dirLat = mem->Latency()/cmpConfig.UFreq()/3.0; // directory latency (approx.) [ns]
 
     Component * parent = cmpConfig.GetProcessor(idx)->Parent();
     DASSERT(parent);
@@ -157,7 +160,7 @@ double CmpAnalytPerfModel::CalculateProcLatencyCC (
       DASSERT(cl);
     }
 
-    // precalulate latencies between Proc and L3
+    // precalulate latencies between Proc and L3 [ns]
     double latProcToL3Req = cl->ULatProcToMem(idx, m, dynamic, 1, UShort(MSGREQ));
     double latL3ToProcAck = cl->ULatMemToProc(m, idx, dynamic, 1, UShort(MSGACK));
     double latL3ToProcData = cl->ULatMemToProc(
@@ -167,17 +170,17 @@ double CmpAnalytPerfModel::CalculateProcLatencyCC (
     //     << ", latL3ToProcAck = " << latL3ToProcAck
     //     << ", latL3ToProcData = " << latL3ToProcData << endl;
 
-    // L3 hit
+    // L3 hit [ns]
     double l3HitLatency = latProcToL3Req + max(
           dirLat + (dynamic ? mem->BufDelay() : 0.0) + latL3ToProcAck,
-          mem->Latency() + (dynamic ? mem->BufDelay() : 0.0) + latL3ToProcData);
+          mem->Latency()/cmpConfig.UFreq() + (dynamic ? mem->BufDelay() : 0.0) + latL3ToProcData);
 
     if (idx == 0)
       DEBUG(3, "pa[" << m << "] = " << proc->L3ProbDistr()[m]
                << ", latency = " << l3HitLatency << endl);
     l3Latency += proc->L3ProbDistr()[m]*l3HitLatency;
 
-    // L3 miss (MC latency)
+    // L3 miss (MC latency) [ns]
     const int numValuesInSubn = cmpConfig.MemCnt()*cmpConfig.MemCtrlCnt();
     for (int mc = 0; mc < cmpConfig.MemCtrlCnt(); ++mc) {
       // See L3 Miss transaction in 2012-07-05_Memory_Flows_Implementation.pptx

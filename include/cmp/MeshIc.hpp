@@ -55,7 +55,7 @@ namespace cmpex {
     public:
 
       // Constructors & destructor
-      MeshIc (Cluster * c, UInt subnCnt);
+      MeshIc (Cluster * c, UInt subnCnt, double freq, double volt);
 
       virtual ~MeshIc ();
 
@@ -78,9 +78,13 @@ namespace cmpex {
 
       inline void LinkDelay ( int d );
 
+      inline double LinkDelayNs () const;
+
       inline int RouterDelay () const;
 
       inline void RouterDelay ( int d );
+
+      inline double RouterDelayNs () const;
 
       inline int TCnt() const;
 
@@ -255,12 +259,20 @@ namespace cmpex {
       linkDelay_ = d;
     }
 
+    double MeshIc::LinkDelayNs () const {
+      return linkDelay_/Freq();
+    }
+
     int MeshIc::RouterDelay () const {
       return routerDelay_;
     }
 
     void MeshIc::RouterDelay (int d) {
       routerDelay_ = d;
+    }
+
+    double MeshIc::RouterDelayNs () const {
+      return routerDelay_/Freq();
     }
 
     int MeshIc::TCnt () const {
