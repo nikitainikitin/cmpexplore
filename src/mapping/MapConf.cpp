@@ -18,12 +18,17 @@
 
 #include "mapping/MapConf.hpp"
 #include "Config.hpp"
+#include "cmp/CmpConfig.hpp"
+#include "cmp/Processor.hpp"
 
 using namespace std;
 
 namespace cmpex {
 
   extern Config config;
+  extern cmp::CmpConfig cmpConfig;
+
+  using namespace cmp;
 
   namespace mapping {
 
@@ -40,6 +45,38 @@ MapConf::MapConf (int cc, double t, double p, double tmp, double c):
 }
 
 MapConf::~MapConf () {}
+
+//=======================================================================
+/*
+ * Assign specified thread to the next free processor.
+ * Return true if thread has been assigned successfully.
+ */
+
+bool MapConf::AssignToFreeProc (int th_gid) {
+  for (int p = 0; p < map.size(); ++p) {
+    if (map[p] == IDX_UNASSIGNED) {
+      map[p] = th_gid;
+      states[p] = cmpConfig.GetProcessor(p)->Freq();
+      return true;
+    }
+  }
+  return false;
+}
+
+//=======================================================================
+/*
+ * Copy mapping configuration to the target object
+ */
+
+void MapConf::CopyTo (MapConf * target) const {
+  target->coreCnt = coreCnt;
+  target->thr = thr;
+  target->power = power;
+  target->temp = temp;
+  target->cost = cost;
+  target->map.assign(map.begin(), map.end());
+  target->states.assign(states.begin(), states.end());
+}
 
 //=======================================================================
 /*

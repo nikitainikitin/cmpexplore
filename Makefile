@@ -82,6 +82,7 @@ OBJECTS = \
 	$(OBJ_DIR)/mapping/MapConf.o \
 	$(OBJ_DIR)/mapping/MapEngine.o \
 	$(OBJ_DIR)/mapping/SaMapEngine.o \
+	$(OBJ_DIR)/mapping/MapSim.o \
 	$(OBJ_DIR)/Util.o \
 	$(OBJ_DIR)/Config.o \
 	$(OBJ_DIR)/Debug.o \

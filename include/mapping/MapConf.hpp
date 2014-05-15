@@ -19,6 +19,7 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 namespace cmpex {
 
@@ -50,6 +51,14 @@ namespace cmpex {
 
     ~MapConf ();
 
+    // --- Service functions ---
+
+    inline int GetUnassignedProcCnt() const;
+
+    bool AssignToFreeProc (int th_gid);
+
+    void CopyTo (MapConf * target) const;
+
     void Print() const;
 
   public:
@@ -71,6 +80,15 @@ namespace cmpex {
     double cost;
 
   };
+
+  //----------------------------------------------------------------------
+  // Inline functions
+  //----------------------------------------------------------------------
+
+  int MapConf::GetUnassignedProcCnt() const {
+    return std::count(map.begin(), map.end(), IDX_UNASSIGNED);
+  }
+
 
   } // namespace mapping
 

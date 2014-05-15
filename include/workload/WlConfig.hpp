@@ -50,10 +50,13 @@ namespace cmpex {
 
       enum Status {PENDING, RUNNING, SUSPENDED, COMPLETED};
 
+      struct Task;
+
       // Data structure for a thread.
       struct Thread {
         int thread_id; // thread local id within the task
         int thread_gid; // thread global id
+        Task * task; // parent task
         XYloc thread_xyloc; //0(1) is x(y) coordinate in cmp
         int thread_instructions;
         int thread_progress;
@@ -61,6 +64,8 @@ namespace cmpex {
         double thread_ipc;
         double thread_mpi;
         model::Function * missRatioOfMemSize;
+
+        inline bool CheckProgressMarkCompleted ();
       };
 
       typedef std::vector<Thread*> ThreadArray;
@@ -75,16 +80,20 @@ namespace cmpex {
         model::Function * missRatioOfMemSize;
         double task_ipc;
         double task_mpi;
-        int task_instructions; // total instructions to be executed
-        int task_progress; // instructions executed till NOW
+        //int task_instructions; // total instructions to be executed
+        //int task_progress; // instructions executed till NOW
         int task_deadline; // deadline time in ms
-        int task_elapsed; // task runtime in ms
-        int task_slack; // remaining time from NOW till deadline in ms
+        //int task_elapsed; // task runtime in ms
+        //int task_slack; // remaining time from NOW till deadline in ms
         ThreadArray task_threads;
         Status task_status;
+
+        inline bool CheckProgressMarkCompleted ();
       };
 
       typedef std::vector<Task*> TaskArray;
+
+      typedef TaskArray::iterator TaskIter;
 
       typedef TaskArray::const_iterator TaskCIter;
 
@@ -117,7 +126,11 @@ namespace cmpex {
       // Create Tasks
       int CreateTasks ( int ntasks );
 
+      bool HasPendingTasks ();
+
       Task * GetNextPendingTask ();
+
+      bool AllTasksCompleted ();
 
       // DEBUG: Print Tasks
       int PrintTasks ( int ntasks );
@@ -169,6 +182,26 @@ namespace cmpex {
 
     WlConfig::Thread * WlConfig::GetThreadByGid ( int gid ) {
       return threads[gid];
+    }
+
+    // Thread inline functions
+
+    bool WlConfig::Thread::CheckProgressMarkCompleted() {
+      if (thread_progress >= thread_instructions) {
+        thread_status = COMPLETED;
+        return true;
+      }
+      return false;
+    }
+
+    // Task inline functions
+
+    bool WlConfig::Task::CheckProgressMarkCompleted() {
+      for (int i = 0; i < task_threads.size(); ++i) {
+        if (task_threads[i]->thread_status != COMPLETED) return false;
+      }
+      task_status = COMPLETED;
+      return true;
     }
 
   } // namespace workload

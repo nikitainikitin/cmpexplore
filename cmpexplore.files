@@ -115,3 +115,5 @@ include/ptsim/PTsim.hpp
 include/ptsim/PTsim.h
 src/ptsim/PTsim.c
 src/ptsim/CallHotSpot.cpp
+include/mapping/MapSim.hpp
+src/mapping/MapSim.cpp

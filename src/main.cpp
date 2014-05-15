@@ -38,6 +38,7 @@
 #include "ptsim/PTsim.hpp"
 #include "workload/WlConfig.hpp"
 #include "mapping/SaMapEngine.hpp"
+#include "mapping/MapSim.hpp"
 
 using namespace cmpex;
 using namespace cmpex::cmp;
@@ -86,20 +87,21 @@ int main( int argc, char ** argv )
       cmpConfig.WriteWorkloadArchFromArch(config.Test());
       return 0;
     }
-    else if (config.Tmap()) { // mapping mode
+    else if (config.Tmap()) { // mapping mode, starts mapping simulator
       // create CMP architecture
       cmpConfig.CreateCmp(config.Test());
 
       // create task stream
-      wlConfig.CreateTasks(20);
+      int taskCnt = 10;
+      wlConfig.CreateTasks(taskCnt);
 
-      //int tot =  wlConfig.PrintTasks(20);
-      //cout << endl << "Total Tasks = " << tot << endl;
-      //wlConfig.Cleanup();
+      cout << "-I- The workload has " << taskCnt << " tasks" << endl;
+      cout << "    Printing tasks:" << endl;
+      wlConfig.PrintTasks(taskCnt);
 
       // start mapping
-      SaMapEngine me;
-      me.Map();
+      MapSim sim(1000);
+      sim.Run();
     }
     else {                // run selected testcase
       cmpConfig.CreateCmp(config.Test());

@@ -14,8 +14,8 @@
 //   limitations under the License.
 // ----------------------------------------------------------------------
 
-#ifndef _MAPPING_MAPENGINE_H_
-#define _MAPPING_MAPENGINE_H_
+#ifndef _MAPPING_MAPSIM_H_
+#define _MAPPING_MAPSIM_H_
 
 #include <string>
 #include <vector>
@@ -27,58 +27,48 @@ namespace cmpex {
 
   namespace mapping {
 
-    class MapTransform;
-    class MapConf;
-
     //======================================================================
-    // MapEngine represents the interface for mapping engines.
+    // MapSim is a mapping simulator, which emulates the behavior of a CMP.
+    // It performs the following actions at the beginning of every period:
+    // - Checks for completed tasks and starts the new tasks
+    // - Remaps tasks and selects V/F to fit the CMP budgets and maximize IPC
+    // - Reevaluates system state by running analytical models
+    // - Advances the progress of each task
     //======================================================================
 
-    class MapEngine {
+    class MapSim {
 
     public:
-
-      typedef vector<MapTransform*> MapTrArray;
-
-      typedef MapTrArray::iterator MapTrIter;
 
       // ---------------------------- Methods ------------------------------
 
     public:
 
       // Constructors & destructor
-      MapEngine ();
+      MapSim (int period_us);
 
-      virtual ~MapEngine ();
+      virtual ~MapSim ();
 
       // Accessors
-      inline void AddTransform(MapTransform * t);
+      inline int PeriodUs() const;
 
-      inline const MapTrArray& Transforms() const;
-
-      // Main method that invokes mapping.
-      virtual void Map(MapConf * mconf = 0) = 0;
+      // Main method that invokes simulation.
+      virtual void Run();
 
       // --- Service functions ---
-
-      // Create a greedy mapping solution
-      MapConf * CreateGreedyMapping () const;
-
-      // Evaluate cost of the provided mapping
-      void EvalMappingCost(MapConf * mconf, double lambda) const;
 
     private:
 
       // Deprecated methods: prevent usage
-      MapEngine ( const MapEngine& );
+      MapSim ( const MapSim& );
 
-      MapEngine& operator = ( const MapEngine& );
+      MapSim& operator = ( const MapSim& );
 
       // -------------------------- Attributes -----------------------------
 
     private:
 
-      MapTrArray transforms_;
+      int period_; // duration of remapping period in us
 
     };
 
@@ -86,16 +76,12 @@ namespace cmpex {
     // Inline functions
     //----------------------------------------------------------------------
 
-    void MapEngine::AddTransform(MapTransform * t) {
-      transforms_.push_back(t);
-    }
-
-    const MapEngine::MapTrArray& MapEngine::Transforms() const {
-      return transforms_;
+    int MapSim::PeriodUs() const {
+       return period_;
     }
 
   } // namespace mapping
 
 } // namespace cmpex
 
-#endif // _MAPPING_MAPENGINE_H_
+#endif // _MAPPING_MAPSIM_H_

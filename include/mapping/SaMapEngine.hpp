@@ -39,7 +39,7 @@ namespace cmpex {
       virtual ~SaMapEngine ();
       
       // Main method that invokes the mapping.
-      void Map();
+      void Map(MapConf * mconf = 0);
 
     private:
 

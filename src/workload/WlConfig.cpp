@@ -55,11 +55,11 @@ int WlConfig::CreateTasks ( int ntasks )
     task->task_status = PENDING;
     task->task_cluster_id = -1; // default, unmapped
     instr = INSTR_MIN+RandInt(INSTR_MAX-INSTR_MIN+1); // in [INSTR_MIN,INSTR_MAX]
-    task->task_instructions = instr;
+    //task->task_instructions = instr;
     task->task_deadline = DEADLINE; // ms
-    task->task_progress = 0;
-    task->task_elapsed = 0;
-    task->task_slack = DEADLINE; // ms
+    //task->task_progress = 0;
+    //task->task_elapsed = 0;
+    //task->task_slack = DEADLINE; // ms
     task->task_ipc = IPC_MIN+(IPC_MAX-IPC_MIN)*RandUDouble(); // in [IPC_MIN,IPC_MAX]
     task->task_mpi = MPI_MIN+(MPI_MAX-MPI_MIN)*RandUDouble(); // in [IPC_MIN,IPC_MAX]
     dop = 1 << RandInt(LOG2_DOP_MAX+1); // in [1,2**(LOG2_DOP_MAX)]
@@ -74,6 +74,7 @@ int WlConfig::CreateTasks ( int ntasks )
       thread = new WlConfig::Thread;
       thread->thread_id = j;
       thread->thread_gid = thread_gid;
+      thread->task = task;
       thread->thread_status = PENDING;
       thread->thread_xyloc.x= -1; // unmapped, default value
       thread->thread_xyloc.y= -1; // unmapped, default value
@@ -100,7 +101,8 @@ int WlConfig::PrintTasks ( int ntasks )
 {
   int tot = TaskCnt();
   for(int i = 0; (i < ntasks) && (i < tot); i++) {
-    cout << "Task " << i << " ID = " << tasks[i]->task_id << ", DOP = " << tasks[i]->task_dop << ", instr = " << tasks[i]->task_instructions; 
+    cout << "Task " << i << " ID = " << tasks[i]->task_id << ", DOP = " << tasks[i]->task_dop
+         << ", instr = " << tasks[i]->task_threads[0]->thread_instructions;
     cout << ", status = " << TaskStatusString(i);
     cout << ", ipc = " << tasks[i]->task_ipc << ", mpi = " << tasks[i]->task_mpi << ", mr = ";
     tasks[i]->missRatioOfMemSize->Print();
@@ -123,6 +125,19 @@ void WlConfig::Cleanup()
 
 //=======================================================================
 /*
+ * Returns true if there is at least one pending task.
+ */
+
+bool WlConfig::HasPendingTasks ( void )
+{
+  for (TaskCIter it = tasks.begin(); it != tasks.end(); ++it) {
+    if ((*it)->task_status == PENDING) return true;
+  }
+  return false;
+}
+
+//=======================================================================
+/*
  * Returns next pending task in the order of creation.
  */
 
@@ -132,6 +147,19 @@ WlConfig::Task * WlConfig::GetNextPendingTask ( void )
     if ((*it)->task_status == PENDING) return *it;
   }
   return 0;
+}
+
+//=======================================================================
+/*
+ * Returns true if all tasks have completed.
+ */
+
+bool WlConfig::AllTasksCompleted ( void )
+{
+  for (TaskCIter it = tasks.begin(); it != tasks.end(); ++it) {
+    if ((*it)->task_status != COMPLETED) return false;
+  }
+  return true;
 }
 
 //=======================================================================

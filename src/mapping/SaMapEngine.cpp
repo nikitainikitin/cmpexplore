@@ -75,7 +75,7 @@ SaMapEngine::~SaMapEngine() {}
  * Main method that invokes the mapping.
  */
 
-void SaMapEngine::Map()
+void SaMapEngine::Map(MapConf * mconf)
 {
   MapConf *curMap, *bestMap;
 
@@ -84,9 +84,9 @@ void SaMapEngine::Map()
 
   double lambda = 0.5;
 
-  // 1. Initialize mapping greedily
+  // 1. Initialize mapping with mconf or greedily
   // For now, assume that all cores will be busy
-  curMap = bestMap = CreateGreedyMapping();
+  curMap = bestMap = (mconf ? new MapConf(*mconf) : CreateGreedyMapping());
   EvalMappingCost(curMap, lambda);
   cout << "Initial Thr = " << curMap->thr << ", Pow = " << curMap->power << endl;
   curMap->Print();
@@ -156,6 +156,14 @@ void SaMapEngine::Map()
   cout << "Best Thr = " << bestMap->thr << endl;
   cout << "Params: tCur = " << tCur << endl;
 
+  // cleanup
+  if (curMap != bestMap) delete curMap;
+  if (mconf) { // copy data back to config
+    if (mconf != bestMap) bestMap->CopyTo(mconf);
+  }
+  else {
+    delete bestMap;
+  }
 }
 
 //=======================================================================
