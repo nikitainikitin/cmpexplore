@@ -49,9 +49,9 @@ Config::Config ( void ) :
   test_ (""), configFile_ (""), expMode_ ("ex"), a2wa_ (false), tmap_ (false),
   eoTau_ (1.5), saAlpha_ (0.995),
   sEffort_ (5), maxPower_ (1.0e6), debug_ (0), dumpConfigs_ (false),
-  tech_ (TECH_16NM), uFreq_ (1.6), mcFreq_ (0.3),
+  tech_ (TECH_16NM), uFreq_ (1.6), mcFreq_ (0.8),
   maxProcAreaPerCluster_ (1.0), wlFile_(""), maxArea_ (350.0),
-  linkWidth_ (256),  simulateCC_ (false)
+  linkWidth_ (64),  simulateCC_ (false)
 {
   numL3PerCluster_.push_back(1);
 }
@@ -206,11 +206,50 @@ void Config::ParseParamValues(const string& name, string& value)
   if (name == "uFrequency") {
     UFreq(StrToDouble(value));
   }
+  else if (name == "uMaxFrequency") {
+    UFreqMax(StrToDouble(value));
+  }
   else if (name == "uVoltage") {
     UVolt(StrToDouble(value));
   }
+  else if (name == "uMaxVoltage") {
+    UVoltMax(StrToDouble(value));
+  }
+  else if (name == "uMinVoltage") {
+    UVoltMin(StrToDouble(value));
+  }
+  else if (name == "uNomVoltage") {
+    UVoltNom(StrToDouble(value));
+  }
+  else if (name == "mcVoltage") {
+    McVolt(StrToDouble(value));
+  }
+  else if (name == "mcMaxVoltage") {
+    McVoltMax(StrToDouble(value));
+  }
+  else if (name == "mcMinVoltage") {
+    McVoltMin(StrToDouble(value));
+  }
+  else if (name == "mcNomVoltage") {
+    McVoltNom(StrToDouble(value));
+  }
   else if (name == "mcFrequency") {
     McFreq(StrToDouble(value));
+  }
+  else if (name == "mcMaxFrequency") {
+    McFreqMax(StrToDouble(value));
+  }
+  else if (name == "procMaxVoltage") {
+    McVoltMax(StrToDouble(value));
+  }
+  else if (name == "procMinVoltage") {
+    McVoltMin(StrToDouble(value));
+  }
+  else if (name == "procNomVoltage") {
+    McVoltNom(StrToDouble(value));
+  }
+  else if (name == "procMaxFrequency") {
+    McFreqMax(StrToDouble(value));
   }
   else if (name == "gMeshDimX") {
     ValueParser::GetVectorOfIValues(value, gMeshDimX_);

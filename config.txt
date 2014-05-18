@@ -54,8 +54,50 @@ memCtrlLeakagePower = 0.1
 # Uncore frequency [GHz]
 uFrequency = 1.6
 
+# Uncore max frequency [GHz]
+uMaxFrequency = 3.5
+
 # Uncore voltage [V]
 uVoltage = 0.8
 
+# Uncore max voltage [V]
+uMaxVoltage = 1.0
+
+# Uncore min voltage [V]
+uMinVoltage = 0.5
+
+# Uncore nom voltage [V]
+uNomVoltage = 1.0
+
+# Memory Controller voltage [V]
+mcVoltage 0.8
+
+# Memory Controller max voltage [V]
+mcMaxVoltage 1.0
+
+# Memory Controller min voltage [V]
+mcMinVoltage 0.5
+
+# Memory Controller nom voltage [V]
+mcNomVoltage 1.0
+
+# Memory Controller frequency [GHz]
+mcFrequency 0.8
+
+# Memory Controller max frequency [GHz]
+mcMaxFrequency 0.8
+
+# Processors max frequency [GHz]
+procMaxFrequency 3.5
+
+# Processors max voltage [V]
+procMaxVoltage 1.0
+
+# Processors min voltage [V]
+procMinVoltage 0.5
+
+# Processors nom voltage [V]
+procNomVoltage 1.0
+
 # IC link width
-linkWidth = 256
+linkWidth = 64

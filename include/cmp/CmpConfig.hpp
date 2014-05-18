@@ -123,13 +123,65 @@ namespace cmpex {
 
       inline void UFreq ( double f );
 
+      inline double UFreqMax () const;
+
+      inline void UFreqMax ( double f );
+
       inline double UVolt () const;
 
       inline void UVolt ( double v );
 
+      inline double UVoltMin () const;
+
+      inline void UVoltMin ( double v );
+
+      inline double UVoltMax () const;
+
+      inline void UVoltMax ( double v );
+
+      inline double UVoltNom () const;
+
+      inline void UVoltNom ( double v );
+
       inline double McFreq () const;
 
       inline void McFreq ( double f );
+
+      inline double McFreqMax () const;
+
+      inline void McFreqMax ( double f );
+
+      inline double McVolt () const;
+
+      inline void McVolt ( double v );
+
+      inline double McVoltMax () const;
+
+      inline void McVoltMax ( double v );
+
+      inline double McVoltMin () const;
+
+      inline void McVoltMin ( double v );
+
+      inline double McVoltNom () const;
+
+      inline void McVoltNom ( double v );
+
+      inline double ProcFreqMax () const;
+
+      inline void ProcFreqMax ( double f );
+
+      inline double ProcVoltMax () const;
+
+      inline void ProcVoltMax ( double v );
+
+      inline double ProcVoltMin () const;
+
+      inline void ProcVoltMin ( double v );
+
+      inline double ProcVoltNom () const;
+
+      inline void ProcVoltNom ( double v );
 
       inline void AddMemCtrl ( const std::string& n, double l, double e, double p );
 
@@ -253,9 +305,35 @@ namespace cmpex {
       
       double uFreq_; // uncore frequency (NoC & shared caches) [GHz]
 
+      double uFreqMax_; // uncore max frequency (NoC & shared caches) [GHz]
+
       double uVolt_; // uncore voltage (NoC & shared caches) [V]
 
+      double uVoltMax_; // uncore max voltage (NoC & shared caches) [V]
+
+      double uVoltMin_; // uncore min voltage (NoC & shared caches) [V]
+
+      double uVoltNom_; // uncore nom voltage (NoC & shared caches) [V]
+
       double mcFreq_; // frequency of MCs [GHz]
+
+      double mcFreqMax_; // max frequency of MCs [GHz]
+
+      double mcVolt_; // MCs voltage [V]
+
+      double mcVoltMax_; // MCs max voltage [V]
+
+      double mcVoltMin_; // MCs min voltage [V]
+
+      double mcVoltNom_; // MCs nom voltage [V]
+
+      double procFreqMax_; // max frequency of Processors [GHz]
+
+      double procVoltMax_; // Processors max voltage [V]
+
+      double procVoltMin_; // Processors min voltage [V]
+
+      double procVoltNom_; // Processors nom voltage [V]
 
       std::vector<MemCtrl> memCtrl_; // list of controllers
       
@@ -334,6 +412,14 @@ namespace cmpex {
       uFreq_ = f;
     }
 
+    double CmpConfig::UFreqMax () const {
+      return uFreqMax_;
+    }
+
+    void CmpConfig::UFreqMax ( double f ) {
+      uFreqMax_ = f;
+    }
+
     double CmpConfig::UVolt () const {
       return uVolt_;
     }
@@ -342,12 +428,108 @@ namespace cmpex {
       uVolt_ = v;
     }
 
+    double CmpConfig::UVoltMin () const {
+      return uVoltMin_;
+    }
+
+    void CmpConfig::UVoltMin ( double v ) {
+      uVoltMin_ = v;
+    }
+
+    double CmpConfig::UVoltMax () const {
+      return uVoltMax_;
+    }
+
+    void CmpConfig::UVoltMax ( double v ) {
+      uVoltMax_ = v;
+    }
+
+    double CmpConfig::UVoltNom () const {
+      return uVoltNom_;
+    }
+
+    void CmpConfig::UVoltNom ( double v ) {
+      uVoltNom_ = v;
+    }
+
     double CmpConfig::McFreq () const {
       return mcFreq_;
     }
 
     void CmpConfig::McFreq ( double f ) {
       mcFreq_ = f;
+    }
+
+    double CmpConfig::McFreqMax () const {
+      return mcFreqMax_;
+    }
+
+    void CmpConfig::McFreqMax ( double f ) {
+      mcFreqMax_ = f;
+    }
+
+    double CmpConfig::McVolt () const {
+      return mcVolt_;
+    }
+
+    void CmpConfig::McVolt ( double v ) {
+      mcVolt_ = v;
+    }
+
+    double CmpConfig::McVoltMax () const {
+      return mcVoltMax_;
+    }
+
+    void CmpConfig::McVoltMax ( double v ) {
+      mcVoltMax_ = v;
+    }
+
+    double CmpConfig::McVoltMin () const {
+      return mcVoltMin_;
+    }
+
+    void CmpConfig::McVoltMin ( double v ) {
+      mcVoltMin_ = v;
+    }
+
+    double CmpConfig::McVoltNom () const {
+      return mcVoltNom_;
+    }
+
+    void CmpConfig::McVoltNom ( double v ) {
+      mcVoltNom_ = v;
+    }
+
+    double CmpConfig::ProcFreqMax () const {
+      return procFreqMax_;
+    }
+
+    void CmpConfig::ProcFreqMax ( double f ) {
+      procFreqMax_ = f;
+    }
+
+    double CmpConfig::ProcVoltMax () const {
+      return procVoltMax_;
+    }
+
+    void CmpConfig::ProcVoltMax ( double v ) {
+      procVoltMax_ = v;
+    }
+
+    double CmpConfig::ProcVoltMin () const {
+      return procVoltMin_;
+    }
+
+    void CmpConfig::ProcVoltMin ( double v ) {
+      procVoltMin_ = v;
+    }
+
+    double CmpConfig::ProcVoltNom () const {
+      return procVoltNom_;
+    }
+
+    void CmpConfig::ProcVoltNom ( double v ) {
+      procVoltNom_ = v;
     }
 
     void CmpConfig::AddMemCtrl ( const std::string& n, double l, double e, double p ) {
