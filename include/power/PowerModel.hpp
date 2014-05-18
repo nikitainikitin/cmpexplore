@@ -92,6 +92,18 @@ namespace cmpex {
 
       static double VScalLeakPower ( double volt );
 
+      static double VScalDynPowerProc ( double volt );
+
+      static double VScalLeakPowerProc ( double volt );
+
+      static double VScalDynPowerUncore ( double volt );
+
+      static double VScalLeakPowerUncore ( double volt );
+
+      static double VScalDynPowerMc ( double volt );
+
+      static double VScalLeakPowerMc ( double volt );
+
     public:
 
       // Constructors & destructor

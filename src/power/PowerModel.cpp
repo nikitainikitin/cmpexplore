@@ -87,18 +87,18 @@ double PowerModel::GetTotalPower(Component * cmp)
 
     // core
     corePower_[p] = proc->Active() ?
-                      proc->Epi() * VScalDynPower(proc->Volt()) * proc->Thr() +
-                      proc->Pleak() * VScalLeakPower(proc->Volt()) : 0.0;
+                      proc->Epi() * VScalDynPowerProc(proc->Volt()) * proc->Thr() +
+                      proc->Pleak() * VScalLeakPowerProc(proc->Volt()) : 0.0;
 
     // l1
     L1Power_[p] = proc->Active() ?
-                    proc->L1Eacc() * VScalDynPower(proc->Volt()) * proc->Lambda()*proc->L1AccessProbability() +
-                    proc->L1Pleak() * VScalLeakPower(proc->Volt()) : 0.0;
+                    proc->L1Eacc() * VScalDynPowerProc(proc->Volt()) * proc->Lambda()*proc->L1AccessProbability() +
+                    proc->L1Pleak() * VScalLeakPowerProc(proc->Volt()) : 0.0;
 
     // l2
     L2Power_[p] = proc->Active() ?
-                    proc->L2Eacc() * VScalDynPower(proc->Volt()) * proc->Lambda()*proc->L2AccessProbability() +
-                    proc->L2Pleak() * VScalLeakPower(proc->Volt()) : 0.0;
+                    proc->L2Eacc() * VScalDynPowerProc(proc->Volt()) * proc->Lambda()*proc->L2AccessProbability() +
+                    proc->L2Pleak() * VScalLeakPowerProc(proc->Volt()) : 0.0;
   }
 
   double core_power = 0.0;
@@ -114,8 +114,8 @@ double PowerModel::GetTotalPower(Component * cmp)
   for (int m = 0; m < cmpConfig.MemCnt(); ++m) {
     Memory * mem = cmpConfig.GetMemory(m);
 
-    L3Power_[m] = mem->Eacc() * VScalDynPower(cmpConfig.UVolt()) * mem->Lambda() +
-                  mem->Pleak() * VScalLeakPower(cmpConfig.UVolt());
+    L3Power_[m] = mem->Eacc() * VScalDynPowerUncore(cmpConfig.UVolt()) * mem->Lambda() +
+                  mem->Pleak() * VScalLeakPowerUncore(cmpConfig.UVolt());
   }
 
   double l3Power = 0.0;
@@ -128,8 +128,8 @@ double PowerModel::GetTotalPower(Component * cmp)
   for (int mc = 0; mc < cmpConfig.MemCtrlCnt(); ++mc) {
     CmpConfig::MemCtrl * memCtrl = cmpConfig.GetMemCtrl(mc);
 
-    MCPower_[mc] = memCtrl->eacc * VScalDynPower(cmpConfig.UVolt()) * memCtrl->lambda +
-                   memCtrl->pleak * VScalLeakPower(cmpConfig.UVolt());
+    MCPower_[mc] = memCtrl->eacc * VScalDynPowerMc(cmpConfig.UVolt()) * memCtrl->lambda +
+                   memCtrl->pleak * VScalLeakPowerMc(cmpConfig.UVolt());
   }
 
   double mcPower = 0.0;
@@ -224,8 +224,8 @@ double PowerModel::MeshPower(MeshIc * ic)
         // add power of the link connected to this input port
         if (RouteDir(i) != RDPRIMARY) {
           //cout << "r = " << r << ", traffic to input port " << i << " = " << iTraffic << endl;
-          double link_power = ( LinkEpf(config.Tech(), config.LinkWidth())*iTraffic*VScalDynPower(cmpConfig.UVolt())
-                     + LinkPleak(config.Tech(), config.LinkWidth())*VScalLeakPower(cmpConfig.UVolt()) ) * linkLen;
+          double link_power = ( LinkEpf(config.Tech(), config.LinkWidth())*iTraffic*VScalDynPowerUncore(cmpConfig.UVolt())
+                     + LinkPleak(config.Tech(), config.LinkWidth())*VScalLeakPowerUncore(cmpConfig.UVolt()) ) * linkLen;
           power += link_power;
           //cout << "r = " << r << ", power of link at input port " << i << " = " << link_power << endl;
           MeshLinkPower_[r*4+i] += link_power;
@@ -246,8 +246,8 @@ double PowerModel::MeshPower(MeshIc * ic)
         portNum = 5;
       }*/
 
-      double router_power = RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*VScalDynPower(cmpConfig.UVolt())
-               + RouterPleak(config.Tech(), portNum, config.LinkWidth())*VScalLeakPower(cmpConfig.UVolt());
+      double router_power = RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*VScalDynPowerUncore(cmpConfig.UVolt())
+               + RouterPleak(config.Tech(), portNum, config.LinkWidth())*VScalLeakPowerUncore(cmpConfig.UVolt());
       power += router_power;
       MeshRouterPower_[r] += router_power;
     }
@@ -289,13 +289,13 @@ double PowerModel::BusPower(BusIc * ic)
       traffic += iTraffic;
       // add power of the buffer connected to this input port
       //cout << "r = " << r << ", traffic to input port " << i << " = " << iTraffic << endl;
-      power += BufferEpf(config.Tech(), config.LinkWidth())*iTraffic*VScalDynPower(cmpConfig.UVolt())
-                 + BufferPleak(config.Tech(), config.LinkWidth())*VScalLeakPower(cmpConfig.UVolt());
+      power += BufferEpf(config.Tech(), config.LinkWidth())*iTraffic*VScalDynPowerUncore(cmpConfig.UVolt())
+                 + BufferPleak(config.Tech(), config.LinkWidth())*VScalLeakPowerUncore(cmpConfig.UVolt());
     }
 
     // add link power
-    power += ( LinkEpf(config.Tech(), config.LinkWidth())*traffic*VScalDynPower(cmpConfig.UVolt())
-               + LinkPleak(config.Tech(), config.LinkWidth())*VScalLeakPower(cmpConfig.UVolt()) ) * busLen;
+    power += ( LinkEpf(config.Tech(), config.LinkWidth())*traffic*VScalDynPowerUncore(cmpConfig.UVolt())
+               + LinkPleak(config.Tech(), config.LinkWidth())*VScalLeakPowerUncore(cmpConfig.UVolt()) ) * busLen;
   }
 
   return power;
@@ -338,14 +338,14 @@ double PowerModel::URingPower(URingIc * ic)
         // add power of the link connected to this input port
         if (i != 0) { // if not a component port
           //cout << "r = " << r << ", traffic to input port " << i << " = " << iTraffic << endl;
-          power += ( LinkEpf(config.Tech(), config.LinkWidth())*iTraffic*VScalDynPower(cmpConfig.UVolt())
-                     + LinkPleak(config.Tech(), config.LinkWidth())*VScalLeakPower(cmpConfig.UVolt()) ) * linkLen;
+          power += ( LinkEpf(config.Tech(), config.LinkWidth())*iTraffic*VScalDynPowerUncore(cmpConfig.UVolt())
+                     + LinkPleak(config.Tech(), config.LinkWidth())*VScalLeakPowerUncore(cmpConfig.UVolt()) ) * linkLen;
         }
       }
 
       const int portNum = 2; // power of 2x2 routers (with 2 VCs)
-      power += RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*VScalDynPower(cmpConfig.UVolt())
-               + RouterPleak(config.Tech(), portNum, config.LinkWidth())*VScalLeakPower(cmpConfig.UVolt());
+      power += RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*VScalDynPowerUncore(cmpConfig.UVolt())
+               + RouterPleak(config.Tech(), portNum, config.LinkWidth())*VScalLeakPowerUncore(cmpConfig.UVolt());
     }
   }
 
@@ -389,14 +389,14 @@ double PowerModel::BRingPower(BRingIc * ic)
         // add power of the link connected to this input port
         if (i != 0) { // if not a component port
           //cout << "r = " << r << ", traffic to input port " << i << " = " << iTraffic << endl;
-          power += ( LinkEpf(config.Tech(), config.LinkWidth())*iTraffic*VScalDynPower(cmpConfig.UVolt())
-                     + LinkPleak(config.Tech(), config.LinkWidth())*VScalLeakPower(cmpConfig.UVolt()) ) * linkLen;
+          power += ( LinkEpf(config.Tech(), config.LinkWidth())*iTraffic*VScalDynPowerUncore(cmpConfig.UVolt())
+                     + LinkPleak(config.Tech(), config.LinkWidth())*VScalLeakPowerUncore(cmpConfig.UVolt()) ) * linkLen;
         }
       }
 
       const int portNum = 3; // power of 3x3 routers (with 2 VCs)
-      power += RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*VScalDynPower(cmpConfig.UVolt())
-               + RouterPleak(config.Tech(), portNum, config.LinkWidth())*VScalLeakPower(cmpConfig.UVolt());
+      power += RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*VScalDynPowerUncore(cmpConfig.UVolt())
+               + RouterPleak(config.Tech(), portNum, config.LinkWidth())*VScalLeakPowerUncore(cmpConfig.UVolt());
     }
   }
 
@@ -444,8 +444,8 @@ double PowerModel::XBarPower(XBarIc * ic)
       traffic += iTraffic;
     }
 
-    power += RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*VScalDynPower(cmpConfig.UVolt())
-             + RouterPleak(config.Tech(), portNum, config.LinkWidth())*VScalLeakPower(cmpConfig.UVolt());
+    power += RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*VScalDynPowerUncore(cmpConfig.UVolt())
+             + RouterPleak(config.Tech(), portNum, config.LinkWidth())*VScalLeakPowerUncore(cmpConfig.UVolt());
   }
 
   return power;
@@ -549,6 +549,78 @@ double PowerModel::VScalDynPower ( double volt )
 double PowerModel::VScalLeakPower ( double volt )
 {
   return volt/0.8;
+}
+
+//=======================================================================
+/*
+ * Returns voltage scaling coefficient for dynamic power.
+ * Nominal voltage is assumed to be fixed (0.8 V).
+ */
+
+double PowerModel::VScalDynPowerProc ( double volt )
+{
+  double vnom = cmpConfig.ProcVoltNom();
+  return volt*volt/(vnom*vnom);
+}
+
+//=======================================================================
+/*
+ * Returns voltage scaling coefficient for leakage power.
+ * Nominal voltage is assumed to be fixed (0.8 V).
+ */
+
+double PowerModel::VScalLeakPowerProc ( double volt )
+{
+  double vnom = cmpConfig.ProcVoltNom();
+  return volt/vnom;
+}
+
+//=======================================================================
+/*
+ * Returns voltage scaling coefficient for dynamic power.
+ * Nominal voltage is assumed to be fixed (0.8 V).
+ */
+
+double PowerModel::VScalDynPowerUncore ( double volt )
+{
+  double vnom = cmpConfig.UVoltNom();
+  return volt*volt/(vnom*vnom);
+}
+
+//=======================================================================
+/*
+ * Returns voltage scaling coefficient for leakage power.
+ * Nominal voltage is assumed to be fixed (0.8 V).
+ */
+
+double PowerModel::VScalLeakPowerUncore ( double volt )
+{
+  double vnom = cmpConfig.UVoltNom();
+  return volt/vnom;
+}
+
+//=======================================================================
+/*
+ * Returns voltage scaling coefficient for dynamic power.
+ * Nominal voltage is assumed to be fixed (0.8 V).
+ */
+
+double PowerModel::VScalDynPowerMc ( double volt )
+{
+  double vnom = cmpConfig.McVoltNom();
+  return volt*volt/(vnom*vnom);
+}
+
+//=======================================================================
+/*
+ * Returns voltage scaling coefficient for leakage power.
+ * Nominal voltage is assumed to be fixed (0.8 V).
+ */
+
+double PowerModel::VScalLeakPowerMc ( double volt )
+{
+  double vnom = cmpConfig.McVoltNom();
+  return volt/vnom;
 }
 
 //=======================================================================
