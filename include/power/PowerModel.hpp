@@ -104,6 +104,10 @@ namespace cmpex {
 
       static double VScalLeakPowerMc ( double volt );
 
+      static double FScalPowerProc ( double freq );
+
+      static double VoltAtFreqProc ( double freq );
+
     public:
 
       // Constructors & destructor

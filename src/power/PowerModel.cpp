@@ -87,8 +87,9 @@ double PowerModel::GetTotalPower(Component * cmp)
 
     // core
     corePower_[p] = proc->Active() ?
-                      proc->Epi() * VScalDynPowerProc(proc->Volt()) * proc->Thr() +
-                      proc->Pleak() * VScalLeakPowerProc(proc->Volt()) : 0.0;
+      proc->Pidle() * VScalDynPowerProc(proc->Volt()) * FScalPowerProc(proc->Freq()) +
+      proc->Epi() * VScalDynPowerProc(proc->Volt()) * proc->Thr() +
+      proc->PleakOfTemp(300.0) * VScalLeakPowerProc(proc->Volt()) : proc->Pgated();
 
     // l1
     L1Power_[p] = proc->Active() ?
@@ -554,7 +555,7 @@ double PowerModel::VScalLeakPower ( double volt )
 //=======================================================================
 /*
  * Returns voltage scaling coefficient for dynamic power.
- * Nominal voltage is assumed to be fixed (0.8 V).
+ * Power values have been obtained with McPAT at nominal voltage (1.0 V).
  */
 
 double PowerModel::VScalDynPowerProc ( double volt )
@@ -566,7 +567,7 @@ double PowerModel::VScalDynPowerProc ( double volt )
 //=======================================================================
 /*
  * Returns voltage scaling coefficient for leakage power.
- * Nominal voltage is assumed to be fixed (0.8 V).
+ * Power values have been obtained with McPAT at nominal voltage (1.0 V).
  */
 
 double PowerModel::VScalLeakPowerProc ( double volt )
@@ -578,7 +579,7 @@ double PowerModel::VScalLeakPowerProc ( double volt )
 //=======================================================================
 /*
  * Returns voltage scaling coefficient for dynamic power.
- * Nominal voltage is assumed to be fixed (0.8 V).
+ * Power values have been obtained with McPAT at nominal voltage (1.0 V).
  */
 
 double PowerModel::VScalDynPowerUncore ( double volt )
@@ -590,7 +591,7 @@ double PowerModel::VScalDynPowerUncore ( double volt )
 //=======================================================================
 /*
  * Returns voltage scaling coefficient for leakage power.
- * Nominal voltage is assumed to be fixed (0.8 V).
+ * Power values have been obtained with McPAT at nominal voltage (1.0 V).
  */
 
 double PowerModel::VScalLeakPowerUncore ( double volt )
@@ -602,7 +603,7 @@ double PowerModel::VScalLeakPowerUncore ( double volt )
 //=======================================================================
 /*
  * Returns voltage scaling coefficient for dynamic power.
- * Nominal voltage is assumed to be fixed (0.8 V).
+ * Power values have been obtained with McPAT at nominal voltage (1.0 V).
  */
 
 double PowerModel::VScalDynPowerMc ( double volt )
@@ -614,7 +615,7 @@ double PowerModel::VScalDynPowerMc ( double volt )
 //=======================================================================
 /*
  * Returns voltage scaling coefficient for leakage power.
- * Nominal voltage is assumed to be fixed (0.8 V).
+ * Power values have been obtained with McPAT at nominal voltage (1.0 V).
  */
 
 double PowerModel::VScalLeakPowerMc ( double volt )
@@ -624,6 +625,34 @@ double PowerModel::VScalLeakPowerMc ( double volt )
 }
 
 //=======================================================================
+/*
+ * Returns frequency scaling coefficient for dynamic power.
+ * Frequency values have been obtained with McPAT at nominal voltage (1.0 V)
+ * and maximum frequency (3.5 GHz).
+ */
+
+double PowerModel::FScalPowerProc ( double freq )
+{
+  double fnom = cmpConfig.ProcFreqMax();
+  return freq/fnom;
+}
+
+//=======================================================================
+/*
+ * Returns minimum voltage for a given frequency.
+ * Parameters obtained with McPAT at nominal voltage (1.0 V)
+ * and maximum frequency (3.5 GHz).
+ */
+
+double PowerModel::VoltAtFreqProc ( double freq )
+{
+  double fmin = cmpConfig.ProcMinVoltFreq();
+  double fmax = cmpConfig.ProcFreqMax();
+  double vmin = cmpConfig.ProcVoltMin();
+  double vmax = cmpConfig.ProcVoltMax();
+  return freq > fmin ?  vmin+(vmax-vmin)/(fmax-fmin)*(freq-fmin) : vmin;
+}
+
 
   } // namespace power
 

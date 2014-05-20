@@ -22,6 +22,7 @@
 
 #include "Device.hpp"
 #include "CmpConfig.hpp"
+#include "CmpBuilder.hpp"
 #include "Config.hpp"
 
 using std::vector;
@@ -29,6 +30,7 @@ using std::vector;
 namespace cmpex {
   
   extern cmp::CmpConfig cmpConfig;
+  extern cmp::CmpBuilder cmpBuilder;
   extern Config config;
 
   namespace cmp {
@@ -135,7 +137,13 @@ namespace cmpex {
       // Power
       inline double Epi() const;
 
+      inline double Pidle() const;
+      
       inline double Pleak() const;
+
+      inline double PleakOfTemp(double tmp) const;
+      
+      inline double Pgated() const;
       
       inline double L1Eacc() const;
 
@@ -180,6 +188,10 @@ namespace cmpex {
       inline void SetEpi(double e);
 
       inline void SetPleak(double p);
+
+      inline void SetPidle(double p);
+
+      inline void SetPgated(double p);
 
       inline void SetL1Eacc(double e);
 
@@ -248,6 +260,10 @@ namespace cmpex {
       double epi_; // energy per instruction
 
       double pleak_; // leakage power
+
+      double pidle_; // leakage power
+
+      double pgated_; // leakage power
 
       double l1Eacc_; // l1 access energy
 
@@ -459,8 +475,28 @@ namespace cmpex {
       return pleak_;
     }
 
+    double Processor::PleakOfTemp ( double tmp ) const {
+      return cmpBuilder.CoreLeakageOfTemp(tmp);
+    }
+
     void Processor::SetPleak ( double p ) {
       pleak_ = p;
+    }
+
+    double Processor::Pidle () const {
+      return pidle_;
+    }
+
+    void Processor::SetPidle ( double p ) {
+      pidle_ = p;
+    }
+
+    double Processor::Pgated () const {
+      return pgated_;
+    }
+
+    void Processor::SetPgated ( double p ) {
+      pgated_ = p;
     }
 
     double Processor::L1Eacc () const {

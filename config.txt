@@ -11,7 +11,7 @@ gMeshDimY = 8
 clusterIcType = bus
 
 # Processor data: Name / Area[mm2] / OoO (1/0) / Freq[GHz] / Volt[V] / Epi[nJ] / Pleak[W] / l1, l2 sizes
-processor 	P1	1.25	1	1.6	0.8	0.60	0.14 \
+processor 	P1	1.25	1	1.6	0.8	0.6	0.14 \
     l1Size = 0.064 \
     l2Size = 0.256
 
@@ -99,5 +99,8 @@ procMinVoltage 0.5
 # Processors nom voltage [V]
 procNomVoltage 1.0
 
+# Processors max frequency at min voltage [V]
+procMinVoltFrequency 0.775
+
 # IC link width
-linkWidth = 64
+linkWidth = 256

@@ -183,6 +183,10 @@ namespace cmpex {
 
       inline void ProcVoltNom ( double v );
 
+      inline double ProcMinVoltFreq () const;
+
+      inline void ProcMinVoltFreq ( double f );
+
       inline void AddMemCtrl ( const std::string& n, double l, double e, double p );
 
       inline int MemCtrlCnt () const;
@@ -334,6 +338,8 @@ namespace cmpex {
       double procVoltMin_; // Processors min voltage [V]
 
       double procVoltNom_; // Processors nom voltage [V]
+
+      double procMinVoltFreq_; // max frequency of Processors at min voltage [GHz]
 
       std::vector<MemCtrl> memCtrl_; // list of controllers
       
@@ -530,6 +536,14 @@ namespace cmpex {
 
     void CmpConfig::ProcVoltNom ( double v ) {
       procVoltNom_ = v;
+    }
+
+    double CmpConfig::ProcMinVoltFreq () const {
+      return procMinVoltFreq_;
+    }
+
+    void CmpConfig::ProcMinVoltFreq ( double f ) {
+      procMinVoltFreq_ = f;
     }
 
     void CmpConfig::AddMemCtrl ( const std::string& n, double l, double e, double p ) {

@@ -49,7 +49,7 @@ CmpConfig::CmpConfig ( void ) :
   cmp_ (0), unitLen_ (1.0e-3), memDensity_ (10),
   uFreq_ (1.6), uFreqMax_ (3.5), uVolt_(0.8), uVoltMax_(1.0), uVoltMin_(0.5), uVoltNom_(1.0),
   mcFreq_ (0.8), mcFreqMax_ (0.8), mcVolt_(0.8), mcVoltMax_(1.0), mcVoltMin_(0.5), mcVoltNom_(1.0),
-  procFreqMax_ (3.5), procVoltMax_ (1.0), procVoltMin_(0.5), procVoltNom_(1.0),
+  procFreqMax_ (3.5), procVoltMax_ (1.0), procVoltMin_(0.5), procVoltNom_(1.0), procMinVoltFreq_(0.775),
   memReplySize_(3),
   niDelay_ (0), L3ClusterSize_(0), totalL3Size_ (0.0), subnCnt_ (1),
   wlFile_(""), flatMeshIc_ (true), wlIdx_(-1) {}

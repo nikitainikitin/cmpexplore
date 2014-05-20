@@ -175,6 +175,10 @@ namespace cmpex {
 
     inline void ProcVoltNom (double v);
 
+    inline double ProcMinVoltFreq () const;
+
+    inline void ProcMinVoltFreq (double f);
+
     inline const vector<UInt>& GMeshDimXVec() const;
 
     inline const vector<UInt>& GMeshDimYVec() const;
@@ -328,6 +332,8 @@ namespace cmpex {
     double procVoltMin_; // Processor min voltage [V]
 
     double procVoltNom_; // Processor nom voltage [V]
+
+    double procMinVoltFreq_; // Processor frequency at min voltage [GHz]
 
     vector<UInt> gMeshDimX_;
     
@@ -631,6 +637,18 @@ namespace cmpex {
 
   double Config::ProcVoltNom() const {
     return procVoltNom_;
+  }
+
+  void Config::ProcVoltNom(double v) {
+    procVoltNom_ = v;
+  }
+
+  double Config::ProcMinVoltFreq() const {
+    return procMinVoltFreq_;
+  }
+
+  void Config::ProcMinVoltFreq(double f) {
+    procMinVoltFreq_ = f;
   }
 
   const vector<UInt>& Config::GMeshDimXVec () const {

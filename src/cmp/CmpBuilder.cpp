@@ -254,6 +254,8 @@ void CmpBuilder::ReadEntry (istream& in, Component *& topComp)
       topComp = ReadComponent(in, entry); break;
     case ETDEFINE:
       ReadDefine(entry); break;
+    case ETFUNCTION:
+      ReadFunction(entry); break;
     default:
       cout << "-E-: Undefined entry type in CmpBuilder::ReadEntry()" << endl;
       exit(1);
@@ -277,6 +279,9 @@ CmpBuilder::EntryType CmpBuilder::GetEntryType (string& entry)
   }
   else if (StartsWith(entry, "DEFINE")) {
     type = ETDEFINE;
+  }
+  else if (StartsWith(entry, "FUNCTION")) {
+    type = ETFUNCTION;
   }
 
   return type;
@@ -413,8 +418,14 @@ Component * CmpBuilder::ReadProcessor (
     else if (arg.name == "Epi") {
       p->SetEpi(StrToDouble(arg.value));
     }
+    else if (arg.name == "Pidle") {
+      p->SetPidle(StrToDouble(arg.value));
+    }
     else if (arg.name == "Pleak") {
       p->SetPleak(StrToDouble(arg.value));
+    }
+    else if (arg.name == "Pgated") {
+      p->SetPgated(StrToDouble(arg.value));
     }
     else if (arg.name == "L1Eacc") {
       p->SetL1Eacc(StrToDouble(arg.value));
@@ -749,6 +760,97 @@ Component * CmpBuilder::ReadXBar (
 
   return c;
 }
+
+//=======================================================================
+/*
+ * Reads parameterfunction from given entry.
+ * Currently only piecewise is supported
+ */
+
+model::Function * CmpBuilder::coreLeakageOfTemp_;
+model::Function * CmpBuilder::l1LeakageOfTemp_;
+model::Function * CmpBuilder::l2LeakageOfTemp_;
+model::Function * CmpBuilder::l3LeakageOfTemp_;
+model::Function * CmpBuilder::routerLeakageOfTemp_;
+model::Function * CmpBuilder::linksLeakageOfTemp_;
+model::Function * CmpBuilder::mcLeakageOfTemp_;
+
+double CmpBuilder::CoreLeakageOfTemp(double tmp)  {
+  return coreLeakageOfTemp_->eval(tmp);
+}
+
+double CmpBuilder::L1LeakageOfTemp(double tmp)  {
+  return coreLeakageOfTemp_->eval(tmp);
+}
+
+double CmpBuilder::L2LeakageOfTemp(double tmp)  {
+  return coreLeakageOfTemp_->eval(tmp);
+}
+
+double CmpBuilder::L3LeakageOfTemp(double tmp)  {
+  return coreLeakageOfTemp_->eval(tmp);
+}
+
+double CmpBuilder::RouterLeakageOfTemp(double tmp)  {
+  return coreLeakageOfTemp_->eval(tmp);
+}
+
+double CmpBuilder::LinksLeakageOfTemp(double tmp)  {
+  return coreLeakageOfTemp_->eval(tmp);
+}
+
+double CmpBuilder::McLeakageOfTemp(double tmp)  {
+  return coreLeakageOfTemp_->eval(tmp);
+}
+
+
+void CmpBuilder::ReadFunction (string& entry)
+{
+  entry.erase(0, entry.find(' ')+1); // erase type
+
+  int spIdx = entry.find_first_of(" \t");
+  if (spIdx == string::npos) {
+    cerr << "-E- Wrong format of input line" << endl;
+    return;
+  }
+  
+  string name = entry.substr(0, spIdx);
+  Strip(name);
+  string value = entry.substr(spIdx+1);
+  // erase equal sign if present
+  int eqIdx = value.find_first_not_of(" \t=");
+  if (eqIdx != string::npos) {
+    value.erase(0, eqIdx);
+  }
+
+  if (name == "coreLeakageOfTemp") {
+    coreLeakageOfTemp_ = Function::ParseFunction(value);
+  }
+  else if (name == "l1LeakageOfTemp") {
+    l1LeakageOfTemp_ = Function::ParseFunction(value);
+  }
+  else if (name == "l2LeakageOfTemp") {
+    l2LeakageOfTemp_ = Function::ParseFunction(value);
+  }
+  else if (name == "l3LeakageOfTemp") {
+    l3LeakageOfTemp_ = Function::ParseFunction(value);
+  }
+  else if (name == "routerLeakageOfTemp") {
+    routerLeakageOfTemp_ = Function::ParseFunction(value);
+  }
+  else if (name == "linksLeakageOfTemp") {
+    linksLeakageOfTemp_ = Function::ParseFunction(value);
+  }
+  else if (name == "mcLeakageOfTemp") {
+    mcLeakageOfTemp_ = Function::ParseFunction(value);
+    //double leaktest=McLeakageOfTemp(temp);
+    //cout <<"DEBUG: TEMP = 305, MC LEAKAGE = "<<leaktest << endl;
+  }
+  else {
+    cout << "-W-: Unknown parameter " << name << endl;
+  }
+}
+
 
 //=======================================================================
 /*

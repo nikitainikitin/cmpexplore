@@ -1,0 +1,85 @@
+PARAM UnitLen=1.0e-3
+PARAM MemDensity=1
+PARAM L3LatencyDef=8
+PARAM MemReplySize=3
+PARAM LinkWidth=256
+PARAM NiDelay=3
+PARAM WlFile=./workloads/wl_spx_1cpu.txt
+PARAM L3ClusterSize=16
+PARAM UFrequency=1.6
+PARAM UVoltage=0.8
+
+DEFINE ProcOff PROC Type=0 L1Size=0.064 L1Lat=3 L2Size=0.256 L2Lat=5 L3SizeEff=3.87879 OoO=1 Area=1.25 Freq=1.6 Volt=0.8 Epi=0.6 Pleak=0.14 L1Eacc=0.08 L1Pleak=0.01 L2Eacc=0.12 L2Pleak=0.03 Active=0
+
+DEFINE ProcOn PROC Type=0 L1Size=0.064 L1Lat=3 L2Size=0.256 L2Lat=5 L3SizeEff=3.87879 OoO=1 Area=1.25 Freq=1.6 Volt=0.8 Epi=0.6 Pleak=0.14 L1Eacc=0.08 L1Pleak=0.01 L2Eacc=0.12 L2Pleak=0.03 Active=1
+
+DEFINE ProcSleep PROC Type=0 L1Size=0.064 L1Lat=3 L2Size=0.256 L2Lat=5 L3SizeEff=3.87879 OoO=1 Area=1.25 Freq=0.0 Volt=0.8 Epi=0.6 Pleak=0.14 L1Eacc=0.08 L1Pleak=0.01 L2Eacc=0.12 L2Pleak=0.03 Active=1
+
+MESH Col=4 Row=4 ColWidth=6 RowHeight=5 LinkDelay=2 RouterDelay=3
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Eacc=0.18 Pleak=0.15
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Eacc=0.18 Pleak=0.15
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Eacc=0.18 Pleak=0.15
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Eacc=0.18 Pleak=0.15
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Eacc=0.18 Pleak=0.15
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Eacc=0.18 Pleak=0.15
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Eacc=0.18 Pleak=0.15
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Eacc=0.18 Pleak=0.15
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Eacc=0.18 Pleak=0.15
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Eacc=0.18 Pleak=0.15
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Eacc=0.18 Pleak=0.15
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Eacc=0.18 Pleak=0.15
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Eacc=0.18 Pleak=0.15
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Eacc=0.18 Pleak=0.15
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Eacc=0.18 Pleak=0.15
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Eacc=0.18 Pleak=0.15
+    NI
+
+MEMCTRL Location=West Latency=62.5 Eacc=0.13 Pleak=0.1
+MEMCTRL Location=East Latency=62.5 Eacc=0.13 Pleak=0.1

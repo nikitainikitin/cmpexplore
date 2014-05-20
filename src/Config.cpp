@@ -240,16 +240,19 @@ void Config::ParseParamValues(const string& name, string& value)
     McFreqMax(StrToDouble(value));
   }
   else if (name == "procMaxVoltage") {
-    McVoltMax(StrToDouble(value));
+    ProcVoltMax(StrToDouble(value));
   }
   else if (name == "procMinVoltage") {
-    McVoltMin(StrToDouble(value));
+    ProcVoltMin(StrToDouble(value));
   }
   else if (name == "procNomVoltage") {
-    McVoltNom(StrToDouble(value));
+    ProcVoltNom(StrToDouble(value));
   }
   else if (name == "procMaxFrequency") {
-    McFreqMax(StrToDouble(value));
+    ProcFreqMax(StrToDouble(value));
+  }
+  else if (name == "procMinVoltFrequency") {
+    ProcMinVoltFreq(StrToDouble(value));
   }
   else if (name == "gMeshDimX") {
     ValueParser::GetVectorOfIValues(value, gMeshDimX_);
