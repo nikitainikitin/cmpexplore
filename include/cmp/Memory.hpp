@@ -21,9 +21,12 @@
 #include <list>
 
 #include "Device.hpp"
+#include "CmpBuilder.hpp"
 
 namespace cmpex {
   
+  extern cmp::CmpBuilder cmpBuilder;
+
   namespace cmp {
 
     //======================================================================
@@ -65,6 +68,15 @@ namespace cmpex {
       inline double Eacc() const;
 
       inline double Pleak() const;
+
+      inline double PleakOfTemp(double tmp) const;
+      
+      inline double PgPleakOfTemp(double tmp) const;
+      
+      inline bool Active () const;
+
+      inline void SetActive ( bool a );
+
 
       // Implementations of the Component interface.
       
@@ -142,6 +154,8 @@ namespace cmpex {
 
       double pleak_; // leakage power
 
+      bool active_; // whether the memory is active ot not
+
     };
 
     //----------------------------------------------------------------------
@@ -206,6 +220,22 @@ namespace cmpex {
 
     void Memory::SetPleak ( double p ) {
       pleak_ = p;
+    }
+
+    double Memory::PleakOfTemp ( double tmp ) const {
+      return cmpBuilder.L3LeakageOfTemp(tmp);
+    }
+
+    double Memory::PgPleakOfTemp ( double tmp ) const {
+      return cmpBuilder.L3PgLeakageOfTemp(tmp);
+    }
+
+    bool Memory::Active () const {
+      return active_;
+    }
+
+    void Memory::SetActive ( bool a ) {
+      active_ = a;
     }
 
   } // namespace cmp
