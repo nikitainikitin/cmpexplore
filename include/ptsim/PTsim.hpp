@@ -51,7 +51,14 @@ namespace cmpex {
     public:
 
       // Calculates transient and steady-state temperature of given configuration
-      static int CallHotSpot(cmp::Component * cmp);
+      static int CallHotSpot(cmp::Component * cmp, vector<double> * power_vec = 0,
+                             bool silent_mode = false);
+
+      // Saves simulated temperature values to local buffers
+      static void SaveSimTemp(cmp::Component * cmp, double * temp_sim);
+
+      // Prints temperature values saved in local buffers
+      static void PrintTemp();
 
     public:
 

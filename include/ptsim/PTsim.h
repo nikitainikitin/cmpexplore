@@ -19,7 +19,7 @@ typedef struct global_config_t_st
 }global_config_t;
 
 int sim_init(char *flp_file, char *config_file, char *init_file, char *steady_file, char *gridsteady_file);
-void sim_main(double*, double*, double);
+void sim_main(double*, double*, double, int);
 void sim_exit();
 
 #endif

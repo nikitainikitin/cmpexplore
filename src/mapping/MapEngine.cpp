@@ -36,6 +36,7 @@
 #include "MapTransform.hpp"
 #include "workload/WlConfig.hpp"
 #include "cmp/Processor.hpp"
+#include "ptsim/PTsim.hpp"
 
 using namespace std;
 
@@ -52,6 +53,7 @@ namespace cmpex {
   using namespace phys;
   using namespace power;
   using namespace workload;
+  using namespace temperature;
 
   namespace mapping {
 
@@ -155,6 +157,13 @@ void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
   double power = PowerModel::GetTotalPower(cmpConfig.Cmp());
   pSm->Power(power);
   double powerPen = max(0.0, power - config.MaxPower());
+
+  // Hotspot
+  vector<double> power_vec;
+  PowerModel::CreatePTsimPowerVector(cmpConfig.Cmp(), power_vec);
+  cout << "-I- Running Hotspot..." << endl;
+  PTsim::CallHotSpot(cmpConfig.Cmp(), &power_vec, true);
+
 
   // 3. Save evaluation within the mapping object
   mc->thr = pSm->Throughput();

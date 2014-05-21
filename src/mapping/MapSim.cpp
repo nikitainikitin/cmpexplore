@@ -164,7 +164,7 @@ void MapSim::Run() {
          << sysElapsedPeriod*PeriodUs()/1e6 << " sec)" << endl;
   }
   else {
-    cout << "-I- There are running/peding tasks left after " << sysElapsedPeriod << " periods ("
+    cout << "-I- There are running/pending tasks left after " << sysElapsedPeriod << " periods ("
          << sysElapsedPeriod*PeriodUs()/1e6 << " sec)" << endl;
   }
 }

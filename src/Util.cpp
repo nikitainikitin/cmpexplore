@@ -26,6 +26,7 @@ using std::endl;
 using std::string;
 using std::istringstream;
 using std::ostringstream;
+using std::ifstream;
 
 namespace cmpex {
 
@@ -118,6 +119,19 @@ void Strip ( string& s )
 bool StartsWith ( const string& s, const string& start_s )
 {
   return (s.substr(0, start_s.length()) == start_s) ? true : false;
+}
+
+//=======================================================================
+/*
+ * Returns true if file exists.
+ */
+
+bool FileExists ( const std::string& fname )
+{
+  ifstream f(fname.c_str());
+  bool exists = f.good();
+  f.close();
+  return exists;
 }
 
 //=======================================================================

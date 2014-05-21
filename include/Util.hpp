@@ -49,6 +49,9 @@ namespace cmpex {
   // Returns true if 's' starts with 'start_s' string
   bool StartsWith ( const std::string& s, const std::string& start_s );
 
+  // Check file for existence
+  bool FileExists ( const std::string& fname );
+
 } // namespace cmpex
 
 #endif // _UTIL_H_

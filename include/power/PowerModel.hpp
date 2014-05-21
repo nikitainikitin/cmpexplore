@@ -86,7 +86,9 @@ namespace cmpex {
 
       static double XBarPower(cmp::XBarIc * ic);
 
-      static double DumpPTsimPower(cmp::Component * cmp);
+      static void DumpPTsimPower(cmp::Component * cmp);
+
+      static void CreatePTsimPowerVector(cmp::Component * cmp, vector<double>& power_vec);
 
       static double VScalDynPower ( double volt );
 

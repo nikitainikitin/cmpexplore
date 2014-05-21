@@ -453,12 +453,12 @@ double PowerModel::XBarPower(XBarIc * ic)
 
 //=======================================================================
 /*
- * Writed out PTsim power file using the values from temporary buffers.
- * Assumed a flat mesh interconnect.
+ * Writes out PTsim power file using the values from temporary buffers.
+ * Assumes a flat mesh interconnect.
  * Ignores power of local busses (between cores and caches).
  */
 
-double PowerModel::DumpPTsimPower(Component * cmp)
+void PowerModel::DumpPTsimPower(Component * cmp)
 {
   const string fname = "./ptsim_power.txt";
 
@@ -490,15 +490,15 @@ double PowerModel::DumpPTsimPower(Component * cmp)
     // LinkW - bi-directional link power
     double link_power = 0.0;
     if (tile_id%mic->ColNum() != 0) {
-      link_power = MeshLinkPower_[tile_id*int(RDWEST)] + MeshLinkPower_[(tile_id-1)*int(RDEAST)];
+      link_power = MeshLinkPower_[tile_id*4+int(RDWEST)] + MeshLinkPower_[(tile_id-1)*4+int(RDEAST)];
     }
     else { // west links for tiles in the left column are those to MC, approximate traffic by doubling
-      link_power = 2.0*MeshLinkPower_[tile_id*int(RDWEST)];
+      link_power = 2.0*MeshLinkPower_[tile_id*4+int(RDWEST)];
     }
     out << link_power;
 
     // RTR
-    out << '\t' << MeshRouterPower_[tile_id*int(RDWEST)];
+    out << '\t' << MeshRouterPower_[tile_id];
 
     // L3
     out << '\t' << L3Power_[tile_id];
@@ -506,8 +506,8 @@ double PowerModel::DumpPTsimPower(Component * cmp)
     // LinkN - bi-directional link power
     link_power = 0.0;
     if (tile_id >= mic->ColNum()) { // no north links for tiles in the upper row
-      link_power = MeshLinkPower_[tile_id*int(RDNORTH)] +
-                   MeshLinkPower_[(tile_id-mic->ColNum())*int(RDSOUTH)];
+      link_power = MeshLinkPower_[tile_id*4+int(RDNORTH)] +
+                   MeshLinkPower_[(tile_id-mic->ColNum())*4+int(RDSOUTH)];
     }
     out << '\t' << link_power;
 
@@ -527,6 +527,67 @@ double PowerModel::DumpPTsimPower(Component * cmp)
   }
 
   out.close();
+}
+
+//=======================================================================
+/*
+ * Creates PTsim power vector using the values from temporary buffers.
+ * Assumes a flat mesh interconnect.
+ * Ignores power of local busses (between cores and caches).
+ */
+
+void PowerModel::CreatePTsimPowerVector(Component * cmp, vector<double>& power_vec)
+{
+  Cluster * clCmp = static_cast<Cluster*>(cmp);
+  MeshIc * mic = static_cast<MeshIc*>(clCmp->Ic());
+
+  int vec_len = MCPower_.size() + corePower_.size()*8;
+  power_vec.assign(vec_len, 0.0);
+
+  int cnt = 0;
+
+  // MCs
+  for (vector<double>::const_iterator it = MCPower_.begin(); it != MCPower_.end(); ++it) {
+    power_vec[cnt++] = *it;
+  }
+
+  for (int tile_id = 0; tile_id < corePower_.size(); ++tile_id) {
+    // LinkW - bi-directional link power
+    double link_power = 0.0;
+    if (tile_id%mic->ColNum() != 0) {
+      link_power = MeshLinkPower_[tile_id*4+int(RDWEST)] + MeshLinkPower_[(tile_id-1)*4+int(RDEAST)];
+    }
+    else { // west links for tiles in the left column are those to MC, approximate traffic by doubling
+      link_power = 2.0*MeshLinkPower_[tile_id*4+int(RDWEST)];
+    }
+    power_vec[cnt++] = link_power;
+
+    // RTR
+    power_vec[cnt++] = MeshRouterPower_[tile_id];
+
+    // L3
+    power_vec[cnt++] = L3Power_[tile_id];
+
+    // LinkN - bi-directional link power
+    link_power = 0.0;
+    if (tile_id >= mic->ColNum()) { // no north links for tiles in the upper row
+      link_power = MeshLinkPower_[tile_id*4+int(RDNORTH)] +
+                   MeshLinkPower_[(tile_id-mic->ColNum())*4+int(RDSOUTH)];
+    }
+    power_vec[cnt++] = link_power;
+
+    // L2
+    power_vec[cnt++] = L2Power_[tile_id];
+
+    // Core
+    power_vec[cnt++] = corePower_[tile_id];
+
+    // L1D
+    power_vec[cnt++] = L1Power_[tile_id];
+
+    // L1I - approximate as power of data L1
+    power_vec[cnt++] = L1Power_[tile_id];
+  }
 }
 
 //=======================================================================

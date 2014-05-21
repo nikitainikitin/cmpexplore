@@ -208,13 +208,12 @@ int sim_init(char *flp_file, char *config_file, char *init_file, char *steady_fi
  * cycle-by-cycle power model. note that this is just a stub 
  * function and is not called anywhere in this file	
  */
-void sim_main(double *power_sim, double *temp_sim, double time_sim)
+void sim_main(double *power_sim, double *temp_sim, double time_sim, int silent_mode)
 {
 	int i, j, base, idx, count;
 	//double *vals;
 
 	//vals = dvector(MAX_UNITS);
-
 
 
 	//initial temperature
@@ -266,7 +265,7 @@ void sim_main(double *power_sim, double *temp_sim, double time_sim)
 	if ((cur_time - prev_time) >= model->config->sampling_intvl) {
 	  double elapsed_time = (cur_time - prev_time);
 	  prev_time = cur_time;
-	  printf("\nELAPSED TIME: %f\n",cur_time);
+    if (!silent_mode) printf("\nELAPSED TIME: %f\n",cur_time);
 	  
 	  /* find the average power dissipated in the elapsed time */
 	  if (model->type == BLOCK_MODEL) {
@@ -410,7 +409,7 @@ void sim_exit()
   time_sim = 0.0;
 
   for(i=0;i<=9;i++) {
-    sim_main(power_sim,temp_sim,time_sim);
+    sim_main(power_sim,temp_sim,time_sim,false);
 
     //output instantaneous temperature trace
     write_vals(tout, temp_sim, n_blocks);

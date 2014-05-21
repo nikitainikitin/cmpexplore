@@ -42,7 +42,9 @@ void sim_exit();
 #include "Component.hpp"
 #include "CmpConfig.hpp"
 #include "Config.hpp"
-
+#include "MeshIc.hpp"
+#include "Cluster.hpp"
+#include "Util.hpp"
 
 extern "C" {
 #include "PTsim.h"
@@ -211,16 +213,16 @@ double block_power[2050]={0.5,0.5,
 			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
 			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0};
 double warmup_power[2050];
-string floorplan_filename("./src/ptsim/cmp16x16.flp");
-string inittemp_filename("./src/ptsim/cmp16x16.init");
-string steadytemp_filename("./src/ptsim/cmp16x16.steady");
-string ttrace_filename("./src/ptsim/cmp16x16.ttrace");
-string gridsteadytemp_filename("./src/ptsim/cmp16x16.grid.steady");
+//string floorplan_filename("./src/ptsim/cmp16x16.flp");
+//string inittemp_filename("./src/ptsim/cmp16x16.init");
+//string steadytemp_filename("./src/ptsim/cmp16x16.steady");
+//string ttrace_filename("./src/ptsim/cmp16x16.ttrace");
+//string gridsteadytemp_filename("./src/ptsim/cmp16x16.grid.steady");
 
 
 string null_filename("(null)");
 
-int PTsim::CallHotSpot(cmp::Component * cmp)
+int PTsim::CallHotSpot(cmp::Component * cmp, vector<double> * power_vec, bool silent_mode)
 {
   int i,j;
   double *power_sim,*temp_sim, time_sim;
@@ -245,7 +247,24 @@ int PTsim::CallHotSpot(cmp::Component * cmp)
   //cmp4x4
   //n_blocks = 2050;
 
-  
+  // find out mesh size to define file names
+  Cluster * clCmp = static_cast<Cluster*>(cmp);
+  MeshIc * mic = static_cast<MeshIc*>(clCmp->Ic());
+  int meshX = mic->ColNum();
+  int meshY = mic->RowNum();
+
+  stringstream ss_tmp;
+  ss_tmp << "cmp" << meshX << "x" << meshY;
+  string floorplan_filename("./src/ptsim/" + ss_tmp.str() + ".flp");
+  if (!FileExists(floorplan_filename)) {
+    cout << "-E- Floorplan file " << floorplan_filename << " does not exist -> Exiting" << endl;
+    return -1;
+  }
+  string inittemp_filename("./src/ptsim/" + ss_tmp.str() + ".init");
+  string steadytemp_filename("./src/ptsim/" + ss_tmp.str() + ".steady");
+  string ttrace_filename("./src/ptsim/" + ss_tmp.str() + ".ttrace");
+  string gridsteadytemp_filename("./src/ptsim/" + ss_tmp.str() + ".grid.steady");
+
   // adapt C++ strings to C strings
   strcpy(flp,floorplan_filename.c_str());
   strcpy(cfg,config_filename.c_str());
@@ -256,7 +275,7 @@ int PTsim::CallHotSpot(cmp::Component * cmp)
 
   // initialize hotspot with steady temp target file same as init temp file 
   n_blocks=sim_init(flp,cfg,nullt,initt,gstdyt);
-  cout << "Number of blocks = " << n_blocks << endl;
+  if (!silent_mode) cout << "Number of blocks = " << n_blocks << endl;
 
   // create power vector
   power_sim = new double[n_blocks];
@@ -283,41 +302,51 @@ int PTsim::CallHotSpot(cmp::Component * cmp)
   time_sim = 0.0;
 
   // initialization of hotspot with 1st call to sim_main, time is 0.0
-  sim_main(power_sim,temp_sim,time_sim);
+  sim_main(power_sim,temp_sim,time_sim,silent_mode);
   // increase time and rerun hotspot, save intermediate temp values to trace file
   time_sim += 0.001;
-  sim_main(power_sim,temp_sim,time_sim);
+  sim_main(power_sim,temp_sim,time_sim,silent_mode);
   // terminate hotspot and save steady file in init file
   sim_exit();
 
-  //input power (from CMPexplore) file opening
-  pin.open("ptsim_power.txt");
+  //input power (from CMPexplore
+  if (!power_vec) { // no power vector - read values from file
+    pin.open("ptsim_power.txt");
 
-  i=0;
-  while(getline(pin,line)) {
-    if ((line == "") || (!line.find("#")))
-      continue;
-    stringstream ss;
-    ss << line;
-    double temp_double;
-    while(ss >> temp_double) {
-      if (1) // every tile is ON
-      //if (((i-2)/8)%2==0) // every other tile is ON
-      //if (((i-2)>=(n_blocks-2)/4) && (i-2<(n_blocks-2)/4+n_blocks/2)) // half CMP centered is ON
-	//if ((i-2)>=((n_blocks-2)/2)) // top half CMP is ON
-	power_sim[i] = temp_double;
-      else
-	power_sim[i] = 0;
-      total_power += power_sim[i];
-      cout << power_sim[i] << endl;
-      i++;
+    i=0;
+    while(getline(pin,line)) {
+      if ((line == "") || (!line.find("#")))
+        continue;
+      stringstream ss;
+      ss << line;
+      double temp_double;
+      while(ss >> temp_double) {
+        if (1) // every tile is ON
+        //if (((i-2)/8)%2==0) // every other tile is ON
+        //if (((i-2)>=(n_blocks-2)/4) && (i-2<(n_blocks-2)/4+n_blocks/2)) // half CMP centered is ON
+    //if ((i-2)>=((n_blocks-2)/2)) // top half CMP is ON
+    power_sim[i] = temp_double;
+        else
+    power_sim[i] = 0;
+        total_power += power_sim[i];
+        if (!silent_mode) cout << power_sim[i] << endl;
+        i++;
+      }
     }
+    pin.close();
   }
-  pin.close();
+  else { // power vector provided
+    for (int i = 0; i < power_vec->size(); ++i) {
+      power_sim[i] = (*power_vec)[i];
+      //cout << power_sim[i] << ' ';
+    }
+    //cout << endl;
+  }
 
-  cout << "TOTAL POWER = " << total_power << endl;
+  if (!silent_mode) cout << "TOTAL POWER = " << total_power << endl;
   if(i != n_blocks){
     cout << "\nERROR: power elements /= number of blocks\n\n";
+    cout << i << ' ' << n_blocks << endl;
     return -1;
   }
 
@@ -333,12 +362,12 @@ int PTsim::CallHotSpot(cmp::Component * cmp)
   sim_init(flp,cfg,initt,stdyt,gstdyt);
 
   // re-initialization of hotspot with 1st call to sim_main, time is 0.0
-  sim_main(power_sim,temp_sim,time_sim);
+  sim_main(power_sim,temp_sim,time_sim,silent_mode);
 
   // increase time and rerun hotspot, save intermediate temp values to trace file
   time_sim += 0.001;
   for(i=0;i<=0;i++) {
-    sim_main(power_sim,temp_sim,time_sim);
+    sim_main(power_sim,temp_sim,time_sim,silent_mode);
     //output instantaneous temperature trace
     for(j=0;j<n_blocks;j++)
       tout << setiosflags(ios::fixed) << setprecision(2) << temp_sim[j]-273.15 << "\t";
@@ -353,9 +382,140 @@ int PTsim::CallHotSpot(cmp::Component * cmp)
   // closing
   tout.close();
 
+  // convert K to C degrees
+  for(j=0;j<n_blocks;j++) {
+    temp_sim[j] -= 273.15;
+  }
+
+  SaveSimTemp(cmp, temp_sim);
+  //PrintTemp();
+
   delete [] power_sim;
   delete [] temp_sim;
   return 0;
+}
+
+//=======================================================================
+/*
+ * Saves simulated temperature values to local buffers.
+ * Assumes specific order of values in temp_sim:
+ * - values for MemCtrl,
+ * - per tile: LinkW  RTR  L3  LinkN  L2  Core  L1D  L1I (one line per component).
+ * The order is the same as in the ptsim_power.txt file.
+ */
+
+void PTsim::SaveSimTemp(cmp::Component * cmp, double * temp_sim) {
+  coreTemp_.assign(cmpConfig.ProcCnt(), 0.0);
+  L1DTemp_.assign(cmpConfig.ProcCnt(), 0.0);
+  L1ITemp_.assign(cmpConfig.ProcCnt(), 0.0);
+  L2Temp_.assign(cmpConfig.ProcCnt(), 0.0);
+  L3Temp_.assign(cmpConfig.MemCnt(), 0.0);
+  MCTemp_.assign(cmpConfig.MemCtrlCnt(), 0.0);
+  MeshRouterTemp_.assign(cmpConfig.ProcCnt(), 0.0);
+  MeshLinkTemp_.assign(cmpConfig.ProcCnt()*4, 0.0);
+
+  int cnt = 0;
+
+  // MC
+  for (int mc = 0; mc < cmpConfig.MemCtrlCnt(); ++mc) {
+    MCTemp_[mc] = temp_sim[cnt];
+    ++cnt;
+  }
+
+  Cluster * clCmp = static_cast<Cluster*>(cmp);
+  MeshIc * mic = static_cast<MeshIc*>(clCmp->Ic());
+  for (int tile_id = 0; tile_id < mic->ColNum()*mic->RowNum(); ++tile_id) {
+
+    // LinkW
+    MeshLinkTemp_[tile_id*4+int(RDWEST)] = temp_sim[cnt];
+    if (tile_id%mic->ColNum() != 0) {
+      MeshLinkTemp_[(tile_id-1)*4+int(RDEAST)] = temp_sim[cnt];
+    }
+    ++cnt;
+
+    // RTR
+    MeshRouterTemp_[tile_id] = temp_sim[cnt++];
+
+    // L3
+    L3Temp_[tile_id] = temp_sim[cnt++];
+
+    // LinkN
+    MeshLinkTemp_[tile_id*4+int(RDNORTH)] = temp_sim[cnt];
+    if (tile_id >= mic->ColNum()) { // no north links for tiles in the upper row
+      MeshLinkTemp_[(tile_id-mic->ColNum())*4+int(RDSOUTH)] = temp_sim[cnt];
+    }
+    ++cnt;
+
+    // L2
+    L2Temp_[tile_id] = temp_sim[cnt++];
+
+    // Core
+    coreTemp_[tile_id] = temp_sim[cnt++];
+
+    // L1D
+    L1DTemp_[tile_id] = temp_sim[cnt++];
+
+    // L1I
+    L1ITemp_[tile_id] = temp_sim[cnt++];
+  }
+
+}
+
+//=======================================================================
+/*
+ * Prints temperature values saved in local buffers
+ */
+
+void PTsim::PrintTemp() {
+
+  cout << "  CoreTemp: ";
+  for (vector<double>::const_iterator it = coreTemp_.begin(); it != coreTemp_.end(); ++it) {
+    cout << setiosflags(ios::fixed) << setprecision(2) << (*it) << ' ';
+  }
+  cout << endl;
+
+  cout << "  L1DTemp: ";
+  for (vector<double>::const_iterator it = L1DTemp_.begin(); it != L1DTemp_.end(); ++it) {
+    cout << setiosflags(ios::fixed) << setprecision(2) << (*it) << ' ';
+  }
+  cout << endl;
+
+  cout << "  L1ITemp: ";
+  for (vector<double>::const_iterator it = L1ITemp_.begin(); it != L1ITemp_.end(); ++it) {
+    cout << setiosflags(ios::fixed) << setprecision(2) << (*it) << ' ';
+  }
+  cout << endl;
+
+  cout << "  L2Temp: ";
+  for (vector<double>::const_iterator it = L2Temp_.begin(); it != L2Temp_.end(); ++it) {
+    cout << setiosflags(ios::fixed) << setprecision(2) << (*it) << ' ';
+  }
+  cout << endl;
+
+  cout << "  L3Temp: ";
+  for (vector<double>::const_iterator it = L3Temp_.begin(); it != L3Temp_.end(); ++it) {
+    cout << setiosflags(ios::fixed) << setprecision(2) << (*it) << ' ';
+  }
+  cout << endl;
+
+  cout << "  MeshRouterTemp: ";
+  for (vector<double>::const_iterator it = MeshRouterTemp_.begin(); it != MeshRouterTemp_.end(); ++it) {
+    cout << setiosflags(ios::fixed) << setprecision(2) << (*it) << ' ';
+  }
+  cout << endl;
+
+  cout << "  MeshLinkTemp: ";
+  for (vector<double>::const_iterator it = MeshLinkTemp_.begin(); it != MeshLinkTemp_.end(); ++it) {
+    cout << setiosflags(ios::fixed) << setprecision(2) << (*it) << ' ';
+  }
+  cout << endl;
+
+  cout << "  MC: ";
+  for (vector<double>::const_iterator it = MCTemp_.begin(); it != MCTemp_.end(); ++it) {
+    cout << setiosflags(ios::fixed) << setprecision(2) << (*it) << ' ';
+  }
+  cout << endl;
+
 }
 
 //=======================================================================
