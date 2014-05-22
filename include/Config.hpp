@@ -115,13 +115,69 @@ namespace cmpex {
 
     inline void UFreq (double f);
 
+    inline double UFreqMax () const;
+
+    inline void UFreqMax (double f);
+
     inline double UVolt () const;
 
     inline void UVolt (double v);
 
+    inline double UVoltMax () const;
+
+    inline void UVoltMax (double v);
+
+    inline double UVoltMin () const;
+
+    inline void UVoltMin (double v);
+
+    inline double UVoltNom () const;
+
+    inline void UVoltNom (double v);
+
     inline double McFreq () const;
 
     inline void McFreq (double f);
+
+    inline double McFreqMax () const;
+
+    inline void McFreqMax (double f);
+
+    inline double McVolt () const;
+
+    inline void McVolt (double f);
+
+    inline double McVoltMax () const;
+
+    inline void McVoltMax (double v);
+
+    inline double McVoltMin () const;
+
+    inline void McVoltMin (double v);
+
+    inline double McVoltNom () const;
+
+    inline void McVoltNom (double v);
+
+    inline double ProcFreqMax () const;
+
+    inline void ProcFreqMax (double f);
+
+    inline double ProcVoltMax () const;
+
+    inline void ProcVoltMax (double v);
+
+    inline double ProcVoltMin () const;
+
+    inline void ProcVoltMin (double v);
+
+    inline double ProcVoltNom () const;
+
+    inline void ProcVoltNom (double v);
+
+    inline double ProcMinVoltFreq () const;
+
+    inline void ProcMinVoltFreq (double f);
 
     inline const vector<UInt>& GMeshDimXVec() const;
 
@@ -247,9 +303,37 @@ namespace cmpex {
 
     double uFreq_; // uncore frequency (NoC and shared caches) [GHz]
 
+    double uFreqMax_; // uncore max frequency (NoC and shared caches) [GHz]
+
     double uVolt_; // uncore voltage (NoC and shared caches) [V]
 
+    double uVoltMax_; // uncore max voltage (NoC and shared caches) [V]
+
+    double uVoltMin_; // uncore min voltage (NoC and shared caches) [V]
+
+    double uVoltNom_; // uncore nom voltage (NoC and shared caches) [V]
+
     double mcFreq_; // MC frequency [GHz]
+
+    double mcFreqMax_; // MC max frequency [GHz]
+
+    double mcVolt_; // MC voltage [V]
+
+    double mcVoltMax_; // MC max voltage [V]
+
+    double mcVoltMin_; // MC min voltage [V]
+
+    double mcVoltNom_; // MC nom voltage [V]
+
+    double procFreqMax_; // Processor max frequency [GHz]
+
+    double procVoltMax_; // Processor max voltage [V]
+
+    double procVoltMin_; // Processor min voltage [V]
+
+    double procVoltNom_; // Processor nom voltage [V]
+
+    double procMinVoltFreq_; // Processor frequency at min voltage [GHz]
 
     vector<UInt> gMeshDimX_;
     
@@ -443,6 +527,14 @@ namespace cmpex {
     uFreq_ = f;
   }
 
+  double Config::UFreqMax() const {
+    return uFreqMax_;
+  }
+
+  void Config::UFreqMax(double f) {
+    uFreqMax_ = f;
+  }
+
   double Config::UVolt() const {
     return uVolt_;
   }
@@ -451,12 +543,112 @@ namespace cmpex {
     uVolt_ = v;
   }
 
+  double Config::UVoltMax() const {
+    return uVoltMax_;
+  }
+
+  void Config::UVoltMax(double v) {
+    uVoltMax_ = v;
+  }
+
+  double Config::UVoltMin() const {
+    return uVoltMin_;
+  }
+
+  void Config::UVoltMin(double v) {
+    uVoltMin_ = v;
+  }
+
+  double Config::UVoltNom() const {
+    return uVoltNom_;
+  }
+
+  void Config::UVoltNom(double v) {
+    uVoltNom_ = v;
+  }
+
   double Config::McFreq() const {
     return mcFreq_;
   }
 
   void Config::McFreq(double f) {
     mcFreq_ = f;
+  }
+
+  double Config::McFreqMax() const {
+    return mcFreqMax_;
+  }
+
+  void Config::McFreqMax(double f) {
+    mcFreqMax_ = f;
+  }
+
+  double Config::McVolt() const {
+    return mcVolt_;
+  }
+
+  void Config::McVolt(double v) {
+    mcVolt_ = v;
+  }
+
+  double Config::McVoltMax() const {
+    return mcVoltMax_;
+  }
+
+  void Config::McVoltMax(double v) {
+    mcVoltMax_ = v;
+  }
+
+  double Config::McVoltMin() const {
+    return mcVoltMin_;
+  }
+
+  void Config::McVoltMin(double v) {
+    mcVoltMin_ = v;
+  }
+
+  double Config::McVoltNom() const {
+    return mcVoltNom_;
+  }
+
+  void Config::McVoltNom(double v) {
+    mcVoltNom_ = v;
+  }
+
+  double Config::ProcFreqMax() const {
+    return procFreqMax_;
+  }
+
+  void Config::ProcFreqMax(double f) {
+    procFreqMax_ = f;
+  }
+
+  void Config::ProcVoltMax(double v) {
+    procVoltMax_ = v;
+  }
+
+  double Config::ProcVoltMin() const {
+    return procVoltMin_;
+  }
+
+  void Config::ProcVoltMin(double v) {
+    procVoltMin_ = v;
+  }
+
+  double Config::ProcVoltNom() const {
+    return procVoltNom_;
+  }
+
+  void Config::ProcVoltNom(double v) {
+    procVoltNom_ = v;
+  }
+
+  double Config::ProcMinVoltFreq() const {
+    return procMinVoltFreq_;
+  }
+
+  void Config::ProcMinVoltFreq(double f) {
+    procMinVoltFreq_ = f;
   }
 
   const vector<UInt>& Config::GMeshDimXVec () const {

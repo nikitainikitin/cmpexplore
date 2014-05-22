@@ -21,6 +21,7 @@
 #include <fstream>
 #include <map>
 #include <string>
+#include "Function.hpp"
 
 #include "../Defs.hpp"
 
@@ -41,7 +42,7 @@ namespace cmpex {
 
     class CmpBuilder {
       
-      enum EntryType { ETUNDEF = -1, ETPARAM, ETMEMCTRL, ETCOMP, ETDEFINE };
+      enum EntryType { ETUNDEF = -1, ETPARAM, ETFUNCTION, ETMEMCTRL, ETCOMP, ETDEFINE };
       
       // Argument pair: Name-Value
       struct Argument {
@@ -133,9 +134,84 @@ namespace cmpex {
       // Extracts and returns next argument from 'entry'.
       static Argument ExtractNextArg ( std::string& entry );
       
-    protected:
+      // Reads function from given entry.
+      static void ReadFunction (std::string& entry);
+      
+      static double CoreLeakageOfTemp(double tmp);
+
+      static double L1LeakageOfTemp(double tmp);
+
+      static double L1ILeakageOfTemp(double tmp);
+
+      static double L1DLeakageOfTemp(double tmp);
+
+      static double L2LeakageOfTemp(double tmp);
+
+      static double L3LeakageOfTemp(double tmp);
+
+      static double RouterLeakageOfTemp(double tmp);
+
+      static double LinksLeakageOfTemp(double tmp);
+
+      static double McLeakageOfTemp(double tmp);
+
+      static double CorePgLeakageOfTemp(double tmp);
+
+      static double L1PgLeakageOfTemp(double tmp);
+
+      static double L1IPgLeakageOfTemp(double tmp);
+
+      static double L1DPgLeakageOfTemp(double tmp);
+
+      static double L2PgLeakageOfTemp(double tmp);
+
+      static double L3PgLeakageOfTemp(double tmp);
+
+      static double RouterPgLeakageOfTemp(double tmp);
+
+      static double LinksPgLeakageOfTemp(double tmp);
+
+      static double McPgLeakageOfTemp(double tmp);
+
+   protected:
 
     private:
+
+      static model::Function * coreLeakageOfTemp_;
+      
+      static model::Function * l1LeakageOfTemp_;
+      
+      static model::Function * l1iLeakageOfTemp_;
+      
+      static model::Function * l1dLeakageOfTemp_;
+      
+      static model::Function * l2LeakageOfTemp_;
+      
+      static model::Function * l3LeakageOfTemp_;
+      
+      static model::Function * routerLeakageOfTemp_;
+
+      static model::Function * linksLeakageOfTemp_;
+
+      static model::Function * mcLeakageOfTemp_;
+
+      static model::Function * corePgLeakageOfTemp_;
+      
+      static model::Function * l1PgLeakageOfTemp_;
+      
+      static model::Function * l1iPgLeakageOfTemp_;
+      
+      static model::Function * l1dPgLeakageOfTemp_;
+      
+      static model::Function * l2PgLeakageOfTemp_;
+      
+      static model::Function * l3PgLeakageOfTemp_;
+      
+      static model::Function * routerPgLeakageOfTemp_;
+
+      static model::Function * linksPgLeakageOfTemp_;
+
+      static model::Function * mcPgLeakageOfTemp_;
 
       // Deprecated methods: prevent usage
       CmpBuilder ();
@@ -147,6 +223,9 @@ namespace cmpex {
       CmpBuilder& operator = ( const CmpBuilder& );
 
     };
+
+
+
 
   } // namespace cmp
   
