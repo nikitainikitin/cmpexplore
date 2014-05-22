@@ -36,6 +36,7 @@
 #include "MapTransform.hpp"
 #include "workload/WlConfig.hpp"
 #include "cmp/Processor.hpp"
+#include "cmp/Memory.hpp"
 #include "ptsim/PTsim.hpp"
 
 using namespace std;
@@ -124,6 +125,11 @@ MapConf * MapEngine::CreateGreedyMapping() const
 void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
 {
   // 1. Prepare configuration: initialize processors according to the mapping
+
+
+  // NOTICE: memory activities have to be updated before
+  // calling proc->SetMemAccessProbabilities()!
+
   for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
     Processor * proc = cmpConfig.GetProcessor(p);
     Thread * thread = (mc->map[p] != MapConf::IDX_UNASSIGNED) ?
@@ -141,6 +147,7 @@ void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
     }
   }
 
+
   /*for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
     Processor * proc = cmpConfig.GetProcessor(p);
     cout << "ProcIdx = " << p << ", ipc = " << proc->Ipc() << ", mpi = " << proc->Mpi()
@@ -157,6 +164,7 @@ void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
   double power = PowerModel::GetTotalPower(cmpConfig.Cmp());
   pSm->Power(power);
   double powerPen = max(0.0, power - config.MaxPower());
+
 
   // Hotspot
   vector<double> power_vec;
