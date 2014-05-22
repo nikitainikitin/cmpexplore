@@ -69,7 +69,10 @@ namespace cmpex {
 MapEngine::MapEngine() {
   // create transformations
   AddTransform(new MapTrSwapTaskPair());
-  AddTransform(new MapTrChangeCoreState());
+  AddTransform(new MapTrChangeCoreActiv());
+  AddTransform(new MapTrIncreaseCoreFreq());
+  AddTransform(new MapTrDecreaseCoreFreq());
+  AddTransform(new MapTrChangeL3ClusterActiv());
 }
 
 MapEngine::~MapEngine() {
@@ -89,8 +92,9 @@ MapEngine::~MapEngine() {
 MapConf * MapEngine::CreateGreedyMapping() const
 {
   int coreCnt = cmpConfig.ProcCnt();
+  int L3ClusterCnt = cmpConfig.ProcCnt()/cmpConfig.L3ClusterSize();
 
-  MapConf * newMap = new MapConf(coreCnt);
+  MapConf * newMap = new MapConf(coreCnt, L3ClusterCnt);
 
   int busyCores = 0;
   Task * nextTask = wlConfig.GetNextPendingTask();
@@ -110,8 +114,10 @@ MapConf * MapEngine::CreateGreedyMapping() const
   // assign states (speeds) for all active cores
   for (int p = 0; p < coreCnt; ++p) {
     Processor * proc = cmpConfig.GetProcessor(p);
-    newMap->states[p] = (newMap->map[p] != MapConf::IDX_UNASSIGNED) ?
-                        proc->Freq() : 0.0;
+    newMap->coreActiv[p] = (newMap->map[p] != MapConf::IDX_UNASSIGNED) ?
+                            true : false;
+    newMap->coreFreq[p] = (newMap->map[p] != MapConf::IDX_UNASSIGNED) ?
+                           proc->Freq() : 0.0;
   }
 
   return newMap;
@@ -135,11 +141,11 @@ void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
     Thread * thread = (mc->map[p] != MapConf::IDX_UNASSIGNED) ?
         wlConfig.GetThreadByGid(mc->map[p]) : 0;
     if (thread) {
-      proc->SetActive(true);
       proc->SetIpc(thread->thread_ipc);
       proc->SetMpi(thread->thread_mpi);
       proc->SetMemAccessProbabilities(thread->missRatioOfMemSize);
-      proc->SetFreq(1.6);
+      proc->SetActive(mc->coreActiv[p]);
+      proc->SetFreq(mc->coreFreq[p]);
     }
     else {
       proc->SetActive(false);

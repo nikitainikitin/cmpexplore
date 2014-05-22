@@ -22,6 +22,7 @@
 
 #include "Config.hpp"
 #include "mapping/MapConf.hpp"
+#include "TechDefs.hpp"
 
 using std::string;
 using std::vector;
@@ -69,12 +70,52 @@ namespace cmpex {
     };
 
     //======================================================================
-    // -2- Change state of a random core.
+    // -2- Change activity of a random core.
     //======================================================================
-    struct MapTrChangeCoreState : public MapTransform {
+    struct MapTrChangeCoreActiv : public MapTransform {
       bool UpdateMap(MapConf& mConf) const {
-        /// TODO: IMPLEMENT THE TRANSFORMATION
-        return false;
+        int core_idx = int(RandUDouble()*mConf.coreCnt);
+        // inverse activity
+        mConf.coreActiv[core_idx] = !mConf.coreActiv[core_idx];
+        return true;
+      }
+    };
+
+    //======================================================================
+    // -3- Increase frequency of a random core.
+    //======================================================================
+    struct MapTrIncreaseCoreFreq : public MapTransform {
+      bool UpdateMap(MapConf& mConf) const {
+        int core_idx = int(RandUDouble()*mConf.coreCnt);
+        if (mConf.coreFreq[core_idx] <= MAX_FREQ - FREQ_STEP) {
+          mConf.coreFreq[core_idx] += FREQ_STEP;
+        }
+        return true;
+      }
+    };
+
+    //======================================================================
+    // -4- Decrease frequency of a random core.
+    //======================================================================
+    struct MapTrDecreaseCoreFreq : public MapTransform {
+      bool UpdateMap(MapConf& mConf) const {
+        int core_idx = int(RandUDouble()*mConf.coreCnt);
+        if (mConf.coreFreq[core_idx] >= 2*FREQ_STEP) {
+          mConf.coreFreq[core_idx] -= FREQ_STEP;
+        }
+        return true;
+      }
+    };
+
+    //======================================================================
+    // -5- Change activity of a random L3 cluster.
+    //======================================================================
+    struct MapTrChangeL3ClusterActiv : public MapTransform {
+      bool UpdateMap(MapConf& mConf) const {
+        int cluster_idx = int(RandUDouble()*mConf.L3ClusterCnt);
+        // inverse activity
+        mConf.L3ClusterActiv[cluster_idx] = !mConf.L3ClusterActiv[cluster_idx];
+        return true;
       }
     };
 

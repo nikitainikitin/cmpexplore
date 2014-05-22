@@ -20,6 +20,7 @@
 #include "Config.hpp"
 #include "cmp/CmpConfig.hpp"
 #include "cmp/Processor.hpp"
+#include "TechDefs.hpp"
 
 using namespace std;
 
@@ -37,11 +38,14 @@ namespace cmpex {
  * Constructors and destructor
  */
 
-MapConf::MapConf (int cc, double t, double p, double tmp, double c):
-  coreCnt (cc), thr (t), power(p), temp(tmp), cost (c)
+MapConf::MapConf (int core_cnt, int l3_cl_cnt,
+                  double t, double p, double tmp, double c):
+  coreCnt (core_cnt), L3ClusterCnt (l3_cl_cnt), thr (t), power(p), temp(tmp), cost (c)
 {
   map.assign(coreCnt, IDX_UNASSIGNED);
-  states.assign(coreCnt, 0.0);
+  coreActiv.assign(coreCnt, true);
+  coreFreq.assign(coreCnt, MAX_FREQ);
+  L3ClusterActiv.assign(L3ClusterCnt, true);
 }
 
 MapConf::~MapConf () {}
@@ -56,7 +60,8 @@ bool MapConf::AssignToFreeProc (int th_gid) {
   for (int p = 0; p < map.size(); ++p) {
     if (map[p] == IDX_UNASSIGNED) {
       map[p] = th_gid;
-      states[p] = cmpConfig.GetProcessor(p)->Freq();
+      coreActiv[p] = true;
+      coreFreq[p] = cmpConfig.GetProcessor(p)->Freq();
       return true;
     }
   }
@@ -70,12 +75,15 @@ bool MapConf::AssignToFreeProc (int th_gid) {
 
 void MapConf::CopyTo (MapConf * target) const {
   target->coreCnt = coreCnt;
+  target->L3ClusterCnt = L3ClusterCnt;
+  target->map = map;
+  target->coreActiv = coreActiv;
+  target->coreFreq = coreFreq;
+  target->L3ClusterActiv = L3ClusterActiv;
   target->thr = thr;
   target->power = power;
   target->temp = temp;
   target->cost = cost;
-  target->map.assign(map.begin(), map.end());
-  target->states.assign(states.begin(), states.end());
 }
 
 //=======================================================================
@@ -88,8 +96,16 @@ void MapConf::Print () const {
   for (CoresToThreadsMap::const_iterator it = map.begin(); it != map.end(); ++it) {
     cout << ' ' << (*it);
   }
-  cout << "; States:";
-  for (CoreStateArray::const_iterator it = states.begin(); it != states.end(); ++it) {
+  cout << "; CoreActiv:";
+  for (BoolArray::const_iterator it = coreActiv.begin(); it != coreActiv.end(); ++it) {
+    cout << ' ' << (*it);
+  }
+  cout << "; CoreFreq:";
+  for (DoubleArray::const_iterator it = coreFreq.begin(); it != coreFreq.end(); ++it) {
+    cout << ' ' << (*it);
+  }
+  cout << "; L3ClusterActiv:";
+  for (BoolArray::const_iterator it = L3ClusterActiv.begin(); it != L3ClusterActiv.end(); ++it) {
     cout << ' ' << (*it);
   }
   cout << ";   Pow=" << power << "; Temp=" << temp

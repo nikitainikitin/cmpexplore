@@ -76,8 +76,11 @@ MapSim::~MapSim() {}
 void MapSim::Run() {
 
   int sysElapsedPeriod = 0; // system time in multiples of MapSim::period_
+  int coreCnt = cmpConfig.ProcCnt();
+  int L3ClusterCnt = cmpConfig.ProcCnt()/cmpConfig.L3ClusterSize();
 
-  MapConf * mconf = new MapConf(cmpConfig.ProcCnt()); // this is current mapping configuration
+  // this is current mapping configuration
+  MapConf * mconf = new MapConf(coreCnt, L3ClusterCnt);
 
   int maxPeriods = 1000;
 

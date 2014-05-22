@@ -38,7 +38,9 @@ namespace cmpex {
 
     typedef std::vector<int> CoresToThreadsMap;
 
-    typedef std::vector<double> CoreStateArray;
+    typedef std::vector<double> DoubleArray;
+
+    typedef std::vector<bool> BoolArray;
 
     // reserved value for unassigned indices
     static const int IDX_UNASSIGNED = -1;
@@ -47,7 +49,8 @@ namespace cmpex {
 
   public:
 
-    MapConf ( int cc, double t = 0, double p = 0, double tmp = 0, double c = 0 );
+    MapConf ( int core_cnt, int l3_cl_cnt,
+              double t = 0, double p = 0, double tmp = 0, double c = 0 );
 
     ~MapConf ();
 
@@ -65,9 +68,15 @@ namespace cmpex {
 
     int coreCnt;
 
+    int L3ClusterCnt;
+
     CoresToThreadsMap map;
 
-    CoreStateArray states;
+    BoolArray coreActiv; // acitivities of the cores (on/off)
+
+    DoubleArray coreFreq; // frequencies of the cores [GHz]
+
+    BoolArray L3ClusterActiv; // acitivities of the cache clusters (on/off)
 
     // mapping evaluation data
 
