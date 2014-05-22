@@ -9,87 +9,99 @@ PARAM L3ClusterSize=16
 PARAM UFrequency=1.6
 PARAM UVoltage=0.8
 
-DEFINE ProcOff PROC Type=0 L1Size=0.064 L1Lat=3 L2Size=0.256 L2Lat=5 L3SizeEff=3.87879 OoO=1 Area=1.25 Freq=1.6 Volt=0.8 Epi=0.6 Pidle=0.0 Pleak=0.14 Pgated=0.0 L1Eacc=0.08 L1Pleak=0.01 L2Eacc=0.12 L2Pleak=0.03 Active=0
+DEFINE ProcOff PROC Type=0 L1Size=0.064 L1Lat=3 L2Size=0.256 L2Lat=5 L3SizeEff=3.87879 OoO=1 Area=1.25 Freq=1.6 Volt=0.8 Epi=0.6 Pidle=0.0 Pleak=0.14 Pgated=0.0 L1IEa=0.1 L1IEm=0.01 L1DErda=0.2 L1DErdm=0.02 L1DEwra=0.3 L1DEwrm=0.03 L2Erda=0.2 L2Erdm=0.02 L2Ewra=0.3 L2Ewrm=0.03 Active=0
 
-DEFINE ProcOn PROC Type=0 L1Size=0.064 L1Lat=3 L2Size=0.256 L2Lat=5 L3SizeEff=3.87879 OoO=1 Area=1.25 Freq=1.6 Volt=0.8 Epi=1.2 Pidle=0.34 Pleak=0.14 Pgated=0.0 L1Eacc=0.08 L1Pleak=0.01 L2Eacc=0.12 L2Pleak=0.03 Active=1
+DEFINE ProcOn PROC Type=0 L1Size=0.064 L1Lat=3 L2Size=0.256 L2Lat=5 L3SizeEff=3.87879 OoO=1 Area=1.25 Freq=1.6 Volt=0.8 Epi=1.2 Pidle=0.34 Pleak=0.14 Pgated=0.0 L1IEa=0.1 L1IEm=0.01 L1DErda=0.2 L1DErdm=0.02 L1DEwra=0.3 L1DEwrm=0.03 L2Erda=0.2 L2Erdm=0.02 L2Ewra=0.3 L2Ewrm=0.03 Active=1
 
-DEFINE ProcSleep PROC Type=0 L1Size=0.064 L1Lat=3 L2Size=0.256 L2Lat=5 L3SizeEff=3.87879 OoO=1 Area=1.25 Freq=0.0 Volt=0.8 Epi=0.6 Pidle=0.0 Pleak=0.14 Pgated=0.0 L1Eacc=0.08 L1Pleak=0.01 L2Eacc=0.12 L2Pleak=0.03 Active=1
+DEFINE ProcSleep PROC Type=0 L1Size=0.064 L1Lat=3 L2Size=0.256 L2Lat=5 L3SizeEff=3.87879 OoO=1 Area=1.25 Freq=0.0 Volt=0.8 Epi=0.6 Pidle=0.0 Pleak=0.14 Pgated=0.0 L1IEa=0.1 L1IEm=0.01 L1DErda=0.2 L1DErdm=0.02 L1DEwra=0.3 L1DEwrm=0.03 L2Erda=0.2 L2Erdm=0.02 L2Ewra=0.3 L2Ewrm=0.03 Active=1
 
 
 FUNCTION coreLeakageOfTemp = piecewise (300 0.01) (310 0.02) (320 0.02) (330 0.03) (340 0.05) (350 0.08) (360 0.15) (370 0.31) (380 0.59) (390 1.18) (400 2.0) 
 FUNCTION l1LeakageOfTemp = piecewise (300 0.01) (310 0.02) (320 0.02) (330 0.03) (340 0.05) (350 0.08) (360 0.15) (370 0.31) (380 0.59) (390 1.18) (400 2.0) 
+FUNCTION l1iLeakageOfTemp = piecewise (300 0.05) (310 0.02) (320 0.02) (330 0.03) (340 0.05) (350 0.08) (360 0.15) (370 0.31) (380 0.59) (390 1.18) (400 2.0) 
+FUNCTION l1dLeakageOfTemp = piecewise (300 0.05) (310 0.02) (320 0.02) (330 0.03) (340 0.05) (350 0.08) (360 0.15) (370 0.31) (380 0.59) (390 1.18) (400 2.0) 
 FUNCTION l2LeakageOfTemp = piecewise (300 0.01) (310 0.02) (320 0.02) (330 0.03) (340 0.05) (350 0.08) (360 0.15) (370 0.31) (380 0.59) (390 1.18) (400 2.0) 
 FUNCTION l3LeakageOfTemp = piecewise (300 0.01) (310 0.02) (320 0.02) (330 0.03) (340 0.05) (350 0.08) (360 0.15) (370 0.31) (380 0.59) (390 1.18) (400 2.0) 
 FUNCTION routerLeakageOfTemp = piecewise (300 0.01) (310 0.02) (320 0.02) (330 0.03) (340 0.05) (350 0.08) (360 0.15) (370 0.31) (380 0.59) (390 1.18) (400 2.0) 
 FUNCTION linksLeakageOfTemp = piecewise (300 0.01) (310 0.02) (320 0.02) (330 0.03) (340 0.05) (350 0.08) (360 0.15) (370 0.31) (380 0.59) (390 1.18) (400 2.0) 
 FUNCTION mcLeakageOfTemp = piecewise (300 0.01) (310 0.02) (320 0.02) (330 0.03) (340 0.05) (350 0.08) (360 0.15) (370 0.31) (380 0.59) (390 1.18) (400 2.0) 
 
+FUNCTION corePgLeakageOfTemp = piecewise (300 0.01) (310 0.02) (320 0.02) (330 0.03) (340 0.05) (350 0.08) (360 0.15) (370 0.31) (380 0.59) (390 1.18) (400 2.0) 
+FUNCTION l1PgLeakageOfTemp = piecewise (300 0.01) (310 0.02) (320 0.02) (330 0.03) (340 0.05) (350 0.08) (360 0.15) (370 0.31) (380 0.59) (390 1.18) (400 2.0) 
+FUNCTION l1iPgLeakageOfTemp = piecewise (300 0.05) (310 0.02) (320 0.02) (330 0.03) (340 0.05) (350 0.08) (360 0.15) (370 0.31) (380 0.59) (390 1.18) (400 2.0) 
+FUNCTION l1dPgLeakageOfTemp = piecewise (300 0.05) (310 0.02) (320 0.02) (330 0.03) (340 0.05) (350 0.08) (360 0.15) (370 0.31) (380 0.59) (390 1.18) (400 2.0) 
+FUNCTION l2PgLeakageOfTemp = piecewise (300 0.01) (310 0.02) (320 0.02) (330 0.03) (340 0.05) (350 0.08) (360 0.15) (370 0.31) (380 0.59) (390 1.18) (400 2.0) 
+FUNCTION l3PgLeakageOfTemp = piecewise (300 0.01) (310 0.02) (320 0.02) (330 0.03) (340 0.05) (350 0.08) (360 0.15) (370 0.31) (380 0.59) (390 1.18) (400 2.0) 
+FUNCTION routerPgLeakageOfTemp = piecewise (300 0.01) (310 0.02) (320 0.02) (330 0.03) (340 0.05) (350 0.08) (360 0.15) (370 0.31) (380 0.59) (390 1.18) (400 2.0) 
+FUNCTION linksPgLeakageOfTemp = piecewise (300 0.01) (310 0.02) (320 0.02) (330 0.03) (340 0.05) (350 0.08) (360 0.15) (370 0.31) (380 0.59) (390 1.18) (400 2.0) 
+FUNCTION mcPgLeakageOfTemp = piecewise (300 0.01) (310 0.02) (320 0.02) (330 0.03) (340 0.05) (350 0.08) (360 0.15) (370 0.31) (380 0.59) (390 1.18) (400 2.0) 
 
-MESH Col=4 Row=4 ColWidth=6 RowHeight=5 LinkDelay=2 RouterDelay=3
+
+MESH Col=4 Row=4 ColWidth=6 RowHeight=5 LinkDelay=2 RouterDelay=3 LinkEpf=0.15 RouterEpf=0.25
   BUS CompCnt=3 AccessTime=2
     ProcOn
-    MEM Size=2 Eacc=0.18 Pleak=0.15
+    MEM Size=2 Erda=0.2 Erdm=0.02 Ewra=0.3 Ewrm=0.03 
     NI
   BUS CompCnt=3 AccessTime=2
     ProcOn
-    MEM Size=2 Eacc=0.18 Pleak=0.15
+    MEM Size=2 Erda=0.2 Erdm=0.02 Ewra=0.3 Ewrm=0.03 
     NI
   BUS CompCnt=3 AccessTime=2
     ProcOn
-    MEM Size=2 Eacc=0.18 Pleak=0.15
+    MEM Size=2 Erda=0.2 Erdm=0.02 Ewra=0.3 Ewrm=0.03 
     NI
   BUS CompCnt=3 AccessTime=2
     ProcOn
-    MEM Size=2 Eacc=0.18 Pleak=0.15
+    MEM Size=2 Erda=0.2 Erdm=0.02 Ewra=0.3 Ewrm=0.03 
     NI
   BUS CompCnt=3 AccessTime=2
     ProcOn
-    MEM Size=2 Eacc=0.18 Pleak=0.15
+    MEM Size=2 Erda=0.2 Erdm=0.02 Ewra=0.3 Ewrm=0.03 
     NI
   BUS CompCnt=3 AccessTime=2
     ProcOn
-    MEM Size=2 Eacc=0.18 Pleak=0.15
+    MEM Size=2 Erda=0.2 Erdm=0.02 Ewra=0.3 Ewrm=0.03 
     NI
   BUS CompCnt=3 AccessTime=2
     ProcOn
-    MEM Size=2 Eacc=0.18 Pleak=0.15
+    MEM Size=2 Erda=0.2 Erdm=0.02 Ewra=0.3 Ewrm=0.03 
     NI
   BUS CompCnt=3 AccessTime=2
     ProcOn
-    MEM Size=2 Eacc=0.18 Pleak=0.15
+    MEM Size=2 Erda=0.2 Erdm=0.02 Ewra=0.3 Ewrm=0.03 
     NI
   BUS CompCnt=3 AccessTime=2
     ProcOn
-    MEM Size=2 Eacc=0.18 Pleak=0.15
+    MEM Size=2 Erda=0.2 Erdm=0.02 Ewra=0.3 Ewrm=0.03 
     NI
   BUS CompCnt=3 AccessTime=2
     ProcOn
-    MEM Size=2 Eacc=0.18 Pleak=0.15
+    MEM Size=2 Erda=0.2 Erdm=0.02 Ewra=0.3 Ewrm=0.03 
     NI
   BUS CompCnt=3 AccessTime=2
     ProcOn
-    MEM Size=2 Eacc=0.18 Pleak=0.15
+    MEM Size=2 Erda=0.2 Erdm=0.02 Ewra=0.3 Ewrm=0.03 
     NI
   BUS CompCnt=3 AccessTime=2
     ProcOn
-    MEM Size=2 Eacc=0.18 Pleak=0.15
+    MEM Size=2 Erda=0.2 Erdm=0.02 Ewra=0.3 Ewrm=0.03 
     NI
   BUS CompCnt=3 AccessTime=2
     ProcOn
-    MEM Size=2 Eacc=0.18 Pleak=0.15
+    MEM Size=2 Erda=0.2 Erdm=0.02 Ewra=0.3 Ewrm=0.03 
     NI
   BUS CompCnt=3 AccessTime=2
     ProcOn
-    MEM Size=2 Eacc=0.18 Pleak=0.15
+    MEM Size=2 Erda=0.2 Erdm=0.02 Ewra=0.3 Ewrm=0.03 
     NI
   BUS CompCnt=3 AccessTime=2
     ProcOn
-    MEM Size=2 Eacc=0.18 Pleak=0.15
+    MEM Size=2 Erda=0.2 Erdm=0.02 Ewra=0.3 Ewrm=0.03 
     NI
   BUS CompCnt=3 AccessTime=2
     ProcOn
-    MEM Size=2 Eacc=0.18 Pleak=0.15
+    MEM Size=2 Erda=0.2 Erdm=0.02 Ewra=0.3 Ewrm=0.03 
     NI
 
-MEMCTRL Location=West Latency=62.5 Eacc=0.13 Pleak=0.1
-MEMCTRL Location=East Latency=62.5 Eacc=0.13 Pleak=0.1
+MEMCTRL Location=West Latency=62.5 Eacc=0.13 Pidle=0.5 Active=1
+MEMCTRL Location=East Latency=62.5 Eacc=0.13 Pidle=0.5 Active=1

@@ -19,11 +19,13 @@
 
 #include <string>
 #include <vector>
+#include "CmpBuilder.hpp"
 
 using std::string;
 using std::vector;
 
 namespace cmpex {
+
 
   namespace cmp {
     class Component;
@@ -54,6 +56,10 @@ namespace cmpex {
 
       static vector<double> L1Power_;
 
+      static vector<double> L1IPower_;
+
+      static vector<double> L1DPower_;
+
       static vector<double> L2Power_;
 
       static vector<double> L3Power_;
@@ -66,6 +72,12 @@ namespace cmpex {
 
     public:
 
+      // Leakage power of memory controller
+      static double McPleakOfTemp(double tmp);
+      
+      // Leakage power of memory controller in power gating state
+      static double McPgPleakOfTemp(double tmp);
+      
       // Calculates power of given configuration
       static double GetTotalPower(cmp::Component * cmp);
 
@@ -106,6 +118,8 @@ namespace cmpex {
 
       static double FScalPowerProc ( double freq );
 
+      static double FScalPowerMc ( double freq );
+
       static double VoltAtFreqProc ( double freq );
 
     public:
@@ -127,6 +141,8 @@ namespace cmpex {
     private:
 
     };
+
+
 
   } // namespace power
 

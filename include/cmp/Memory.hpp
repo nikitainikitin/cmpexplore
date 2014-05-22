@@ -69,6 +69,14 @@ namespace cmpex {
 
       inline double Pleak() const;
 
+      inline double Erda() const;
+
+      inline double Erdm() const;
+
+      inline double Ewra() const;
+
+      inline double Ewrm() const;
+
       inline double PleakOfTemp(double tmp) const;
       
       inline double PgPleakOfTemp(double tmp) const;
@@ -123,6 +131,14 @@ namespace cmpex {
 
       inline void SetPleak ( double p );
 
+      inline void SetErda ( double e );
+
+      inline void SetErdm ( double e );
+
+      inline void SetEwra ( double e );
+
+      inline void SetEwrm ( double e );
+
     private:
 
       // Deprecated methods: prevent usage
@@ -153,6 +169,14 @@ namespace cmpex {
       double eacc_; // access energy
 
       double pleak_; // leakage power
+
+      double Erda_; // read access energy 
+
+      double Erdm_; // additional read miss access energy 
+
+      double Ewra_; // write access energy 
+
+      double Ewrm_; // additional write miss access energy 
 
       bool active_; // whether the memory is active ot not
 
@@ -212,6 +236,38 @@ namespace cmpex {
 
     void Memory::SetEacc ( double e ) {
       eacc_ = e;
+    }
+
+    double Memory::Erda () const {
+      return Erda_;
+    }
+
+    double Memory::Erdm () const {
+      return Erdm_;
+    }
+
+    double Memory::Ewra () const {
+      return Ewra_;
+    }
+
+    double Memory::Ewrm () const {
+      return Ewrm_;
+    }
+
+    void Memory::SetErda ( double e ) {
+      Erda_ = e;
+    }
+
+    void Memory::SetErdm ( double e ) {
+      Erdm_ = e;
+    }
+
+    void Memory::SetEwra ( double e ) {
+      Ewra_ = e;
+    }
+
+    void Memory::SetEwrm ( double e ) {
+      Ewrm_ = e;
     }
 
     double Memory::Pleak () const {

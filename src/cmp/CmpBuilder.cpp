@@ -397,6 +397,9 @@ Component * CmpBuilder::ReadProcessor (
     else if (arg.name == "Active") {
       p->SetActive(StrToInt(arg.value));
     }
+    else if (arg.name == "Sleep") {
+      p->SetSleep(StrToInt(arg.value));
+    }
     /*else if (arg.name == "L1AccProb") {
       p->SetL1AccProb(StrToDouble(arg.value));
     }
@@ -438,6 +441,36 @@ Component * CmpBuilder::ReadProcessor (
     }
     else if (arg.name == "L2Pleak") {
       p->SetL2Pleak(StrToDouble(arg.value));
+    }
+    else if (arg.name == "L1IEa") {
+      p->SetL1IEa(StrToDouble(arg.value));
+    }
+    else if (arg.name == "L1IEm") {
+      p->SetL1IEm(StrToDouble(arg.value));
+    }
+    else if (arg.name == "L1DErda") {
+      p->SetL1DErda(StrToDouble(arg.value));
+    }
+    else if (arg.name == "L1DErdm") {
+      p->SetL1DErdm(StrToDouble(arg.value));
+    }
+    else if (arg.name == "L1DEwra") {
+      p->SetL1DEwra(StrToDouble(arg.value));
+    }
+    else if (arg.name == "L1DEwrm") {
+      p->SetL1DEwrm(StrToDouble(arg.value));
+    }
+    else if (arg.name == "L2Erda") {
+      p->SetL2Erda(StrToDouble(arg.value));
+    }
+    else if (arg.name == "L2Erdm") {
+      p->SetL2Erdm(StrToDouble(arg.value));
+    }
+    else if (arg.name == "L2Ewra") {
+      p->SetL2Ewra(StrToDouble(arg.value));
+    }
+    else if (arg.name == "L2Ewrm") {
+      p->SetL2Ewrm(StrToDouble(arg.value));
     }
   }
   
@@ -487,6 +520,18 @@ Component * CmpBuilder::ReadMemory (
     }
     else if (arg.name == "Pleak") {
       m->SetPleak(StrToDouble(arg.value));
+    }
+    else if (arg.name == "Erda") {
+      m->SetErda(StrToDouble(arg.value));
+    }
+    else if (arg.name == "Erdm") {
+      m->SetErdm(StrToDouble(arg.value));
+    }
+    else if (arg.name == "Ewra") {
+      m->SetEwra(StrToDouble(arg.value));
+    }
+    else if (arg.name == "Ewrm") {
+      m->SetEwrm(StrToDouble(arg.value));
     }
   }
 
@@ -547,8 +592,16 @@ Component * CmpBuilder::ReadMesh (
       mesh->RouterDelay(StrToInt(arg.value));
       DASSERT(mesh->RouterDelay() > 0);
     }
+    else if (arg.name == "LinkEpf") {
+      mesh->LinkEpf(StrToDouble(arg.value));
+    }
+    else if (arg.name == "RouterEpf") {
+      mesh->RouterEpf(StrToDouble(arg.value));
+    }
   }
-  
+
+  mesh->CreateInitActive(colNum*rowNum);
+
   mesh->Init(colNum, rowNum);
 
   // recursively read and create subcomponents
@@ -769,38 +822,93 @@ Component * CmpBuilder::ReadXBar (
 
 model::Function * CmpBuilder::coreLeakageOfTemp_;
 model::Function * CmpBuilder::l1LeakageOfTemp_;
+model::Function * CmpBuilder::l1iLeakageOfTemp_;
+model::Function * CmpBuilder::l1dLeakageOfTemp_;
 model::Function * CmpBuilder::l2LeakageOfTemp_;
 model::Function * CmpBuilder::l3LeakageOfTemp_;
 model::Function * CmpBuilder::routerLeakageOfTemp_;
 model::Function * CmpBuilder::linksLeakageOfTemp_;
 model::Function * CmpBuilder::mcLeakageOfTemp_;
+model::Function * CmpBuilder::corePgLeakageOfTemp_;
+model::Function * CmpBuilder::l1PgLeakageOfTemp_;
+model::Function * CmpBuilder::l1iPgLeakageOfTemp_;
+model::Function * CmpBuilder::l1dPgLeakageOfTemp_;
+model::Function * CmpBuilder::l2PgLeakageOfTemp_;
+model::Function * CmpBuilder::l3PgLeakageOfTemp_;
+model::Function * CmpBuilder::routerPgLeakageOfTemp_;
+model::Function * CmpBuilder::linksPgLeakageOfTemp_;
+model::Function * CmpBuilder::mcPgLeakageOfTemp_;
 
 double CmpBuilder::CoreLeakageOfTemp(double tmp)  {
   return coreLeakageOfTemp_->eval(tmp);
 }
 
 double CmpBuilder::L1LeakageOfTemp(double tmp)  {
-  return coreLeakageOfTemp_->eval(tmp);
+  return l1LeakageOfTemp_->eval(tmp);
+}
+
+double CmpBuilder::L1ILeakageOfTemp(double tmp)  {
+  return l1iLeakageOfTemp_->eval(tmp);
+}
+
+double CmpBuilder::L1DLeakageOfTemp(double tmp)  {
+  return l1dLeakageOfTemp_->eval(tmp);
 }
 
 double CmpBuilder::L2LeakageOfTemp(double tmp)  {
-  return coreLeakageOfTemp_->eval(tmp);
+  return l2LeakageOfTemp_->eval(tmp);
 }
 
 double CmpBuilder::L3LeakageOfTemp(double tmp)  {
-  return coreLeakageOfTemp_->eval(tmp);
+  return l3LeakageOfTemp_->eval(tmp);
 }
 
 double CmpBuilder::RouterLeakageOfTemp(double tmp)  {
-  return coreLeakageOfTemp_->eval(tmp);
+  return routerLeakageOfTemp_->eval(tmp);
 }
 
 double CmpBuilder::LinksLeakageOfTemp(double tmp)  {
-  return coreLeakageOfTemp_->eval(tmp);
+  return linksLeakageOfTemp_->eval(tmp);
 }
 
 double CmpBuilder::McLeakageOfTemp(double tmp)  {
-  return coreLeakageOfTemp_->eval(tmp);
+  return mcLeakageOfTemp_->eval(tmp);
+}
+
+double CmpBuilder::CorePgLeakageOfTemp(double tmp)  {
+  return corePgLeakageOfTemp_->eval(tmp);
+}
+
+double CmpBuilder::L1PgLeakageOfTemp(double tmp)  {
+  return l1PgLeakageOfTemp_->eval(tmp);
+}
+
+double CmpBuilder::L1IPgLeakageOfTemp(double tmp)  {
+  return l1iPgLeakageOfTemp_->eval(tmp);
+}
+
+double CmpBuilder::L1DPgLeakageOfTemp(double tmp)  {
+  return l1dPgLeakageOfTemp_->eval(tmp);
+}
+
+double CmpBuilder::L2PgLeakageOfTemp(double tmp)  {
+  return l2PgLeakageOfTemp_->eval(tmp);
+}
+
+double CmpBuilder::L3PgLeakageOfTemp(double tmp)  {
+  return l3PgLeakageOfTemp_->eval(tmp);
+}
+
+double CmpBuilder::RouterPgLeakageOfTemp(double tmp)  {
+  return routerPgLeakageOfTemp_->eval(tmp);
+}
+
+double CmpBuilder::LinksPgLeakageOfTemp(double tmp)  {
+  return linksPgLeakageOfTemp_->eval(tmp);
+}
+
+double CmpBuilder::McPgLeakageOfTemp(double tmp)  {
+  return mcPgLeakageOfTemp_->eval(tmp);
 }
 
 
@@ -829,6 +937,12 @@ void CmpBuilder::ReadFunction (string& entry)
   else if (name == "l1LeakageOfTemp") {
     l1LeakageOfTemp_ = Function::ParseFunction(value);
   }
+  else if (name == "l1iLeakageOfTemp") {
+    l1iLeakageOfTemp_ = Function::ParseFunction(value);
+  }
+  else if (name == "l1dLeakageOfTemp") {
+    l1dLeakageOfTemp_ = Function::ParseFunction(value);
+  }
   else if (name == "l2LeakageOfTemp") {
     l2LeakageOfTemp_ = Function::ParseFunction(value);
   }
@@ -843,8 +957,33 @@ void CmpBuilder::ReadFunction (string& entry)
   }
   else if (name == "mcLeakageOfTemp") {
     mcLeakageOfTemp_ = Function::ParseFunction(value);
-    //double leaktest=McLeakageOfTemp(temp);
-    //cout <<"DEBUG: TEMP = 305, MC LEAKAGE = "<<leaktest << endl;
+  }
+  else if (name == "corePgLeakageOfTemp") {
+    corePgLeakageOfTemp_ = Function::ParseFunction(value);
+  }
+  else if (name == "l1PgLeakageOfTemp") {
+    l1PgLeakageOfTemp_ = Function::ParseFunction(value);
+  }
+  else if (name == "l1iPgLeakageOfTemp") {
+    l1iPgLeakageOfTemp_ = Function::ParseFunction(value);
+  }
+  else if (name == "l1dPgLeakageOfTemp") {
+    l1dPgLeakageOfTemp_ = Function::ParseFunction(value);
+  }
+  else if (name == "l2PgLeakageOfTemp") {
+    l2PgLeakageOfTemp_ = Function::ParseFunction(value);
+  }
+  else if (name == "l3PgLeakageOfTemp") {
+    l3PgLeakageOfTemp_ = Function::ParseFunction(value);
+  }
+  else if (name == "routerPgLeakageOfTemp") {
+    routerPgLeakageOfTemp_ = Function::ParseFunction(value);
+  }
+  else if (name == "linksPgLeakageOfTemp") {
+    linksPgLeakageOfTemp_ = Function::ParseFunction(value);
+  }
+  else if (name == "mcPgLeakageOfTemp") {
+    mcPgLeakageOfTemp_ = Function::ParseFunction(value);
   }
   else {
     cout << "-W-: Unknown parameter " << name << endl;
@@ -922,7 +1061,8 @@ void CmpBuilder::ReadMemCtrl (string& entry)
   entry.erase(0, entry.find(' ')+1); // erase type
   
   string type;
-  double lat, eacc, pleak;
+  double lat, eacc, pidle, pleak;
+  bool active=0;
   
   while (HasMoreArgs(entry)) { // handle arguments
     Argument arg = ExtractNextArg(entry);
@@ -935,15 +1075,22 @@ void CmpBuilder::ReadMemCtrl (string& entry)
     else if (arg.name == "Eacc") {
       eacc = StrToDouble(arg.value);
     }
+    else if (arg.name == "Pidle") {
+      pidle = StrToDouble(arg.value);
+    }
     else if (arg.name == "Pleak") {
       pleak = StrToDouble(arg.value);
     }
+    else if (arg.name == "Active") {
+      active = StrToInt(arg.value);
+    }
   }
-  
-  cmpConfig.AddMemCtrl(type, lat, eacc, pleak);
+
+  cmpConfig.AddMemCtrl(type, active, lat, eacc, pidle, pleak);
   
   DEBUG(5, "Added memory controller " << type << ", lat = " << lat
-           << ", eacc = " << eacc << ", pleak = " << pleak << endl);
+	<< ", eacc = " << eacc << ", pleak = " << pleak 
+	<< ", pidle = " << pidle <<endl);
 }
 
 //=======================================================================

@@ -141,6 +141,10 @@ namespace cmpex {
 
       static double L1LeakageOfTemp(double tmp);
 
+      static double L1ILeakageOfTemp(double tmp);
+
+      static double L1DLeakageOfTemp(double tmp);
+
       static double L2LeakageOfTemp(double tmp);
 
       static double L3LeakageOfTemp(double tmp);
@@ -151,6 +155,24 @@ namespace cmpex {
 
       static double McLeakageOfTemp(double tmp);
 
+      static double CorePgLeakageOfTemp(double tmp);
+
+      static double L1PgLeakageOfTemp(double tmp);
+
+      static double L1IPgLeakageOfTemp(double tmp);
+
+      static double L1DPgLeakageOfTemp(double tmp);
+
+      static double L2PgLeakageOfTemp(double tmp);
+
+      static double L3PgLeakageOfTemp(double tmp);
+
+      static double RouterPgLeakageOfTemp(double tmp);
+
+      static double LinksPgLeakageOfTemp(double tmp);
+
+      static double McPgLeakageOfTemp(double tmp);
+
    protected:
 
     private:
@@ -158,6 +180,10 @@ namespace cmpex {
       static model::Function * coreLeakageOfTemp_;
       
       static model::Function * l1LeakageOfTemp_;
+      
+      static model::Function * l1iLeakageOfTemp_;
+      
+      static model::Function * l1dLeakageOfTemp_;
       
       static model::Function * l2LeakageOfTemp_;
       
@@ -168,6 +194,24 @@ namespace cmpex {
       static model::Function * linksLeakageOfTemp_;
 
       static model::Function * mcLeakageOfTemp_;
+
+      static model::Function * corePgLeakageOfTemp_;
+      
+      static model::Function * l1PgLeakageOfTemp_;
+      
+      static model::Function * l1iPgLeakageOfTemp_;
+      
+      static model::Function * l1dPgLeakageOfTemp_;
+      
+      static model::Function * l2PgLeakageOfTemp_;
+      
+      static model::Function * l3PgLeakageOfTemp_;
+      
+      static model::Function * routerPgLeakageOfTemp_;
+
+      static model::Function * linksPgLeakageOfTemp_;
+
+      static model::Function * mcPgLeakageOfTemp_;
 
       // Deprecated methods: prevent usage
       CmpBuilder ();

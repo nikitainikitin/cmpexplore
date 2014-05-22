@@ -24,8 +24,14 @@
 #include <GGraph.hpp>
 #include "MeshIcTile.hpp"
 #include "MeshIcLink.hpp"
+#include "CmpBuilder.hpp"
+
+using std::cout;
+using std::endl;
 
 namespace cmpex {
+
+  extern cmp::CmpBuilder cmpBuilder;
 
   namespace cmp {
 
@@ -80,12 +86,28 @@ namespace cmpex {
 
       inline double LinkDelayNs () const;
 
+      inline double LinkEpf () const;
+
+      inline void LinkEpf ( double epf );
+
+      inline double LinkPleakOfTemp(double tmp) const;
+      
+      inline double LinkPgPleakOfTemp(double tmp) const;
+      
       inline int RouterDelay () const;
 
       inline void RouterDelay ( int d );
 
       inline double RouterDelayNs () const;
 
+      inline double RouterEpf () const;
+
+      inline void RouterEpf ( double epf );
+
+      inline double RouterPleakOfTemp(double tmp) const;
+      
+      inline double RouterPgPleakOfTemp(double tmp) const;
+      
       inline int TCnt() const;
 
       inline const MeshIcTile * GetTile ( int idx ) const;
@@ -194,6 +216,18 @@ namespace cmpex {
       // Access value of buffer delay for 'iPort' of router 'rIdx'.
       inline double& BufDelay (UShort subnIdx, UShort rIdx, RouteDir iPort);
 
+      // Create active vector and set all routers to active
+      inline void CreateInitActive (UShort rNum );
+
+      // Set all routers to active
+      inline void SetAllActive ( );
+
+      // Set a router to active
+      inline void SetActive (UShort rIdx);
+
+      // Get active status for given router
+      inline bool Active (UShort rIdx);
+
       // Debug methods
       void Print () const;
 
@@ -216,6 +250,10 @@ namespace cmpex {
 
       int routerDelay_; // router delay (in cycles)
 
+      double linkEpf_; //Energy per flit (nJ)
+
+      double routerEpf_; //Energy per flit (nJ)
+
       // Matrix of traffic rates per IO-port pair per router per subnetwork.
       // To access the value of traffic from input port I to output port O
       // of router R in subnetwork S, use the the index
@@ -228,6 +266,9 @@ namespace cmpex {
       // use the the index bufDelays_[S*TCnt()*PORT_NUM + R*PORT_NUM + I].
       // It is assumed there're 5 input ports per router.
       DoubleArray bufDelays_;
+
+      // Active status of routers
+      vector<bool> active_;
 
     };
 
@@ -263,6 +304,22 @@ namespace cmpex {
       return linkDelay_/Freq();
     }
 
+    double MeshIc::LinkEpf () const {
+      return linkEpf_;
+    }
+
+    void MeshIc::LinkEpf (double epf) {
+      linkEpf_ = epf;
+    }
+
+    double MeshIc::LinkPleakOfTemp ( double tmp ) const {
+      return cmpBuilder.LinksLeakageOfTemp(tmp);
+    }
+
+    double MeshIc::LinkPgPleakOfTemp ( double tmp ) const {
+      return cmpBuilder.LinksPgLeakageOfTemp(tmp);
+    }
+
     int MeshIc::RouterDelay () const {
       return routerDelay_;
     }
@@ -273,6 +330,22 @@ namespace cmpex {
 
     double MeshIc::RouterDelayNs () const {
       return routerDelay_/Freq();
+    }
+
+    double MeshIc::RouterEpf () const {
+      return routerEpf_;
+    }
+
+    void MeshIc::RouterEpf (double epf) {
+      routerEpf_ = epf;
+    }
+
+    double MeshIc::RouterPleakOfTemp ( double tmp ) const {
+      return cmpBuilder.RouterLeakageOfTemp(tmp);
+    }
+
+    double MeshIc::RouterPgPleakOfTemp ( double tmp ) const {
+      return cmpBuilder.RouterPgLeakageOfTemp(tmp);
     }
 
     int MeshIc::TCnt () const {
@@ -305,6 +378,23 @@ namespace cmpex {
 
     double& MeshIc::BufDelay (UShort subnIdx, UShort rIdx, RouteDir iPort) {
       return bufDelays_[subnIdx*TCnt()*PORT_NUM + rIdx*PORT_NUM + iPort];
+    }
+
+    void MeshIc::SetAllActive ( ) {
+      std::fill(active_.begin(),active_.end(),1);
+    }
+
+    void MeshIc::CreateInitActive (UShort rNum ) {
+      active_.resize(rNum);
+      active_.assign(rNum,1);
+    }
+
+    void MeshIc::SetActive (UShort rIdx ) {
+      active_[rIdx]=1;
+    }
+
+    bool MeshIc::Active (UShort rIdx) {
+      return active_[rIdx];
     }
 
   } // namespace cmp

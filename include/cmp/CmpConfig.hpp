@@ -72,13 +72,15 @@ namespace cmpex {
       // once MC placement has to be investigated.
       struct MemCtrl {
         std::string name;
+	bool active; // active or off
         double latency; // latency unit is [ns]
         double eacc; // access energy
+	double pidle; // idle dynamic power
         double pleak; // leakage power
         double lambda; // runtime parameter: number of accesses per ns
         double bufDelay; // contention delay in the input queue
-        MemCtrl (std::string n, double l, double e, double p) :
-          name (n), latency (l), eacc (e), pleak (p), lambda (0.0) {}
+        MemCtrl (std::string n, bool a, double l, double e, double pi, double p) :
+          name (n), active (a), latency (l), eacc (e), pidle (pi), pleak (p), lambda (0.0) {}
       };
 
       // Data structure for a workload application.
@@ -187,7 +189,7 @@ namespace cmpex {
 
       inline void ProcMinVoltFreq ( double f );
 
-      inline void AddMemCtrl ( const std::string& n, double l, double e, double p );
+      inline void AddMemCtrl ( const std::string& n, bool a, double l, double e, double pi, double p );
 
       inline int MemCtrlCnt () const;
 
@@ -546,8 +548,8 @@ namespace cmpex {
       procMinVoltFreq_ = f;
     }
 
-    void CmpConfig::AddMemCtrl ( const std::string& n, double l, double e, double p ) {
-      memCtrl_.push_back(MemCtrl(n,l,e,p));
+    void CmpConfig::AddMemCtrl ( const std::string& n, bool a, double l, double e, double pi, double p ) {
+      memCtrl_.push_back(MemCtrl(n,a,l,e,pi,p));
     }
 
     int CmpConfig::MemCtrlCnt () const {

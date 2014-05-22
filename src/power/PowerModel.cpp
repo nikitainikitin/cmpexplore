@@ -41,6 +41,7 @@ using namespace std;
 namespace cmpex {
   
   extern cmp::CmpConfig cmpConfig;
+  extern cmp::CmpBuilder cmpBuilder;
   extern Config config;
 
   using namespace cmp;
@@ -58,6 +59,8 @@ PowerModel::~PowerModel() {}
 
 vector<double> PowerModel::corePower_;
 vector<double> PowerModel::L1Power_;
+vector<double> PowerModel::L1IPower_;
+vector<double> PowerModel::L1DPower_;
 vector<double> PowerModel::L2Power_;
 vector<double> PowerModel::L3Power_;
 vector<double> PowerModel::MCPower_;
@@ -73,6 +76,8 @@ double PowerModel::GetTotalPower(Component * cmp)
 {
   corePower_.assign(cmpConfig.ProcCnt(), 0.0);
   L1Power_.assign(cmpConfig.ProcCnt(), 0.0);
+  L1IPower_.assign(cmpConfig.ProcCnt(), 0.0);
+  L1DPower_.assign(cmpConfig.ProcCnt(), 0.0);
   L2Power_.assign(cmpConfig.ProcCnt(), 0.0);
   L3Power_.assign(cmpConfig.MemCnt(), 0.0);
   MCPower_.assign(cmpConfig.MemCtrlCnt(), 0.0);
@@ -86,25 +91,81 @@ double PowerModel::GetTotalPower(Component * cmp)
     Processor * proc = cmpConfig.GetProcessor(p);
 
     // core
+    /*if (proc->Active() && !proc->Sleep()) {
+      corePower_[p] = proc->Pidle() * VScalDynPowerProc(proc->Volt()) * FScalPowerProc(proc->Freq()) +
+	proc->Epi() * VScalDynPowerProc(proc->Volt()) * proc->Thr() +
+	proc->CorePleakOfTemp(300.0) * VScalLeakPowerProc(proc->Volt());
+      L1Power_[p] = proc->L1Eacc() * VScalDynPowerProc(proc->Volt()) * proc->Lambda()*proc->L1AccessProbability() +
+	proc->L1PleakOfTemp(300.0) * VScalLeakPowerProc(proc->Volt());
+      L2Power_[p] = proc->L2Eacc() * VScalDynPowerProc(proc->Volt()) * proc->Lambda()*proc->L2AccessProbability() +
+	proc->L2PleakOfTemp(300.0) * VScalLeakPowerProc(proc->Volt());
+    }
+    else if (proc->Active() && proc->Sleep()) {
+      corePower_[p] = proc->CorePgPleakOfTemp(300.0) * VScalLeakPowerProc(proc->Volt());
+      L1Power_[p] = proc->L1PgPleakOfTemp(300.0) * VScalLeakPowerProc(proc->Volt());
+      L2Power_[p] = proc->L2PgPleakOfTemp(300.0) * VScalLeakPowerProc(proc->Volt());
+    }
+    else {
+      corePower_[p] = 0.0;
+      L1Power_[p] = 0.0;
+      L2Power_[p] = 0.0;
+      }*/
+
     corePower_[p] = proc->Active() ?
       proc->Pidle() * VScalDynPowerProc(proc->Volt()) * FScalPowerProc(proc->Freq()) +
       proc->Epi() * VScalDynPowerProc(proc->Volt()) * proc->Thr() +
-      proc->PleakOfTemp(300.0) * VScalLeakPowerProc(proc->Volt()) : proc->Pgated();
+      proc->CorePleakOfTemp(300.0) * VScalLeakPowerProc(proc->Volt()) : 
+      proc->CorePgPleakOfTemp(300.0) * VScalLeakPowerProc(proc->Volt());
 
     // l1
-    L1Power_[p] = proc->Active() ?
-                    proc->L1Eacc() * VScalDynPowerProc(proc->Volt()) * proc->Lambda()*proc->L1AccessProbability() +
-                    proc->L1Pleak() * VScalLeakPowerProc(proc->Volt()) : 0.0;
+    /*L1Power_[p] = proc->Active() ?
+      proc->L1Eacc() * VScalDynPowerProc(proc->Volt()) * proc->Lambda()*proc->L1AccessProbability() +
+      proc->L1PleakOfTemp(300.0) * VScalLeakPowerProc(proc->Volt()) : 
+      proc->L1PgPleakOfTemp(300.0) * VScalLeakPowerProc(proc->Volt());*/
 
+    // l1I
+    double l1imr = 0.0; // FIXME: miss rate in L1I is assumed zero
+    L1IPower_[p] = proc->Active() ?
+      (proc->L1IEa() + l1imr*proc->L1IEm()) * VScalDynPowerProc(proc->Volt()) * proc->Thr() +
+      proc->L1IPleakOfTemp(300.0) * VScalLeakPowerProc(proc->Volt()) : 
+      proc->L1IPgPleakOfTemp(300.0) * VScalLeakPowerProc(proc->Volt());
+
+    // l1D
+    double l1dwr = 0.333; // FIXME
+    double l1drd = 0.667; // FIXME
+    double l1dmr = proc->L2AccessProbability();
+    L1DPower_[p] = proc->Active() ?
+      (proc->L1DErda()*l1drd + proc->L1DEwra()*l1dwr + 
+       l1dmr * (proc->L1DErdm()*l1drd + proc->L1DEwrm()*l1dwr) ) * 
+      VScalDynPowerProc(proc->Volt()) * proc->Lambda()*proc->L1AccessProbability() +
+      proc->L1DPleakOfTemp(300.0) * VScalLeakPowerProc(proc->Volt()) : 
+      proc->L1DPgPleakOfTemp(300.0) * VScalLeakPowerProc(proc->Volt());
+
+    /*
     // l2
     L2Power_[p] = proc->Active() ?
-                    proc->L2Eacc() * VScalDynPowerProc(proc->Volt()) * proc->Lambda()*proc->L2AccessProbability() +
-                    proc->L2Pleak() * VScalLeakPowerProc(proc->Volt()) : 0.0;
+      proc->L2Eacc() * VScalDynPowerProc(proc->Volt()) * proc->Lambda()*proc->L2AccessProbability() +
+      proc->L2PleakOfTemp(300.0) * VScalLeakPowerProc(proc->Volt()) : 
+      proc->L2PgPleakOfTemp(300.0) * VScalLeakPowerProc(proc->Volt()); */
+
+    // l2
+    double l2wr = 0.333; // FIXME
+    double l2rd = 0.667; // FIXME
+    double l2mr = proc->L3AccessProbability();
+    L2Power_[p] = proc->Active() ?
+      (proc->L2Erda()*l2rd + proc->L2Ewra()*l2wr + 
+       l2mr * (proc->L2Erdm()*l2rd + proc->L2Ewrm()*l2wr) ) * 
+      VScalDynPowerProc(proc->Volt()) * proc->Lambda()*proc->L2AccessProbability() +
+      proc->L2PleakOfTemp(300.0) * VScalLeakPowerProc(proc->Volt()) : 
+      proc->L2PgPleakOfTemp(300.0) * VScalLeakPowerProc(proc->Volt());
+
   }
 
   double core_power = 0.0;
   core_power += accumulate(corePower_.begin(), corePower_.end(), 0.0);
-  core_power += accumulate(L1Power_.begin(), L1Power_.end(), 0.0);
+  //core_power += accumulate(L1Power_.begin(), L1Power_.end(), 0.0);
+  core_power += accumulate(L1IPower_.begin(), L1IPower_.end(), 0.0);
+  core_power += accumulate(L1DPower_.begin(), L1DPower_.end(), 0.0);
   core_power += accumulate(L2Power_.begin(), L2Power_.end(), 0.0);
   power += core_power;
 
@@ -115,8 +176,19 @@ double PowerModel::GetTotalPower(Component * cmp)
   for (int m = 0; m < cmpConfig.MemCnt(); ++m) {
     Memory * mem = cmpConfig.GetMemory(m);
 
-    L3Power_[m] = mem->Eacc() * VScalDynPowerUncore(cmpConfig.UVolt()) * mem->Lambda() +
-                  mem->Pleak() * VScalLeakPowerUncore(cmpConfig.UVolt());
+    /*L3Power_[m] = mem->Active() ? mem->Eacc() * VScalDynPowerUncore(cmpConfig.UVolt()) * mem->Lambda() +
+      mem->PleakOfTemp(300.0) * VScalLeakPowerUncore(cmpConfig.UVolt()) :
+      mem->PgPleakOfTemp(300.0) * VScalLeakPowerUncore(cmpConfig.UVolt());*/
+
+    double l3wr = 0.333; // FIXME
+    double l3rd = 0.667; // FIXME
+    double l3mr = 0.0; // FIXME
+    L3Power_[m] = mem->Active() ?
+      (mem->Erda()*l3rd + mem->Ewra()*l3wr + 
+       l3mr * (mem->Erdm()*l3rd + mem->Ewrm()*l3wr) ) * 
+      VScalDynPowerUncore(cmpConfig.UVolt()) * mem->Lambda() +
+      mem->PleakOfTemp(300.0) * VScalLeakPowerUncore(cmpConfig.UVolt()) :
+      mem->PgPleakOfTemp(300.0) * VScalLeakPowerUncore(cmpConfig.UVolt());
   }
 
   double l3Power = 0.0;
@@ -129,8 +201,15 @@ double PowerModel::GetTotalPower(Component * cmp)
   for (int mc = 0; mc < cmpConfig.MemCtrlCnt(); ++mc) {
     CmpConfig::MemCtrl * memCtrl = cmpConfig.GetMemCtrl(mc);
 
-    MCPower_[mc] = memCtrl->eacc * VScalDynPowerMc(cmpConfig.UVolt()) * memCtrl->lambda +
-                   memCtrl->pleak * VScalLeakPowerMc(cmpConfig.UVolt());
+    /*MCPower_[mc] = memCtrl->active ? memCtrl->eacc * VScalDynPowerMc(cmpConfig.UVolt()) * memCtrl->lambda +
+      McPleakOfTemp(300.0) * VScalLeakPowerMc(cmpConfig.UVolt()) :
+      McPgPleakOfTemp(300.0) * VScalLeakPowerMc(cmpConfig.UVolt());*/
+
+    MCPower_[mc] = memCtrl->active ? 
+      memCtrl->pidle * VScalDynPowerMc(cmpConfig.UVolt()) * FScalPowerMc(cmpConfig.McFreq()) +
+      memCtrl->eacc * VScalDynPowerMc(cmpConfig.UVolt()) * memCtrl->lambda +
+      McPleakOfTemp(300.0) * VScalLeakPowerMc(cmpConfig.UVolt()) :
+      McPgPleakOfTemp(300.0) * VScalLeakPowerMc(cmpConfig.UVolt());
   }
 
   double mcPower = 0.0;
@@ -222,6 +301,7 @@ double PowerModel::MeshPower(MeshIc * ic)
           iTraffic += ic->Traffic(s, r, RouteDir(i), RouteDir(o))*flitCnt;
         }
         traffic += iTraffic;
+	/* COMMENTED OUT: WE NOW USE McPAT WHICH MERGES ALL LINKS
         // add power of the link connected to this input port
         if (RouteDir(i) != RDPRIMARY) {
           //cout << "r = " << r << ", traffic to input port " << i << " = " << iTraffic << endl;
@@ -230,11 +310,11 @@ double PowerModel::MeshPower(MeshIc * ic)
           power += link_power;
           //cout << "r = " << r << ", power of link at input port " << i << " = " << link_power << endl;
           MeshLinkPower_[r*4+i] += link_power;
-        }
+	  }*/
       }
 
       // Assume all routers are 5x5, because of the connections to MCs.
-      int portNum = 5;
+      //int portNum = 5;
       /*bool atEdgeColumn = (r%ic->ColNum() == 0 || r%ic->ColNum() == ic->ColNum()-1);
       bool atEdgeRow = (r/ic->ColNum() == 0 || r/ic->ColNum() == ic->RowNum()-1);
       if (atEdgeColumn && atEdgeRow) { // 3x3 router
@@ -247,9 +327,17 @@ double PowerModel::MeshPower(MeshIc * ic)
         portNum = 5;
       }*/
 
-      double router_power = RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*VScalDynPowerUncore(cmpConfig.UVolt())
-               + RouterPleak(config.Tech(), portNum, config.LinkWidth())*VScalLeakPowerUncore(cmpConfig.UVolt());
-      power += router_power;
+      double link_power = ic->Active(r) ? ic->LinkEpf() * traffic * VScalDynPowerUncore(cmpConfig.UVolt())
+	+ ic->LinkPleakOfTemp(300.0) * VScalLeakPowerUncore(cmpConfig.UVolt()) :
+	ic->LinkPgPleakOfTemp(300.0) * VScalLeakPowerUncore(cmpConfig.UVolt());
+
+	double router_power = ic->Active(r) ? ic->RouterEpf() * traffic * VScalDynPowerUncore(cmpConfig.UVolt())
+	  + ic->RouterPleakOfTemp(300.0) * VScalLeakPowerUncore(cmpConfig.UVolt()) :
+	  + ic->RouterPgPleakOfTemp(300.0) * VScalLeakPowerUncore(cmpConfig.UVolt());
+
+      //double router_power = RouterEpf(config.Tech(), portNum, config.LinkWidth())*traffic*VScalDynPowerUncore(cmpConfig.UVolt())
+      //     + RouterPleak(config.Tech(), portNum, config.LinkWidth())*VScalLeakPowerUncore(cmpConfig.UVolt());
+      power += router_power + link_power;
       MeshRouterPower_[r] += router_power;
     }
   }
@@ -637,6 +725,12 @@ double PowerModel::FScalPowerProc ( double freq )
   return freq/fnom;
 }
 
+double PowerModel::FScalPowerMc ( double freq )
+{
+  double fnom = cmpConfig.McFreqMax();
+  return freq/fnom;
+}
+
 //=======================================================================
 /*
  * Returns minimum voltage for a given frequency.
@@ -651,6 +745,24 @@ double PowerModel::VoltAtFreqProc ( double freq )
   double vmin = cmpConfig.ProcVoltMin();
   double vmax = cmpConfig.ProcVoltMax();
   return freq > fmin ?  vmin+(vmax-vmin)/(fmax-fmin)*(freq-fmin) : vmin;
+}
+
+
+
+//=======================================================================
+/*
+ * Returns leakage of memory controoler.
+ */
+double PowerModel::McPleakOfTemp ( double tmp ) {
+  return cmpBuilder.McLeakageOfTemp(tmp);
+}
+
+//=======================================================================
+/*
+ * Returns leakage of memory controoler in power gating state
+ */
+double PowerModel::McPgPleakOfTemp ( double tmp ) {
+  return cmpBuilder.McPgLeakageOfTemp(tmp);
 }
 
 

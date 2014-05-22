@@ -87,6 +87,8 @@ namespace cmpex {
 
       inline bool Active () const;
 
+      inline bool Sleep () const;
+
       // Implementations of the Component interface.
       
       // Returns true if component contains the processor 'idx'.
@@ -141,7 +143,9 @@ namespace cmpex {
       
       inline double Pleak() const;
 
-      inline double PleakOfTemp(double tmp) const;
+      inline double CorePleakOfTemp(double tmp) const;
+      
+      inline double CorePgPleakOfTemp(double tmp) const;
       
       inline double Pgated() const;
       
@@ -149,9 +153,25 @@ namespace cmpex {
 
       inline double L1Pleak() const;
 
+      inline double L1PleakOfTemp(double tmp) const;
+
+      inline double L1PgPleakOfTemp(double tmp) const;
+
+      inline double L1IPleakOfTemp(double tmp) const;
+
+      inline double L1IPgPleakOfTemp(double tmp) const;
+
+      inline double L1DPleakOfTemp(double tmp) const;
+
+      inline double L1DPgPleakOfTemp(double tmp) const;
+
       inline double L2Eacc() const;
 
       inline double L2Pleak() const;
+
+      inline double L2PleakOfTemp(double tmp) const;
+
+      inline double L2PgPleakOfTemp(double tmp) const;
 
       inline void SetL1Size ( double s );
 
@@ -168,6 +188,8 @@ namespace cmpex {
       inline void SetArea ( double a );
 
       inline void SetActive ( bool a );
+
+      inline void SetSleep ( bool s );
 
       inline void SetIpc ( double i );
 
@@ -204,6 +226,46 @@ namespace cmpex {
       inline void SetType(int t);
 
       inline void SetMemAccessProbabilities ( model::Function * mr );
+
+      inline double L1IEa () const;
+
+      inline void SetL1IEa ( double e );
+
+      inline double L1IEm () const;
+
+      inline void SetL1IEm ( double e );
+
+      inline double L1DErda () const;
+
+      inline void SetL1DErda ( double e );
+
+      inline double L1DErdm () const;
+
+      inline void SetL1DErdm ( double e );
+
+      inline double L1DEwra () const;
+
+      inline void SetL1DEwra ( double e );
+
+      inline double L1DEwrm () const;
+
+      inline void SetL1DEwrm ( double e );
+
+      inline double L2Erda () const;
+
+      inline void SetL2Erda ( double e );
+
+      inline double L2Erdm () const;
+
+      inline void SetL2Erdm ( double e );
+
+      inline double L2Ewra () const;
+
+      inline void SetL2Ewra ( double e );
+
+      inline double L2Ewrm () const;
+
+      inline void SetL2Ewrm ( double e );
 
     private:
 
@@ -255,6 +317,8 @@ namespace cmpex {
 
       bool active_; // whether the core is on or off
 
+      bool sleep_; // whether the core is asleep or not
+
       // Power parameters
 
       double epi_; // energy per instruction
@@ -269,9 +333,29 @@ namespace cmpex {
 
       double l1Pleak_; // l1 leakage power
 
+      double l1iEa_; // l1 instruction cache access energy 
+
+      double l1iEm_; // l1 instruction cache additional miss access energy 
+
+      double l1dErda_; // l1 data cache read access energy 
+
+      double l1dErdm_; // l1 data cache additional read  miss access energy 
+
+      double l1dEwra_; // l1 data cache write access energy 
+
+      double l1dEwrm_; // l1 data cache additional write miss access energy 
+
       double l2Eacc_; // l2 access energy
 
       double l2Pleak_; // l2 leakage power
+
+      double l2Erda_; // l2 read access energy 
+
+      double l2Erdm_; // l2 additional read  miss access energy 
+
+      double l2Ewra_; // l2 write access energy 
+
+      double l2Ewrm_; // l2 additional write miss access energy 
 
       // Runtime parameters
 
@@ -475,8 +559,12 @@ namespace cmpex {
       return pleak_;
     }
 
-    double Processor::PleakOfTemp ( double tmp ) const {
+    double Processor::CorePleakOfTemp ( double tmp ) const {
       return cmpBuilder.CoreLeakageOfTemp(tmp);
+    }
+
+    double Processor::CorePgPleakOfTemp ( double tmp ) const {
+      return cmpBuilder.CorePgLeakageOfTemp(tmp);
     }
 
     void Processor::SetPleak ( double p ) {
@@ -507,12 +595,116 @@ namespace cmpex {
       l1Eacc_ = e;
     }
 
+    double Processor::L1IEa () const {
+      return l1iEa_;
+    }
+
+    void Processor::SetL1IEa ( double e ) {
+      l1iEa_ = e;
+    }
+
+    double Processor::L1IEm () const {
+      return l1iEm_;
+    }
+
+    void Processor::SetL1IEm ( double e ) {
+      l1iEm_ = e;
+    }
+
+    double Processor::L1DErda () const {
+      return l1dErda_;
+    }
+
+    void Processor::SetL1DErda ( double e ) {
+      l1dErda_ = e;
+    }
+
+    double Processor::L1DErdm () const {
+      return l1dErdm_;
+    }
+
+    void Processor::SetL1DErdm ( double e ) {
+      l1dErdm_ = e;
+    }
+
+    double Processor::L1DEwra () const {
+      return l1dEwra_;
+    }
+
+    void Processor::SetL1DEwra ( double e ) {
+      l1dEwra_ = e;
+    }
+
+    double Processor::L1DEwrm () const {
+      return l1dEwrm_;
+    }
+
+    void Processor::SetL1DEwrm ( double e ) {
+      l1dEwrm_ = e;
+    }
+
+    double Processor::L2Erda () const {
+      return l2Erda_;
+    }
+
+    void Processor::SetL2Erda ( double e ) {
+      l2Erda_ = e;
+    }
+
+    double Processor::L2Erdm () const {
+      return l2Erdm_;
+    }
+
+    void Processor::SetL2Erdm ( double e ) {
+      l2Erdm_ = e;
+    }
+
+    double Processor::L2Ewra () const {
+      return l2Ewra_;
+    }
+
+    void Processor::SetL2Ewra ( double e ) {
+      l2Ewra_ = e;
+    }
+
+    double Processor::L2Ewrm () const {
+      return l2Ewrm_;
+    }
+
+    void Processor::SetL2Ewrm ( double e ) {
+      l2Ewrm_ = e;
+    }
+
     double Processor::L1Pleak () const {
       return l1Pleak_;
     }
 
     void Processor::SetL1Pleak ( double p ) {
       l1Pleak_ = p;
+    }
+
+    double Processor::L1PleakOfTemp ( double tmp ) const {
+      return cmpBuilder.L1LeakageOfTemp(tmp);
+    }
+
+    double Processor::L1PgPleakOfTemp ( double tmp ) const {
+      return cmpBuilder.L1PgLeakageOfTemp(tmp);
+    }
+
+    double Processor::L1IPleakOfTemp ( double tmp ) const {
+      return cmpBuilder.L1ILeakageOfTemp(tmp);
+    }
+
+    double Processor::L1IPgPleakOfTemp ( double tmp ) const {
+      return cmpBuilder.L1IPgLeakageOfTemp(tmp);
+    }
+
+    double Processor::L1DPleakOfTemp ( double tmp ) const {
+      return cmpBuilder.L1DLeakageOfTemp(tmp);
+    }
+
+    double Processor::L1DPgPleakOfTemp ( double tmp ) const {
+      return cmpBuilder.L1DPgLeakageOfTemp(tmp);
     }
 
     double Processor::L2Eacc () const {
@@ -531,6 +723,14 @@ namespace cmpex {
       l2Pleak_ = p;
     }
 
+    double Processor::L2PleakOfTemp ( double tmp ) const {
+      return cmpBuilder.L2LeakageOfTemp(tmp);
+    }
+
+    double Processor::L2PgPleakOfTemp ( double tmp ) const {
+      return cmpBuilder.L2PgLeakageOfTemp(tmp);
+    }
+
     int Processor::Type () const {
       return type_;
     }
@@ -545,6 +745,14 @@ namespace cmpex {
 
     void Processor::SetActive ( bool a ) {
       active_ = a;
+    }
+
+    bool Processor::Sleep () const {
+      return sleep_;
+    }
+
+    void Processor::SetSleep ( bool s ) {
+      sleep_ = s;
     }
 
   } // namespace cmp
