@@ -53,11 +53,22 @@ namespace cmpex {
 
       static vector<double> MeshLinkWTemp_; // 4 links per router
 
+      static bool warmupDone_; // flag set to one after hotspot warmup
+
+      static bool initHotspotDone_; // flag set to one after hotspot initialization
+
+      static double timeSim_; // hotspot simulation time
+
+      static int nBlocks_; // number of blocks in hotspot
+
     public:
 
       // Calculates transient and steady-state temperature of given configuration
       static int CallHotSpot(cmp::Component * cmp, vector<double> * power_vec = 0,
                              bool silent_mode = false);
+
+      // Terminates HotSpot
+      static void EndHotSpot();
 
       // Saves simulated temperature values to local buffers
       static void SaveSimTemp(cmp::Component * cmp, double * temp_sim);
@@ -111,6 +122,9 @@ namespace cmpex {
 	return MeshLinkWTemp_[lw_idx]; 
       }
 
+      inline static bool WarmupDone ( ) {
+	return warmupDone_;
+      }
 
     public:
 

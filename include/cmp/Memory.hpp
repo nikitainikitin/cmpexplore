@@ -24,11 +24,7 @@
 #include "CmpBuilder.hpp"
 
 namespace cmpex {
-<<<<<<< HEAD
-  
-=======
 
->>>>>>> 384e70f2f9319c5bb25bca142ebc9d64db2cb5e9
   extern cmp::CmpBuilder cmpBuilder;
 
   namespace cmp {
@@ -73,7 +69,6 @@ namespace cmpex {
 
       inline double Pleak() const;
 
-<<<<<<< HEAD
       inline double Erda() const;
 
       inline double Erdm() const;
@@ -86,8 +81,6 @@ namespace cmpex {
       
       inline double PgPleakOfTemp(double tmp) const;
       
-=======
->>>>>>> 384e70f2f9319c5bb25bca142ebc9d64db2cb5e9
       inline bool Active () const;
 
       inline void SetActive ( bool a );
@@ -177,7 +170,6 @@ namespace cmpex {
 
       double pleak_; // leakage power
 
-<<<<<<< HEAD
       double Erda_; // read access energy 
 
       double Erdm_; // additional read miss access energy 
@@ -186,8 +178,6 @@ namespace cmpex {
 
       double Ewrm_; // additional write miss access energy 
 
-=======
->>>>>>> 384e70f2f9319c5bb25bca142ebc9d64db2cb5e9
       bool active_; // whether the memory is active ot not
 
     };
@@ -288,7 +278,6 @@ namespace cmpex {
       pleak_ = p;
     }
 
-<<<<<<< HEAD
     double Memory::PleakOfTemp ( double tmp ) const {
       return cmpBuilder.L3LeakageOfTemp(tmp);
     }
@@ -297,8 +286,6 @@ namespace cmpex {
       return cmpBuilder.L3PgLeakageOfTemp(tmp);
     }
 
-=======
->>>>>>> 384e70f2f9319c5bb25bca142ebc9d64db2cb5e9
     bool Memory::Active () const {
       return active_;
     }

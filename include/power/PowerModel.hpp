@@ -52,7 +52,7 @@ namespace cmpex {
       // temporary buffers to store power values
       // used for dumping the power trace file;
       // indexed by the component idx (core, router, etc)
-    public:
+
       static vector<double> corePower_;
 
       static vector<double> L1Power_;
@@ -70,6 +70,10 @@ namespace cmpex {
       static vector<double> MeshRouterPower_;
 
       static vector<double> MeshLinkPower_; // 4 links per router
+
+      static vector<double> MeshLinkNPower_; // 2 links per router
+
+      static vector<double> MeshLinkWPower_; // 2 links per router
 
     public:
 
