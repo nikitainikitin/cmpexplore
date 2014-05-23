@@ -225,7 +225,7 @@ namespace cmpex {
 
       inline void SetType(int t);
 
-      inline void SetMemAccessProbabilities ( model::Function * mr );
+      void SetMemAccessProbabilities ( model::Function * mr );
 
       inline double L1IEa () const;
 
@@ -494,17 +494,6 @@ namespace cmpex {
         return (L3SizeEff() < E_DOUBLE) ?
                cmpConfig.EvalCurWlMissRate(L2Size()+L1Size()) :
                cmpConfig.EvalCurWlMissRate(L3SizeEff()+L2Size()+L1Size());
-    }
-
-    void Processor::SetMemAccessProbabilities ( model::Function * mr ) {
-      SetL1AccProb(1.0 - mr->eval(L1Size()));
-      SetL2AccProb(mr->eval(L1Size()) - mr->eval(L2Size()+L1Size()));
-      SetL3AccProb(L3SizeEff() < E_DOUBLE ? 0.0 :
-                   (mr->eval(L2Size()+L1Size()) -
-                    mr->eval(L3SizeEff()+L2Size()+L1Size())));
-      SetMMAccProb(L3SizeEff() < E_DOUBLE ?
-                    mr->eval(L2Size()+L1Size()) :
-                    mr->eval(L3SizeEff()+L2Size()+L1Size()));
     }
 
     const vector<double>& Processor::L3ProbDistr() const {

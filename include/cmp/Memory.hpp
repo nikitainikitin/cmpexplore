@@ -24,7 +24,11 @@
 #include "CmpBuilder.hpp"
 
 namespace cmpex {
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> 384e70f2f9319c5bb25bca142ebc9d64db2cb5e9
   extern cmp::CmpBuilder cmpBuilder;
 
   namespace cmp {
@@ -34,21 +38,21 @@ namespace cmpex {
     //======================================================================
 
     class Memory : public Device {
-      
+
       friend class CmpBuilder;
-      
+
       // ---------------------------- Methods ------------------------------
 
     public:
-      
+
       // Constructors and destructor
       Memory ( UShort idx, UShort clIdx, cmp::MemType mt, Component * parent = 0 );
-      
+
       virtual ~Memory ();
-      
+
       // Accessors
       inline double Size() const;
-      
+
       inline double Latency() const;
 
       inline cmp::MemType MemType() const;
@@ -60,7 +64,7 @@ namespace cmpex {
       inline double Lambda() const;
 
       inline void Lambda(double l);
-      
+
       inline double BufDelay() const;
 
       inline void BufDelay(double d);
@@ -69,6 +73,7 @@ namespace cmpex {
 
       inline double Pleak() const;
 
+<<<<<<< HEAD
       inline double Erda() const;
 
       inline double Erdm() const;
@@ -81,39 +86,41 @@ namespace cmpex {
       
       inline double PgPleakOfTemp(double tmp) const;
       
+=======
+>>>>>>> 384e70f2f9319c5bb25bca142ebc9d64db2cb5e9
       inline bool Active () const;
 
       inline void SetActive ( bool a );
 
 
       // Implementations of the Component interface.
-      
+
       // Returns true if component contains the processor 'idx'.
       virtual bool HasProcessor( UShort idx );
-      
+
       // Returns true if component contains the memory 'idx'.
       virtual bool HasMemory( UShort idx );
-      
+
       // Returns hop-count distance from processor 'pIdx' to the Iface
       // component
       virtual int DistanceProcToIface (UShort pIdx);
-      
+
       // Returns hop-count distance from memory 'mIdx' to the Iface
       // component
       virtual int DistanceMemToIface (UShort mIdx);
-      
+
       // Returns uni-directional latency from the processor 'pIdx'
       // to the interface of component.
       virtual double ULatProcToIface (UShort pIdx, bool dynamic, UShort pSize, UShort subnIdx);
-      
+
       // Returns uni-directional latency from the interface of component
       // to the processor 'pIdx'.
       virtual double ULatIfaceToProc (UShort pIdx, bool dynamic, UShort pSize, UShort subnIdx);
-      
+
       // Returns uni-directional latency from the memory 'mIdx'
       // to the interface of component.
       virtual double ULatMemToIface (UShort mIdx, bool dynamic, UShort pSize, UShort subnIdx);
-      
+
       // Returns uni-directional latency from the interface of component
       // to the memory 'mIdx'.
       virtual double ULatIfaceToMem (UShort mIdx, bool dynamic, UShort pSize, UShort subnIdx);
@@ -149,9 +156,9 @@ namespace cmpex {
       // -------------------------- Attributes -----------------------------
 
     private:
-      
+
       cmp::MemType mtype_;
-      
+
       double size_; // memory size in Mb
 
       double lat_; // memory latency in cycles
@@ -170,6 +177,7 @@ namespace cmpex {
 
       double pleak_; // leakage power
 
+<<<<<<< HEAD
       double Erda_; // read access energy 
 
       double Erdm_; // additional read miss access energy 
@@ -178,6 +186,8 @@ namespace cmpex {
 
       double Ewrm_; // additional write miss access energy 
 
+=======
+>>>>>>> 384e70f2f9319c5bb25bca142ebc9d64db2cb5e9
       bool active_; // whether the memory is active ot not
 
     };
@@ -189,11 +199,11 @@ namespace cmpex {
     double Memory::Size () const {
       return size_;
     }
-    
+
     void Memory::SetSize ( double s ) {
       size_ = s;
     }
-    
+
     double Memory::Latency () const {
       return lat_;
     }
@@ -221,7 +231,7 @@ namespace cmpex {
     void Memory::Lambda(double l) {
       lambda_ = l;
     }
-    
+
     double Memory::BufDelay() const {
       return bufDelay_;
     }
@@ -278,6 +288,7 @@ namespace cmpex {
       pleak_ = p;
     }
 
+<<<<<<< HEAD
     double Memory::PleakOfTemp ( double tmp ) const {
       return cmpBuilder.L3LeakageOfTemp(tmp);
     }
@@ -286,6 +297,8 @@ namespace cmpex {
       return cmpBuilder.L3PgLeakageOfTemp(tmp);
     }
 
+=======
+>>>>>>> 384e70f2f9319c5bb25bca142ebc9d64db2cb5e9
     bool Memory::Active () const {
       return active_;
     }
@@ -295,7 +308,7 @@ namespace cmpex {
     }
 
   } // namespace cmp
-  
+
 } // namespace cmpex
 
 #endif // _CMP_MEMORY_H_

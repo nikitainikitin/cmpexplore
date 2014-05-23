@@ -19,6 +19,7 @@
 
 #include "Processor.hpp"
 #include "CmpConfig.hpp"
+#include "Memory.hpp"
 
 using std::cout;
 using std::endl;
@@ -128,6 +129,31 @@ double Processor::ULatMemToIface (UShort mIdx, bool dynamic, UShort pSize, UShor
 double Processor::ULatIfaceToMem (UShort mIdx, bool dynamic, UShort pSize, UShort subnIdx)
 {
   return MAX_DOUBLE;
+}
+
+//=======================================================================
+/*
+ * Sets probabilities of memory access to the caches and MC.
+ *
+ * !!! NOTICE: this function has been tested in the -tmap mode,
+ * under the assumption that L3 can be off and this information
+ * is fetched from the memory activity flags.
+ * It is assumed that every tile has one core and one L3 slice
+ * and that the core and the L3 slice have the same index.
+ */
+
+void Processor::SetMemAccessProbabilities ( model::Function * mr ) {
+  SetL1AccProb(1.0 - mr->eval(L1Size()));
+  SetL2AccProb(mr->eval(L1Size()) - mr->eval(L2Size()+L1Size()));
+
+  bool L3IsOn = cmpConfig.GetMemory(Idx())->Active();
+
+  SetL3AccProb(L3SizeEff() < E_DOUBLE || !L3IsOn ? 0.0 :
+               (mr->eval(L2Size()+L1Size()) -
+                mr->eval(L3SizeEff()+L2Size()+L1Size())));
+  SetMMAccProb(L3SizeEff() < E_DOUBLE || !L3IsOn ?
+                mr->eval(L2Size()+L1Size()) :
+                mr->eval(L3SizeEff()+L2Size()+L1Size()));
 }
 
 //=======================================================================
