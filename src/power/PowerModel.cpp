@@ -35,6 +35,7 @@
 #include "XBarIc.hpp"
 #include "RouterDefs.hpp"
 #include "Config.hpp"
+#include "PTsim.hpp"
 
 using namespace std;
 
@@ -42,9 +43,16 @@ namespace cmpex {
   
   extern cmp::CmpConfig cmpConfig;
   extern cmp::CmpBuilder cmpBuilder;
+  //extern temperature::PTsim ptsim;
   extern Config config;
 
+  namespace temperature {
+    class PTsim;
+  }
+  
   using namespace cmp;
+
+  using namespace temperature;
 
   namespace power {
 
@@ -67,6 +75,16 @@ vector<double> PowerModel::MCPower_;
 vector<double> PowerModel::MeshRouterPower_;
 vector<double> PowerModel::MeshLinkPower_;
 
+    
+    /*    vector<double> temperature::PTsim::coreTemp_;
+vector<double> PTsim::L1DTemp_;
+vector<double> PTsim::L1ITemp_;
+vector<double> PTsim::L2Temp_;
+vector<double> PTsim::L3Temp_;
+vector<double> PTsim::MCTemp_;
+vector<double> PTsim::MeshRouterTemp_;
+vector<double> PTsim::MeshLinkTemp_; // 4 links per router
+    */
 //=======================================================================
 /*
  * Calculates power of cmp configuration.
@@ -110,6 +128,9 @@ double PowerModel::GetTotalPower(Component * cmp)
       L1Power_[p] = 0.0;
       L2Power_[p] = 0.0;
       }*/
+    //cout << "DEBUG: CALL TO CORETEMP(p)" << endl;
+    //double coretemp = PTsim::CoreTemp(p); 
+    //cout << " Core["<<p<<"] Temperature = " << coretemp << endl;
 
     corePower_[p] = proc->Active() ?
       proc->Pidle() * VScalDynPowerProc(proc->Volt()) * FScalPowerProc(proc->Freq()) +
