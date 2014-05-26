@@ -96,6 +96,7 @@ int CmpConfig::CreateCmp (const std::string& fname)
   //InitL3ToMcMapping();
   InitRuntimeProperties();
   InitProcL3ProbDistr();
+  InitL3ClusterIdx();
 
   return 0;
 }
@@ -114,6 +115,7 @@ int CmpConfig::CreateCmp (ArchConfig& ac)
   //InitL3ToMcMapping();
   InitRuntimeProperties();
   InitProcL3ProbDistr();
+  InitL3ClusterIdx();
 
   return 0;
 }
@@ -322,7 +324,6 @@ void CmpConfig::InitProcL3ProbDistr()
     for (int p = 0; p < ProcCnt(); ++p) {
       //cout << "-------> Proc = " << p << endl;
       Processor * proc = GetProcessor(p);
-      Cluster * cl = static_cast<Cluster*>(proc->Parent());
 
       proc->L3ProbDistr().assign(MemCnt(), 0.0);
 
@@ -347,6 +348,46 @@ void CmpConfig::InitProcL3ProbDistr()
     }
   }
 
+}
+
+//=======================================================================
+/*
+ * Assign indices of L3 clusters to the memories.
+ * See InitProcL3ProbDistr() for more info on L3 clusters.
+ */
+
+void CmpConfig::InitL3ClusterIdx()
+{
+  if (!L3ClusterSize()) {
+    // all memories belong to the same cluster
+    for (int m = 0; m < MemCnt(); ++m) {
+      Memory * mem = GetMemory(m);
+      mem->SetL3ClusterIdx(0);
+    }
+  }
+  else {
+    int l3ClusterWidth = int(sqrt(L3ClusterSize())+E_DOUBLE);
+    //cout << "l3CLusterwidth = " << l3ClusterWidth << endl;
+
+    Cluster * clCmp = static_cast<Cluster*>(Cmp());
+    MeshIc * mesh = static_cast<MeshIc*>(clCmp->Ic());
+
+    // !!! assume that every tile has one L3 memory module
+    for (int m = 0; m < MemCnt(); ++m) {
+      //cout << "-------> Mem = " << m << endl;
+      Memory * mem = GetMemory(m);
+
+      int colIdx = m%mesh->ColNum();
+      int rowIdx = m/mesh->ColNum();
+      int clColIdx = colIdx/l3ClusterWidth;
+      int clRowIdx = rowIdx/l3ClusterWidth;
+      int clColCnt = (mesh->ColNum() + l3ClusterWidth - 1) / l3ClusterWidth;
+      int clIdx = clRowIdx*clColCnt+clColIdx;
+      mem->SetL3ClusterIdx(clIdx);
+      //cout << clIdx << ' ';
+    }
+    //cout << endl;
+  }
 }
 
 //=======================================================================

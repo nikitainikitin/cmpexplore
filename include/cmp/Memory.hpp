@@ -85,6 +85,9 @@ namespace cmpex {
 
       inline void SetActive ( bool a );
 
+      inline int L3ClusterIdx() const;
+
+      inline void SetL3ClusterIdx ( int i );
 
       // Implementations of the Component interface.
 
@@ -179,6 +182,8 @@ namespace cmpex {
       double Ewrm_; // additional write miss access energy 
 
       bool active_; // whether the memory is active ot not
+
+      int L3ClusterIdx_; // index of L3 cluster that the memory belongs to
 
     };
 
@@ -292,6 +297,14 @@ namespace cmpex {
 
     void Memory::SetActive ( bool a ) {
       active_ = a;
+    }
+
+    int Memory::L3ClusterIdx() const {
+      return L3ClusterIdx_;
+    }
+
+    void Memory::SetL3ClusterIdx ( int i ) {
+      L3ClusterIdx_ = i;
     }
 
   } // namespace cmp

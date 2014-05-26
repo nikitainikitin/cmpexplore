@@ -70,9 +70,9 @@ MapEngine::MapEngine() {
   // create transformations
   AddTransform(new MapTrSwapTaskPair());
   AddTransform(new MapTrChangeCoreActiv());
-  //AddTransform(new MapTrIncreaseCoreFreq());
-  //AddTransform(new MapTrDecreaseCoreFreq());
-  //AddTransform(new MapTrChangeL3ClusterActiv());
+  AddTransform(new MapTrIncreaseCoreFreq());
+  AddTransform(new MapTrDecreaseCoreFreq());
+  AddTransform(new MapTrChangeL3ClusterActiv());
 }
 
 MapEngine::~MapEngine() {
@@ -132,10 +132,17 @@ void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
 {
   // 1. Prepare configuration: initialize processors according to the mapping
 
+  // update L3 activities
+  for (int m = 0; m < cmpConfig.MemCnt(); ++m) {
+    Memory * mem = cmpConfig.GetMemory(m);
+    mem->SetActive(mc->L3ClusterActiv[mem->L3ClusterIdx()]);
+  }
 
-  // NOTICE: memory activities have to be updated before
-  // calling proc->SetMemAccessProbabilities()!
+  // !!! NOTICE: L3 activities have to be updated before
+  // calling proc->SetMemAccessProbabilities(),
+  // because probabilities are set depending on the L3 activity
 
+  // update core states
   for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
     Processor * proc = cmpConfig.GetProcessor(p);
     Thread * thread = (mc->map[p] != MapConf::IDX_UNASSIGNED) ?
@@ -146,10 +153,12 @@ void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
       proc->SetMemAccessProbabilities(thread->missRatioOfMemSize);
       proc->SetActive(mc->coreActiv[p]);
       proc->SetFreq(mc->coreFreq[p]);
+      proc->SetVolt(PowerModel::VoltAtFreqProc(mc->coreFreq[p]));
     }
     else {
       proc->SetActive(false);
       proc->SetFreq(0.0);
+      proc->SetVolt(PowerModel::VoltAtFreqProc(mc->coreFreq[p]));
     }
   }
 

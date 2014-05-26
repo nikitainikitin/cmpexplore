@@ -75,7 +75,7 @@ SaMapEngine::~SaMapEngine() {}
  * Main method that invokes the mapping.
  */
 
-void SaMapEngine::Map(MapConf * mconf)
+void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
 {
   MapConf *curMap, *bestMap;
 
@@ -89,8 +89,10 @@ void SaMapEngine::Map(MapConf * mconf)
   curMap = (mconf ? new MapConf(*mconf) : CreateGreedyMapping());
   bestMap = 0;
   EvalMappingCost(curMap, lambda);
-  cout << "Initial Thr = " << curMap->thr << ", Pow = " << curMap->power << endl;
-  curMap->Print();
+  if (!silent_mode) {
+    cout << "Initial Thr = " << curMap->thr << ", Pow = " << curMap->power << endl;
+    curMap->Print();
+  }
 
   // 2. Run the annealing schedule
 
@@ -101,7 +103,7 @@ void SaMapEngine::Map(MapConf * mconf)
   // number of local iterations
   double lIterCnt = cmpConfig.ProcCnt()*4;
 
-  cout << "Number of local iters = " << lIterCnt << endl;
+  if (!silent_mode) cout << "Number of local iters = " << lIterCnt << endl;
 
   double no_impr_limit = lIterCnt*lIterCnt*config.SEffort();
   double last_impr = 0;
@@ -114,7 +116,7 @@ void SaMapEngine::Map(MapConf * mconf)
       MapConf * newMap = new MapConf(*curMap); // copy current mapping
 
       // for now, only swapping tasks is a possible transformation
-      int idx = int(RandUDouble()*2);
+      int idx = int(RandUDouble()*Transforms().size());
       Transforms()[idx]->UpdateMap(*newMap);
 
       //if (idx == 1) cout << "NM:::"; newMap->Print();
@@ -146,7 +148,10 @@ void SaMapEngine::Map(MapConf * mconf)
         last_impr = oIter*lIterCnt + iter;
         if (bestMap) delete bestMap;
         bestMap = curMap;
-        cout << "(Time " << timer.Current() << ") "; curMap->Print();
+        if (!silent_mode) {
+          cout << "(Time " << timer.Current() << ") ";
+          curMap->Print();
+        }
       }
     }
 
@@ -158,11 +163,13 @@ void SaMapEngine::Map(MapConf * mconf)
   // check if the constraints are too strict
   assert(bestMap);
 
-  cout << "Finished search (no improvement during the last "
-       << no_impr_limit << " iterations)" << endl;
+  if (!silent_mode) {
+    cout << "Finished search (no improvement during the last "
+         << no_impr_limit << " iterations)" << endl;
 
-  cout << "Best Thr = " << bestMap->thr << endl;
-  cout << "Params: tCur = " << tCur << endl;
+    cout << "Best Thr = " << bestMap->thr << endl;
+    cout << "Params: tCur = " << tCur << endl;
+  }
 
   // cleanup
   if (curMap != bestMap) delete curMap;

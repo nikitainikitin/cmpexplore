@@ -117,3 +117,4 @@ src/ptsim/PTsim.c
 src/ptsim/CallHotSpot.cpp
 include/mapping/MapSim.hpp
 src/mapping/MapSim.cpp
+src/ptsim/CreateCmpFloorplan.cpp

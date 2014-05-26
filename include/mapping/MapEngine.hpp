@@ -57,7 +57,7 @@ namespace cmpex {
       inline const MapTrArray& Transforms() const;
 
       // Main method that invokes mapping.
-      virtual void Map(MapConf * mconf = 0) = 0;
+      virtual void Map(MapConf * mconf = 0, bool silent_mode = false) = 0;
 
       // --- Service functions ---
 

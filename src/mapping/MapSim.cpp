@@ -122,24 +122,25 @@ void MapSim::Run() {
     }
 
     // 2. Find the new best mapping
-    cout << "***** Mapconf before mapping: "; mconf->Print();
+    //cout << "***** Mapconf before mapping: "; mconf->Print();
+    cout << "   -MAP- Running SA mapping..." << endl;
     SaMapEngine me;
-    me.Map(mconf); // run SA mapping
+    me.Map(mconf, true); // run SA mapping
     //me.EvalMappingCost(mconf); // no remapping, evaluate default mapping only
-    cout << "***** Mapconf after mapping: "; mconf->Print();
+    cout << "   -MAP- Mapconf after mapping: "; mconf->Print();
 
     // 3. Run performance model with the new mapping;
     //    reuse cost estimation function from mapping
     me.EvalMappingCost(mconf);
 
 
-    cout << "Throughput of cores: ";
+    cout << "   -MAP- Throughput of cores: ";
     for (int p = 0; p < mconf->map.size(); ++p) {
       cout << cmpConfig.GetProcessor(p)->Thr() << ' ';
     }
     cout << endl;
 
-    cout << "Frequency of cores: ";
+    cout << "   -MAP- Frequency of cores: ";
     for (int p = 0; p < mconf->map.size(); ++p) {
       cout << cmpConfig.GetProcessor(p)->Freq() << ' ';
     }
@@ -194,9 +195,6 @@ void MapSim::Run() {
     cout << "-I- There are running/pending tasks left after " << sysElapsedPeriod << " periods ("
          << sysElapsedPeriod*PeriodUs()/1e6 << " sec)" << endl;
   }
-
-  // Cleanup
-  PTsim::EndHotSpot();
 
 }
 

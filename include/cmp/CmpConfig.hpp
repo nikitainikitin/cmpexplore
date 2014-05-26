@@ -297,6 +297,9 @@ namespace cmpex {
       // Initialize probabilities of procs to access L3 instances.
       void InitProcL3ProbDistr();
 
+      // Assign indices of L3 clusters to the memories
+      void InitL3ClusterIdx();
+
       void Cleanup();
       
     private:

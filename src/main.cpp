@@ -88,6 +88,7 @@ int main( int argc, char ** argv )
       return 0;
     }
     else if (config.Tmap()) { // mapping mode, starts mapping simulator
+
       // create CMP architecture
       cmpConfig.CreateCmp(config.Test());
 
@@ -102,6 +103,9 @@ int main( int argc, char ** argv )
       // start mapping
       MapSim sim(1000);
       sim.Run();
+
+      // cleanup
+      PTsim::EndHotSpot();
     }
     else {                // run selected testcase
       cmpConfig.CreateCmp(config.Test());
@@ -129,6 +133,9 @@ int main( int argc, char ** argv )
         cout << "WlName = " << cmpConfig.GetWorkload(wlIdx)->shortName
              << ": Power = " << power
              << ", Lat = " << sm->Latency() << ", Thr = " << sm->Throughput() << endl;
+
+        // cleanup
+        PTsim::EndHotSpot();
         delete sm;
       }
 

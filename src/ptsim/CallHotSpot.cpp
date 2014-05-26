@@ -279,7 +279,9 @@ int PTsim::CallHotSpot(cmp::Component * cmp, vector<double> * power_vec, bool si
 
 void PTsim::EndHotSpot() {
   // terminate hotspot
-  sim_exit();
+  if (warmupDone_) {
+    sim_exit();
+  }
 }
 
 //=======================================================================

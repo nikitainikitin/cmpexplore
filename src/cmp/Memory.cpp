@@ -35,7 +35,8 @@ namespace cmpex {
 
 Memory::Memory ( UShort idx, UShort clIdx, cmp::MemType mt, Component * parent ) :
   Device (idx, clIdx, CTMEMORY, parent), mtype_ (mt), size_ (0.0), lat_ (0.0),
-  mcIdx_ (-1), lambda_ (0.0), bufDelay_ (0.0), active_ (true) {}
+  mcIdx_ (-1), lambda_ (0.0), bufDelay_ (0.0), active_ (true),
+  L3ClusterIdx_ (0) {}
 
 Memory::~Memory () {}
 

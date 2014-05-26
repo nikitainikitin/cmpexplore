@@ -152,7 +152,6 @@ double PowerModel::GetTotalPower(Component * cmp)
     //cout << " L1D["<<p<<"] Temperature = " << l1dtemp << endl;
     //cout << " L2["<<p<<"] Temperature = " << l2temp << endl;
 
-    
     corePower_[p] = proc->Active() ?
       proc->Pidle() * VScalDynPowerProc(proc->Volt()) * FScalPowerProc(proc->Freq()) +
       proc->Epi() * VScalDynPowerProc(proc->Volt()) * proc->Thr() +
