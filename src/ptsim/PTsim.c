@@ -370,9 +370,13 @@ void sim_exit()
 	steady_state_temp(model, overall_power, steady_temp);
 
 	/* dump temperatures if needed	*/
-	if (strcmp(model->config->steady_file, NULLFILE))
-		dump_temp(model, steady_temp, model->config->steady_file);
-
+	// DEBUG
+	//printf("DEBUG: STEADY FILE IS %s\n",model->config->steady_file);
+	if (strcmp(model->config->steady_file, NULLFILE)) {
+	  //printf("DUMPING TEMP VALUES TO STEADY STATE FILE...");
+	    dump_temp(model, steady_temp, model->config->steady_file);
+	    //printf("DONE\n");
+	}
 	/* for the grid model, optionally dump the internal 
 	 * temperatures of the grid cells	
 	 */

@@ -19,11 +19,14 @@
 
 #include <string>
 #include <vector>
+#include "CmpBuilder.hpp"
+#include "PTsim.h"
 
 using std::string;
 using std::vector;
 
 namespace cmpex {
+
 
   namespace cmp {
     class Component;
@@ -43,7 +46,7 @@ namespace cmpex {
     //======================================================================
 
     class PowerModel {
-
+      friend class PTsim;
       // ---------------------------- Methods ------------------------------
 
       // temporary buffers to store power values
@@ -53,6 +56,10 @@ namespace cmpex {
       static vector<double> corePower_;
 
       static vector<double> L1Power_;
+
+      static vector<double> L1IPower_;
+
+      static vector<double> L1DPower_;
 
       static vector<double> L2Power_;
 
@@ -64,8 +71,18 @@ namespace cmpex {
 
       static vector<double> MeshLinkPower_; // 4 links per router
 
+      static vector<double> MeshLinkNPower_; // 2 links per router
+
+      static vector<double> MeshLinkWPower_; // 2 links per router
+
     public:
 
+      // Leakage power of memory controller
+      static double McPleakOfTemp(double tmp);
+      
+      // Leakage power of memory controller in power gating state
+      static double McPgPleakOfTemp(double tmp);
+      
       // Calculates power of given configuration
       static double GetTotalPower(cmp::Component * cmp);
 
@@ -94,6 +111,24 @@ namespace cmpex {
 
       static double VScalLeakPower ( double volt );
 
+      static double VScalDynPowerProc ( double volt );
+
+      static double VScalLeakPowerProc ( double volt );
+
+      static double VScalDynPowerUncore ( double volt );
+
+      static double VScalLeakPowerUncore ( double volt );
+
+      static double VScalDynPowerMc ( double volt );
+
+      static double VScalLeakPowerMc ( double volt );
+
+      static double FScalPowerProc ( double freq );
+
+      static double FScalPowerMc ( double freq );
+
+      static double VoltAtFreqProc ( double freq );
+
     public:
 
       // Constructors & destructor
@@ -113,6 +148,8 @@ namespace cmpex {
     private:
 
     };
+
+
 
   } // namespace power
 

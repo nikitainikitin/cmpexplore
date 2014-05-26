@@ -37,6 +37,7 @@
 #include "MapTransform.hpp"
 #include "workload/WlConfig.hpp"
 #include "cmp/Processor.hpp"
+#include "PTsim.hpp"
 
 using namespace std;
 
@@ -53,6 +54,7 @@ namespace cmpex {
   using namespace phys;
   using namespace power;
   using namespace workload;
+  using namespace temperature;
 
   namespace mapping {
 
@@ -192,6 +194,10 @@ void MapSim::Run() {
     cout << "-I- There are running/pending tasks left after " << sysElapsedPeriod << " periods ("
          << sysElapsedPeriod*PeriodUs()/1e6 << " sec)" << endl;
   }
+
+  // Cleanup
+  PTsim::EndHotSpot();
+
 }
 
 //=======================================================================

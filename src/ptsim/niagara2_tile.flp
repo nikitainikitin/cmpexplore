@@ -1,0 +1,14 @@
+
+# Line Format: <unit-name>\t<width>\t<height>\t<left-x>\t<bottom-y>
+# all dimensions are in meters
+# comment lines begin with a '#' 
+# comments and empty lines are ignored
+
+LinkW	0.001394     	0.000020	0.000000	0.000000
+RTR	0.000610	0.000757	0.001394	0.000000
+L3	0.001394	0.000737	0.000000	0.000020
+LinkN	0.000020	0.001394	0.001984	0.000757
+L2	0.001984	0.000351	0.000000	0.000757
+Core	0.001582	0.001043	0.000334	0.001108
+L1D	0.000068	0.001043	0.001916	0.001108
+L1I	0.000334	0.001043	0.000000	0.001108

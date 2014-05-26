@@ -37,7 +37,6 @@ HSOBJECTS = \
 OBJECTS = \
 	$(HSOBJECTS) \
 	$(OBJ_DIR)/ptsim/PTsim.o \
-	$(OBJ_DIR)/ptsim/CreateCmpFloorplan.o \
 	$(OBJ_DIR)/ptsim/CallHotSpot.o \
 	$(OBJ_DIR)/workload/WlConfig.o \
 	$(OBJ_DIR)/ggraph/GVertex.o \

@@ -1,0 +1,1551 @@
+-I- Config file for exploration is config.txt
+******************   Configuration file   ******************
+gMeshDimX: 8
+gMeshDimY: 8
+uFreq = 1.6, uVolt = 0.8
+processor P1: area = 1.25mm^2, freq = 1.6GHz, volt = 0.8V, epi = 0.6nJ, pleak = 0.14W
+======= Constraints =======
+maxArea = 245
+maxPower = 1e+06
+-I- Exploration mode is: Exhaustive
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+DEBUG: (freq,fmin,fmax,vmin,vmax)=(1,0.775,3.5,0.5,1)
+DEBUG: VF SCALING, V=1 F=3.5 Vatf=0.541284
+*************** Stats: ReportAllConfigs ***************
+x= 8; y= 8; P1= 1; L1=0.064; L2=0.256; P#= 64; L3=  128MB; Ic=Bus-2; A=244.5; #conf	=1	; Pwr =  43.7 Thr =	32.343	
+x= 8; y= 8; P1= 2; L1=0.064; L2=0.256; P#=128; L3=   16MB; Ic=Bus-2; A=  233; #conf	=2	; Pwr = 45.42 Thr =	20.234	
+2 configurations explored
+Total time = 0.042993

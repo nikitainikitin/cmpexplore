@@ -15,7 +15,8 @@ using namespace std;
 flp_t *read_flp(char *, int);
 
 // tile
-string tile_floorplan_filename("single_tile.flp");
+//string tile_floorplan_filename("single_tile.flp");
+string tile_floorplan_filename("niagara2_tile.flp");
 // cmp16x16
 //string cmp_floorplan_filename("cmp16x16.flp");
 char cmp_floorplan_filename[MAXSTRING];
@@ -23,7 +24,7 @@ char cmp_floorplan_filename[MAXSTRING];
 //string cmp_ptrace_filename("cmp16x16.ptrace");
 char cmp_ptrace_filename[MAXSTRING];
 
-int CreateCmpFloorplan(int argc, char **argv)
+int main(int argc, char **argv)
 {
   int i,j, k;
 
@@ -46,6 +47,7 @@ int CreateCmpFloorplan(int argc, char **argv)
   int cmp_y_tiles = 16;
  
   int mc_num = 2;
+  double mc_area = 0.00001561115;
   double mc_width = 0.001;
   double mc_height = 0.001;
 
@@ -105,6 +107,7 @@ int CreateCmpFloorplan(int argc, char **argv)
   fout << "# comments and empty lines are ignored" << endl;
   fout << endl;
 
+  mc_width = mc_area / cmp_height;
   if (mc_num >0) {
     x_offset = mc_width;
     pout << "MCW\t";

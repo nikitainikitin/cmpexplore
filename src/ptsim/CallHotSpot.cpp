@@ -79,6 +79,14 @@ vector<double> PTsim::L3Temp_;
 vector<double> PTsim::MCTemp_;
 vector<double> PTsim::MeshRouterTemp_;
 vector<double> PTsim::MeshLinkTemp_;
+vector<double> PTsim::MeshLinkNTemp_;
+vector<double> PTsim::MeshLinkWTemp_;
+
+bool PTsim::warmupDone_;
+bool PTsim::initHotspotDone_;
+double PTsim::timeSim_;
+int PTsim::nBlocks_;
+
 
 //=======================================================================
 /*
@@ -87,145 +95,12 @@ vector<double> PTsim::MeshLinkTemp_;
 
 
 string config_filename("./src/ptsim/cmp.config");
-// tile
-//double block_power[9]={0.5,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0};
-//double warmup_power[9];
-//string floorplan_filename("tile.flp");
-//string inittemp_filename("tile.init");
-//string steadytemp_filename("tile.steady");
-//string ttrace_filename("tile.ttrace");
-//string gridsteadytemp_filename("tile.grid.steady");
-
-// cmp2x2
-//double block_power[34]={0.5,0.5,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0};
-//double warmup_power[34];
-
-//string floorplan_filename("cmp2x2.flp");
-//string inittemp_filename("cmp2x2.init");
-//string steadytemp_filename("cmp2x2.steady");
-//string ttrace_filename("cmp2x2.ttrace");
-//string gridsteadytemp_filename("cmp2x2.grid.steady");
-
-// cmp4x4
-//double block_power[130]={0.5,0.5,
-//			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-//			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-//			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-//			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0};
-//double warmup_power[130];
-//string floorplan_filename("cmp4x4.flp");
-//string inittemp_filename("cmp4x4.init");
-//string steadytemp_filename("cmp4x4.steady");
-//string ttrace_filename("cmp4x4.ttrace");
-//string gridsteadytemp_filename("cmp4x4.grid.steady");
-
-// cmp8x8
-/*
-double block_power[514]={0.5,0.5,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0};
-double warmup_power[514];
-string floorplan_filename("cmp8x8.flp");
-string inittemp_filename("cmp8x8.init");
-string steadytemp_filename("cmp8x8.steady");
-string ttrace_filename("cmp8x8.ttrace");
-string gridsteadytemp_filename("cmp8x8.grid.steady");
-*/
-// cmp16x16
-
-double block_power[2050]={0.5,0.5,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			  0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			  0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,
-			 0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0,0.01,0.1,0.5,0.01,1.0,2.0,0.5,1.0};
-double warmup_power[2050];
-//string floorplan_filename("./src/ptsim/cmp16x16.flp");
-//string inittemp_filename("./src/ptsim/cmp16x16.init");
-//string steadytemp_filename("./src/ptsim/cmp16x16.steady");
-//string ttrace_filename("./src/ptsim/cmp16x16.ttrace");
-//string gridsteadytemp_filename("./src/ptsim/cmp16x16.grid.steady");
-
-
 string null_filename("(null)");
 
 int PTsim::CallHotSpot(cmp::Component * cmp, vector<double> * power_vec, bool silent_mode)
 {
   int i,j;
-  double *power_sim,*temp_sim, time_sim;
+  double *power_sim,*warmup_power,*temp_sim, time_sim;
   ifstream pin;
   ofstream tout;
   int n_blocks;
@@ -238,14 +113,6 @@ int PTsim::CallHotSpot(cmp::Component * cmp, vector<double> * power_vec, bool si
   string line;
   double total_power=0.0;
 
-  // tile
-  // n_blocks = 9;
-  // cmp2x2
-  //n_blocks = 34;
-  //cmp2x2
-  //n_blocks = 130;
-  //cmp4x4
-  //n_blocks = 2050;
 
   // find out mesh size to define file names
   Cluster * clCmp = static_cast<Cluster*>(cmp);
@@ -274,12 +141,16 @@ int PTsim::CallHotSpot(cmp::Component * cmp, vector<double> * power_vec, bool si
   strcpy(gstdyt,gridsteadytemp_filename.c_str());
 
   // initialize hotspot with steady temp target file same as init temp file 
-  n_blocks=sim_init(flp,cfg,nullt,initt,gstdyt);
+  if (!warmupDone_) {
+    nBlocks_=sim_init(flp,cfg,nullt,initt,gstdyt);
+  }
+  n_blocks = nBlocks_;
+
   if (!silent_mode) cout << "Number of blocks = " << n_blocks << endl;
 
   // create power vector
   power_sim = new double[n_blocks];
-
+  warmup_power = new double[n_blocks];
   // set warmup power: in this example it is set to block_power
   for(i=0;i<n_blocks;i++){
     warmup_power[i]=0;
@@ -298,89 +169,100 @@ int PTsim::CallHotSpot(cmp::Component * cmp, vector<double> * power_vec, bool si
   // trace file opening
   tout.open(ttrace_filename.c_str());
 
-  // initialize simulation time
-  time_sim = 0.0;
 
-  // initialization of hotspot with 1st call to sim_main, time is 0.0
-  sim_main(power_sim,temp_sim,time_sim,silent_mode);
-  // increase time and rerun hotspot, save intermediate temp values to trace file
-  time_sim += 0.001;
-  sim_main(power_sim,temp_sim,time_sim,silent_mode);
-  // terminate hotspot and save steady file in init file
-  sim_exit();
-
-  //input power (from CMPexplore
-  if (!power_vec) { // no power vector - read values from file
-    pin.open("ptsim_power.txt");
-
-    i=0;
-    while(getline(pin,line)) {
-      if ((line == "") || (!line.find("#")))
-        continue;
-      stringstream ss;
-      ss << line;
-      double temp_double;
-      while(ss >> temp_double) {
-        if (1) // every tile is ON
-        //if (((i-2)/8)%2==0) // every other tile is ON
-        //if (((i-2)>=(n_blocks-2)/4) && (i-2<(n_blocks-2)/4+n_blocks/2)) // half CMP centered is ON
-    //if ((i-2)>=((n_blocks-2)/2)) // top half CMP is ON
-    power_sim[i] = temp_double;
-        else
-    power_sim[i] = 0;
-        total_power += power_sim[i];
-        if (!silent_mode) cout << power_sim[i] << endl;
-        i++;
+    //input power (from CMPexplore
+    if (!power_vec) { // no power vector - read values from file
+      pin.open("ptsim_power.txt");
+      
+      i=0;
+      while(getline(pin,line)) {
+	if ((line == "") || (!line.find("#")))
+	  continue;
+	stringstream ss;
+	ss << line;
+	double temp_double;
+	while(ss >> temp_double) {
+	  if (1) // every tile is ON
+	    //if (((i-2)/8)%2==0) // every other tile is ON
+	    //if (((i-2)>=(n_blocks-2)/4) && (i-2<(n_blocks-2)/4+n_blocks/2)) // half CMP centered is ON
+	    //if ((i-2)>=((n_blocks-2)/2)) // top half CMP is ON
+	    power_sim[i] = temp_double;
+	  else
+	    power_sim[i] = 0;
+	  total_power += power_sim[i];
+	  if (!silent_mode) cout << power_sim[i] << endl;
+	  i++;
+	}
       }
+      pin.close();
     }
-    pin.close();
-  }
-  else { // power vector provided
-    for (int i = 0; i < power_vec->size(); ++i) {
-      power_sim[i] = (*power_vec)[i];
-      //cout << power_sim[i] << ' ';
+    else { // power vector provided
+      for (int i = 0; i < power_vec->size(); ++i) {
+	power_sim[i] = (*power_vec)[i];
+	//cout << power_sim[i] << ' ';
+      }
+      //cout << endl;
     }
-    //cout << endl;
-  }
+    
+    if (!silent_mode) cout << "TOTAL POWER = " << total_power << endl;
+    if(i != n_blocks){
+      cout << "\nERROR: power elements /= number of blocks\n\n";
+      cout << i << ' ' << n_blocks << endl;
+      return -1;
+    }
+    
+    // set block power to transient values
+    //for(i=0;i<n_blocks;i++){
+    //power_sim[i]=block_power[i];
+    //}
 
-  if (!silent_mode) cout << "TOTAL POWER = " << total_power << endl;
-  if(i != n_blocks){
-    cout << "\nERROR: power elements /= number of blocks\n\n";
-    cout << i << ' ' << n_blocks << endl;
-    return -1;
-  }
 
-  // set block power to transient values
-  //for(i=0;i<n_blocks;i++){
-  //power_sim[i]=block_power[i];
-  //}
 
-  // re-initialize simulation time
-  time_sim = 0.0;
 
-  // re-initialize hotspot with correct init file
-  sim_init(flp,cfg,initt,stdyt,gstdyt);
-
-  // re-initialization of hotspot with 1st call to sim_main, time is 0.0
-  sim_main(power_sim,temp_sim,time_sim,silent_mode);
-
-  // increase time and rerun hotspot, save intermediate temp values to trace file
-  time_sim += 0.001;
-  for(i=0;i<=0;i++) {
+  if (!warmupDone_) {
+    // initialize simulation time
+    time_sim = 0.0;
+    // initialization of hotspot with 1st call to sim_main, time is 0.0
     sim_main(power_sim,temp_sim,time_sim,silent_mode);
-    //output instantaneous temperature trace
-    for(j=0;j<n_blocks;j++)
-      tout << setiosflags(ios::fixed) << setprecision(2) << temp_sim[j]-273.15 << "\t";
-    tout << endl;
-
+    // increase time and rerun hotspot, save intermediate temp values to trace file
     time_sim += 0.001;
+    sim_main(power_sim,temp_sim,time_sim,silent_mode);
+    // terminate hotspot and save steady file in init file
+    sim_exit();
+    timeSim_ = 0.0;
+    warmupDone_ = 1;
   }
-
-  // terminate hotspot
-  sim_exit();
-
+  else {
+    
+    
+    if (!initHotspotDone_) {
+      initHotspotDone_ = 1;
+      // re-initialize simulation time
+      time_sim = 0.0;
+      // re-initialize hotspot with correct init file
+      sim_init(flp,cfg,initt,stdyt,gstdyt);
+      
+      // re-initialization of hotspot with 1st call to sim_main, time is 0.0
+      sim_main(power_sim,temp_sim,time_sim,silent_mode);
+      
+      // increase time and rerun hotspot, save intermediate temp values to trace file
+      time_sim += 0.001;
+      timeSim_ = time_sim;
+    }
+    else {
+      time_sim = timeSim_;
+      sim_main(power_sim,temp_sim,time_sim,silent_mode);
+      //output instantaneous temperature trace
+      for(j=0;j<n_blocks;j++)
+	tout << setiosflags(ios::fixed) << setprecision(2) << temp_sim[j]-273.15 << "\t";
+      tout << endl;
+      timeSim_ += 0.001;
+    }
+    
+  }
   // closing
   tout.close();
+
 
   // convert K to C degrees
   for(j=0;j<n_blocks;j++) {
@@ -393,6 +275,11 @@ int PTsim::CallHotSpot(cmp::Component * cmp, vector<double> * power_vec, bool si
   delete [] power_sim;
   delete [] temp_sim;
   return 0;
+}
+
+void PTsim::EndHotSpot() {
+  // terminate hotspot
+  sim_exit();
 }
 
 //=======================================================================
@@ -412,7 +299,8 @@ void PTsim::SaveSimTemp(cmp::Component * cmp, double * temp_sim) {
   L3Temp_.assign(cmpConfig.MemCnt(), 0.0);
   MCTemp_.assign(cmpConfig.MemCtrlCnt(), 0.0);
   MeshRouterTemp_.assign(cmpConfig.ProcCnt(), 0.0);
-  MeshLinkTemp_.assign(cmpConfig.ProcCnt()*4, 0.0);
+  MeshLinkNTemp_.assign(cmpConfig.ProcCnt(), 0.0);
+  MeshLinkWTemp_.assign(cmpConfig.ProcCnt(), 0.0);
 
   int cnt = 0;
 
@@ -427,10 +315,11 @@ void PTsim::SaveSimTemp(cmp::Component * cmp, double * temp_sim) {
   for (int tile_id = 0; tile_id < mic->ColNum()*mic->RowNum(); ++tile_id) {
 
     // LinkW
-    MeshLinkTemp_[tile_id*4+int(RDWEST)] = temp_sim[cnt];
+    /*MeshLinkTemp_[tile_id*4+int(RDWEST)] = temp_sim[cnt];
     if (tile_id%mic->ColNum() != 0) {
       MeshLinkTemp_[(tile_id-1)*4+int(RDEAST)] = temp_sim[cnt];
-    }
+      }*/
+    MeshLinkWTemp_[tile_id] = temp_sim[cnt];
     ++cnt;
 
     // RTR
@@ -440,10 +329,11 @@ void PTsim::SaveSimTemp(cmp::Component * cmp, double * temp_sim) {
     L3Temp_[tile_id] = temp_sim[cnt++];
 
     // LinkN
-    MeshLinkTemp_[tile_id*4+int(RDNORTH)] = temp_sim[cnt];
+    /*MeshLinkTemp_[tile_id*4+int(RDNORTH)] = temp_sim[cnt];
     if (tile_id >= mic->ColNum()) { // no north links for tiles in the upper row
       MeshLinkTemp_[(tile_id-mic->ColNum())*4+int(RDSOUTH)] = temp_sim[cnt];
-    }
+      }*/
+    MeshLinkNTemp_[tile_id] = temp_sim[cnt];
     ++cnt;
 
     // L2
@@ -504,8 +394,14 @@ void PTsim::PrintTemp() {
   }
   cout << endl;
 
-  cout << "  MeshLinkTemp: ";
-  for (vector<double>::const_iterator it = MeshLinkTemp_.begin(); it != MeshLinkTemp_.end(); ++it) {
+  cout << "  MeshLinkWTemp: ";
+  for (vector<double>::const_iterator it = MeshLinkWTemp_.begin(); it != MeshLinkWTemp_.end(); ++it) {
+    cout << setiosflags(ios::fixed) << setprecision(2) << (*it) << ' ';
+  }
+  cout << endl;
+
+  cout << "  MeshLinkNTemp: ";
+  for (vector<double>::const_iterator it = MeshLinkNTemp_.begin(); it != MeshLinkNTemp_.end(); ++it) {
     cout << setiosflags(ios::fixed) << setprecision(2) << (*it) << ' ';
   }
   cout << endl;
