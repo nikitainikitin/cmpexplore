@@ -61,29 +61,11 @@ bool MapConf::AssignToFreeProc (int th_gid) {
     if (map[p] == IDX_UNASSIGNED) {
       map[p] = th_gid;
       coreActiv[p] = true;
-      coreFreq[p] = cmpConfig.GetProcessor(p)->Freq();
+      //coreFreq[p] = cmpConfig.GetProcessor(p)->Freq();
       return true;
     }
   }
   return false;
-}
-
-//=======================================================================
-/*
- * Copy mapping configuration to the target object
- */
-
-void MapConf::CopyTo (MapConf * target) const {
-  target->coreCnt = coreCnt;
-  target->L3ClusterCnt = L3ClusterCnt;
-  target->map = map;
-  target->coreActiv = coreActiv;
-  target->coreFreq = coreFreq;
-  target->L3ClusterActiv = L3ClusterActiv;
-  target->thr = thr;
-  target->power = power;
-  target->temp = temp;
-  target->cost = cost;
 }
 
 //=======================================================================
@@ -109,7 +91,7 @@ void MapConf::Print () const {
     cout << ' ' << (*it);
   }
   cout << ";   Pow=" << power << "; Temp=" << temp
-       << "; Thr=" << thr << endl;
+       << "; Thr=" << thr << "; Cost=" << cost << endl;
 }
 
 //=======================================================================

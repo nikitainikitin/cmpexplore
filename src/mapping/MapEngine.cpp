@@ -70,9 +70,9 @@ MapEngine::MapEngine() {
   // create transformations
   AddTransform(new MapTrSwapTaskPair());
   AddTransform(new MapTrChangeCoreActiv());
-  AddTransform(new MapTrIncreaseCoreFreq());
-  AddTransform(new MapTrDecreaseCoreFreq());
-  AddTransform(new MapTrChangeL3ClusterActiv());
+  //AddTransform(new MapTrIncreaseCoreFreq());
+  //AddTransform(new MapTrDecreaseCoreFreq());
+  //AddTransform(new MapTrChangeL3ClusterActiv());
 }
 
 MapEngine::~MapEngine() {
@@ -175,8 +175,8 @@ void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
   // Hotspot
   vector<double> power_vec;
   PowerModel::CreatePTsimPowerVector(cmpConfig.Cmp(), power_vec);
-  cout << "-I- Running Hotspot..." << endl;
-  PTsim::CallHotSpot(cmpConfig.Cmp(), &power_vec, true);
+  //cout << "-I- Running Hotspot..." << endl;
+  //PTsim::CallHotSpot(cmpConfig.Cmp(), &power_vec, true);
 
 
   // 3. Save evaluation within the mapping object
@@ -186,6 +186,7 @@ void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
   // cost including penalty
   double cost = mc->thr / (1.0 + lambda*powerPen/config.MaxPower());
   mc->cost = cost;
+  delete pSm;
 }
 
 //=======================================================================

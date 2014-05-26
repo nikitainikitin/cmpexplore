@@ -104,25 +104,7 @@ void MapSim::Run() {
       }
     }
 
-    // 1. Check for completed tasks
-    for (int p = 0; p < mconf->map.size(); ++p) {
-      int thr_id = mconf->map[p];
-      if (thr_id != MapConf::IDX_UNASSIGNED) {
-        Thread * thread = wlConfig.GetThreadByGid(thr_id);
-        // check if thread has completed
-        if (thread->CheckProgressMarkCompleted()) {
-          // release core
-          mconf->map[p] = MapConf::IDX_UNASSIGNED;
-          cout << "   -MAP- Thread " << thr_id << " has completed" << endl;
-        }
-        // check if the task has completed
-        if (thread->task->CheckProgressMarkCompleted()) {
-          cout << "   -MAP- Task " << thread->task->task_id << " has completed" << endl;
-        }
-      }
-    }
-
-    // 2. Start new tasks
+    // 1. Start new tasks
     while (wlConfig.GetNextPendingTask() &&
            mconf->GetUnassignedProcCnt() >= wlConfig.GetNextPendingTask()->task_dop) {
       Task * nextTask = wlConfig.GetNextPendingTask();
@@ -137,10 +119,32 @@ void MapSim::Run() {
       nextTask->task_status = WlConfig::RUNNING;
     }
 
-    // 3. Find the new best mapping
+    // 2. Find the new best mapping
+    cout << "***** Mapconf before mapping: "; mconf->Print();
     SaMapEngine me;
-    //me.Map(mconf); // run SA mapping
-    me.EvalMappingCost(mconf, 1.0); // no remapping, just evaluate the system metrics
+    me.Map(mconf); // run SA mapping
+    //me.EvalMappingCost(mconf); // no remapping, evaluate default mapping only
+    cout << "***** Mapconf after mapping: "; mconf->Print();
+
+    // 3. Run performance model with the new mapping;
+    //    reuse cost estimation function from mapping
+    me.EvalMappingCost(mconf);
+
+
+    cout << "Throughput of cores: ";
+    for (int p = 0; p < mconf->map.size(); ++p) {
+      cout << cmpConfig.GetProcessor(p)->Thr() << ' ';
+    }
+    cout << endl;
+
+    cout << "Frequency of cores: ";
+    for (int p = 0; p < mconf->map.size(); ++p) {
+      cout << cmpConfig.GetProcessor(p)->Freq() << ' ';
+    }
+    cout << endl;
+
+    //////////// DEBUG ///////////////////
+    //exit(0);
 
 
     // 4. Advance every task
@@ -156,6 +160,24 @@ void MapSim::Run() {
       }
     }
 
+    // 5. Check for completed tasks
+    for (int p = 0; p < mconf->map.size(); ++p) {
+      int thr_id = mconf->map[p];
+      if (thr_id != MapConf::IDX_UNASSIGNED) {
+        Thread * thread = wlConfig.GetThreadByGid(thr_id);
+        // check if thread has completed
+        if (thread->CheckProgressMarkCompleted()) {
+          // release core
+          mconf->map[p] = MapConf::IDX_UNASSIGNED;
+          mconf->coreActiv[p] = false;
+          cout << "   -MAP- Thread " << thr_id << " has completed" << endl;
+        }
+        // check if the task has completed
+        if (thread->task->CheckProgressMarkCompleted()) {
+          cout << "   -MAP- Task " << thread->task->task_id << " has completed" << endl;
+        }
+      }
+    }
 
     // advance system time
     ++sysElapsedPeriod;

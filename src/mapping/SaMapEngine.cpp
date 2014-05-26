@@ -86,7 +86,8 @@ void SaMapEngine::Map(MapConf * mconf)
 
   // 1. Initialize mapping with mconf or greedily
   // For now, assume that all cores will be busy
-  curMap = bestMap = (mconf ? new MapConf(*mconf) : CreateGreedyMapping());
+  curMap = (mconf ? new MapConf(*mconf) : CreateGreedyMapping());
+  bestMap = 0;
   EvalMappingCost(curMap, lambda);
   cout << "Initial Thr = " << curMap->thr << ", Pow = " << curMap->power << endl;
   curMap->Print();
@@ -113,8 +114,10 @@ void SaMapEngine::Map(MapConf * mconf)
       MapConf * newMap = new MapConf(*curMap); // copy current mapping
 
       // for now, only swapping tasks is a possible transformation
-      int idx = 0;//int(RandUDouble()*trCnt);
+      int idx = int(RandUDouble()*2);
       Transforms()[idx]->UpdateMap(*newMap);
+
+      //if (idx == 1) cout << "NM:::"; newMap->Print();
 
       // 2b. Estimate cost of new mapping
       EvalMappingCost(newMap, lambda);
@@ -138,9 +141,10 @@ void SaMapEngine::Map(MapConf * mconf)
       }
 
       // 2d. update best cost
-      if (curMap->thr > bestMap->thr && fabs(curMap->cost-curMap->thr) < E_DOUBLE) {
+      double bestThr = bestMap ? bestMap->thr : 0.0;
+      if (curMap->thr > bestThr && fabs(curMap->cost-curMap->thr) < E_DOUBLE) {
         last_impr = oIter*lIterCnt + iter;
-        delete bestMap;
+        if (bestMap) delete bestMap;
         bestMap = curMap;
         cout << "(Time " << timer.Current() << ") "; curMap->Print();
       }
@@ -149,6 +153,10 @@ void SaMapEngine::Map(MapConf * mconf)
     tCur = tCur*alpha;
     ++oIter;
   } while (oIter*lIterCnt - last_impr < no_impr_limit);
+
+  // if this assert fails it is probably that no feasible solution has been found,
+  // check if the constraints are too strict
+  assert(bestMap);
 
   cout << "Finished search (no improvement during the last "
        << no_impr_limit << " iterations)" << endl;
@@ -159,7 +167,7 @@ void SaMapEngine::Map(MapConf * mconf)
   // cleanup
   if (curMap != bestMap) delete curMap;
   if (mconf) { // copy data back to config
-    if (mconf != bestMap) bestMap->CopyTo(mconf);
+    if (mconf != bestMap) *mconf = *bestMap;
   }
   else {
     delete bestMap;

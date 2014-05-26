@@ -81,7 +81,7 @@ StatMetrics * IterativePerfModel::Run ()
     if (proc->Active() && proc->Freq() > E_DOUBLE) active_core_exists = true;
   }
   if (!active_core_exists) {
-    cout << "-W- There are no actively runnning cores, throughput is 0" << endl;
+    //cout << "-W- There are no actively runnning cores, throughput is 0" << endl;
     InitModels(); // for the power model to work
     return new StatMetrics(0.0, MAX_DOUBLE);
   }

@@ -28,9 +28,9 @@ namespace cmpex {
 
   enum Technology { TECH_32NM = 0, TECH_22NM, TECH_16NM, TECH_CNT };
 
-  const int MAX_FREQ = 3.5; // Maximum on-chip frequency [GHz]
+  const double MAX_FREQ = 3.5; // Maximum on-chip frequency [GHz]
 
-  const int FREQ_STEP = 0.5; // Dynamic frequency scaling step [GHz]
+  const double FREQ_STEP = 0.5; // Dynamic frequency scaling step [GHz]
 
 } // namespace cmpex
 

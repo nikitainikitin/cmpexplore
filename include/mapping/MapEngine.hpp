@@ -65,7 +65,7 @@ namespace cmpex {
       MapConf * CreateGreedyMapping () const;
 
       // Evaluate cost of the provided mapping
-      void EvalMappingCost(MapConf * mconf, double lambda) const;
+      void EvalMappingCost(MapConf * mconf, double lambda = 1.0) const;
 
     private:
 

@@ -60,8 +60,6 @@ namespace cmpex {
 
     bool AssignToFreeProc (int th_gid);
 
-    void CopyTo (MapConf * target) const;
-
     void Print() const;
 
   public:
