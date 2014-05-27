@@ -105,6 +105,7 @@ MapConf * MapEngine::CreateGreedyMapping() const
       newMap->map[busyCores] = nextTask->task_threads[th]->thread_gid;
       ++busyCores;
       // mark thread as running
+      // Greedy mapping starts threads as soon as they are scheduled.
       nextTask->task_threads[th]->thread_status = WlConfig::RUNNING;
     }
     nextTask->task_status = WlConfig::RUNNING;
@@ -179,13 +180,6 @@ void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
   double power = PowerModel::GetTotalPower(cmpConfig.Cmp());
   pSm->Power(power);
   double powerPen = max(0.0, power - config.MaxPower());
-
-
-  // Hotspot
-  vector<double> power_vec;
-  PowerModel::CreatePTsimPowerVector(cmpConfig.Cmp(), power_vec);
-  //cout << "-I- Running Hotspot..." << endl;
-  //PTsim::CallHotSpot(cmpConfig.Cmp(), &power_vec, true);
 
 
   // 3. Save evaluation within the mapping object

@@ -58,7 +58,7 @@ int WlConfig::CreateTasks ( int ntasks )
     //task->task_instructions = instr;
     task->task_deadline = DEADLINE; // ms
     //task->task_progress = 0;
-    //task->task_elapsed = 0;
+    task->task_elapsed = 0;
     //task->task_slack = DEADLINE; // ms
     task->task_ipc = IPC_MIN+(IPC_MAX-IPC_MIN)*RandUDouble(); // in [IPC_MIN,IPC_MAX]
     task->task_mpi = MPI_MIN+(MPI_MAX-MPI_MIN)*RandUDouble(); // in [IPC_MIN,IPC_MAX]
@@ -68,6 +68,8 @@ int WlConfig::CreateTasks ( int ntasks )
     double alpha = MR_ALPHA_MIN + (MR_ALPHA_MAX-MR_ALPHA_MIN)*RandUDouble();
     double exp = MR_EXP_MIN + (MR_EXP_MAX-MR_EXP_MIN)*RandUDouble();
     task->missRatioOfMemSize = new Powerlaw(alpha, exp);
+    //task->task_start = -1;
+    //task->task_finish = -1;
 
     if (task) AddTask(task);
     for(j = 0; j < dop; j++) {
@@ -106,10 +108,11 @@ int WlConfig::PrintTasks ( int ntasks )
     cout << ", status = " << TaskStatusString(i);
     cout << ", ipc = " << tasks[i]->task_ipc << ", mpi = " << tasks[i]->task_mpi << ", mr = ";
     tasks[i]->missRatioOfMemSize->Print();
-    cout << ", threads: ";
+    /*cout << ", threads: ";
     for(int j = 0; j < tasks[i]->task_dop; j++) {
       cout << tasks[i]->task_threads[j]->thread_gid << "(" << tasks[i]->task_cluster_xyloc[j]->x << "," << tasks[i]->task_cluster_xyloc[j]->y << "),";
-    }
+    }*/
+    cout << ", QoS = " << tasks[i]->GetQoS();
     cout << endl;
   }
 

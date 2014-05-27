@@ -28,7 +28,7 @@ namespace cmpex {
     const double MR_EXP_MAX = -0.1;
     const int INSTR_MIN = 1000000;
     const int INSTR_MAX = 2000000;
-    const int DEADLINE = 100; // ms
+    const int DEADLINE = 4;//100; // ms
     const int LOG2_DOP_MAX = 2; // max 2**6 = 64 threads per task
 
 
@@ -48,7 +48,7 @@ namespace cmpex {
 
       typedef std::vector<XYloc*> XYlocArray;
 
-      enum Status {PENDING, RUNNING, SUSPENDED, COMPLETED};
+      enum Status {PENDING, SCHEDULED, RUNNING, SUSPENDED, COMPLETED};
 
       struct Task;
 
@@ -83,12 +83,20 @@ namespace cmpex {
         //int task_instructions; // total instructions to be executed
         //int task_progress; // instructions executed till NOW
         int task_deadline; // deadline time in ms
-        //int task_elapsed; // task runtime in ms
+        int task_elapsed; // task runtime in ms
+        //int task_start; // timestamp when task has started in ms
+        //int task_finish; // timestamp when task has finished in ms
         //int task_slack; // remaining time from NOW till deadline in ms
         ThreadArray task_threads;
         Status task_status;
 
         inline bool CheckProgressMarkCompleted ();
+
+        // Get task QoS, defined on the scale (0.0, 1.0].
+        // QoS is 1.0 if deadline constraint is not violated
+        // and it is decreased proportionally to the square of violation slack.
+        inline double GetQoS() const;
+
       };
 
       typedef std::vector<Task*> TaskArray;
@@ -100,6 +108,10 @@ namespace cmpex {
       typedef vector<Thread*> MapIdxToThreads;
 
       TaskArray tasks;
+
+      TaskArray completed_tasks;
+
+      TaskArray running_tasks;
 
       // ---------------------------- Methods ------------------------------
 
@@ -131,6 +143,12 @@ namespace cmpex {
       Task * GetNextPendingTask ();
 
       bool AllTasksCompleted ();
+
+      // Instantaneous QoS over running tasks
+      inline double GetInstantQoS () const;
+
+      // Total QoS over all tasks that have ever started
+      inline double GetTotalQoS () const;
 
       // DEBUG: Print Tasks
       int PrintTasks ( int ntasks );
@@ -169,19 +187,44 @@ namespace cmpex {
       string status_string;
       switch (tasks[i]->task_status) {
         case PENDING:
-    status_string = "PENDING"; break;
+        status_string = "PENDING"; break;
+        case SCHEDULED:
+        status_string = "SCHEDULED"; break;
         case RUNNING:
-	  status_string = "RUNNING"; break;
+        status_string = "RUNNING"; break;
         case SUSPENDED:
-	  status_string = "SUSPENDED"; break;
+        status_string = "SUSPENDED"; break;
         case COMPLETED:
-	  status_string = "COMPLETED"; break;	  
+        status_string = "COMPLETED"; break;
       }
       return status_string;
     }
 
     WlConfig::Thread * WlConfig::GetThreadByGid ( int gid ) {
       return threads[gid];
+    }
+
+    double WlConfig::GetInstantQoS() const {
+      double qos = 0;
+      for (TaskCIter it = running_tasks.begin();  it != running_tasks.end(); ++it) {
+        qos += (*it)->GetQoS();
+      }
+
+      int total_tasks = running_tasks.size();
+      return total_tasks ? qos/total_tasks : 1.0;
+    }
+
+    double WlConfig::GetTotalQoS() const {
+      double qos = 0;
+      for (TaskCIter it = running_tasks.begin();  it != running_tasks.end(); ++it) {
+        qos += (*it)->GetQoS();
+      }
+      for (TaskCIter it = completed_tasks.begin();  it != completed_tasks.end(); ++it) {
+        qos += (*it)->GetQoS();
+      }
+
+      int total_tasks = running_tasks.size()+completed_tasks.size();
+      return total_tasks ? qos/total_tasks : 1.0;
     }
 
     // Thread inline functions
@@ -202,6 +245,13 @@ namespace cmpex {
       }
       task_status = COMPLETED;
       return true;
+    }
+
+    double WlConfig::Task::GetQoS() const {
+      if (task_deadline - task_elapsed >= 0)
+        return 1.0;
+      double relative_slack = double(task_deadline)/double(task_elapsed);
+      return relative_slack*relative_slack;
     }
 
   } // namespace workload

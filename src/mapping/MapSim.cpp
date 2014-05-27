@@ -19,6 +19,7 @@
 #include <limits>
 #include <fstream>
 #include <iomanip>
+#include <algorithm>
 
 #include "MapSim.hpp"
 #include "SaMapEngine.hpp"
@@ -101,12 +102,12 @@ void MapSim::Run() {
       if (thr_id != MapConf::IDX_UNASSIGNED) {
         Thread * thread = wlConfig.GetThreadByGid(thr_id);
         cout << "   -MAP- Thread " << thr_id << " from task " << thread->task->task_id
-             << " on proc " << p << ", progress = "
+             << " is mapped to proc " << p << ", progress = "
              << min(100,100*thread->thread_progress/thread->thread_instructions) << "%" << endl;
       }
     }
 
-    // 1. Start new tasks
+    // 1. Map new tasks
     while (wlConfig.GetNextPendingTask() &&
            mconf->GetUnassignedProcCnt() >= wlConfig.GetNextPendingTask()->task_dop) {
       Task * nextTask = wlConfig.GetNextPendingTask();
@@ -115,10 +116,12 @@ void MapSim::Run() {
       for (int th = 0; th < nextTask->task_dop; ++th) {
         // assign thread to the next available core
         mconf->AssignToFreeProc(nextTask->task_threads[th]->thread_gid);
-        // mark thread as running
-        nextTask->task_threads[th]->thread_status = WlConfig::RUNNING;
+        // NOTE: thread remains in the scheduled state until it actually
+        // starts execution. The beginning of execution can be delayed
+        // to prioritize those tasks which are close to their deadlines.
+        nextTask->task_threads[th]->thread_status = WlConfig::SCHEDULED;
       }
-      nextTask->task_status = WlConfig::RUNNING;
+      nextTask->task_status = WlConfig::SCHEDULED;
     }
 
     // 2. Find the new best mapping
@@ -133,7 +136,23 @@ void MapSim::Run() {
     //    reuse cost estimation function from mapping
     me.EvalMappingCost(mconf);
 
+    // Run Hotspot every hs_period_sec
+    double hs_period_sec = 0.01;
+    int hs_period_usec = int(hs_period_sec * 1e6);
+    if ((sysElapsedPeriod*PeriodUs() % hs_period_usec) == 0) {
+      vector<double> power_vec;
+      PowerModel::CreatePTsimPowerVector(cmpConfig.Cmp(), power_vec);
+      cout << "-I- Running Hotspot..." << endl;
+      PTsim::CallHotSpot(cmpConfig.Cmp(), &power_vec, true);
 
+      cout << "   -MAP- Temperature of cores: ";
+      for (int p = 0; p < mconf->map.size(); ++p) {
+        cout << PTsim::CoreTemp(p) << ' ';
+      }
+      cout << endl;
+    }
+
+    // BEGIN PRINTOUT
     cout << "   -MAP- Throughput of cores: ";
     for (int p = 0; p < mconf->map.size(); ++p) {
       cout << cmpConfig.GetProcessor(p)->Thr() << ' ';
@@ -145,10 +164,7 @@ void MapSim::Run() {
       cout << cmpConfig.GetProcessor(p)->Freq() << ' ';
     }
     cout << endl;
-
-    //////////// DEBUG ///////////////////
-    //exit(0);
-
+    // END PRINTOUT
 
     // 4. Advance every task
     for (int p = 0; p < mconf->map.size(); ++p) {
@@ -160,7 +176,25 @@ void MapSim::Run() {
         cout << "   -MAP- Advancing thread " << thr_id << " progress by "
              << cmpConfig.GetProcessor(p)->Thr()*PeriodUs()*1000 << " instructions" << endl;
         thread->thread_progress += cmpConfig.GetProcessor(p)->Thr()*PeriodUs()*1000;
+        // Mark as running tasks and threads who have started execution
+        if (thread->thread_progress > 0 && thread->thread_status != WlConfig::RUNNING) {
+          assert(thread->thread_status = WlConfig::SCHEDULED);
+          thread->thread_status = WlConfig::RUNNING;
+          thread->task->task_status = WlConfig::RUNNING;
+          // Add to the running queue, when processing first thread from the task
+          bool task_not_in_the_running_queue =
+            find(wlConfig.running_tasks.begin(), wlConfig.running_tasks.end(), thread->task) ==
+              wlConfig.running_tasks.end();
+          if (task_not_in_the_running_queue) {
+            wlConfig.running_tasks.push_back(thread->task);
+          }
+        }
       }
+    }
+
+    for (WlConfig::TaskCIter it = wlConfig.running_tasks.begin();
+                             it != wlConfig.running_tasks.end(); ++it) {
+      (*it)->task_elapsed += PeriodUs() / 1000; // period in ms
     }
 
     // 5. Check for completed tasks
@@ -178,16 +212,37 @@ void MapSim::Run() {
         // check if the task has completed
         if (thread->task->CheckProgressMarkCompleted()) {
           cout << "   -MAP- Task " << thread->task->task_id << " has completed" << endl;
+          // update the running_tasks and completed_tasks queues
+          bool task_in_the_running_queue =
+            find(wlConfig.running_tasks.begin(), wlConfig.running_tasks.end(), thread->task) !=
+              wlConfig.running_tasks.end();
+          assert(task_in_the_running_queue);
+          bool task_not_in_the_completed_queue =
+            find(wlConfig.completed_tasks.begin(), wlConfig.completed_tasks.end(), thread->task) ==
+              wlConfig.completed_tasks.end();
+          assert(task_not_in_the_completed_queue);
+          WlConfig::TaskIter it =
+              find(wlConfig.running_tasks.begin(), wlConfig.running_tasks.end(), thread->task);
+          wlConfig.running_tasks.erase(it);
+          wlConfig.completed_tasks.push_back(thread->task);
         }
       }
     }
 
+    cout << "   -MAP- Period instantaneous QoS = " << wlConfig.GetInstantQoS()
+         << ", total QoS = " << wlConfig.GetTotalQoS() << endl;
+
     // advance system time
     ++sysElapsedPeriod;
     cout << " * * * " << endl;
+    wlConfig.PrintTasks(10);
   }
 
   if (wlConfig.AllTasksCompleted()) {
+    // sanity checks
+    assert(wlConfig.running_tasks.empty());
+    assert(wlConfig.completed_tasks.size() == wlConfig.tasks.size());
+
     cout << "-I- All tasks completed after " << sysElapsedPeriod << " periods ("
          << sysElapsedPeriod*PeriodUs()/1e6 << " sec)" << endl;
   }
