@@ -235,7 +235,7 @@ void MapSim::Run() {
     // advance system time
     ++sysElapsedPeriod;
     cout << " * * * " << endl;
-    wlConfig.PrintTasks(10);
+    wlConfig.PrintTasks();
   }
 
   if (wlConfig.AllTasksCompleted()) {

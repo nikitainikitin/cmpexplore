@@ -115,7 +115,6 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
       // 2a. Generate new solution (apply transform)
       MapConf * newMap = new MapConf(*curMap); // copy current mapping
 
-      // for now, only swapping tasks is a possible transformation
       int idx = int(RandUDouble()*Transforms().size());
       Transforms()[idx]->UpdateMap(*newMap);
 
@@ -142,9 +141,11 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
         delete newMap;
       }
 
-      // 2d. update best cost
-      double bestThr = bestMap ? bestMap->thr : 0.0;
-      if (curMap->thr > bestThr && fabs(curMap->cost-curMap->thr) < E_DOUBLE) {
+      // 2d. Update best mapping
+      double bestObj = bestMap ? bestMap->obj : 0.0;
+      //bool cur_budgets_met = (fabs(curMap->cost-curMap->thr) < E_DOUBLE);
+      bool cur_budgets_met = (config.MaxPower() - curMap->power > 0);
+      if (curMap->obj > bestObj && cur_budgets_met) {
         last_impr = oIter*lIterCnt + iter;
         if (bestMap) delete bestMap;
         bestMap = curMap;

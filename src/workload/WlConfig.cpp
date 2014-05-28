@@ -39,7 +39,7 @@ WlConfig::~WlConfig () {
  * Creates Tasks
  */
 
-int WlConfig::CreateTasks ( int ntasks )
+int WlConfig::CreateTasks ( int ntasks, bool predefined )
 {
 
   int i,j;
@@ -48,25 +48,27 @@ int WlConfig::CreateTasks ( int ntasks )
   XYloc * xyloc = 0;
   int instr, dop;
 
+  if (predefined) ntasks = sizeof(TASK_IPC)/sizeof(double);
+
   int thread_gid = 0;
   for(i = 0; i < ntasks; i++) {
     task = new WlConfig::Task;
     task->task_id = i;
     task->task_status = PENDING;
     task->task_cluster_id = -1; // default, unmapped
-    instr = INSTR_MIN+RandInt(INSTR_MAX-INSTR_MIN+1); // in [INSTR_MIN,INSTR_MAX]
+    instr = predefined ? TASK_INSTR[i] : INSTR_MIN+RandInt(INSTR_MAX-INSTR_MIN+1); // in [INSTR_MIN,INSTR_MAX]
     //task->task_instructions = instr;
-    task->task_deadline = DEADLINE; // ms
+    task->task_deadline = predefined ? TASK_DEADLINE[i] : DEADLINE; // ms
     //task->task_progress = 0;
     task->task_elapsed = 0;
     //task->task_slack = DEADLINE; // ms
-    task->task_ipc = IPC_MIN+(IPC_MAX-IPC_MIN)*RandUDouble(); // in [IPC_MIN,IPC_MAX]
-    task->task_mpi = MPI_MIN+(MPI_MAX-MPI_MIN)*RandUDouble(); // in [IPC_MIN,IPC_MAX]
-    dop = 1 << RandInt(LOG2_DOP_MAX+1); // in [1,2**(LOG2_DOP_MAX)]
+    task->task_ipc = predefined ? TASK_IPC[i] : IPC_MIN+(IPC_MAX-IPC_MIN)*RandUDouble(); // in [IPC_MIN,IPC_MAX]
+    task->task_mpi = predefined ? TASK_MPI[i] : MPI_MIN+(MPI_MAX-MPI_MIN)*RandUDouble(); // in [IPC_MIN,IPC_MAX]
+    dop = predefined ? TASK_DOP[i] : 1 << RandInt(LOG2_DOP_MAX+1); // in [1,2**(LOG2_DOP_MAX)]
     task->task_dop = dop;
     // use randomly generated powerlaw functions for missRatioOfMemSize
-    double alpha = MR_ALPHA_MIN + (MR_ALPHA_MAX-MR_ALPHA_MIN)*RandUDouble();
-    double exp = MR_EXP_MIN + (MR_EXP_MAX-MR_EXP_MIN)*RandUDouble();
+    double alpha = predefined ? TASK_MR_ALPHA[i] : MR_ALPHA_MIN + (MR_ALPHA_MAX-MR_ALPHA_MIN)*RandUDouble();
+    double exp = predefined ? TASK_MR_EXP[i] : MR_EXP_MIN + (MR_EXP_MAX-MR_EXP_MIN)*RandUDouble();
     task->missRatioOfMemSize = new Powerlaw(alpha, exp);
     //task->task_start = -1;
     //task->task_finish = -1;
@@ -101,6 +103,8 @@ int WlConfig::CreateTasks ( int ntasks )
 
 int WlConfig::PrintTasks ( int ntasks )
 {
+  if (ntasks == 0) ntasks = TaskCnt();
+
   int tot = TaskCnt();
   for(int i = 0; (i < ntasks) && (i < tot); i++) {
     cout << "Task " << i << " ID = " << tasks[i]->task_id << ", DOP = " << tasks[i]->task_dop

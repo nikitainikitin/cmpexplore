@@ -49,6 +49,7 @@ Config::Config ( void ) :
   test_ (""), configFile_ (""), expMode_ ("ex"), a2wa_ (false), tmap_ (false),
   eoTau_ (1.5), saAlpha_ (0.995),
   sEffort_ (5), maxPower_ (1.0e6), debug_ (0), dumpConfigs_ (false),
+  dumpPTsimPower_ (false), callPTsim_ (false), qos_ (true),
   tech_ (TECH_16NM), uFreq_ (1.6), mcFreq_ (0.8),
   maxProcAreaPerCluster_ (1.0), wlFile_(""), maxArea_ (350.0),
   linkWidth_ (64),  simulateCC_ (false)
@@ -128,6 +129,9 @@ int Config::ParseCommandLine ( int argc, char ** argv )
     }
     else if (!strcmp(argv[i], "-call_ptsim")) {
       CallPTsim(true);
+    }
+    else if (!strcmp(argv[i], "-noqos")) {
+      QoS(false);
     }
     else {
       cout << "Wrong argument: " << string(argv[i]) << endl;

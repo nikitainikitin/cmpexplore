@@ -18,6 +18,7 @@ namespace cmpex {
 
   namespace workload {
 
+    // generated tasks
     const double IPC_MIN = 1.0;
     const double IPC_MAX = 3.0;
     const double MPI_MIN = 0.1;
@@ -28,8 +29,24 @@ namespace cmpex {
     const double MR_EXP_MAX = -0.1;
     const int INSTR_MIN = 1000000;
     const int INSTR_MAX = 2000000;
-    const int DEADLINE = 4;//100; // ms
+    const int DEADLINE = 6; // ms
     const int LOG2_DOP_MAX = 2; // max 2**6 = 64 threads per task
+
+    // predefined tasks
+    const double TASK_IPC [] = {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+                                1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
+    const double TASK_MPI [] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+    const double TASK_MR_ALPHA [] = {0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+                                     0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
+    const double TASK_MR_EXP [] = {-0.1, -0.1, -0.1, -0.1, -0.1, -0.1, -0.1, -0.1, -0.1, -0.1,
+                                   -0.1, -0.1, -0.1, -0.1, -0.1, -0.1, -0.1, -0.1, -0.1, -0.1};
+    const double TASK_INSTR [] = {10e6, 5e6, 7e6, 13e6, 4e6, 3e6, 9e6, 5e6, 10e6, 9e6,
+                                  10e6, 5e6, 7e6, 13e6, 4e6, 3e6, 9e6, 5e6, 10e6, 9e6,};
+    const int TASK_DEADLINE [] = {6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+                                  6, 6, 6, 6, 6, 6, 6, 6, 6, 6}; // ms
+    const int TASK_DOP [] = {1, 2, 4, 1, 2, 4, 1, 2, 4, 1,
+                             1, 2, 4, 1, 2, 4, 1, 2, 4, 1};
 
 
     //======================================================================
@@ -136,7 +153,7 @@ namespace cmpex {
       inline Thread * GetThreadByGid ( int gid );
 
       // Create Tasks
-      int CreateTasks ( int ntasks );
+      int CreateTasks ( int ntasks, bool predefined = false );
 
       bool HasPendingTasks ();
 
@@ -151,7 +168,7 @@ namespace cmpex {
       inline double GetTotalQoS () const;
 
       // DEBUG: Print Tasks
-      int PrintTasks ( int ntasks );
+      int PrintTasks ( int ntasks = 0 );
 
       void Cleanup();
 

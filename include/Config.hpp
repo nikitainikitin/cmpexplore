@@ -71,6 +71,10 @@ namespace cmpex {
 
     inline void CallPTsim ( bool d );
 
+    inline bool QoS ( void ) const;
+
+    inline void QoS ( bool b );
+
     inline const string& Test ( void ) const;
 
     inline void Test ( string s );
@@ -296,6 +300,8 @@ namespace cmpex {
     bool dumpPTsimPower_; // dump power trace for ptsim simulator
 
     bool callPTsim_; // call ptsim if true
+
+    bool qos_; // account for qos constraints in mapping
     
     /*** ============== general parameters ================ ***/
 
@@ -437,6 +443,14 @@ namespace cmpex {
 
   void Config::CallPTsim( bool d ) {
     callPTsim_ = d;
+  }
+
+  bool Config::QoS() const {
+    return qos_;
+  }
+
+  void Config::QoS( bool b ) {
+    qos_ = b;
   }
 
   const string& Config::Test () const {

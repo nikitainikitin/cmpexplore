@@ -126,6 +126,57 @@ MapConf * MapEngine::CreateGreedyMapping() const
 
 //=======================================================================
 /*
+ * Returns QoS-penalty for the mapping objective.
+ * Heuristic:
+ * for every running thread
+ *   Evaluate complete time with current execution rate
+ *   Add penalty if deadline is violated at current rate
+ */
+
+double MapEngine::CalcQoSObjPenalty(MapConf * mc) const
+{
+  double total_qos_penalty = 0.0;
+  int running_threads_cnt = 0;
+
+  for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
+    Thread * thread = (mc->map[p] != MapConf::IDX_UNASSIGNED) ?
+        wlConfig.GetThreadByGid(mc->map[p]) : 0;
+    if (thread && thread->thread_status == WlConfig::RUNNING) {
+      //cout << "Thread id " << thread->thread_gid << " is running" << endl;
+      double thread_penalty = 1.0;
+
+      double instr_to_complete = thread->thread_instructions - thread->thread_progress;
+      double ms_to_complete = cmpConfig.GetProcessor(p)->Thr() > E_DOUBLE ?
+            instr_to_complete/(cmpConfig.GetProcessor(p)->Thr()*1e6) : MAX_DOUBLE;
+      assert(ms_to_complete >= 0);
+      double slack_avail_ms = thread->task->task_deadline - thread->task->task_elapsed;
+      double slack_to_complete_ms = slack_avail_ms - ms_to_complete;
+      //cout << "slack_avail = " << slack_avail_ms
+      //     << ", ms_to_complete = " << ms_to_complete << endl;
+      if (slack_to_complete_ms < 0) {
+        // penalty
+        double relative_violation = max(0.0, slack_avail_ms)/ms_to_complete;
+        // set lower bound on penalty to 0.1
+        thread_penalty = max(relative_violation*relative_violation, 0.1);
+      }
+      /*if (thread_penalty > 1.0) {
+        cout << "thread_penalty = " << thread_penalty << endl;
+        cout << "slack_avail = " << slack_avail_ms
+             << ", ms_to_complete = " << ms_to_complete << endl;
+      }*/
+      assert(thread_penalty <= 1.0);
+      //cout << "thread_penalty = " << thread_penalty << endl;
+
+      total_qos_penalty += thread_penalty;
+      ++running_threads_cnt;
+    }
+  }
+
+  return running_threads_cnt ? total_qos_penalty/running_threads_cnt : 1.0;
+}
+
+//=======================================================================
+/*
  * Evaluates cost of the provided mapping solution.
  */
 
@@ -181,13 +232,17 @@ void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
   pSm->Power(power);
   double powerPen = max(0.0, power - config.MaxPower());
 
+  // 2a. Evaluate delay/qos penalty
+  double obj_penalty = config.QoS() ? CalcQoSObjPenalty(mc) : 1.0;
 
   // 3. Save evaluation within the mapping object
   mc->thr = pSm->Throughput();
   mc->power = power;
 
-  // cost including penalty
-  double cost = mc->thr / (1.0 + lambda*powerPen/config.MaxPower());
+  mc->obj = mc->thr*obj_penalty;
+
+  // cost including hard penalties
+  double cost = mc->obj / (1.0 + lambda*powerPen/config.MaxPower());
   mc->cost = cost;
   delete pSm;
 }

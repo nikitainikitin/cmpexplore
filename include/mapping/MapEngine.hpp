@@ -64,8 +64,10 @@ namespace cmpex {
       // Create a greedy mapping solution
       MapConf * CreateGreedyMapping () const;
 
+      double CalcQoSObjPenalty(MapConf * mc) const;
+
       // Evaluate cost of the provided mapping
-      void EvalMappingCost(MapConf * mconf, double lambda = 1.0) const;
+      void EvalMappingCost(MapConf * mc, double lambda = 1.0) const;
 
     private:
 

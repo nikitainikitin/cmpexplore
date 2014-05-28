@@ -50,7 +50,7 @@ namespace cmpex {
   public:
 
     MapConf ( int core_cnt, int l3_cl_cnt,
-              double t = 0, double p = 0, double tmp = 0, double c = 0 );
+              double t = 0, double p = 0, double tmp = 0 );
 
     ~MapConf ();
 
@@ -84,6 +84,13 @@ namespace cmpex {
 
     double temp;
 
+    // Original optimization objective, weighted by the soft constraint penalties.
+    // This is the final optimization objective of mapping.
+    double obj;
+
+    // Optimization objective penalized by the hard constraints.
+    // This is the internal mapping objective, which incorporates
+    // hard constraints.
     double cost;
 
   };

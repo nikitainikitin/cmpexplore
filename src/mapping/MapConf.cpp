@@ -39,8 +39,9 @@ namespace cmpex {
  */
 
 MapConf::MapConf (int core_cnt, int l3_cl_cnt,
-                  double t, double p, double tmp, double c):
-  coreCnt (core_cnt), L3ClusterCnt (l3_cl_cnt), thr (t), power(p), temp(tmp), cost (c)
+                  double t, double p, double tmp):
+  coreCnt (core_cnt), L3ClusterCnt (l3_cl_cnt), thr (t), power(p), temp(tmp),
+  obj (0.0), cost (0.0)
 {
   map.assign(coreCnt, IDX_UNASSIGNED);
   coreActiv.assign(coreCnt, true);
@@ -91,7 +92,7 @@ void MapConf::Print () const {
     cout << ' ' << (*it);
   }
   cout << ";   Pow=" << power << "; Temp=" << temp
-       << "; Thr=" << thr << "; Cost=" << cost << endl;
+       << "; Thr=" << thr << "; Obj=" << obj << "; Cost=" << cost << endl;
 }
 
 //=======================================================================
