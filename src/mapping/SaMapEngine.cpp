@@ -22,6 +22,7 @@
 #include <vector>
 #include <map>
 #include <ctime>
+#include <cmath>
 
 #include "SaMapEngine.hpp"
 #include "Config.hpp"
@@ -72,10 +73,54 @@ SaMapEngine::~SaMapEngine() {}
 
 //=======================================================================
 /*
+ * Calculate initial temprature for SA.
+ * Perform mcnt random moves and aim that the probability of accepting
+ * downhill solutions at initial temperature is equal to prob.
+ */
+
+double SaMapEngine::GetInitTemp(const MapConf * mc, int mcnt, double prob) const
+{
+  double downhillCost = 0.0;
+  int downhillMoves = 0;
+
+  MapConf * curMap = new MapConf(*mc);
+  double prevCost = curMap->cost;
+
+  for (int iter = 0; iter < mcnt || !downhillMoves; ++iter) {
+    // change curMap to get new random solution
+    int idx = int(RandUDouble()*Transforms().size());
+    Transforms()[idx]->UpdateMap(*curMap);
+
+    // Estimate cost of new mapping
+    EvalMappingCost(curMap, 1.0);
+
+    // Record delta cost and accept solution
+    double deltaCost = curMap->cost - prevCost;
+    if (deltaCost < 0) {
+      downhillCost += -deltaCost;
+      ++downhillMoves;
+    }
+
+    prevCost = curMap->cost;
+  }
+
+  delete curMap;
+
+  double tInit = -downhillCost/downhillMoves/log(prob);
+
+  cout << "downhillMoves = " << downhillMoves
+       << ", avg downillCost = " << downhillCost/downhillMoves
+       << ", tInit = " << tInit << endl;
+
+  return tInit;
+}
+
+//=======================================================================
+/*
  * Main method that invokes the mapping.
  */
 
-void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
+void SaMapEngine::Map(MapConf * mc, bool silent_mode)
 {
   MapConf *curMap, *bestMap;
 
@@ -84,9 +129,9 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
 
   double lambda = 0.5;
 
-  // 1. Initialize mapping with mconf or greedily
+  // 1. Initialize mapping with mc or greedily
   // For now, assume that all cores will be busy
-  curMap = (mconf ? new MapConf(*mconf) : CreateGreedyMapping());
+  curMap = (mc ? new MapConf(*mc) : CreateGreedyMapping());
   bestMap = 0;
   EvalMappingCost(curMap, lambda);
   if (!silent_mode) {
@@ -96,12 +141,16 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
 
   // 2. Run the annealing schedule
 
-  double tInit = 100;
+  // number of local iterations
+  double lIterCnt = cmpConfig.ProcCnt()*4;
+
+  double tInit = GetInitTemp(curMap, lIterCnt, 0.95);
   double tCur = tInit;
   double alpha = config.SaAlpha();
 
-  // number of local iterations
-  double lIterCnt = cmpConfig.ProcCnt()*4;
+  int cntAll = 0;
+  int cntAcc = 0;
+  int cntAccProb = 0;
 
   if (!silent_mode) cout << "Number of local iters = " << lIterCnt << endl;
 
@@ -124,18 +173,20 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
       EvalMappingCost(newMap, lambda);
 
       // 2c. Decide acceptance
-      lambda = 0.5*tInit/tCur;
+      lambda = tInit/tCur;
       double curC = curMap->cost;
       double newC = newMap->cost;
 
-      if (newC > curC) { // accept
+      cntAll++;
+      if (newC >= curC) { // accept
         if (curMap != bestMap) delete curMap;
         curMap = newMap;
+        cntAcc++;
       }
-      else if ( RandUDouble() < // accept
-              std::exp(- curC/newC * curC/newC * tInit/tCur) ) {
+      else if ( RandUDouble() < std::exp(-(curC-newC)/tCur) ) { // accept
         if (curMap != bestMap) delete curMap;
         curMap = newMap;
+        cntAccProb++;
       }
       else { // reject
         delete newMap;
@@ -156,6 +207,10 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
       }
     }
 
+    //cout << "cntAll = " << cntAll;
+    //cout << ", ProbAcc = " << double(cntAcc)/cntAll;
+    //cout << ", ProbAccProb = " << double(cntAccProb)/cntAll << endl;
+
     tCur = tCur*alpha;
     ++oIter;
   } while (oIter*lIterCnt - last_impr < no_impr_limit);
@@ -174,8 +229,8 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
 
   // cleanup
   if (curMap != bestMap) delete curMap;
-  if (mconf) { // copy data back to config
-    if (mconf != bestMap) *mconf = *bestMap;
+  if (mc) { // copy data back to config
+    if (mc != bestMap) *mc = *bestMap;
   }
   else {
     delete bestMap;
