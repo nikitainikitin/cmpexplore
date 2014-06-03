@@ -47,6 +47,9 @@ namespace cmpex {
   typedef unsigned int UShort;
   typedef unsigned int UInt;
 
+  // a type with three states
+  enum Tristate { TS_UNDEF = -1, TS_OFF, TS_ON };
+
   //======================================================================
   // Some min/max constants
   //======================================================================
@@ -102,7 +105,7 @@ namespace cmpex {
     // Message type (cache-coherence protocol)
     // MSGNOCC - when CC is not considered, for compatibility
     enum MsgType { MSGNOCC = 0, MSGREQ = 0, MSGACK, MSGDATA, NUMMSG };
-    
+
   }
   
 } // namespace cmpex

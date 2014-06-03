@@ -18,6 +18,7 @@
 #define _MAPPING_SAMAPENGINE_H_
 
 #include "MapEngine.hpp"
+#include "Defs.hpp"
 
 namespace cmpex {
 
@@ -28,6 +29,10 @@ namespace cmpex {
     //======================================================================
 
     class SaMapEngine : public MapEngine {
+
+      // Runtime attribute to drive mapping heuristics in case of
+      // tight power budget. Prioritizes feasibility to optimality.
+      static Tristate tightBudget;
 
       // ---------------------------- Methods ------------------------------
 

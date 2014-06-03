@@ -44,9 +44,9 @@ MapConf::MapConf (int core_cnt, int l3_cl_cnt,
   obj (0.0), cost (0.0)
 {
   map.assign(coreCnt, IDX_UNASSIGNED);
-  coreActiv.assign(coreCnt, true);
-  coreFreq.assign(coreCnt, MAX_FREQ);
-  L3ClusterActiv.assign(L3ClusterCnt, true);
+  coreActiv.assign(coreCnt, false);
+  coreFreq.assign(coreCnt, MIN_FREQ);
+  L3ClusterActiv.assign(L3ClusterCnt, false);
 }
 
 MapConf::~MapConf () {}
@@ -61,7 +61,7 @@ bool MapConf::AssignToFreeProc (int th_gid) {
   for (int p = 0; p < map.size(); ++p) {
     if (map[p] == IDX_UNASSIGNED) {
       map[p] = th_gid;
-      coreActiv[p] = true;
+      //coreActiv[p] = true;
       //coreFreq[p] = cmpConfig.GetProcessor(p)->Freq();
       return true;
     }
