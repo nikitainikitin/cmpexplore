@@ -37,6 +37,7 @@ void sim_exit();
 #include <fstream>
 #include <sstream>
 #include <string.h>
+#include <stdlib.h>
 
 #include "PTsim.hpp"
 #include "Component.hpp"
@@ -82,7 +83,38 @@ vector<double> PTsim::MeshLinkTemp_;
 vector<double> PTsim::MeshLinkNTemp_;
 vector<double> PTsim::MeshLinkWTemp_;
 
+vector<double> PTsim::coreTempEst_;
+vector<double> PTsim::L1DTempEst_;
+vector<double> PTsim::L1ITempEst_;
+vector<double> PTsim::L2TempEst_;
+vector<double> PTsim::L3TempEst_;
+vector<double> PTsim::MCTempEst_;
+vector<double> PTsim::MeshRouterTempEst_;
+vector<double> PTsim::MeshLinkNTempEst_;
+vector<double> PTsim::MeshLinkWTempEst_;
+
+vector<vector<int> > PTsim::coreTempPredictorIdx_;
+vector<vector<double> > PTsim::coreTempPredictorCoeff_;
+vector<vector<int> > PTsim::L1DTempPredictorIdx_;
+vector<vector<double> > PTsim::L1DTempPredictorCoeff_;
+vector<vector<int> > PTsim::L1ITempPredictorIdx_;
+vector<vector<double> > PTsim::L1ITempPredictorCoeff_;
+vector<vector<int> > PTsim::L2TempPredictorIdx_;
+vector<vector<double> > PTsim::L2TempPredictorCoeff_;
+vector<vector<int> > PTsim::L3TempPredictorIdx_;
+vector<vector<double> > PTsim::L3TempPredictorCoeff_;
+vector<vector<int> > PTsim::MCTempPredictorIdx_;
+vector<vector<double> > PTsim::MCTempPredictorCoeff_;
+vector<vector<int> > PTsim::MeshRouterTempPredictorIdx_;
+vector<vector<double> > PTsim::MeshRouterTempPredictorCoeff_;
+vector<vector<int> > PTsim::MeshLinkNTempPredictorIdx_; // 4 links per router
+vector<vector<double> > PTsim::MeshLinkNTempPredictorCoeff_; // 4 links per router
+vector<vector<int> > PTsim::MeshLinkWTempPredictorIdx_; // 4 links per router
+vector<vector<double> > PTsim::MeshLinkWTempPredictorCoeff_; // 4 links per router
+
+
 bool PTsim::warmupDone_;
+bool PTsim::initTracing_;
 bool PTsim::initHotspotDone_;
 double PTsim::timeSim_;
 int PTsim::nBlocks_;
@@ -143,6 +175,7 @@ int PTsim::CallHotSpot(cmp::Component * cmp, vector<double> * power_vec, bool si
   // initialize hotspot with steady temp target file same as init temp file 
   if (!warmupDone_) {
     nBlocks_=sim_init(flp,cfg,nullt,initt,gstdyt);
+    ReadTempPredictors(cmp);
   }
   n_blocks = nBlocks_;
 
@@ -270,6 +303,7 @@ int PTsim::CallHotSpot(cmp::Component * cmp, vector<double> * power_vec, bool si
   }
 
   SaveSimTemp(cmp, temp_sim);
+  WritePowerTempTraces(cmp, power_sim, temp_sim);
   //PrintTemp();
 
   delete [] power_sim;
@@ -416,7 +450,378 @@ void PTsim::PrintTemp() {
 
 }
 
+
 //=======================================================================
+/*
+ * Save power and temperature transient traces
+ */
+
+void PTsim::WritePowerTempTraces(cmp::Component * cmp, double * power_sim, double * temp_sim) {
+
+  string ttrace = "cmp.ttrace";
+  string ptrace = "cmp.ptrace";
+  ofstream tout, pout;
+  int i;
+
+  if (!initTracing_) {
+    initTracing_ = 1;
+    tout.open(ttrace.c_str());
+    pout.open(ptrace.c_str());
+  }
+  else {
+    tout.open(ttrace.c_str(), ios::app);
+    pout.open(ptrace.c_str(), ios::app);
+  }
+
+  int cnt = 0;
+
+  // MC
+  for (int mc = 0; mc < cmpConfig.MemCtrlCnt(); ++mc) {
+    pout << power_sim[cnt] << "\t";
+    tout << temp_sim[cnt] << "\t";
+    ++cnt;
+  }
+
+  Cluster * clCmp = static_cast<Cluster*>(cmp);
+  MeshIc * mic = static_cast<MeshIc*>(clCmp->Ic());
+  for (int tile_id = 0; tile_id < mic->ColNum()*mic->RowNum(); ++tile_id) {
+
+    // LinkW
+    pout << power_sim[cnt] << "\t";
+    tout << temp_sim[cnt] << "\t";
+    ++cnt;
+
+    // RTR
+    pout << power_sim[cnt] << "\t";
+    tout << temp_sim[cnt++] << "\t";
+
+    // L3
+    pout << power_sim[cnt] << "\t";
+    tout << temp_sim[cnt++] << "\t";
+
+    // LinkN
+    pout << power_sim[cnt] << "\t";
+    tout << temp_sim[cnt] << "\t";
+    ++cnt;
+
+    // L2
+    pout << power_sim[cnt] << "\t";
+    tout << temp_sim[cnt++] << "\t";
+
+    // Core
+    pout << power_sim[cnt] << "\t";
+    tout << temp_sim[cnt++] << "\t";
+
+    // L1D
+    pout << power_sim[cnt] << "\t";
+    tout << temp_sim[cnt++] << "\t";
+
+    // L1I
+    pout << power_sim[cnt] << "\t";
+    tout << temp_sim[cnt++] << "\t";
+
+  }
+  
+  tout << endl;
+  pout << endl;
+ 
+  tout.close();
+  pout.close();
+  
+
+}
+
+//=======================================================================
+/*
+ * Save power and temperature transient traces
+ */
+
+void PTsim::ReadTempPredictors(cmp::Component * cmp) {
+
+
+  Cluster * clCmp = static_cast<Cluster*>(cmp);
+  MeshIc * mic = static_cast<MeshIc*>(clCmp->Ic());
+  int meshX = mic->ColNum();
+  int meshY = mic->RowNum();
+  stringstream ss_tmp;
+  ss_tmp << "cmp" << meshX << "x" << meshY;
+  string predictor_filename("./src/ptsim/" + ss_tmp.str() + ".prd");
+  if (!FileExists(predictor_filename)) {
+    cout << "-E- Temperature predictors file  " << predictor_filename << " does not exist -> Exiting" << endl;
+    return;
+  }
+  ifstream predin;
+  predin.open(predictor_filename.c_str());
+  string line;
+  int idx;
+  double coeff;
+  vector<int> idx_vec;
+  vector<double> coeff_vec;
+
+  // MC
+  for (int mc = 0; mc < cmpConfig.MemCtrlCnt(); ++mc) {
+    if (getline(predin, line)) {
+      istringstream iss(line);
+      while (iss >> idx) {
+	idx_vec.push_back(idx);
+      }
+      MCTempPredictorIdx_.push_back(idx_vec);
+    }
+    if (getline(predin, line)) {
+      istringstream iss(line);
+      while (iss >> coeff) {
+	coeff_vec.push_back(coeff);
+      }
+      MCTempPredictorCoeff_.push_back(coeff_vec);
+    }
+    idx_vec.clear();
+    coeff_vec.clear();
+  }
+
+  // TILES
+  for (int tile_id = 0; tile_id < mic->ColNum()*mic->RowNum(); ++tile_id) {
+    // LINK W
+    if (getline(predin, line)) {
+      istringstream iss(line);
+      while (iss >> idx) {
+	idx_vec.push_back(idx);
+      }
+      MeshLinkWTempPredictorIdx_.push_back(idx_vec);
+    }
+    if (getline(predin, line)) {
+      istringstream iss(line);
+      while (iss >> coeff) {
+	coeff_vec.push_back(coeff);
+      }
+      MeshLinkWTempPredictorCoeff_.push_back(coeff_vec);
+    }
+    idx_vec.clear();
+    coeff_vec.clear();
+
+    // RTR
+    if (getline(predin, line)) {
+      istringstream iss(line);
+      while (iss >> idx) {
+	idx_vec.push_back(idx);
+      }
+      MeshRouterTempPredictorIdx_.push_back(idx_vec);
+    }
+    if (getline(predin, line)) {
+      istringstream iss(line);
+      while (iss >> coeff) {
+	coeff_vec.push_back(coeff);
+      }
+      MeshRouterTempPredictorCoeff_.push_back(coeff_vec);
+    }
+    idx_vec.clear();
+    coeff_vec.clear();
+
+    // L3
+    if (getline(predin, line)) {
+      istringstream iss(line);
+      while (iss >> idx) {
+	idx_vec.push_back(idx);
+      }
+      L3TempPredictorIdx_.push_back(idx_vec);
+    }
+    if (getline(predin, line)) {
+      istringstream iss(line);
+      while (iss >> coeff) {
+	coeff_vec.push_back(coeff);
+      }
+      L3TempPredictorCoeff_.push_back(coeff_vec);
+    }
+    idx_vec.clear();
+    coeff_vec.clear();
+
+    // LinkN
+    if (getline(predin, line)) {
+      istringstream iss(line);
+      while (iss >> idx) {
+	idx_vec.push_back(idx);
+      }
+      MeshLinkNTempPredictorIdx_.push_back(idx_vec);
+    }
+    if (getline(predin, line)) {
+      istringstream iss(line);
+      while (iss >> coeff) {
+	coeff_vec.push_back(coeff);
+      }
+      MeshLinkNTempPredictorCoeff_.push_back(coeff_vec);
+    }
+    idx_vec.clear();
+    coeff_vec.clear();
+
+    // L2
+    if (getline(predin, line)) {
+      istringstream iss(line);
+      while (iss >> idx) {
+	idx_vec.push_back(idx);
+      }
+      L2TempPredictorIdx_.push_back(idx_vec);
+    }
+    if (getline(predin, line)) {
+      istringstream iss(line);
+      while (iss >> coeff) {
+	coeff_vec.push_back(coeff);
+      }
+      L2TempPredictorCoeff_.push_back(coeff_vec);
+    }
+    idx_vec.clear();
+    coeff_vec.clear();
+
+    // Core
+    if (getline(predin, line)) {
+      istringstream iss(line);
+      while (iss >> idx) {
+	idx_vec.push_back(idx);
+      }
+      coreTempPredictorIdx_.push_back(idx_vec);
+    }
+    if (getline(predin, line)) {
+      istringstream iss(line);
+      while (iss >> coeff) {
+	coeff_vec.push_back(coeff);
+      }
+      coreTempPredictorCoeff_.push_back(coeff_vec);
+    }
+    idx_vec.clear();
+    coeff_vec.clear();
+
+    // L1D
+    if (getline(predin, line)) {
+      istringstream iss(line);
+      while (iss >> idx) {
+	idx_vec.push_back(idx);
+      }
+      L1DTempPredictorIdx_.push_back(idx_vec);
+    }
+    if (getline(predin, line)) {
+      istringstream iss(line);
+      while (iss >> coeff) {
+	coeff_vec.push_back(coeff);
+      }
+      L1DTempPredictorCoeff_.push_back(coeff_vec);
+    }
+    idx_vec.clear();
+    coeff_vec.clear();
+
+    // L1I
+    if (getline(predin, line)) {
+      istringstream iss(line);
+      while (iss >> idx) {
+	idx_vec.push_back(idx);
+      }
+      L1ITempPredictorIdx_.push_back(idx_vec);
+    }
+    if (getline(predin, line)) {
+      istringstream iss(line);
+      while (iss >> coeff) {
+	coeff_vec.push_back(coeff);
+      }
+      L1ITempPredictorCoeff_.push_back(coeff_vec);
+    }
+    idx_vec.clear();
+    coeff_vec.clear();
+  }
+  predin.close();
+}
+
+//=======================================================================
+/*
+ * Use actual temperatures and current power to predict next temperatures
+ */
+
+//=======================================================================
+
+
+void PTsim::PredictTemp(cmp::Component * cmp, vector<double> * power_vec) {
+
+  coreTempEst_.assign(cmpConfig.ProcCnt(), 0.0);
+  L1DTempEst_.assign(cmpConfig.ProcCnt(), 0.0);
+  L1ITempEst_.assign(cmpConfig.ProcCnt(), 0.0);
+  L2TempEst_.assign(cmpConfig.ProcCnt(), 0.0);
+  L3TempEst_.assign(cmpConfig.MemCnt(), 0.0);
+  MCTempEst_.assign(cmpConfig.MemCtrlCnt(), 0.0);
+  MeshRouterTempEst_.assign(cmpConfig.ProcCnt(), 0.0);
+  MeshLinkNTempEst_.assign(cmpConfig.ProcCnt(), 0.0);
+  MeshLinkWTempEst_.assign(cmpConfig.ProcCnt(), 0.0);
+
+  Cluster * clCmp = static_cast<Cluster*>(cmp);
+  MeshIc * mic = static_cast<MeshIc*>(clCmp->Ic());
+
+  double acctemp;
+
+  // MC
+  for (int mc = 0; mc < cmpConfig.MemCtrlCnt(); ++mc) {
+    acctemp = MCTemp_[mc];
+    for (int idx = 0; idx < MCTempPredictorIdx_[mc].size(); idx++) {
+      acctemp += MCTempPredictorCoeff_[mc][idx]*(*power_vec)[MCTempPredictorIdx_[mc][idx]];
+    }
+    MCTempEst_[mc]=acctemp;
+  }
+
+  // TILES
+  for (int tile = 0; tile < mic->ColNum()*mic->RowNum(); ++tile) {
+
+    //LINKW
+    acctemp = MeshLinkWTemp_[tile];
+    for (int idx = 0; idx < MeshLinkWTempPredictorIdx_[tile].size(); idx++) {
+      acctemp += MeshLinkWTempPredictorCoeff_[tile][idx]*(*power_vec)[MeshLinkWTempPredictorIdx_[tile][idx]];
+    }
+    MeshLinkWTempEst_[tile]=acctemp;
+
+    //RTR
+    acctemp = MeshRouterTemp_[tile];
+    for (int idx = 0; idx < MeshRouterTempPredictorIdx_[tile].size(); idx++) {
+      acctemp += MeshRouterTempPredictorCoeff_[tile][idx]*(*power_vec)[MeshRouterTempPredictorIdx_[tile][idx]];
+    }
+    MeshRouterTempEst_[tile]=acctemp;
+
+    //L3
+    acctemp = L3Temp_[tile];
+    for (int idx = 0; idx < L3TempPredictorIdx_[tile].size(); idx++) {
+      acctemp += L3TempPredictorCoeff_[tile][idx]*(*power_vec)[L3TempPredictorIdx_[tile][idx]];
+    }
+    L3TempEst_[tile]=acctemp;
+
+    //LINKN
+    acctemp = MeshLinkNTemp_[tile];
+    for (int idx = 0; idx < MeshLinkNTempPredictorIdx_[tile].size(); idx++) {
+      acctemp += MeshLinkNTempPredictorCoeff_[tile][idx]*(*power_vec)[MeshLinkNTempPredictorIdx_[tile][idx]];
+    }
+    MeshLinkNTempEst_[tile]=acctemp;
+
+    //L2
+    acctemp = L2Temp_[tile];
+    for (int idx = 0; idx < L2TempPredictorIdx_[tile].size(); idx++) {
+      acctemp += L2TempPredictorCoeff_[tile][idx]*(*power_vec)[L2TempPredictorIdx_[tile][idx]];
+    }
+    L2TempEst_[tile]=acctemp;
+
+    //CORE
+    acctemp = coreTemp_[tile];
+    for (int idx = 0; idx < coreTempPredictorIdx_[tile].size(); idx++) {
+      acctemp += coreTempPredictorCoeff_[tile][idx]*(*power_vec)[coreTempPredictorIdx_[tile][idx]];
+    }
+    coreTempEst_[tile]=acctemp;
+
+    //L1D
+    acctemp = L1DTemp_[tile];
+    for (int idx = 0; idx < L1DTempPredictorIdx_[tile].size(); idx++) {
+      acctemp += L1DTempPredictorCoeff_[tile][idx]*(*power_vec)[L1DTempPredictorIdx_[tile][idx]];
+    }
+    L1DTempEst_[tile]=acctemp;
+
+    //L1I
+    acctemp = L1ITemp_[tile];
+    for (int idx = 0; idx < L1ITempPredictorIdx_[tile].size(); idx++) {
+      acctemp += L1ITempPredictorCoeff_[tile][idx]*(*power_vec)[L1ITempPredictorIdx_[tile][idx]];
+    }
+    L1ITempEst_[tile]=acctemp;
+
+  }
+}
 
   } // namespace temperature
 

@@ -53,6 +53,24 @@ namespace cmpex {
 
       static vector<double> MeshLinkWTemp_; // 4 links per router
 
+      static vector<double> coreTempEst_;
+
+      static vector<double> L1DTempEst_;
+
+      static vector<double> L1ITempEst_;
+
+      static vector<double> L2TempEst_;
+
+      static vector<double> L3TempEst_;
+
+      static vector<double> MCTempEst_;
+
+      static vector<double> MeshRouterTempEst_;
+
+      static vector<double> MeshLinkNTempEst_; // 4 links per router
+
+      static vector<double> MeshLinkWTempEst_; // 4 links per router
+
       static bool warmupDone_; // flag set to one after hotspot warmup
 
       static bool initHotspotDone_; // flag set to one after hotspot initialization
@@ -60,6 +78,35 @@ namespace cmpex {
       static double timeSim_; // hotspot simulation time
 
       static int nBlocks_; // number of blocks in hotspot
+
+      static bool initTracing_; // flag set to one first time PT tracing is called
+
+      static vector<vector<int> > coreTempPredictorIdx_;
+      static vector<vector<double> > coreTempPredictorCoeff_;
+
+      static vector<vector<int> > L1DTempPredictorIdx_;
+      static vector<vector<double> > L1DTempPredictorCoeff_;
+
+      static vector<vector<int> > L1ITempPredictorIdx_;
+      static vector<vector<double> > L1ITempPredictorCoeff_;
+
+      static vector<vector<int> > L2TempPredictorIdx_;
+      static vector<vector<double> > L2TempPredictorCoeff_;
+
+      static vector<vector<int> > L3TempPredictorIdx_;
+      static vector<vector<double> > L3TempPredictorCoeff_;
+
+      static vector<vector<int> > MCTempPredictorIdx_;
+      static vector<vector<double> > MCTempPredictorCoeff_;
+
+      static vector<vector<int> > MeshRouterTempPredictorIdx_;
+      static vector<vector<double> > MeshRouterTempPredictorCoeff_;
+
+      static vector<vector<int> > MeshLinkNTempPredictorIdx_; // 4 links per router
+      static vector<vector<double> > MeshLinkNTempPredictorCoeff_; // 4 links per router
+
+      static vector<vector<int> > MeshLinkWTempPredictorIdx_; // 4 links per router
+      static vector<vector<double> > MeshLinkWTempPredictorCoeff_; // 4 links per router
 
     public:
 
@@ -76,6 +123,14 @@ namespace cmpex {
       // Prints temperature values saved in local buffers
       static void PrintTemp();
 
+      // Writes power and temperature trace files
+      static void WritePowerTempTraces(cmp::Component * cmp, double * power_sim, double * temp_sim);
+
+      // Read temperature predictors from file
+      static void ReadTempPredictors(cmp::Component * cmp);
+
+      // Predict next temperatures
+      static void PredictTemp(cmp::Component * cmp, vector<double> * power_vec);
       
       // get temperature for one core
       inline static double CoreTemp(int core_idx) { 

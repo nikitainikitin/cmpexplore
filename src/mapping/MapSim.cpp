@@ -137,7 +137,8 @@ void MapSim::Run() {
     me.EvalMappingCost(mconf);
 
     // Run Hotspot every hs_period_sec
-    double hs_period_sec = 0.01;
+    //double hs_period_sec = 0.01;
+    double hs_period_sec = 0.001;
     int hs_period_usec = int(hs_period_sec * 1e6);
     if ((sysElapsedPeriod*PeriodUs() % hs_period_usec) == 0) {
       vector<double> power_vec;
