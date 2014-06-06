@@ -111,6 +111,10 @@ namespace cmpex {
 
     inline void MaxPower ( double p );
 
+    inline double MaxTemp ( void ) const;
+
+    inline void MaxTemp ( double t );
+
     inline Technology Tech () const;
 
     inline void Tech (Technology t);
@@ -290,6 +294,8 @@ namespace cmpex {
     int sEffort_; // search effort (defines iteratioms before quit)
 
     double maxPower_; // power constraint
+
+    double maxTemp_; // temperature constraint
 
     /*** ============== debug and output options ================ ***/
 
@@ -523,6 +529,14 @@ namespace cmpex {
 
   void Config::MaxPower ( double p ) {
     maxPower_ = p;
+  }
+
+  double Config::MaxTemp() const {
+    return maxTemp_;
+  }
+
+  void Config::MaxTemp ( double t ) {
+    maxTemp_ = t;
   }
 
   Technology Config::Tech () const {

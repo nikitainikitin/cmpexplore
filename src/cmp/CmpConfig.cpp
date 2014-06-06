@@ -96,7 +96,7 @@ int CmpConfig::CreateCmp (const std::string& fname)
   //InitL3ToMcMapping();
   InitRuntimeProperties();
   InitProcL3ProbDistr();
-  InitL3ClusterIdx();
+  InitL3Clusters();
 
   return 0;
 }
@@ -115,7 +115,7 @@ int CmpConfig::CreateCmp (ArchConfig& ac)
   //InitL3ToMcMapping();
   InitRuntimeProperties();
   InitProcL3ProbDistr();
-  InitL3ClusterIdx();
+  InitL3Clusters();
 
   return 0;
 }
@@ -352,17 +352,23 @@ void CmpConfig::InitProcL3ProbDistr()
 
 //=======================================================================
 /*
- * Assign indices of L3 clusters to the memories.
+ * Initialize lists of tiles per L3 cluster and assign cluster idxs to memories.
  * See InitProcL3ProbDistr() for more info on L3 clusters.
  */
 
-void CmpConfig::InitL3ClusterIdx()
+void CmpConfig::InitL3Clusters()
 {
   if (!L3ClusterSize()) {
     // all memories belong to the same cluster
     for (int m = 0; m < MemCnt(); ++m) {
       Memory * mem = GetMemory(m);
       mem->SetL3ClusterIdx(0);
+    }
+
+    L3Clusters_.push_back(IdxArray());
+    // !!! assume that every tile has one L3 memory module
+    for (int m = 0; m < MemCnt(); ++m) {
+      L3Clusters_[0].push_back(m);
     }
   }
   else {
@@ -371,6 +377,9 @@ void CmpConfig::InitL3ClusterIdx()
 
     Cluster * clCmp = static_cast<Cluster*>(Cmp());
     MeshIc * mesh = static_cast<MeshIc*>(clCmp->Ic());
+
+    int l3ClCnt = mesh->ColNum()*mesh->RowNum()/L3ClusterSize();
+    L3Clusters_.assign(l3ClCnt, IdxArray());
 
     // !!! assume that every tile has one L3 memory module
     for (int m = 0; m < MemCnt(); ++m) {
@@ -384,10 +393,14 @@ void CmpConfig::InitL3ClusterIdx()
       int clColCnt = (mesh->ColNum() + l3ClusterWidth - 1) / l3ClusterWidth;
       int clIdx = clRowIdx*clColCnt+clColIdx;
       mem->SetL3ClusterIdx(clIdx);
+
+      DASSERT(clIdx < L3Clusters_.size());
+      L3Clusters_[clIdx].push_back(m);
       //cout << clIdx << ' ';
     }
     //cout << endl;
   }
+
 }
 
 //=======================================================================
@@ -409,6 +422,24 @@ void CmpConfig::Cleanup()
   // Note that workloads are not cleaned here for speedup purpose:
   // if next cmp has the same wlFile, then workloads will be kept.
   // See CmpBuilder::ReadParameter().
+}
+
+//=======================================================================
+/*
+ * Prints L3 clusters.
+ */
+
+void CmpConfig::PrintL3Clusters() const
+{
+  for (vector<IdxArray>::const_iterator it = L3Clusters_.begin();
+       it != L3Clusters_.end(); ++it) {
+    const IdxArray& tiles = *it;
+    cout << "DEBUG: L3Cluster with tiles";
+    for (IdxCIter tile_it = tiles.begin(); tile_it != tiles.end(); ++tile_it) {
+      cout << ' ' << (*tile_it);
+    }
+    cout << endl;
+  }
 }
 
 //=======================================================================

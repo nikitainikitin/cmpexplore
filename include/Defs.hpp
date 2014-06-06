@@ -20,6 +20,7 @@
 #include <cassert>
 #include <limits>
 #include <cstdlib>
+#include <vector>
 
 namespace cmpex {
 
@@ -40,6 +41,7 @@ namespace cmpex {
     #define DEBUG(l, x) debug(l) << x
   #endif
   
+
   //======================================================================
   // Some types
   //======================================================================
@@ -49,6 +51,12 @@ namespace cmpex {
 
   // a type with three states
   enum Tristate { TS_UNDEF = -1, TS_OFF, TS_ON };
+
+  // an array of indices
+  typedef std::vector<int> IdxArray;
+  typedef IdxArray::iterator IdxIter;
+  typedef IdxArray::const_iterator IdxCIter;
+
 
   //======================================================================
   // Some min/max constants
@@ -64,9 +72,11 @@ namespace cmpex {
   const UShort MAX_USHORT = std::numeric_limits<UShort>::max();
   const UInt MAX_UINT = std::numeric_limits<UInt>::max();
   
+
   //======================================================================
   // Random numbers
   //======================================================================
+
   // Return uniformly distributed int from 0 to max-1.
   inline int RandInt ( int max )
   {
@@ -79,6 +89,7 @@ namespace cmpex {
     return drand48();
   }
   
+
   //======================================================================
   // Definitions of the cmp package
   //======================================================================

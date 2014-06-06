@@ -108,24 +108,33 @@ void MapSim::Run() {
     }
 
     // 1. Map new tasks
-    while (wlConfig.GetNextPendingTask() &&
-           mconf->GetUnassignedProcCnt() >= wlConfig.GetNextPendingTask()->task_dop) {
+    while (wlConfig.HasPendingTasks()) {
       Task * nextTask = wlConfig.GetNextPendingTask();
+      if (nextTask->task_dop > cmpConfig.L3ClusterSize()) {
+        cout << "-E-: Can't assign task (id = " << nextTask->task_id << "), since its DOP = "
+             << nextTask->task_dop << " is larger than the L3 cluster size = "
+             << cmpConfig.L3ClusterSize() << " -> Exiting... " << endl;
+        exit(1);
+      }
+
+      bool assigned = mconf->AssignTaskToFreeProcs(nextTask->task_id);
+      // assignment fails if not enough free procs available
+      if (!assigned) break;
+
       cout << "   -MAP- Mapping new task (id = "
            << nextTask->task_id << ") with DOP = " << nextTask->task_dop << endl;
+
+      // NOTE: task and its threads remain in the scheduled state until they
+      // starts execution. The beginning of execution can be delayed
+      // to prioritize those threads which are close to their deadlines.
       for (int th = 0; th < nextTask->task_dop; ++th) {
-        // assign thread to the next available core
-        mconf->AssignToFreeProc(nextTask->task_threads[th]->thread_gid);
-        // NOTE: thread remains in the scheduled state until it actually
-        // starts execution. The beginning of execution can be delayed
-        // to prioritize those tasks which are close to their deadlines.
         nextTask->task_threads[th]->thread_status = WlConfig::SCHEDULED;
       }
       nextTask->task_status = WlConfig::SCHEDULED;
     }
 
     // 2. Find the new best mapping
-    //cout << "***** Mapconf before mapping: "; mconf->Print();
+    cout << "***** Mapconf before mapping: "; mconf->Print();
     cout << "   -MAP- Running SA mapping..." << endl;
     SaMapEngine me;
     me.Map(mconf, true); // run SA mapping

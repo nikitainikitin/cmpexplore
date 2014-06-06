@@ -5,7 +5,7 @@ PARAM MemReplySize=3
 PARAM LinkWidth=256
 PARAM NiDelay=3
 PARAM WlFile=./workloads/wl_spx_1cpu.txt
-PARAM L3ClusterSize=16
+PARAM L3ClusterSize=4
 PARAM UFrequency=1.6
 PARAM UVoltage=0.8
 

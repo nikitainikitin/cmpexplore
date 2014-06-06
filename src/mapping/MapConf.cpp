@@ -15,12 +15,14 @@
 // ----------------------------------------------------------------------
 
 #include <iostream>
+#include <algorithm>
 
 #include "mapping/MapConf.hpp"
 #include "Config.hpp"
 #include "cmp/CmpConfig.hpp"
 #include "cmp/Processor.hpp"
 #include "TechDefs.hpp"
+#include "workload/WlConfig.hpp"
 
 using namespace std;
 
@@ -28,10 +30,15 @@ namespace cmpex {
 
   extern Config config;
   extern cmp::CmpConfig cmpConfig;
+  extern workload::WlConfig wlConfig;
 
   using namespace cmp;
+  using namespace workload;
 
   namespace mapping {
+
+  typedef WlConfig::Task Task;
+  typedef WlConfig::Thread Thread;
 
 //=======================================================================
 /*
@@ -57,7 +64,7 @@ MapConf::~MapConf () {}
  * Return true if thread has been assigned successfully.
  */
 
-bool MapConf::AssignToFreeProc (int th_gid) {
+bool MapConf::AssignThreadToFreeProc (int th_gid) {
   for (int p = 0; p < map.size(); ++p) {
     if (map[p] == IDX_UNASSIGNED) {
       map[p] = th_gid;
@@ -67,6 +74,51 @@ bool MapConf::AssignToFreeProc (int th_gid) {
     }
   }
   return false;
+}
+
+//=======================================================================
+/*
+ * Assign specified task to the free processors.
+ * Assumption: threads of the task have to be assigned to one L3 cluster.
+ * Return true if task has been assigned successfully.
+ */
+
+bool MapConf::AssignTaskToFreeProcs (int t_id) {
+  // iterate over L3 clusters,
+  // check how many procs available in this cluster
+  vector<int> freeProcsPerL3Cluster;
+  for (int cl = 0; cl < cmpConfig.L3ClusterCnt(); ++cl) {
+    IdxArray& tiles = cmpConfig.GetTilesOfL3Cluster(cl);
+    int freeCnt = 0;
+    for (IdxCIter tile_it = tiles.begin(); tile_it != tiles.end(); ++tile_it) {
+      if (map[*tile_it] == IDX_UNASSIGNED) {
+        ++freeCnt;
+      }
+    }
+    freeProcsPerL3Cluster.push_back(freeCnt);
+  }
+
+  // find cluster with the max number of free procs
+  int maxClIdx = max_element(freeProcsPerL3Cluster.begin(), freeProcsPerL3Cluster.end()) -
+                 freeProcsPerL3Cluster.begin();
+
+  Task * task = wlConfig.GetTask(t_id);
+
+  // not enough procs in any of the clusters
+  if (freeProcsPerL3Cluster[maxClIdx] < task->task_dop) return false;
+
+  // iterator to the list of tiles in the max cluster
+  IdxCIter tile_it = cmpConfig.GetTilesOfL3Cluster(maxClIdx).begin();
+  for (int thread = 0; thread < task->task_dop; ++thread) {
+    // global id of next thread to be assigned
+    int th_gid = task->task_threads[thread]->thread_gid;
+    // find the next free proc
+    while (map[*tile_it] != IDX_UNASSIGNED) ++tile_it;
+    map[*tile_it] = th_gid;
+    ++tile_it;
+  }
+
+  return true;
 }
 
 //=======================================================================
