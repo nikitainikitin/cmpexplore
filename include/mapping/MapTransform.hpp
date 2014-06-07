@@ -20,6 +20,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <map>
 
 #include "Config.hpp"
 #include "CmpConfig.hpp"
@@ -137,91 +138,166 @@ namespace cmpex {
     };
 
     //======================================================================
-    // -6- Swap two random tasks between clusters.
+    // -6- Move random task to other L3 cluster.
     //======================================================================
-    struct MapTrSwapTaskPairBetweenL3Clusters : public MapTransform {
+    struct MapTrMoveTaskToOtherL3Cluster : public MapTransform {
       bool UpdateMap(MapConf& mConf) const {
-        if (wlConfig.running_tasks.size() < 2) return false;
+        if (wlConfig.running_tasks.size() < 1) return false;
 
-        bool success = false;
-
-        // choose a random task
+        // 1. Choose a random task, identify its cluster and # of active threads
         int core_idx = RandInt(mConf.coreCnt);
         while (mConf.map[core_idx] == MapConf::IDX_UNASSIGNED)
           core_idx = RandInt(mConf.coreCnt);
 
-        Task * task = wlConfig.GetThreadByGid(mConf.map[core_idx])->task;
-        int taskClIdx = cmpConfig.GetMemory(core_idx)->L3ClusterIdx();
+        Task * srcTask = wlConfig.GetThreadByGid(mConf.map[core_idx])->task;
+        int srcClIdx = cmpConfig.GetMemory(core_idx)->L3ClusterIdx();
+        IdxArray& srcTiles = cmpConfig.GetTilesOfL3Cluster(srcClIdx);
 
-        // 1. First try to move the task to free cores in some other cluster
-
-        // iterate over L3 clusters,
-        // check how many procs available in this cluster
-        vector<int> freeProcsPerL3Cluster;
-        for (int cl = 0; cl < cmpConfig.L3ClusterCnt(); ++cl) {
-          IdxArray& tiles = cmpConfig.GetTilesOfL3Cluster(cl);
-          int freeCnt = 0;
-          for (IdxCIter tile_it = tiles.begin(); tile_it != tiles.end(); ++tile_it) {
-            if (mConf.map[*tile_it] == MapConf::IDX_UNASSIGNED) {
-              ++freeCnt;
-            }
+        int srcActiveDop = 0;
+        for (IdxCIter tile_it = srcTiles.begin(); tile_it != srcTiles.end(); ++tile_it) {
+          int th_gid = mConf.map[*tile_it];
+          if (th_gid != MapConf::IDX_UNASSIGNED &&
+              wlConfig.GetThreadByGid(th_gid)->task->task_id == srcTask->task_id) {
+            ++srcActiveDop;
           }
-          freeProcsPerL3Cluster.push_back(freeCnt);
         }
 
-        // find cluster with the max number of free procs != taskClIdx
-        int maxClIdx = 0;
-        for (int i = 0; i < freeProcsPerL3Cluster.size(); ++i) {
-          if (i != taskClIdx &&
-              freeProcsPerL3Cluster[i] > freeProcsPerL3Cluster[maxClIdx])
-            maxClIdx = i;
+        // 2. Choose another cluster randomly
+        int dstClIdx = RandInt(cmpConfig.L3ClusterCnt());
+        while (srcClIdx == dstClIdx)
+          dstClIdx = RandInt(cmpConfig.L3ClusterCnt());
+
+        // 3. Check if dst cluster has enough free procs available to move the task
+        IdxArray& dstTiles = cmpConfig.GetTilesOfL3Cluster(dstClIdx);
+        int dstFreeProcCnt = 0;
+        for (IdxCIter tile_it = dstTiles.begin(); tile_it != dstTiles.end(); ++tile_it) {
+          if (mConf.map[*tile_it] == MapConf::IDX_UNASSIGNED) {
+            ++dstFreeProcCnt;
+          }
         }
 
-        // there are enough free procs in some cluster
-        if (freeProcsPerL3Cluster[maxClIdx] >= task->task_dop) {
-          int clIdx = RandInt(cmpConfig.L3ClusterCnt());
-          while (clIdx == taskClIdx || freeProcsPerL3Cluster[clIdx] < task->task_dop)
-            clIdx = RandInt(cmpConfig.L3ClusterCnt());
+        // task can be moved to free processors
+        if (dstFreeProcCnt >= srcActiveDop) {
+          // now move the task to the L3 cluster given by dstClIdx
 
-          // now move the task to the L3 cluster given by clIdx
           // remove old assignment
-          /*IdxArray& tiles = cmpConfig.GetTilesOfL3Cluster(taskClIdx);
-          for (IdxCIter tile_it = tiles.begin(); tile_it != tiles.end(); ++tile_it) {
+          IdxArray srcTaskThreads;
+          for (IdxCIter tile_it = srcTiles.begin(); tile_it != srcTiles.end(); ++tile_it) {
             int th_gid = mConf.map[*tile_it];
             if (th_gid != MapConf::IDX_UNASSIGNED &&
-                wlConfig.GetThreadByGid(th_gid)->task->task_id == task->task_id)
+                wlConfig.GetThreadByGid(th_gid)->task->task_id == srcTask->task_id) {
               mConf.map[*tile_it] = MapConf::IDX_UNASSIGNED;
+              srcTaskThreads.push_back(th_gid);
+            }
           }
 
           // do new assignment
-          IdxCIter tile_it = cmpConfig.GetTilesOfL3Cluster(clIdx).begin();
-          for (int thread = 0; thread < task->task_dop; ++thread) {
-            // global id of next thread to be assigned
-            int th_gid = task->task_threads[thread]->thread_gid;
-            // find the next free proc
-            while (mConf.map[*tile_it] != MapConf::IDX_UNASSIGNED) {
-              ++tile_it;
+          IdxCIter th_gid_iter = srcTaskThreads.begin();
+          for (IdxCIter tile_it = dstTiles.begin(); tile_it != dstTiles.end(); ++tile_it) {
+            int th_gid = mConf.map[*tile_it];
+            if (th_gid == MapConf::IDX_UNASSIGNED) {
+              mConf.map[*tile_it] = *th_gid_iter;
+              if (++th_gid_iter == srcTaskThreads.end()) break;
             }
-            mConf.map[*tile_it] = th_gid;
-            ++tile_it;
-          }*/
+          }
+
+          //cout << "         moved task to FREE procs, task "
+          //     << srcTask->task_id << ", actDop " << srcActiveDop << endl;
+          return true;
+        }
+
+        // 4. If couldn't move the task to free procs,
+        //    look for a replacement task with the same # of active threads the dst cluster
+        map<int, int> activeThreadCntPerTask;
+        for (IdxCIter tile_it = dstTiles.begin(); tile_it != dstTiles.end(); ++tile_it) {
+          int th_gid = mConf.map[*tile_it];
+          if (th_gid != MapConf::IDX_UNASSIGNED) {
+            Task * curTask = wlConfig.GetThreadByGid(th_gid)->task;
+            if (activeThreadCntPerTask.find(curTask->task_id) ==
+                activeThreadCntPerTask.end()) {
+              activeThreadCntPerTask[curTask->task_id] = 1;
+            }
+            else {
+              activeThreadCntPerTask[curTask->task_id] += 1;
+            }
+          }
+        }
+
+        Task * dstTask = 0;
+        for(map<int,int>::const_iterator it = activeThreadCntPerTask.begin();
+            it != activeThreadCntPerTask.end(); ++it) {
+          if (it->second == srcActiveDop) {
+            dstTask = wlConfig.GetTask(it->first); break;
+          }
+        }
+
+        // replacement task (dstTask) was found, swap with src task
+        if (dstTask) {
+
+          /// // save old mapping state
+          /// vector<int> oldMap = mConf.map;
+
+          // remove old assignments
+          // src Task
+          IdxArray srcTaskThreads;
+          for (IdxCIter tile_it = srcTiles.begin(); tile_it != srcTiles.end(); ++tile_it) {
+            int th_gid = mConf.map[*tile_it];
+            if (th_gid != MapConf::IDX_UNASSIGNED &&
+                wlConfig.GetThreadByGid(th_gid)->task->task_id == srcTask->task_id) {
+              mConf.map[*tile_it] = MapConf::IDX_UNASSIGNED;
+              srcTaskThreads.push_back(th_gid);
+            }
+          }
+          // dst Task
+          IdxArray dstTaskThreads;
+          for (IdxCIter tile_it = dstTiles.begin(); tile_it != dstTiles.end(); ++tile_it) {
+            int th_gid = mConf.map[*tile_it];
+            if (th_gid != MapConf::IDX_UNASSIGNED &&
+                wlConfig.GetThreadByGid(th_gid)->task->task_id == dstTask->task_id) {
+              mConf.map[*tile_it] = MapConf::IDX_UNASSIGNED;
+              dstTaskThreads.push_back(th_gid);
+            }
+          }
+
+          // do new assignments
+          // src Task
+          IdxCIter th_gid_iter = srcTaskThreads.begin();
+          for (IdxCIter tile_it = dstTiles.begin(); tile_it != dstTiles.end(); ++tile_it) {
+            int th_gid = mConf.map[*tile_it];
+            if (th_gid == MapConf::IDX_UNASSIGNED) {
+              mConf.map[*tile_it] = *th_gid_iter;
+              if (++th_gid_iter == srcTaskThreads.end()) break;
+            }
+          }
+          // dst Task
+          th_gid_iter = dstTaskThreads.begin();
+          for (IdxCIter tile_it = srcTiles.begin(); tile_it != srcTiles.end(); ++tile_it) {
+            int th_gid = mConf.map[*tile_it];
+            if (th_gid == MapConf::IDX_UNASSIGNED) {
+              mConf.map[*tile_it] = *th_gid_iter;
+              if (++th_gid_iter == dstTaskThreads.end()) break;
+            }
+          }
+
+          /// vector<int> oldMapSorted = oldMap;
+          /// vector<int> newMapSorted = mConf.map;
+          /// sort(oldMapSorted.begin(), oldMapSorted.end());
+          /// sort(newMapSorted.begin(), newMapSorted.end());
+          /// if (oldMapSorted != newMapSorted) {
+          ///   cout << "        swapped task " << srcTask->task_id << ", actDop " << srcActiveDop
+          ///        << " with task " << dstTask->task_id << endl;
+          ///   cout << "Oldmap:";
+          ///   for (int i = 0; i < oldMap.size(); ++i) cout << ' ' << oldMap[i]; cout << endl;
+          ///   cout << "Newmap:";
+          ///   for (int i = 0; i < mConf.map.size(); ++i) cout << ' ' << mConf.map[i]; cout << endl;
+          ///   exit(1);
+          /// }
 
           return true;
         }
 
-        // 2. Failed to move task to free cores. Try swapping with some other task.
-
-
-        // limit the number of trials
-        /*int max_trials = 100;
-        int trial_cnt = 0;
-        bool success = false;
-        do {
-
-
-          ++trial_cnt;
-        } while (!success && trial_cnt < max_trials);
-        return success;*/
+        //cout << "         failed to move task " << srcTask->task_id << ", actDop "
+        //     << srcActiveDop << endl;
         return false;
       }
     };

@@ -79,7 +79,7 @@ MapEngine::MapEngine() {
   AddTransform(new MapTrChangeL3ClusterActiv());
 
   if (cmpConfig.L3ClusterCnt() > 1)
-    AddTransform(new MapTrSwapTaskPairBetweenL3Clusters());
+    AddTransform(new MapTrMoveTaskToOtherL3Cluster());
 }
 
 MapEngine::~MapEngine() {
