@@ -293,6 +293,7 @@ void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
   }
   PTsim::PredictTemp(cmpConfig.Cmp(), &power_vec);
   double temp_penalty = CalcTempPenalty(lambda);
+  //double temp_penalty = 1.0;
 
   // 2d. Delay/qos
   double obj_penalty = config.QoS() ? CalcQoSObjPenalty(mc) : 1.0;

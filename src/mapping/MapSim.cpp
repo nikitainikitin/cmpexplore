@@ -134,7 +134,7 @@ void MapSim::Run() {
     }
 
     // 2. Find the new best mapping
-    cout << "***** Mapconf before mapping: "; mconf->Print();
+    //cout << "***** Mapconf before mapping: "; mconf->Print();
     cout << "   -MAP- Running SA mapping..." << endl;
     SaMapEngine me;
     me.Map(mconf, true); // run SA mapping

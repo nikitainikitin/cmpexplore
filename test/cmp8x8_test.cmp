@@ -1,0 +1,297 @@
+PARAM UnitLen=1.0e-3
+PARAM MemDensity=1
+PARAM L3LatencyDef=8
+PARAM MemReplySize=3
+PARAM LinkWidth=256
+PARAM NiDelay=3
+PARAM WlFile=./workloads/wl_spx_1cpu.txt
+PARAM L3ClusterSize=4
+PARAM UFrequency=1.6
+PARAM UVoltage=0.8
+
+DEFINE ProcOff PROC Type=0 L1Size=0.064 L1Lat=3 L2Size=0.256 L2Lat=5 L3SizeEff=3.87879 OoO=1 Area=2.07 Freq=3.5 Volt=1.0 Epi=0.198 Pidle=0.0 L1IEa=0.161 L1IEm=0.357 L1DErda=0.0116 L1DErdm=0.0222 L1DEwra=0.0649 L1DEwrm=0.0015 L2Erda=0.065 L2Erdm=0.087 L2Ewra=-0.611 L2Ewrm=0.169 Active=0
+
+DEFINE ProcOn PROC Type=0 L1Size=0.064 L1Lat=3 L2Size=0.256 L2Lat=5 L3SizeEff=3.87879 OoO=1 Area=2.07 Freq=3.5 Volt=1.0 Epi=0.198 Pidle=0.391 L1IEa=0.161 L1IEm=0.357 L1DErda=0.0116 L1DErdm=0.0222 L1DEwra=0.0649 L1DEwrm=0.0015 L2Erda=0.065 L2Erdm=0.087 L2Ewra=-0.611 L2Ewrm=0.169 Active=1
+
+DEFINE ProcSleep PROC Type=0 L1Size=0.064 L1Lat=3 L2Size=0.256 L2Lat=5 L3SizeEff=3.87879 OoO=1 Area=2.07 Freq=0.0 Volt=1.0 Epi=0.198 Pidle=0.0 L1IEa=0.161 L1IEm=0.357 L1DErda=0.0116 L1DErdm=0.0222 L1DEwra=0.0649 L1DEwrm=0.0015 L2Erda=0.065 L2Erdm=0.087 L2Ewra=-0.611 L2Ewrm=0.169 Active=1
+
+
+FUNCTION coreLeakageOfTemp = piecewise (300 0.07441093) (310 0.07587967) (320 0.07783831) (330 0.08224432) (340 0.09301419) (350 0.13168844) (360 0.2604402) (370 0.4993405) (380 0.7930695) (390 1.3364699) (400 2.986241)
+FUNCTION l1iLeakageOfTemp = piecewise (300 0.0137618) (310 0.0140334) (320 0.0143955) (330 0.0152104) (340 0.0172022) (350 0.0243547) (360 0.0481662) (370 0.0923488) (380 0.146672) (390 0.247169) (400 0.552282)
+FUNCTION l1dLeakageOfTemp = piecewise (300 0.00334217) (310 0.00340813) (320 0.00349609) (330 0.00369398) (340 0.00417771) (350	0.00591476) (360 0.0116976) (370 0.0224277) (380 0.0356205) (390 0.0600271) (400 0.134127)
+FUNCTION l2LeakageOfTemp = piecewise (300 0.0347431) (310 0.0354288) (320 0.0363431) (330 0.0384003) (340 0.0434289) (350 0.0614861) (360 0.121601) (370 0.233144) (380 0.370288) (390 0.624004) (400 1.3943)
+FUNCTION l3LeakageOfTemp = piecewise (300 0.0332822) (310 0.033939) (320 0.0348149) (330 0.0367855) (340 0.0416027) (350 0.0589007) (360 0.116488) (370 0.223341) (380 0.354718) (390 0.597765) (400 1.33567)
+FUNCTION routerLeakageOfTemp = piecewise (300 0.00428692) (310 0.00437153) (320 0.00448434) (330 0.00473817) (340 0.00535864) (350 0.00758671) (360 0.0150042) (370 0.0287675) (380 0.0456895) (390 0.0769953) (400 0.172041)
+FUNCTION linksLeakageOfTemp = piecewise (300 0.00154339) (310 0.00157385) (320 0.00161447) (330 0.00170585) (340 0.00192924) (350 0.0027314) (360 0.00540187) (370 0.010357) (380 0.0164493) (390 0.0277201) (400 0.0619388)
+FUNCTION mcLeakageOfTemp = piecewise (300 0.0802444) (310 0.0818282) (320 0.0839399) (330 0.0886912) (340 0.100306) (350 0.142012) (360 0.280856) (370 0.538482) (380 0.855237) (390 1.44123) (400 3.22034)
+
+FUNCTION corePgLeakageOfTemp = piecewise (300 0.02861121) (310 0.02917577) (320 0.02992875) (330 0.03162283) (340 0.03576399) (350 0.05063423) (360 0.10013897) (370 0.1919959) (380 0.3049351) (390 0.5138718) (400 1.1482111)
+FUNCTION l1iPgLeakageOfTemp = piecewise (300 0.00666411) (310 0.00679564) (320 0.00697101) (330 0.0073656) (340 0.00833014) (350 0.0117937) (360 0.0233244) (370 0.0447197) (380 0.0710254) (390 0.119691) (400 0.267441)
+FUNCTION l1dPgLeakageOfTemp = piecewise (300 0.00181438) (310 0.00185019) (320 0.00189794) (330 0.00200537) (340 0.00226797) (350 0.00321097) (360 0.00635033) (370 0.0121754) (380 0.0193375) (390 0.0325872) (400 0.0728139)
+FUNCTION l2PgLeakageOfTemp = piecewise (300 0.0168995) (310 0.0172331) (320 0.0176778) (330 0.0186784) (340 0.0211244) (350 0.0299077) (360 0.0591483) (370 0.113405) (380 0.180113) (390 0.303524) (400 0.678204)
+FUNCTION l3PgLeakageOfTemp = piecewise (300 0.0167197) (310 0.0170497) (320 0.0174897) (330 0.0184797) (340 0.0208997) (350 0.0295895) (360 0.058519) (370 0.112198) (380 0.178197) (390 0.300295) (400 0.670989)
+FUNCTION routerPgLeakageOfTemp = piecewise (300 0.00123601) (310 0.00126041) (320 0.00129293) (330 0.00136612) (340 0.00154501) (350 0.00218741) (360 0.00432604) (370 0.00829428) (380 0.0131733) (390 0.0221994) (400 0.049603)
+FUNCTION linksPgLeakageOfTemp = piecewise (300 0.000694526) (310 0.000708234) (320 0.000726511) (330 0.000767634) (340 0.000868158) (350 0.00122913) (360 0.00243084) (370 0.00466064) (380 0.00740219) (390 0.0124741) (400 0.0278724)
+FUNCTION mcPgLeakageOfTemp = piecewise (300 0.0303146) (310 0.0309129) (320 0.0317107) (330 0.0335056) (340 0.0378932) (350 0.0536488) (360 0.106101) (370 0.203427) (380 0.32309) (390 0.544466) (400 1.21657)
+
+
+MESH Col=8 Row=8 ColWidth=6 RowHeight=5 LinkDelay=2 RouterDelay=3 LinkEpf=0.092 RouterEpf=0.163
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+  BUS CompCnt=3 AccessTime=2
+    ProcOn
+    MEM Size=2 Erda=0.118 Erdm=0.166 Ewra=-0.113 Ewrm=0.471
+    NI
+
+MEMCTRL Location=West Latency=62.5 Eacc=3.42 Pidle=1.03 Active=1
+MEMCTRL Location=East Latency=62.5 Eacc=3.42 Pidle=1.03 Active=1

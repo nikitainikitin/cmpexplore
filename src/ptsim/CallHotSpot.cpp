@@ -545,7 +545,7 @@ void PTsim::ReadTempPredictors(cmp::Component * cmp) {
   string predictor_filename("./src/ptsim/cmp" + IntToStr(meshX) + "x" + IntToStr(meshY) + ".prd");
   if (!FileExists(predictor_filename)) {
     cout << "-E- Temperature predictors file  " << predictor_filename << " does not exist -> Exiting" << endl;
-    return;
+    exit(1);
   }
   ifstream predin;
   predin.open(predictor_filename.c_str());

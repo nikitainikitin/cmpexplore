@@ -129,9 +129,11 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
   // number of local iterations
   double lIterCnt = cmpConfig.ProcCnt()*4;
 
-  if (!silent_mode) cout << "Number of local iters = " << lIterCnt << endl;
+  if (!silent_mode)
+    cout << "Number of local iters = " << lIterCnt << endl;
 
-  double no_impr_limit = lIterCnt*lIterCnt*config.SEffort();
+  //double no_impr_limit = lIterCnt*lIterCnt*config.SEffort();
+  double no_impr_limit = 16384/5*config.SEffort();
   double last_impr = 0;
   int oIter = 0;
 
@@ -176,7 +178,8 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
         if (bestMap) delete bestMap;
         bestMap = curMap;
         if (!silent_mode) {
-          cout << "(Time " << timer.Current() << ") ";
+          cout << "(Time " << timer.Current()
+               << ", iter " << last_impr << ") ";
           curMap->Print();
         }
       }
