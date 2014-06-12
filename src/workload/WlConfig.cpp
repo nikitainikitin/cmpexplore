@@ -65,7 +65,13 @@ int WlConfig::CreateTasks ( int ntasks, bool predefined )
     task->task_ipc = predefined ? TASK_IPC[i] : IPC_MIN+(IPC_MAX-IPC_MIN)*RandUDouble(); // in [IPC_MIN,IPC_MAX]
     task->task_mpi = predefined ? TASK_MPI[i] : MPI_MIN+(MPI_MAX-MPI_MIN)*RandUDouble(); // in [IPC_MIN,IPC_MAX]
     dop = predefined ? TASK_DOP[i] : 1 << RandInt(LOG2_DOP_MAX+1); // in [1,2**(LOG2_DOP_MAX)]
-    task->task_dop = dop;
+    if (((dop >> 1) << 1) == dop) {// dop is even
+      task->task_dop = dop >> 1; // dop is divided by 2 because of two-thread parallelism in our core
+    }
+    else { // dop is odd
+      task->task_dop = (dop >> 1)+1; // dop is divided by 2, but we need to consider the extra thread (remainder)
+    }
+    int num_threads = task->task_dop;
     // use randomly generated powerlaw functions for missRatioOfMemSize
     double alpha = predefined ? TASK_MR_ALPHA[i] : MR_ALPHA_MIN + (MR_ALPHA_MAX-MR_ALPHA_MIN)*RandUDouble();
     double exp = predefined ? TASK_MR_EXP[i] : MR_EXP_MIN + (MR_EXP_MAX-MR_EXP_MIN)*RandUDouble();
@@ -74,7 +80,7 @@ int WlConfig::CreateTasks ( int ntasks, bool predefined )
     //task->task_finish = -1;
 
     if (task) AddTask(task);
-    for(j = 0; j < dop; j++) {
+    for(j = 0; j < num_threads; j++) {
       thread = new WlConfig::Thread;
       thread->thread_id = j;
       thread->thread_gid = thread_gid;
@@ -82,9 +88,15 @@ int WlConfig::CreateTasks ( int ntasks, bool predefined )
       thread->thread_status = PENDING;
       thread->thread_xyloc.x= -1; // unmapped, default value
       thread->thread_xyloc.y= -1; // unmapped, default value
-      thread->thread_instructions = instr; // inherited
       thread->thread_progress = 0;
-      thread->thread_ipc = task->task_ipc; // inherited
+      if (j != (dop >> 1)) { 
+	thread->thread_instructions = 2 * instr; //two threads in parallel
+	thread->thread_ipc = 2 * task->task_ipc; // two threads in parallel
+      }
+      else {
+	thread->thread_instructions = instr; //one thread remainder
+	thread->thread_ipc = task->task_ipc; // one thread remainder
+      }
       thread->thread_mpi = task->task_mpi; // inherited
       thread->missRatioOfMemSize = task->missRatioOfMemSize; // inherited
       if (thread) AddThread(thread,i);
@@ -95,6 +107,7 @@ int WlConfig::CreateTasks ( int ntasks, bool predefined )
 
       ++thread_gid;
     }
+    
   }
 
   return 0;
