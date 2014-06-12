@@ -112,6 +112,10 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
     }
     else {
       tightBudget = TS_OFF;
+      // initialize mapping with a high-performance solution
+      curMap->coreActiv.assign(curMap->coreCnt, true);
+      curMap->coreFreq.assign(curMap->coreCnt, MAX_FREQ);
+      curMap->L3ClusterActiv.assign(curMap->L3ClusterCnt, true);
     }
   }
 
@@ -123,6 +127,7 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
     cout << "Initial obj = " << curMap->obj << ", Pow = " << curMap->power << endl;
     curMap->Print();
   }
+  double initObj = curMap->obj;
 
   // 2. Run the annealing schedule
 
@@ -178,8 +183,11 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
       //bool cur_budgets_met = (fabs(curMap->cost-curMap->thr) < E_DOUBLE);
       /// TODO: check max temperature here as well
       bool cur_budgets_met = (config.MaxPower() - curMap->power > 0);
+      // minimum improvement in objective to change mapping with respect to initial
+      double min_impr = 1.01;
 
-      if (curMap->obj > (bestObj+E_DOUBLE) && cur_budgets_met) {
+      if (curMap->obj > bestObj+E_DOUBLE &&
+          curMap->obj > initObj*min_impr && cur_budgets_met) {
         last_impr = oIter*lIterCnt + iter;
         if (bestMap) delete bestMap;
         bestMap = curMap;
