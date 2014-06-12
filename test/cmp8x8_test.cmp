@@ -1,8 +1,10 @@
+# setup mimics Niagara2 parameters
+
 PARAM UnitLen=1.0e-3
 PARAM MemDensity=1
 PARAM L3LatencyDef=8
-PARAM MemReplySize=3
-PARAM LinkWidth=256
+PARAM MemReplySize=9
+PARAM LinkWidth=64
 PARAM NiDelay=3
 PARAM WlFile=./workloads/wl_spx_1cpu.txt
 PARAM L3ClusterSize=4

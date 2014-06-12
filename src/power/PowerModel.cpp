@@ -296,7 +296,7 @@ double PowerModel::GetIcPower(Component * cmp)
   power += GetFlatIcPower(clCmp->Ic());
 
   // bottom level
-  if (!cmpConfig.FlatMeshIc()) {
+  if (!config.Tmap() && !cmpConfig.FlatMeshIc()) { // assume flat IC in tmap mode
     for (int c = 0; c < clCmp->CompCnt(); ++c) {
       Cluster * comp = static_cast<Cluster*>(clCmp->GetComponent(c));
       power += GetFlatIcPower(comp->Ic());
