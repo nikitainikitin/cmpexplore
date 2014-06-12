@@ -94,7 +94,7 @@ int main( int argc, char ** argv )
 
       // create task stream
       int taskCnt = 10;
-      bool predefined_tasks = false;
+      bool predefined_tasks = true;
       wlConfig.CreateTasks(taskCnt, predefined_tasks);
 
       cout << "-I- The workload has " << taskCnt << " tasks" << endl;

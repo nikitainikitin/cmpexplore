@@ -95,7 +95,7 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
     curMap->coreFreq.assign(curMap->coreCnt, MIN_FREQ);
     curMap->L3ClusterActiv.assign(curMap->L3ClusterCnt, false);
   }
-  bestMap = 0;
+
   EvalMappingCost(curMap, lambda);
 
   // assume that the initial solution has all cores and L3 off,
@@ -115,8 +115,12 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
     }
   }
 
+  /// TODO: check max temperature here as well
+  bool cur_budgets_met = (config.MaxPower() - curMap->power > 0);
+  bestMap = cur_budgets_met ? curMap : 0;
+
   if (!silent_mode) {
-    cout << "Initial Thr = " << curMap->thr << ", Pow = " << curMap->power << endl;
+    cout << "Initial obj = " << curMap->obj << ", Pow = " << curMap->power << endl;
     curMap->Print();
   }
 
@@ -172,8 +176,10 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
       // 2d. Update best mapping
       double bestObj = bestMap ? bestMap->obj : 0.0;
       //bool cur_budgets_met = (fabs(curMap->cost-curMap->thr) < E_DOUBLE);
+      /// TODO: check max temperature here as well
       bool cur_budgets_met = (config.MaxPower() - curMap->power > 0);
-      if (curMap->obj > bestObj && cur_budgets_met) {
+
+      if (curMap->obj > (bestObj+E_DOUBLE) && cur_budgets_met) {
         last_impr = oIter*lIterCnt + iter;
         if (bestMap) delete bestMap;
         bestMap = curMap;
