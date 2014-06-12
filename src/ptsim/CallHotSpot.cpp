@@ -533,7 +533,7 @@ void PTsim::WritePowerTempTraces(cmp::Component * cmp, double * power_sim, doubl
 
 //=======================================================================
 /*
- * Save power and temperature transient traces
+ * Read Temperature predictors coefficients
  */
 
 void PTsim::ReadTempPredictors(cmp::Component * cmp) {
