@@ -58,7 +58,9 @@ namespace cmpex {
 
     inline int GetUnassignedProcCnt() const;
 
-    bool AssignToFreeProc (int th_gid);
+    bool AssignThreadToFreeProc (int th_gid);
+
+    bool AssignTaskToFreeProcs (int t_id);
 
     void Print() const;
 

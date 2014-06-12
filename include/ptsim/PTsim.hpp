@@ -131,54 +131,94 @@ namespace cmpex {
 
       // Predict next temperatures
       static void PredictTemp(cmp::Component * cmp, vector<double> * power_vec);
+
+      // Maximum estimated temperature among components in the given tile
+      static double GetMaxEstTempInTile(int tileIdx);
       
       // get temperature for one core
-      inline static double CoreTemp(int core_idx) { 
-	return coreTemp_[core_idx]; 
+      inline static double CoreTemp(int core_idx) {
+        return coreTemp_[core_idx];
       }
 
       // get temperature for one L1D
-      inline static double L1DTemp(int l1d_idx) { 
-	return L1DTemp_[l1d_idx]; 
+      inline static double L1DTemp(int l1d_idx) {
+        return L1DTemp_[l1d_idx];
       }
 
       // get temperature for one L1I
-      inline static double L1ITemp(int l1i_idx) { 
-	return L1ITemp_[l1i_idx]; 
+      inline static double L1ITemp(int l1i_idx) {
+        return L1ITemp_[l1i_idx];
       }
 
       // get temperature for one L2
-      inline static double L2Temp(int l2_idx) { 
-	return L2Temp_[l2_idx]; 
+      inline static double L2Temp(int l2_idx) {
+        return L2Temp_[l2_idx];
       }
 
       // get temperature for one L3 slice
-      inline static double L3Temp(int l3_idx) { 
-	return L3Temp_[l3_idx]; 
+      inline static double L3Temp(int l3_idx) {
+        return L3Temp_[l3_idx];
       }
 
       // get temperature for one MC
-      inline static double MCTemp(int mc_idx) { 
-	return MCTemp_[mc_idx]; 
+      inline static double MCTemp(int mc_idx) {
+        return MCTemp_[mc_idx];
       }
 
       // get temperature for one router
-      inline static double MeshRouterTemp(int rtr_idx) { 
-	return MeshRouterTemp_[rtr_idx]; 
+      inline static double MeshRouterTemp(int rtr_idx) {
+        return MeshRouterTemp_[rtr_idx];
       }
 
       // get temperature for one link North-outbound (South-inbound))
-      inline static double MeshLinkNTemp(int ln_idx) { 
-	return MeshLinkNTemp_[ln_idx]; 
+      inline static double MeshLinkNTemp(int ln_idx) {
+        return MeshLinkNTemp_[ln_idx];
       }
 
       // get temperature for one link West-outbound (East-inbound)
-      inline static double MeshLinkWTemp(int lw_idx) { 
-	return MeshLinkWTemp_[lw_idx]; 
+      inline static double MeshLinkWTemp(int lw_idx) {
+        return MeshLinkWTemp_[lw_idx];
       }
 
       inline static bool WarmupDone ( ) {
-	return warmupDone_;
+        return warmupDone_;
+      }
+
+      // get temperature estimators ---
+      inline static double CoreTempEst(int core_idx) {
+        return coreTempEst_[core_idx];
+      }
+
+      inline static double L1DTempEst(int l1d_idx) {
+        return L1DTempEst_[l1d_idx];
+      }
+
+      inline static double L1ITempEst(int l1i_idx) {
+        return L1ITempEst_[l1i_idx];
+      }
+
+      inline static double L2TempEst(int l2_idx) {
+        return L2TempEst_[l2_idx];
+      }
+
+      inline static double L3TempEst(int l3_idx) {
+        return L3TempEst_[l3_idx];
+      }
+
+      inline static double MCTempEst(int mc_idx) {
+        return MCTempEst_[mc_idx];
+      }
+
+      inline static double MeshRouterTempEst(int rtr_idx) {
+        return MeshRouterTempEst_[rtr_idx];
+      }
+
+      inline static double MeshLinkNTempEst(int ln_idx) {
+        return MeshLinkNTempEst_[ln_idx];
+      }
+
+      inline static double MeshLinkWTempEst(int lw_idx) {
+        return MeshLinkWTempEst_[lw_idx];
       }
 
     public:

@@ -38,6 +38,8 @@
 #include "cmp/Processor.hpp"
 #include "cmp/Memory.hpp"
 #include "ptsim/PTsim.hpp"
+#include "MeshIc.hpp"
+#include "Cluster.hpp"
 
 using namespace std;
 
@@ -68,11 +70,16 @@ namespace cmpex {
 
 MapEngine::MapEngine() {
   // create transformations
-  AddTransform(new MapTrSwapTaskPair());
+  if (cmpConfig.L3ClusterSize() > 1)
+    AddTransform(new MapTrSwapThreadPairInL3Cluster());
+
   AddTransform(new MapTrChangeCoreActiv());
   AddTransform(new MapTrIncreaseCoreFreq());
   AddTransform(new MapTrDecreaseCoreFreq());
   AddTransform(new MapTrChangeL3ClusterActiv());
+
+  if (cmpConfig.L3ClusterCnt() > 1)
+    AddTransform(new MapTrMoveTaskToOtherL3Cluster());
 }
 
 MapEngine::~MapEngine() {
@@ -161,7 +168,7 @@ double MapEngine::CalcQoSObjPenalty(MapConf * mc) const
       }
       /*if (thread_penalty > 1.0) {
         cout << "thread_penalty = " << thread_penalty << endl;
-        cout << "slack_avail = " << slack_avail_ms
+        cout << "slacMapTrSwapThreadPairInL3Clusterk_avail = " << slack_avail_ms
              << ", ms_to_complete = " << ms_to_complete << endl;
       }*/
       assert(thread_penalty <= 1.0);
@@ -173,6 +180,46 @@ double MapEngine::CalcQoSObjPenalty(MapConf * mc) const
   }
 
   return running_threads_cnt ? total_qos_penalty/running_threads_cnt : 1.0;
+}
+
+//=======================================================================
+/*
+ * Returns temperature penalty for the mapping objective.
+ * Calculates maximum temperature on the chip and adds
+ * penalty proportional to the square of relative excess of temperature.
+ */
+
+double MapEngine::CalcTempPenalty(double lambda) const
+{
+  double temp_penalty = 1.0;
+
+  lambda = 1.0;
+
+  Cluster * clCmp = static_cast<Cluster*>(cmpConfig.Cmp());
+  MeshIc * mic = static_cast<MeshIc*>(clCmp->Ic());
+
+  double max_temp_excess = 0.0;
+
+  // MCs
+  for (int mc = 0; mc < cmpConfig.MemCtrlCnt(); ++mc) {
+    double mc_temp = PTsim::MCTempEst(mc);
+    double temp_excess = max(0.0, mc_temp - config.MaxTemp());
+    max_temp_excess = max(max_temp_excess, temp_excess);
+  }
+
+  // Tiles
+  for (int tile = 0; tile < mic->TCnt(); ++tile) {
+    double tile_temp = PTsim::GetMaxEstTempInTile(tile);
+    double temp_excess = max(0.0, tile_temp - config.MaxTemp());
+    max_temp_excess = max(max_temp_excess, temp_excess);
+  }
+
+  // use square of maximum temp access
+  temp_penalty = 1.0/(1.0 + lambda*max_temp_excess*max_temp_excess/config.MaxTemp());
+
+  //cout << "   -MAP-DEBUG- Temperature penalty = " << temp_penalty << endl;
+
+  return temp_penalty;
 }
 
 //=======================================================================
@@ -226,13 +273,29 @@ void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
   }*/
 
   // 2. Run analytical models
+  // 2a. Performance
   IterativePerfModel m;
   StatMetrics * pSm = m.Run();
+
+  // 2b. Power
   double power = PowerModel::GetTotalPower(cmpConfig.Cmp());
   pSm->Power(power);
-  double powerPen = max(0.0, power - config.MaxPower());
+  double powerExcess = max(0.0, power - config.MaxPower());
+  double power_penalty = 1.0 / (1.0 + lambda*powerExcess/config.MaxPower());
 
-  // 2a. Evaluate delay/qos penalty
+  // 2c. Temperature
+  vector<double> power_vec;
+  PowerModel::CreatePTsimPowerVector(cmpConfig.Cmp(), power_vec);
+  if (!PTsim::WarmupDone()) {
+    cout << "   -MAP- Running Hotspot warmup (first invocation)... " << flush;
+    PTsim::CallHotSpot(cmpConfig.Cmp(), &power_vec, true);
+    cout << "done." << endl;
+  }
+  PTsim::PredictTemp(cmpConfig.Cmp(), &power_vec);
+  double temp_penalty = CalcTempPenalty(lambda);
+  //double temp_penalty = 1.0;
+
+  // 2d. Delay/qos
   double obj_penalty = config.QoS() ? CalcQoSObjPenalty(mc) : 1.0;
 
   // 3. Save evaluation within the mapping object
@@ -242,7 +305,7 @@ void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
   mc->obj = mc->thr*obj_penalty;
 
   // cost including hard penalties
-  double cost = mc->obj / (1.0 + lambda*powerPen/config.MaxPower());
+  double cost = mc->obj * power_penalty * temp_penalty;
   mc->cost = cost;
   delete pSm;
 }

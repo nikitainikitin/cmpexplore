@@ -237,6 +237,8 @@ namespace cmpex {
 
       inline void L3ClusterSize ( int c );
 
+      inline int L3ClusterCnt () const;
+
       inline double TotalL3Size () const;
       
       inline UInt SubnCnt () const;
@@ -271,6 +273,8 @@ namespace cmpex {
 
       inline void SetWlIdx ( int i );
 
+      inline IdxArray& GetTilesOfL3Cluster (int clIdx);
+
       // Service functions
       // Get total size of the L3 memory.
       void CalcTotalL3Size ();
@@ -297,10 +301,13 @@ namespace cmpex {
       // Initialize probabilities of procs to access L3 instances.
       void InitProcL3ProbDistr();
 
-      // Assign indices of L3 clusters to the memories
-      void InitL3ClusterIdx();
+      // Initialize lists of tiles per L3 cluster and assign cluster idxs to memories
+      void InitL3Clusters();
 
       void Cleanup();
+
+      // --- DEBUG ---
+      void PrintL3Clusters() const;
       
     private:
 
@@ -364,6 +371,8 @@ namespace cmpex {
                           // When == 0, every core can access all L3 slices on chip.
                           // Note: an L3 cluster is different from cmp:Cluster.
                           // For more info check CmpConfig::InitProcL3ProbDistr().
+
+      vector<IdxArray> L3Clusters_; // IdxArrays with the indices of tiles per L3 cluster
 
       double totalL3Size_;
 
@@ -647,6 +656,10 @@ namespace cmpex {
       L3ClusterSize_ = s;
     }
 
+    int CmpConfig::L3ClusterCnt () const {
+      return L3Clusters_.size();
+    }
+
     double CmpConfig::TotalL3Size () const {
       return totalL3Size_;
     }
@@ -693,6 +706,11 @@ namespace cmpex {
 
     void CmpConfig::SetWlIdx ( int i ) {
       wlIdx_ = i;
+    }
+
+    IdxArray& CmpConfig::GetTilesOfL3Cluster (int clIdx) {
+      DASSERT(clIdx < L3Clusters_.size());
+      return L3Clusters_[clIdx];
     }
 
     const std::string& CmpConfig::GetCurWlName () const {

@@ -152,6 +152,8 @@ namespace cmpex {
       // that gid actually points to some thread
       inline Thread * GetThreadByGid ( int gid );
 
+      inline Task * GetTask ( int t_id );
+
       // Create Tasks
       int CreateTasks ( int ntasks, bool predefined = false );
 
@@ -219,6 +221,10 @@ namespace cmpex {
 
     WlConfig::Thread * WlConfig::GetThreadByGid ( int gid ) {
       return threads[gid];
+    }
+
+    WlConfig::Task * WlConfig::GetTask ( int t_id ) {
+      return tasks[t_id];
     }
 
     double WlConfig::GetInstantQoS() const {

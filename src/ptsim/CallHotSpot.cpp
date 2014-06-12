@@ -152,17 +152,16 @@ int PTsim::CallHotSpot(cmp::Component * cmp, vector<double> * power_vec, bool si
   int meshX = mic->ColNum();
   int meshY = mic->RowNum();
 
-  stringstream ss_tmp;
-  ss_tmp << "cmp" << meshX << "x" << meshY;
-  string floorplan_filename("./src/ptsim/" + ss_tmp.str() + ".flp");
+  string cmpSize = "cmp" + IntToStr(meshX) + "x" + IntToStr(meshY);
+  string floorplan_filename("./src/ptsim/" + cmpSize + ".flp");
   if (!FileExists(floorplan_filename)) {
     cout << "-E- Floorplan file " << floorplan_filename << " does not exist -> Exiting" << endl;
     return -1;
   }
-  string inittemp_filename("./src/ptsim/" + ss_tmp.str() + ".init");
-  string steadytemp_filename("./src/ptsim/" + ss_tmp.str() + ".steady");
-  string ttrace_filename("./src/ptsim/" + ss_tmp.str() + ".ttrace");
-  string gridsteadytemp_filename("./src/ptsim/" + ss_tmp.str() + ".grid.steady");
+  string inittemp_filename("./src/ptsim/" + cmpSize + ".init");
+  string steadytemp_filename("./src/ptsim/" + cmpSize + ".steady");
+  string ttrace_filename("./src/ptsim/" + cmpSize + ".ttrace");
+  string gridsteadytemp_filename("./src/ptsim/" + cmpSize + ".grid.steady");
 
   // adapt C++ strings to C strings
   strcpy(flp,floorplan_filename.c_str());
@@ -543,12 +542,10 @@ void PTsim::ReadTempPredictors(cmp::Component * cmp) {
   MeshIc * mic = static_cast<MeshIc*>(clCmp->Ic());
   int meshX = mic->ColNum();
   int meshY = mic->RowNum();
-  stringstream ss_tmp;
-  ss_tmp << "cmp" << meshX << "x" << meshY;
-  string predictor_filename("./src/ptsim/" + ss_tmp.str() + ".prd");
+  string predictor_filename("./src/ptsim/cmp" + IntToStr(meshX) + "x" + IntToStr(meshY) + ".prd");
   if (!FileExists(predictor_filename)) {
     cout << "-E- Temperature predictors file  " << predictor_filename << " does not exist -> Exiting" << endl;
-    return;
+    exit(1);
   }
   ifstream predin;
   predin.open(predictor_filename.c_str());
@@ -732,9 +729,6 @@ void PTsim::ReadTempPredictors(cmp::Component * cmp) {
  * Use actual temperatures and current power to predict next temperatures
  */
 
-//=======================================================================
-
-
 void PTsim::PredictTemp(cmp::Component * cmp, vector<double> * power_vec) {
 
   coreTempEst_.assign(cmpConfig.ProcCnt(), 0.0);
@@ -822,6 +816,29 @@ void PTsim::PredictTemp(cmp::Component * cmp, vector<double> * power_vec) {
 
   }
 }
+
+//=======================================================================
+/*
+ * Get maximum estimated temperature among components in the given tile.
+ */
+
+double PTsim::GetMaxEstTempInTile(int tileIdx) {
+  double maxTemp = 0.0;
+
+  maxTemp = max(CoreTempEst(tileIdx), maxTemp);
+  maxTemp = max(L1DTempEst(tileIdx), maxTemp);
+  maxTemp = max(L1ITempEst(tileIdx), maxTemp);
+  maxTemp = max(L2TempEst(tileIdx), maxTemp);
+  maxTemp = max(L3TempEst(tileIdx), maxTemp);
+  maxTemp = max(MeshRouterTempEst(tileIdx), maxTemp);
+  maxTemp = max(MeshLinkNTempEst(tileIdx), maxTemp);
+  maxTemp = max(MeshLinkWTempEst(tileIdx), maxTemp);
+
+  return maxTemp;
+}
+
+//=======================================================================
+
 
   } // namespace temperature
 

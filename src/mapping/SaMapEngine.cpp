@@ -66,6 +66,8 @@ namespace cmpex {
  * Constructors and destructor
  */
 
+Tristate SaMapEngine::tightBudget = TS_UNDEF;
+
 SaMapEngine::SaMapEngine() {}
 
 SaMapEngine::~SaMapEngine() {}
@@ -84,11 +86,35 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
 
   double lambda = 0.5;
 
-  // 1. Initialize mapping with mconf or greedily
-  // For now, assume that all cores will be busy
+  // 1. Initialize mapping with mconf or a greedy mapping.
   curMap = (mconf ? new MapConf(*mconf) : CreateGreedyMapping());
+  // In the tightBudget mode prioritize feasible mapping vs
+  // optimal mapping, hence reset all activities to off-state.
+  if (tightBudget == TS_ON) {
+    curMap->coreActiv.assign(curMap->coreCnt, false);
+    curMap->coreFreq.assign(curMap->coreCnt, MIN_FREQ);
+    curMap->L3ClusterActiv.assign(curMap->L3ClusterCnt, false);
+  }
   bestMap = 0;
   EvalMappingCost(curMap, lambda);
+
+  // assume that the initial solution has all cores and L3 off,
+  // hence the evaluated power is a lower bound static power
+  double powerLB = curMap->power;
+
+  if (tightBudget == TS_UNDEF) { // first call
+    // check if the power budget is tight,
+    // meaning not more than 1/3 is left for dynamic power.
+    if (config.MaxPower() / powerLB < 1.5) {
+      cout << "   -MAP- TightBudget mode is on.";
+      cout << " The lower bound for power (no active cores/L3) is = " << powerLB << " W" << endl;
+      tightBudget = TS_ON;
+    }
+    else {
+      tightBudget = TS_OFF;
+    }
+  }
+
   if (!silent_mode) {
     cout << "Initial Thr = " << curMap->thr << ", Pow = " << curMap->power << endl;
     curMap->Print();
@@ -103,9 +129,11 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
   // number of local iterations
   double lIterCnt = cmpConfig.ProcCnt()*4;
 
-  if (!silent_mode) cout << "Number of local iters = " << lIterCnt << endl;
+  if (!silent_mode)
+    cout << "Number of local iters = " << lIterCnt << endl;
 
-  double no_impr_limit = lIterCnt*lIterCnt*config.SEffort();
+  //double no_impr_limit = lIterCnt*lIterCnt*config.SEffort();
+  double no_impr_limit = 16384/5*config.SEffort();
   double last_impr = 0;
   int oIter = 0;
 
@@ -150,7 +178,8 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
         if (bestMap) delete bestMap;
         bestMap = curMap;
         if (!silent_mode) {
-          cout << "(Time " << timer.Current() << ") ";
+          cout << "(Time " << timer.Current()
+               << ", iter " << last_impr << ") ";
           curMap->Print();
         }
       }
@@ -162,7 +191,14 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
 
   // if this assert fails it is probably that no feasible solution has been found,
   // check if the constraints are too strict
-  assert(bestMap);
+  if (!bestMap) {
+    cout << "-E- SAMapEngine: no feasible mapping found.";
+    cout << " It is likely that the power budget is too strict." << endl;
+    cout << "    The lower bound for power (no active cores/L3) at current temperature is "
+         << powerLB << " W" << endl;
+    cout << "    Try running with higher -max_power. Exiting..." << endl;
+    exit(1);
+  }
 
   if (!silent_mode) {
     cout << "Finished search (no improvement during the last "
