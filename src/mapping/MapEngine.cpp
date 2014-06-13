@@ -148,7 +148,8 @@ double MapEngine::CalcQoSObjPenalty(MapConf * mc) const
   for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
     Thread * thread = (mc->map[p] != MapConf::IDX_UNASSIGNED) ?
         wlConfig.GetThreadByGid(mc->map[p]) : 0;
-    if (thread && thread->thread_status == WlConfig::RUNNING) {
+    if (thread && (thread->thread_status == WlConfig::RUNNING ||
+                   thread->thread_status == WlConfig::SCHEDULED && mc->coreActiv[p])) {
       //cout << "Thread id " << thread->thread_gid << " is running" << endl;
       double thread_penalty = 1.0;
 
@@ -168,11 +169,17 @@ double MapEngine::CalcQoSObjPenalty(MapConf * mc) const
       }
       /*if (thread_penalty > 1.0) {
         cout << "thread_penalty = " << thread_penalty << endl;
-        cout << "slacMapTrSwapThreadPairInL3Clusterk_avail = " << slack_avail_ms
+        cout << "slack_avail = " << slack_avail_ms
              << ", ms_to_complete = " << ms_to_complete << endl;
       }*/
       assert(thread_penalty <= 1.0);
       //cout << "thread_penalty = " << thread_penalty << endl;
+
+      // strong penalty for starting the tasks at speeds that
+      // violate the deadline
+      if (thread->thread_status == WlConfig::SCHEDULED && thread_penalty < 1.0-E_DOUBLE) {
+        return 0.01;
+      }
 
       total_qos_penalty += thread_penalty;
       ++running_threads_cnt;

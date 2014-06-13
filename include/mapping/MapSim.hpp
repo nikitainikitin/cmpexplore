@@ -55,6 +55,8 @@ namespace cmpex {
       // Main method that invokes simulation.
       virtual void Run();
 
+      bool SkipRemapping(bool lastPeriodWlChanged);
+
       // --- Service functions ---
 
     private:

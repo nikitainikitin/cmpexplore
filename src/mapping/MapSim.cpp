@@ -39,6 +39,8 @@
 #include "workload/WlConfig.hpp"
 #include "cmp/Processor.hpp"
 #include "PTsim.hpp"
+#include "MeshIc.hpp"
+#include "Cluster.hpp"
 
 using namespace std;
 
@@ -91,6 +93,8 @@ void MapSim::Run() {
   cout << "-I- MapSim: one period simulates " << PeriodUs() << " usec ("
        << PeriodUs()/1e6 << " sec) of system time" << endl;
 
+  bool lastPeriodWlChanged = true; // if workload changed in the last period
+
   // start the mapping loop
   while (!wlConfig.AllTasksCompleted() && sysElapsedPeriod < maxPeriods) {
 
@@ -103,7 +107,8 @@ void MapSim::Run() {
         Thread * thread = wlConfig.GetThreadByGid(thr_id);
         cout << "   -MAP- Thread " << thr_id << " from task " << thread->task->task_id
              << " is mapped to proc " << p << ", progress = "
-             << min(100,100*thread->thread_progress/thread->thread_instructions) << "%" << endl;
+             << min(100,int(100*(double(thread->thread_progress)/thread->thread_instructions)))
+             << "%" << endl;
       }
     }
 
@@ -125,20 +130,27 @@ void MapSim::Run() {
            << nextTask->task_id << ") with DOP = " << nextTask->task_dop << endl;
 
       // NOTE: task and its threads remain in the scheduled state until they
-      // starts execution. The beginning of execution can be delayed
+      // start execution. The beginning of execution can be delayed
       // to prioritize those threads which are close to their deadlines.
       for (int th = 0; th < nextTask->task_dop; ++th) {
         nextTask->task_threads[th]->thread_status = WlConfig::SCHEDULED;
       }
       nextTask->task_status = WlConfig::SCHEDULED;
+      lastPeriodWlChanged = true;
     }
 
     // 2. Find the new best mapping
     //cout << "***** Mapconf before mapping: "; mconf->Print();
-    cout << "   -MAP- Running SA mapping..." << endl;
     SaMapEngine me;
-    me.Map(mconf, true); // run SA mapping
-    //me.EvalMappingCost(mconf); // no remapping, evaluate default mapping only
+    if (sysElapsedPeriod == 0 || !SkipRemapping(lastPeriodWlChanged)) {
+      cout << "   -MAP- Running SA mapping..." << endl;
+      me.Map(mconf, true); // run SA mapping
+    }
+    else {
+      cout << "   -MAP- Skipped SA mapping for this period: "
+           << "no change in workload, all budgets satisfied" << endl;
+    }
+    lastPeriodWlChanged = false; // period change history is reset after mapping
     cout << "   -MAP- Mapconf after mapping: "; mconf->Print();
 
     // 3. Run performance model with the new mapping;
@@ -185,7 +197,10 @@ void MapSim::Run() {
         // by instr_per_ns * length_period_ns
         cout << "   -MAP- Advancing thread " << thr_id << " progress by "
              << cmpConfig.GetProcessor(p)->Thr()*PeriodUs()*1000 << " instructions" << endl;
+        ///cout << "Thread progress before " << thread->thread_progress;
+        ///cout << ", advancing for " << cmpConfig.GetProcessor(p)->Thr()*PeriodUs()*1000;
         thread->thread_progress += cmpConfig.GetProcessor(p)->Thr()*PeriodUs()*1000;
+        ///cout << ", thread progress now " << thread->thread_progress << endl;
         // Mark as running tasks and threads who have started execution
         if (thread->thread_progress > 0 && thread->thread_status != WlConfig::RUNNING) {
           assert(thread->thread_status = WlConfig::SCHEDULED);
@@ -216,8 +231,9 @@ void MapSim::Run() {
         if (thread->CheckProgressMarkCompleted()) {
           // release core
           mconf->map[p] = MapConf::IDX_UNASSIGNED;
-          mconf->coreActiv[p] = false;
+          //mconf->coreActiv[p] = false;
           cout << "   -MAP- Thread " << thr_id << " has completed" << endl;
+          lastPeriodWlChanged = true;
         }
         // check if the task has completed
         if (thread->task->CheckProgressMarkCompleted()) {
@@ -261,6 +277,35 @@ void MapSim::Run() {
          << sysElapsedPeriod*PeriodUs()/1e6 << " sec)" << endl;
   }
 
+}
+
+//=======================================================================
+/*
+ * Returns true if remapping can be skipped for this period.
+ */
+
+bool MapSim::SkipRemapping(bool lastPeriodWlChanged) {
+  if (lastPeriodWlChanged) return false;
+
+  // evaluate temperature at the end of the next period
+  // if running with the same mapping
+
+  double max_temp = 0.0;
+
+  // MCs
+  for (int mc = 0; mc < cmpConfig.MemCtrlCnt(); ++mc) {
+    max_temp = max(max_temp, PTsim::MCTempEst(mc));
+  }
+
+  // Tiles
+  Cluster * clCmp = static_cast<Cluster*>(cmpConfig.Cmp());
+  MeshIc * mic = static_cast<MeshIc*>(clCmp->Ic());
+  for (int tile = 0; tile < mic->TCnt(); ++tile) {
+    max_temp = max(max_temp, PTsim::GetMaxEstTempInTile(tile));
+  }
+
+  bool temp_satisfied = (max_temp <= config.MaxTemp());
+  return temp_satisfied;
 }
 
 //=======================================================================
