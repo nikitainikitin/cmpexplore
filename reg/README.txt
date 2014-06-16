@@ -19,7 +19,7 @@ How to add a new test:
    for the lines to be filtered out of the output file
    (one filter per line). Those will be passed to "grep -v"
    to post-process the test output.
-4. Add file 'golden.txt': this file contains the expected
+4. Add file 'expected.txt': this file contains the expected
    test output (already filtered).
    This will be passed to "diff" with the test output
    to determine the test status (OK/FAILED).

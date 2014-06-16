@@ -93,13 +93,18 @@ int main( int argc, char ** argv )
       cmpConfig.CreateCmp(config.Test());
 
       // create task stream
-      int taskCnt = 10;
-      bool predefined_tasks = true;
-      wlConfig.CreateTasks(taskCnt, predefined_tasks);
+      int taskCnt;
+      if (config.TaskFile() != "") {
+        taskCnt = wlConfig.ReadTasks(config.TaskFile());
+      }
+      else {
+        taskCnt = 10;
+        wlConfig.CreateTasks(taskCnt, false);
+      }
 
       cout << "-I- The workload has " << taskCnt << " tasks" << endl;
       cout << "    Printing tasks:" << endl;
-      wlConfig.PrintTasks(taskCnt);
+      wlConfig.PrintTasks();
 
       // start mapping
       MapSim sim(1000);

@@ -1,14 +1,17 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
 
 #include "WlConfig.hpp"
 #include "model/Function.hpp"
+#include "Parser.hpp"
 
 using std::vector;
 using std::string;
 using std::cout;
 using std::endl;
+using std::ifstream;
 
 namespace cmpex {
 
@@ -180,6 +183,101 @@ bool WlConfig::AllTasksCompleted ( void )
     if ((*it)->task_status != COMPLETED) return false;
   }
   return true;
+}
+
+//=======================================================================
+/*
+ * Read tasks from file.
+ */
+
+int WlConfig::ReadTasks ( const string & fname )
+{
+  ifstream in(fname.c_str());
+
+  if (!in.good()) {
+    cout << "-E- Can't read from file " << fname.c_str() << " -> Exiting..." << endl;
+    exit(1);
+  }
+
+  string line;
+
+  int thread_gid = 0;
+  int task_id = 0;
+
+  while (getline(in, line)) {
+
+    LStrip(line);
+
+    // skip empty lines
+    if (line.empty()) continue;
+
+    // skip comments
+    if (line[0] == '#') continue;
+
+    // parse task parameters
+    double ipc, mpi, mr_alpha, mr_exp, instr_dbl;
+    int instr, deadl, dop;
+    ValueParser::ExtractValue(line, ipc);
+    ValueParser::ExtractValue(line, mpi);
+    ValueParser::ExtractValue(line, mr_alpha);
+    ValueParser::ExtractValue(line, mr_exp);
+    ValueParser::ExtractValue(line, instr_dbl);
+    ValueParser::ExtractValue(line, deadl);
+    ValueParser::ExtractValue(line, dop);
+    instr = int(instr_dbl);
+
+    // create a task
+    /// TODO: merge code with CreateTasks()
+    Task * task = new Task();
+    task->task_id = task_id;
+    task->task_status = PENDING;
+    task->task_cluster_id = -1; // default, unmapped
+    task->task_deadline = deadl;
+    task->task_elapsed = 0;
+    task->task_ipc = ipc;
+    task->task_mpi = mpi;
+    if (((dop >> 1) << 1) == dop) {// dop is even
+      task->task_dop = dop >> 1; // dop is divided by 2 because of two-thread parallelism in our core
+    }
+    else { // dop is odd
+      task->task_dop = (dop >> 1)+1; // dop is divided by 2, but we need to consider the extra thread (remainder)
+    }
+    task->missRatioOfMemSize = new Powerlaw(mr_alpha, mr_exp);
+    AddTask(task);
+
+    for(int j = 0; j < task->task_dop; j++) {
+      Thread * thread = new Thread();
+      thread->thread_id = j;
+      thread->thread_gid = thread_gid;
+      thread->task = task;
+      thread->thread_status = PENDING;
+      thread->thread_xyloc.x= -1; // unmapped, default value
+      thread->thread_xyloc.y= -1; // unmapped, default value
+      thread->thread_progress = 0;
+      if (j != (dop >> 1)) {
+        thread->thread_instructions = 2 * instr; //two threads in parallel
+        thread->thread_ipc = 2 * task->task_ipc; // two threads in parallel
+      }
+      else {
+        thread->thread_instructions = instr; //one thread remainder
+        thread->thread_ipc = task->task_ipc; // one thread remainder
+      }
+      thread->thread_mpi = task->task_mpi; // inherited
+      thread->missRatioOfMemSize = task->missRatioOfMemSize; // inherited
+      if (thread) AddThread(thread,task_id);
+      XYloc * xyloc = new XYloc;
+      xyloc->x = -1;
+      xyloc->y = -1;
+      if (xyloc) AddThreadLoc(xyloc,task_id);
+
+      ++thread_gid;
+    }
+    ++task_id;
+  }
+
+  in.close();
+
+  return task_id;
 }
 
 //=======================================================================

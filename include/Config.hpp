@@ -115,6 +115,10 @@ namespace cmpex {
 
     inline void MaxTemp ( double t );
 
+    inline const string& TaskFile ( void ) const;
+
+    inline void TaskFile ( string s );
+
     inline Technology Tech () const;
 
     inline void Tech (Technology t);
@@ -296,6 +300,8 @@ namespace cmpex {
     double maxPower_; // power constraint
 
     double maxTemp_; // temperature constraint
+
+    string taskFile_; // task file name (tmap mode)
 
     /*** ============== debug and output options ================ ***/
 
@@ -537,6 +543,14 @@ namespace cmpex {
 
   void Config::MaxTemp ( double t ) {
     maxTemp_ = t;
+  }
+
+  const string& Config::TaskFile () const {
+    return taskFile_;
+  }
+
+  void Config::TaskFile ( string s ) {
+    taskFile_ = s;
   }
 
   Technology Config::Tech () const {

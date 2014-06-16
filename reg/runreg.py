@@ -43,7 +43,7 @@ def run_a_test (tname):
   ffilt.close()
   
   # diff output
-  diffcmd = "diff " + tname + "/out.txt " + tname + "/golden.txt > " + tname + "/diff.txt"
+  diffcmd = "diff " + tname + "/out.txt " + tname + "/expected.txt > " + tname + "/diff.txt"
   os.system(diffcmd)
   
   # print test status

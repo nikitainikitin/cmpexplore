@@ -238,6 +238,8 @@ namespace cmpex {
       // Create Tasks
       int CreateTasks ( int ntasks, bool predefined = false );
 
+      int ReadTasks ( const string& fname );
+
       bool HasPendingTasks ();
 
       Task * GetNextPendingTask ();
