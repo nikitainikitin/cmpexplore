@@ -145,6 +145,8 @@ double MapEngine::CalcQoSObjPenalty(MapConf * mc) const
   double total_qos_penalty = 0.0;
   int running_threads_cnt = 0;
 
+  double sch_pen = 1.0; // penalty for scheduled tasks
+
   for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
     Thread * thread = (mc->map[p] != MapConf::IDX_UNASSIGNED) ?
         wlConfig.GetThreadByGid(mc->map[p]) : 0;
@@ -178,7 +180,7 @@ double MapEngine::CalcQoSObjPenalty(MapConf * mc) const
       // strong penalty for starting the tasks at speeds that
       // violate the deadline
       if (thread->thread_status == WlConfig::SCHEDULED && thread_penalty < 1.0-E_DOUBLE) {
-        return 0.01;
+        sch_pen /= 2.0;
       }
 
       total_qos_penalty += thread_penalty;
@@ -186,7 +188,8 @@ double MapEngine::CalcQoSObjPenalty(MapConf * mc) const
     }
   }
 
-  return running_threads_cnt ? total_qos_penalty/running_threads_cnt : 1.0;
+  return sch_pen < 1.0 - E_DOUBLE ? sch_pen :
+      (running_threads_cnt ? total_qos_penalty/running_threads_cnt : 1.0);
 }
 
 //=======================================================================
