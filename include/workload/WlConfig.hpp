@@ -29,7 +29,7 @@ namespace cmpex {
     const double MR_EXP_MAX = -0.1;
     const int INSTR_MIN = 1000000;
     const int INSTR_MAX = 2000000;
-    const int DEADLINE = 6; // ms
+    const int DEADLINE = 12; // ms
     const int LOG2_DOP_MAX = 2; // max 2**6 = 64 threads per task
 
     // predefined tasks

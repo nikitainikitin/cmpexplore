@@ -75,6 +75,10 @@ namespace cmpex {
 
     inline void QoS ( bool b );
 
+    inline bool NewQoS ( void ) const;
+
+    inline void NewQoS ( bool b );
+
     inline const string& Test ( void ) const;
 
     inline void Test ( string s );
@@ -315,6 +319,8 @@ namespace cmpex {
 
     bool qos_; // account for qos constraints in mapping
     
+    bool newqos_; // new qos constraints in mapping
+
     /*** ============== general parameters ================ ***/
 
     Technology tech_;
@@ -457,12 +463,20 @@ namespace cmpex {
     callPTsim_ = d;
   }
 
-  bool Config::QoS() const {
+  bool Config::QoS(void) const {
     return qos_;
   }
 
   void Config::QoS( bool b ) {
     qos_ = b;
+  }
+
+  bool Config::NewQoS(void) const {
+    return newqos_;
+  }
+
+  void Config::NewQoS( bool b ) {
+    newqos_ = b;
   }
 
   const string& Config::Test () const {

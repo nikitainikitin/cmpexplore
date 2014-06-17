@@ -66,6 +66,8 @@ namespace cmpex {
 
       double CalcQoSObjPenalty(MapConf * mc) const;
 
+      double CalcNewQoSObjPenalty(MapConf * mc) const;
+
       double CalcTempPenalty(double lambda = 1.0) const;
 
       // Evaluate cost of the provided mapping

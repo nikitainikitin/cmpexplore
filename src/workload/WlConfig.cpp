@@ -53,6 +53,10 @@ int WlConfig::CreateTasks ( int ntasks, bool predefined )
 
   if (predefined) ntasks = sizeof(TASK_IPC)/sizeof(double);
 
+  /// NOTE: any changes to the task generation below
+  /// have also to be applied to the ReadTasks() function.
+  /// TODO: merge the two functions.
+
   int thread_gid = 0;
   for(i = 0; i < ntasks; i++) {
     task = new WlConfig::Task;
@@ -227,7 +231,10 @@ int WlConfig::ReadTasks ( const string & fname )
     instr = int(instr_dbl);
 
     // create a task
-    /// TODO: merge code with CreateTasks()
+    /// NOTE: any changes to the task generation below
+    /// have also to be applied to the CreateTasks() function.
+    /// TODO: merge the two functions.
+
     Task * task = new Task();
     task->task_id = task_id;
     task->task_status = PENDING;

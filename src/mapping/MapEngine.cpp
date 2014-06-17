@@ -19,6 +19,7 @@
 #include <limits>
 #include <fstream>
 #include <iomanip>
+#include <set>
 
 #include "MapEngine.hpp"
 #include "MapConf.hpp"
@@ -194,6 +195,99 @@ double MapEngine::CalcQoSObjPenalty(MapConf * mc) const
 
 //=======================================================================
 /*
+ * Returns New QoS-penalty for the mapping objective.
+ */
+
+double MapEngine::CalcNewQoSObjPenalty(MapConf * mc) const
+{
+  // 1. Penalty for scheduled active tasks
+  const double sch_dl_viol_penalty = 1.0/(2.0*cmpConfig.ProcCnt());
+
+  int sch_cnt = 0;
+  int sch_pen_cnt = 0;
+  set<Task*> scheduled_tasks;
+  for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
+    Thread * thread = (mc->map[p] != MapConf::IDX_UNASSIGNED) ?
+        wlConfig.GetThreadByGid(mc->map[p]) : 0;
+    if (thread && thread->thread_status == WlConfig::SCHEDULED && mc->coreActiv[p]) {
+      //cout << "Thread id " << thread->thread_gid << " is scheduled active" << endl;
+      double instr_to_complete = thread->thread_instructions - thread->thread_progress;
+      double ms_to_complete = cmpConfig.GetProcessor(p)->Thr() > E_DOUBLE ?
+            instr_to_complete/(cmpConfig.GetProcessor(p)->Thr()*1e6) : MAX_DOUBLE;
+      assert(ms_to_complete >= 0);
+      double thread_penalty = 1.0;
+      // account one thread per task only
+      if (thread->task->task_deadline < ms_to_complete) {
+        thread_penalty = sch_dl_viol_penalty;
+        if (scheduled_tasks.find(thread->task) == scheduled_tasks.end()) ++sch_pen_cnt;
+      }
+      //cout << "thread_penalty = " << thread_penalty << endl;
+      if (scheduled_tasks.find(thread->task) == scheduled_tasks.end()) ++sch_cnt;
+      scheduled_tasks.insert(thread->task);
+    }
+  }
+
+  double qos_sch = (sch_cnt == 0) ? 1.0 : max(sch_cnt-sch_pen_cnt, 1)/
+      (sch_pen_cnt/sch_dl_viol_penalty + (sch_cnt-sch_pen_cnt)*1.0);
+  qos_sch *= qos_sch;
+  //cout << "Scheduled active threads total " << sch_cnt
+  //     << ", successful " << sch_pen_cnt << ", qos_sch " << qos_sch << endl;
+  assert(qos_sch > 0);
+
+
+  // 2. Penalty for running tasks
+  int procCnt = cmpConfig.ProcCnt();
+  double run_dl_viol_pen_at_start = double(procCnt-1)/(procCnt-1+1.0/sch_dl_viol_penalty);
+  run_dl_viol_pen_at_start *= run_dl_viol_pen_at_start;
+  double run_dl_viol_pen_at_end = 1.0 - run_dl_viol_pen_at_start;
+
+  vector<double> run_thr_penalties;
+  for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
+    Thread * thread = (mc->map[p] != MapConf::IDX_UNASSIGNED) ?
+        wlConfig.GetThreadByGid(mc->map[p]) : 0;
+    if (thread && thread->thread_status == WlConfig::RUNNING) {
+      //cout << "Thread id " << thread->thread_gid << " is running" << endl;
+      double instr_to_complete = thread->thread_instructions - thread->thread_progress;
+      double ms_to_complete = cmpConfig.GetProcessor(p)->Thr() > E_DOUBLE ?
+            instr_to_complete/(cmpConfig.GetProcessor(p)->Thr()*1e6) : MAX_DOUBLE;
+      assert(ms_to_complete >= 0);
+      double slack_avail_ms = thread->task->task_deadline - thread->task->task_elapsed;
+      double thread_penalty = 1.0;
+      if (ms_to_complete >= MAX_DOUBLE || slack_avail_ms <= 0) {
+        thread_penalty = run_dl_viol_pen_at_end;
+      }
+      else if (ms_to_complete > slack_avail_ms) {
+        double task_rel_progr = double(thread->task->task_elapsed)/thread->task->task_deadline;
+        assert(task_rel_progr <= 1.0);
+        thread_penalty = sqrt(1.0-task_rel_progr)*run_dl_viol_pen_at_start +
+                         sqrt(task_rel_progr)*run_dl_viol_pen_at_end;
+      }
+      assert(thread_penalty <= 1.0);
+      //cout << "thread_penalty = " << thread_penalty << endl;
+      run_thr_penalties.push_back(thread_penalty);
+    }
+  }
+
+  // calculate hmean for running threads penalties
+  double qos_run = 1.0;
+  if (!run_thr_penalties.empty()) {
+    qos_run = 0.0;
+    for (vector<double>::const_iterator it = run_thr_penalties.begin();
+                                        it != run_thr_penalties.end(); ++it) {
+      qos_run += 1.0/(*it);
+    }
+    qos_run = run_thr_penalties.size()/qos_run;
+  }
+  assert(qos_run > 0);
+
+  //cout << "# running threads = " << run_thr_penalties.size()
+  //     << ", qos_run = " << qos_run << endl;
+
+  return qos_sch*qos_run;
+}
+
+//=======================================================================
+/*
  * Returns temperature penalty for the mapping objective.
  * Calculates maximum temperature on the chip and adds
  * penalty proportional to the square of relative excess of temperature.
@@ -306,7 +400,8 @@ void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
   //double temp_penalty = 1.0;
 
   // 2d. Delay/qos
-  double obj_penalty = config.QoS() ? CalcQoSObjPenalty(mc) : 1.0;
+  double obj_penalty = config.QoS() ?
+        (config.NewQoS() ? CalcNewQoSObjPenalty(mc) : CalcQoSObjPenalty(mc)) : 1.0;
 
   // 3. Save evaluation within the mapping object
   mc->thr = pSm->Throughput();
