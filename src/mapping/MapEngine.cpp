@@ -253,7 +253,7 @@ double MapEngine::CalcNewQoSObjPenalty(MapConf * mc) const
       assert(ms_to_complete >= 0);
       double slack_avail_ms = thread->task->task_deadline - thread->task->task_elapsed;
       double thread_penalty = 1.0;
-      if (ms_to_complete >= MAX_DOUBLE || slack_avail_ms <= 0) {
+      if (slack_avail_ms <= 0) {
         thread_penalty = run_dl_viol_pen_at_end;
       }
       else if (ms_to_complete > slack_avail_ms) {
