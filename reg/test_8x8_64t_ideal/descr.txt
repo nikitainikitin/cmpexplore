@@ -1,0 +1,1 @@
+8x8 CMP, no power or temperature budgets, 64 ideal tasks
