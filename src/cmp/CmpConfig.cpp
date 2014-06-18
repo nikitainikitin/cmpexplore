@@ -47,7 +47,7 @@ namespace cmpex {
 
 CmpConfig::CmpConfig ( void ) :
   cmp_ (0), unitLen_ (1.0e-3), memDensity_ (10),
-  uFreq_ (1.6), uFreqMax_ (3.5), uVolt_(0.8), uVoltMax_(1.0), uVoltMin_(0.5), uVoltNom_(1.0),
+  uFreq_ (1.6), uFreqMax_ (3.5), uVolt_(0.8), uVoltMax_(1.0), uVoltMin_(0.5), uVoltNom_(1.0), uMinVoltFreq_(0.775),
   mcFreq_ (0.8), mcFreqMax_ (0.8), mcVolt_(0.8), mcVoltMax_(1.0), mcVoltMin_(0.5), mcVoltNom_(1.0),
   procFreqMax_ (3.5), procVoltMax_ (1.0), procVoltMin_(0.5), procVoltNom_(1.0), procMinVoltFreq_(0.775),
   memReplySize_(3),

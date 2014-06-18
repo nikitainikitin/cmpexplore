@@ -302,6 +302,32 @@ namespace cmpex {
       }
     };
 
+    //======================================================================
+    // -7- Increase frequency of uncore.
+    //======================================================================
+    struct MapTrIncreaseUncoreFreq : public MapTransform {
+      bool UpdateMap(MapConf& mConf) const {
+        if (mConf.uncoreFreq <= MAX_FREQ - FREQ_STEP) {
+          mConf.uncoreFreq += FREQ_STEP;
+        }
+        return true;
+      }
+    };
+
+    //======================================================================
+    // -8- Decrease frequency of uncore.
+    //======================================================================
+    struct MapTrDecreaseUncoreFreq : public MapTransform {
+      bool UpdateMap(MapConf& mConf) const {
+        if (mConf.uncoreFreq >= 2*FREQ_STEP) {
+          mConf.uncoreFreq -= FREQ_STEP;
+        }
+        return true;
+      }
+    };
+
+
+
   } // namespace mapping
 
 } // namespace cmpex

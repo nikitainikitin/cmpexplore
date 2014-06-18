@@ -896,6 +896,15 @@ double PowerModel::VoltAtFreqProc ( double freq )
   return freq > fmin ?  vmin+(vmax-vmin)/(fmax-fmin)*(freq-fmin) : vmin;
 }
 
+double PowerModel::VoltAtFreqU ( double freq )
+{
+  double fmin = cmpConfig.UMinVoltFreq();
+  double fmax = cmpConfig.UFreqMax();
+  double vmin = cmpConfig.UVoltMin();
+  double vmax = cmpConfig.UVoltMax();
+  return freq > fmin ?  vmin+(vmax-vmin)/(fmax-fmin)*(freq-fmin) : vmin;
+}
+
 
 
 //=======================================================================

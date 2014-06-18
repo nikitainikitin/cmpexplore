@@ -78,6 +78,8 @@ namespace cmpex {
 
     BoolArray L3ClusterActiv; // acitivities of the cache clusters (on/off)
 
+    double uncoreFreq; // frequency of the uncore [GHz]
+
     // mapping evaluation data
 
     double thr;

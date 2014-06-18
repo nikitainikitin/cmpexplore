@@ -40,7 +40,6 @@
 #include "cmp/Processor.hpp"
 
 using namespace std;
-
 namespace cmpex {
 
   extern Config config;
@@ -93,6 +92,7 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
   if (tightBudget == TS_ON) {
     curMap->coreActiv.assign(curMap->coreCnt, false);
     curMap->coreFreq.assign(curMap->coreCnt, MIN_FREQ);
+    curMap->uncoreFreq = MIN_FREQ;
     curMap->L3ClusterActiv.assign(curMap->L3ClusterCnt, false);
   }
 
@@ -115,6 +115,7 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
       // initialize mapping with a high-performance solution
       curMap->coreActiv.assign(curMap->coreCnt, true);
       curMap->coreFreq.assign(curMap->coreCnt, MAX_FREQ);
+      curMap->uncoreFreq = MAX_FREQ;
       curMap->L3ClusterActiv.assign(curMap->L3ClusterCnt, true);
     }
   }

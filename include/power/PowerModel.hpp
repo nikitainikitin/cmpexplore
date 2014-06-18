@@ -129,6 +129,8 @@ namespace cmpex {
 
       static double VoltAtFreqProc ( double freq );
 
+      static double VoltAtFreqU ( double freq );
+
     public:
 
       // Constructors & destructor

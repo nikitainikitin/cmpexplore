@@ -81,6 +81,9 @@ MapEngine::MapEngine() {
 
   if (cmpConfig.L3ClusterCnt() > 1)
     AddTransform(new MapTrMoveTaskToOtherL3Cluster());
+
+  AddTransform(new MapTrIncreaseUncoreFreq());
+  AddTransform(new MapTrDecreaseUncoreFreq());
 }
 
 MapEngine::~MapEngine() {
@@ -340,6 +343,10 @@ void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
     Memory * mem = cmpConfig.GetMemory(m);
     mem->SetActive(mc->L3ClusterActiv[mem->L3ClusterIdx()]);
   }
+
+  // update Uncore voltage and frequency
+  cmpConfig.UFreq(mc->uncoreFreq);
+  cmpConfig.UVolt(PowerModel::VoltAtFreqU(mc->uncoreFreq));
 
   // !!! NOTICE: L3 activities have to be updated before
   // calling proc->SetMemAccessProbabilities(),

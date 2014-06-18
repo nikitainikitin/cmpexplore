@@ -145,6 +145,10 @@ namespace cmpex {
 
       inline void UVoltNom ( double v );
 
+      inline double UMinVoltFreq () const;
+
+      inline void UMinVoltFreq ( double f );
+
       inline double McFreq () const;
 
       inline void McFreq ( double f );
@@ -331,6 +335,8 @@ namespace cmpex {
 
       double uVoltNom_; // uncore nom voltage (NoC & shared caches) [V]
 
+      double uMinVoltFreq_; // max frequency of Uncore  at min voltage [GHz]
+      
       double mcFreq_; // frequency of MCs [GHz]
 
       double mcFreqMax_; // max frequency of MCs [GHz]
@@ -470,6 +476,14 @@ namespace cmpex {
 
     void CmpConfig::UVoltNom ( double v ) {
       uVoltNom_ = v;
+    }
+
+    double CmpConfig::UMinVoltFreq () const {
+      return uMinVoltFreq_;
+    }
+
+    void CmpConfig::UMinVoltFreq ( double f ) {
+      uMinVoltFreq_ = f;
     }
 
     double CmpConfig::McFreq () const {

@@ -53,6 +53,7 @@ MapConf::MapConf (int core_cnt, int l3_cl_cnt,
   map.assign(coreCnt, IDX_UNASSIGNED);
   coreActiv.assign(coreCnt, false);
   coreFreq.assign(coreCnt, MIN_FREQ);
+  uncoreFreq = MIN_FREQ;
   L3ClusterActiv.assign(L3ClusterCnt, false);
 }
 
@@ -143,6 +144,7 @@ void MapConf::Print () const {
   for (BoolArray::const_iterator it = L3ClusterActiv.begin(); it != L3ClusterActiv.end(); ++it) {
     cout << ' ' << (*it);
   }
+  cout << ";   UncoreFreq=" << uncoreFreq;
   cout << ";   Pow=" << power << "; Temp=" << temp
        << "; Thr=" << thr << "; Obj=" << obj << "; Cost=" << cost << endl;
 }
