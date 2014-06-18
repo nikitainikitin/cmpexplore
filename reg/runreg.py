@@ -20,9 +20,16 @@ def run_a_test (tname):
   f.close()
   
   # prepare command line
+  # - adjust the local task file name
+  task_idx = cmd.find("-tasks ")
+  if task_idx != -1:
+    task_idx += len("-tasks ")
+    cmd = cmd[:task_idx] + "./reg/" + tname + "/" + cmd[task_idx:]
+  # - add the output file name
   out = "./reg/" + tname + "/out.txt"
   cmd += " > " + out
-  #print cmd
+  #print '\n' + cmd
+  #sys.exit(0)
   
   # run test
   curdir = os.getcwd()
@@ -59,9 +66,14 @@ def run_a_test (tname):
 
 def run_all_tests ():
   print " *** CMPexplore mapping simulator regression *** "
-  for fname in os.listdir("./"):
-    if os.path.isdir(fname) and fname.startswith("test_"):
+  
+  if len(sys.argv) > 1:
+    for fname in sys.argv[1:]:
       run_a_test(fname)
+  else:
+    for fname in os.listdir("./"):
+      if os.path.isdir(fname) and fname.startswith("test_"):
+        run_a_test(fname)
 
 
 # ---------------------------------------------------------

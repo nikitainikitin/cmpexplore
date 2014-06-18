@@ -1,0 +1,1404 @@
+-I- The workload has 64 tasks
+    Printing tasks:
+Task 0 ID = 0, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 1 ID = 1, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 2 ID = 2, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 3 ID = 3, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 4 ID = 4, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 5 ID = 5, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 6 ID = 6, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 7 ID = 7, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 8 ID = 8, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 9 ID = 9, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 10 ID = 10, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 11 ID = 11, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 12 ID = 12, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 13 ID = 13, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 14 ID = 14, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 15 ID = 15, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 16 ID = 16, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 17 ID = 17, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 18 ID = 18, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 19 ID = 19, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 20 ID = 20, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 21 ID = 21, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 22 ID = 22, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 23 ID = 23, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 24 ID = 24, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 25 ID = 25, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 26 ID = 26, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 27 ID = 27, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 28 ID = 28, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 29 ID = 29, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 30 ID = 30, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 31 ID = 31, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 32 ID = 32, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 33 ID = 33, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 34 ID = 34, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 35 ID = 35, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 36 ID = 36, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 37 ID = 37, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 38 ID = 38, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 39 ID = 39, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 40 ID = 40, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 41 ID = 41, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 42 ID = 42, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 43 ID = 43, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 44 ID = 44, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 45 ID = 45, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 46 ID = 46, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 47 ID = 47, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 48 ID = 48, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 49 ID = 49, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 50 ID = 50, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 51 ID = 51, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 52 ID = 52, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 53 ID = 53, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 54 ID = 54, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 55 ID = 55, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 56 ID = 56, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 57 ID = 57, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 58 ID = 58, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 59 ID = 59, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 60 ID = 60, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 61 ID = 61, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 62 ID = 62, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+-I- MapSim: starting mapping simulator for 1000 periods
+-I- MapSim: one period simulates 1000 usec (0.001 sec) of system time
+-I- MapSim: sysElapsedPeriod = 0, system time = 0 sec
+   -MAP- Mapping new task (id = 0) with DOP = 1
+   -MAP- Mapping new task (id = 1) with DOP = 1
+   -MAP- Mapping new task (id = 2) with DOP = 1
+   -MAP- Mapping new task (id = 3) with DOP = 1
+   -MAP- Mapping new task (id = 4) with DOP = 1
+   -MAP- Mapping new task (id = 5) with DOP = 1
+   -MAP- Mapping new task (id = 6) with DOP = 1
+   -MAP- Mapping new task (id = 7) with DOP = 1
+   -MAP- Mapping new task (id = 8) with DOP = 1
+   -MAP- Mapping new task (id = 9) with DOP = 1
+   -MAP- Mapping new task (id = 10) with DOP = 1
+   -MAP- Mapping new task (id = 11) with DOP = 1
+   -MAP- Mapping new task (id = 12) with DOP = 1
+   -MAP- Mapping new task (id = 13) with DOP = 1
+   -MAP- Mapping new task (id = 14) with DOP = 1
+   -MAP- Mapping new task (id = 15) with DOP = 1
+   -MAP- Mapping new task (id = 16) with DOP = 1
+   -MAP- Mapping new task (id = 17) with DOP = 1
+   -MAP- Mapping new task (id = 18) with DOP = 1
+   -MAP- Mapping new task (id = 19) with DOP = 1
+   -MAP- Mapping new task (id = 20) with DOP = 1
+   -MAP- Mapping new task (id = 21) with DOP = 1
+   -MAP- Mapping new task (id = 22) with DOP = 1
+   -MAP- Mapping new task (id = 23) with DOP = 1
+   -MAP- Mapping new task (id = 24) with DOP = 1
+   -MAP- Mapping new task (id = 25) with DOP = 1
+   -MAP- Mapping new task (id = 26) with DOP = 1
+   -MAP- Mapping new task (id = 27) with DOP = 1
+   -MAP- Mapping new task (id = 28) with DOP = 1
+   -MAP- Mapping new task (id = 29) with DOP = 1
+   -MAP- Mapping new task (id = 30) with DOP = 1
+   -MAP- Mapping new task (id = 31) with DOP = 1
+   -MAP- Mapping new task (id = 32) with DOP = 1
+   -MAP- Mapping new task (id = 33) with DOP = 1
+   -MAP- Mapping new task (id = 34) with DOP = 1
+   -MAP- Mapping new task (id = 35) with DOP = 1
+   -MAP- Mapping new task (id = 36) with DOP = 1
+   -MAP- Mapping new task (id = 37) with DOP = 1
+   -MAP- Mapping new task (id = 38) with DOP = 1
+   -MAP- Mapping new task (id = 39) with DOP = 1
+   -MAP- Mapping new task (id = 40) with DOP = 1
+   -MAP- Mapping new task (id = 41) with DOP = 1
+   -MAP- Mapping new task (id = 42) with DOP = 1
+   -MAP- Mapping new task (id = 43) with DOP = 1
+   -MAP- Mapping new task (id = 44) with DOP = 1
+   -MAP- Mapping new task (id = 45) with DOP = 1
+   -MAP- Mapping new task (id = 46) with DOP = 1
+   -MAP- Mapping new task (id = 47) with DOP = 1
+   -MAP- Mapping new task (id = 48) with DOP = 1
+   -MAP- Mapping new task (id = 49) with DOP = 1
+   -MAP- Mapping new task (id = 50) with DOP = 1
+   -MAP- Mapping new task (id = 51) with DOP = 1
+   -MAP- Mapping new task (id = 52) with DOP = 1
+   -MAP- Mapping new task (id = 53) with DOP = 1
+   -MAP- Mapping new task (id = 54) with DOP = 1
+   -MAP- Mapping new task (id = 55) with DOP = 1
+   -MAP- Mapping new task (id = 56) with DOP = 1
+   -MAP- Mapping new task (id = 57) with DOP = 1
+   -MAP- Mapping new task (id = 58) with DOP = 1
+   -MAP- Mapping new task (id = 59) with DOP = 1
+   -MAP- Mapping new task (id = 60) with DOP = 1
+   -MAP- Mapping new task (id = 61) with DOP = 1
+   -MAP- Mapping new task (id = 62) with DOP = 1
+   -MAP- Mapping new task (id = 63) with DOP = 1
+   -MAP- Running SA mapping...
+   -MAP- Running Hotspot warmup (first invocation)... done.
+   -MAP- Mapconf after mapping: Map: 0 4 8 12 1 5 9 13 16 20 24 28 17 21 25 29 32 36 40 44 33 37 41 45 48 52 56 60 49 53 57 61 2 6 10 14 3 7 11 15 18 22 26 30 19 23 51 31 34 38 42 46 35 39 43 47 50 54 58 62 27 55 59 63; CoreActiv: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5; L3ClusterActiv: 1 1 1 1;   UncoreFreq=3.5;   Pow=821.214; Temp=0; Thr=448; Obj=448; Cost=448
+-I- Running Hotspot...
+   -MAP- Temperature of cores: 45.93 45.92 45.93 45.93 45.93 45.93 45.92 45.94 45.94 45.94 45.95 45.95 45.95 45.95 45.94 45.95 45.95 45.95 45.96 45.96 45.96 45.96 45.95 45.95 45.95 45.96 45.96 45.96 45.96 45.96 45.95 45.96 45.95 45.96 45.96 45.96 45.96 45.96 45.95 45.96 45.95 45.95 45.96 45.96 45.96 45.95 45.95 45.95 45.94 45.94 45.94 45.94 45.94 45.94 45.94 45.94 45.92 45.92 45.92 45.92 45.92 45.92 45.92 45.93 
+   -MAP- Throughput of cores: 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+   -MAP- Frequency of cores: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 
+   -MAP- Advancing thread 0 progress by 7e+06 instructions
+   -MAP- Advancing thread 4 progress by 7e+06 instructions
+   -MAP- Advancing thread 8 progress by 7e+06 instructions
+   -MAP- Advancing thread 12 progress by 7e+06 instructions
+   -MAP- Advancing thread 1 progress by 7e+06 instructions
+   -MAP- Advancing thread 5 progress by 7e+06 instructions
+   -MAP- Advancing thread 9 progress by 7e+06 instructions
+   -MAP- Advancing thread 13 progress by 7e+06 instructions
+   -MAP- Advancing thread 16 progress by 7e+06 instructions
+   -MAP- Advancing thread 20 progress by 7e+06 instructions
+   -MAP- Advancing thread 24 progress by 7e+06 instructions
+   -MAP- Advancing thread 28 progress by 7e+06 instructions
+   -MAP- Advancing thread 17 progress by 7e+06 instructions
+   -MAP- Advancing thread 21 progress by 7e+06 instructions
+   -MAP- Advancing thread 25 progress by 7e+06 instructions
+   -MAP- Advancing thread 29 progress by 7e+06 instructions
+   -MAP- Advancing thread 32 progress by 7e+06 instructions
+   -MAP- Advancing thread 36 progress by 7e+06 instructions
+   -MAP- Advancing thread 40 progress by 7e+06 instructions
+   -MAP- Advancing thread 44 progress by 7e+06 instructions
+   -MAP- Advancing thread 33 progress by 7e+06 instructions
+   -MAP- Advancing thread 37 progress by 7e+06 instructions
+   -MAP- Advancing thread 41 progress by 7e+06 instructions
+   -MAP- Advancing thread 45 progress by 7e+06 instructions
+   -MAP- Advancing thread 48 progress by 7e+06 instructions
+   -MAP- Advancing thread 52 progress by 7e+06 instructions
+   -MAP- Advancing thread 56 progress by 7e+06 instructions
+   -MAP- Advancing thread 60 progress by 7e+06 instructions
+   -MAP- Advancing thread 49 progress by 7e+06 instructions
+   -MAP- Advancing thread 53 progress by 7e+06 instructions
+   -MAP- Advancing thread 57 progress by 7e+06 instructions
+   -MAP- Advancing thread 61 progress by 7e+06 instructions
+   -MAP- Advancing thread 2 progress by 7e+06 instructions
+   -MAP- Advancing thread 6 progress by 7e+06 instructions
+   -MAP- Advancing thread 10 progress by 7e+06 instructions
+   -MAP- Advancing thread 14 progress by 7e+06 instructions
+   -MAP- Advancing thread 3 progress by 7e+06 instructions
+   -MAP- Advancing thread 7 progress by 7e+06 instructions
+   -MAP- Advancing thread 11 progress by 7e+06 instructions
+   -MAP- Advancing thread 15 progress by 7e+06 instructions
+   -MAP- Advancing thread 18 progress by 7e+06 instructions
+   -MAP- Advancing thread 22 progress by 7e+06 instructions
+   -MAP- Advancing thread 26 progress by 7e+06 instructions
+   -MAP- Advancing thread 30 progress by 7e+06 instructions
+   -MAP- Advancing thread 19 progress by 7e+06 instructions
+   -MAP- Advancing thread 23 progress by 7e+06 instructions
+   -MAP- Advancing thread 51 progress by 7e+06 instructions
+   -MAP- Advancing thread 31 progress by 7e+06 instructions
+   -MAP- Advancing thread 34 progress by 7e+06 instructions
+   -MAP- Advancing thread 38 progress by 7e+06 instructions
+   -MAP- Advancing thread 42 progress by 7e+06 instructions
+   -MAP- Advancing thread 46 progress by 7e+06 instructions
+   -MAP- Advancing thread 35 progress by 7e+06 instructions
+   -MAP- Advancing thread 39 progress by 7e+06 instructions
+   -MAP- Advancing thread 43 progress by 7e+06 instructions
+   -MAP- Advancing thread 47 progress by 7e+06 instructions
+   -MAP- Advancing thread 50 progress by 7e+06 instructions
+   -MAP- Advancing thread 54 progress by 7e+06 instructions
+   -MAP- Advancing thread 58 progress by 7e+06 instructions
+   -MAP- Advancing thread 62 progress by 7e+06 instructions
+   -MAP- Advancing thread 27 progress by 7e+06 instructions
+   -MAP- Advancing thread 55 progress by 7e+06 instructions
+   -MAP- Advancing thread 59 progress by 7e+06 instructions
+   -MAP- Advancing thread 63 progress by 7e+06 instructions
+   -MAP- Period instantaneous QoS = 1, total QoS = 1
+ * * * 
+Task 0 ID = 0, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 1 ID = 1, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 2 ID = 2, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 3 ID = 3, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 4 ID = 4, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 5 ID = 5, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 6 ID = 6, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 7 ID = 7, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 8 ID = 8, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 9 ID = 9, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 10 ID = 10, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 11 ID = 11, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 12 ID = 12, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 13 ID = 13, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 14 ID = 14, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 15 ID = 15, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 16 ID = 16, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 17 ID = 17, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 18 ID = 18, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 19 ID = 19, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 20 ID = 20, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 21 ID = 21, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 22 ID = 22, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 23 ID = 23, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 24 ID = 24, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 25 ID = 25, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 26 ID = 26, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 27 ID = 27, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 28 ID = 28, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 29 ID = 29, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 30 ID = 30, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 31 ID = 31, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 32 ID = 32, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 33 ID = 33, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 34 ID = 34, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 35 ID = 35, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 36 ID = 36, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 37 ID = 37, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 38 ID = 38, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 39 ID = 39, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 40 ID = 40, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 41 ID = 41, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 42 ID = 42, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 43 ID = 43, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 44 ID = 44, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 45 ID = 45, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 46 ID = 46, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 47 ID = 47, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 48 ID = 48, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 49 ID = 49, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 50 ID = 50, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 51 ID = 51, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 52 ID = 52, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 53 ID = 53, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 54 ID = 54, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 55 ID = 55, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 56 ID = 56, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 57 ID = 57, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 58 ID = 58, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 59 ID = 59, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 60 ID = 60, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 61 ID = 61, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 62 ID = 62, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 63 ID = 63, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+-I- MapSim: sysElapsedPeriod = 1, system time = 0.001 sec
+   -MAP- Thread 0 from task 0 is mapped to proc 0, progress = 17%
+   -MAP- Thread 4 from task 4 is mapped to proc 1, progress = 17%
+   -MAP- Thread 8 from task 8 is mapped to proc 2, progress = 17%
+   -MAP- Thread 12 from task 12 is mapped to proc 3, progress = 17%
+   -MAP- Thread 1 from task 1 is mapped to proc 4, progress = 17%
+   -MAP- Thread 5 from task 5 is mapped to proc 5, progress = 17%
+   -MAP- Thread 9 from task 9 is mapped to proc 6, progress = 17%
+   -MAP- Thread 13 from task 13 is mapped to proc 7, progress = 17%
+   -MAP- Thread 16 from task 16 is mapped to proc 8, progress = 17%
+   -MAP- Thread 20 from task 20 is mapped to proc 9, progress = 17%
+   -MAP- Thread 24 from task 24 is mapped to proc 10, progress = 17%
+   -MAP- Thread 28 from task 28 is mapped to proc 11, progress = 17%
+   -MAP- Thread 17 from task 17 is mapped to proc 12, progress = 17%
+   -MAP- Thread 21 from task 21 is mapped to proc 13, progress = 17%
+   -MAP- Thread 25 from task 25 is mapped to proc 14, progress = 17%
+   -MAP- Thread 29 from task 29 is mapped to proc 15, progress = 17%
+   -MAP- Thread 32 from task 32 is mapped to proc 16, progress = 17%
+   -MAP- Thread 36 from task 36 is mapped to proc 17, progress = 17%
+   -MAP- Thread 40 from task 40 is mapped to proc 18, progress = 17%
+   -MAP- Thread 44 from task 44 is mapped to proc 19, progress = 17%
+   -MAP- Thread 33 from task 33 is mapped to proc 20, progress = 17%
+   -MAP- Thread 37 from task 37 is mapped to proc 21, progress = 17%
+   -MAP- Thread 41 from task 41 is mapped to proc 22, progress = 17%
+   -MAP- Thread 45 from task 45 is mapped to proc 23, progress = 17%
+   -MAP- Thread 48 from task 48 is mapped to proc 24, progress = 17%
+   -MAP- Thread 52 from task 52 is mapped to proc 25, progress = 17%
+   -MAP- Thread 56 from task 56 is mapped to proc 26, progress = 17%
+   -MAP- Thread 60 from task 60 is mapped to proc 27, progress = 17%
+   -MAP- Thread 49 from task 49 is mapped to proc 28, progress = 17%
+   -MAP- Thread 53 from task 53 is mapped to proc 29, progress = 17%
+   -MAP- Thread 57 from task 57 is mapped to proc 30, progress = 17%
+   -MAP- Thread 61 from task 61 is mapped to proc 31, progress = 17%
+   -MAP- Thread 2 from task 2 is mapped to proc 32, progress = 17%
+   -MAP- Thread 6 from task 6 is mapped to proc 33, progress = 17%
+   -MAP- Thread 10 from task 10 is mapped to proc 34, progress = 17%
+   -MAP- Thread 14 from task 14 is mapped to proc 35, progress = 17%
+   -MAP- Thread 3 from task 3 is mapped to proc 36, progress = 17%
+   -MAP- Thread 7 from task 7 is mapped to proc 37, progress = 17%
+   -MAP- Thread 11 from task 11 is mapped to proc 38, progress = 17%
+   -MAP- Thread 15 from task 15 is mapped to proc 39, progress = 17%
+   -MAP- Thread 18 from task 18 is mapped to proc 40, progress = 17%
+   -MAP- Thread 22 from task 22 is mapped to proc 41, progress = 17%
+   -MAP- Thread 26 from task 26 is mapped to proc 42, progress = 17%
+   -MAP- Thread 30 from task 30 is mapped to proc 43, progress = 17%
+   -MAP- Thread 19 from task 19 is mapped to proc 44, progress = 17%
+   -MAP- Thread 23 from task 23 is mapped to proc 45, progress = 17%
+   -MAP- Thread 51 from task 51 is mapped to proc 46, progress = 17%
+   -MAP- Thread 31 from task 31 is mapped to proc 47, progress = 17%
+   -MAP- Thread 34 from task 34 is mapped to proc 48, progress = 17%
+   -MAP- Thread 38 from task 38 is mapped to proc 49, progress = 17%
+   -MAP- Thread 42 from task 42 is mapped to proc 50, progress = 17%
+   -MAP- Thread 46 from task 46 is mapped to proc 51, progress = 17%
+   -MAP- Thread 35 from task 35 is mapped to proc 52, progress = 17%
+   -MAP- Thread 39 from task 39 is mapped to proc 53, progress = 17%
+   -MAP- Thread 43 from task 43 is mapped to proc 54, progress = 17%
+   -MAP- Thread 47 from task 47 is mapped to proc 55, progress = 17%
+   -MAP- Thread 50 from task 50 is mapped to proc 56, progress = 17%
+   -MAP- Thread 54 from task 54 is mapped to proc 57, progress = 17%
+   -MAP- Thread 58 from task 58 is mapped to proc 58, progress = 17%
+   -MAP- Thread 62 from task 62 is mapped to proc 59, progress = 17%
+   -MAP- Thread 27 from task 27 is mapped to proc 60, progress = 17%
+   -MAP- Thread 55 from task 55 is mapped to proc 61, progress = 17%
+   -MAP- Thread 59 from task 59 is mapped to proc 62, progress = 17%
+   -MAP- Thread 63 from task 63 is mapped to proc 63, progress = 17%
+   -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
+   -MAP- Mapconf after mapping: Map: 0 4 8 12 1 5 9 13 16 20 24 28 17 21 25 29 32 36 40 44 33 37 41 45 48 52 56 60 49 53 57 61 2 6 10 14 3 7 11 15 18 22 26 30 19 23 51 31 34 38 42 46 35 39 43 47 50 54 58 62 27 55 59 63; CoreActiv: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5; L3ClusterActiv: 1 1 1 1;   UncoreFreq=3.5;   Pow=821.214; Temp=0; Thr=448; Obj=448; Cost=448
+-I- Running Hotspot...
+   -MAP- Temperature of cores: 62.6325 62.7382 62.7441 62.7566 62.724 62.7614 62.7374 62.4452 62.673 62.7794 62.7879 62.8015 62.7659 62.8061 62.7795 62.481 62.6809 62.789 62.7983 62.8121 62.7764 62.8171 62.7881 62.4858 62.6829 62.7928 62.8006 62.8133 62.7782 62.8192 62.7898 62.4888 62.6822 62.7922 62.7995 62.8129 62.7783 62.8182 62.7892 62.4884 62.6791 62.7864 62.7931 62.8092 62.7736 62.8101 62.7848 62.483 62.6682 62.7741 62.7789 62.7923 62.7575 62.7967 62.7723 62.4741 66.3679 66.5241 66.5291 66.5446 66.506 66.5533 66.524 66.1037 
+   -MAP- Throughput of cores: 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+   -MAP- Frequency of cores: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 
+   -MAP- Advancing thread 0 progress by 7e+06 instructions
+   -MAP- Advancing thread 4 progress by 7e+06 instructions
+   -MAP- Advancing thread 8 progress by 7e+06 instructions
+   -MAP- Advancing thread 12 progress by 7e+06 instructions
+   -MAP- Advancing thread 1 progress by 7e+06 instructions
+   -MAP- Advancing thread 5 progress by 7e+06 instructions
+   -MAP- Advancing thread 9 progress by 7e+06 instructions
+   -MAP- Advancing thread 13 progress by 7e+06 instructions
+   -MAP- Advancing thread 16 progress by 7e+06 instructions
+   -MAP- Advancing thread 20 progress by 7e+06 instructions
+   -MAP- Advancing thread 24 progress by 7e+06 instructions
+   -MAP- Advancing thread 28 progress by 7e+06 instructions
+   -MAP- Advancing thread 17 progress by 7e+06 instructions
+   -MAP- Advancing thread 21 progress by 7e+06 instructions
+   -MAP- Advancing thread 25 progress by 7e+06 instructions
+   -MAP- Advancing thread 29 progress by 7e+06 instructions
+   -MAP- Advancing thread 32 progress by 7e+06 instructions
+   -MAP- Advancing thread 36 progress by 7e+06 instructions
+   -MAP- Advancing thread 40 progress by 7e+06 instructions
+   -MAP- Advancing thread 44 progress by 7e+06 instructions
+   -MAP- Advancing thread 33 progress by 7e+06 instructions
+   -MAP- Advancing thread 37 progress by 7e+06 instructions
+   -MAP- Advancing thread 41 progress by 7e+06 instructions
+   -MAP- Advancing thread 45 progress by 7e+06 instructions
+   -MAP- Advancing thread 48 progress by 7e+06 instructions
+   -MAP- Advancing thread 52 progress by 7e+06 instructions
+   -MAP- Advancing thread 56 progress by 7e+06 instructions
+   -MAP- Advancing thread 60 progress by 7e+06 instructions
+   -MAP- Advancing thread 49 progress by 7e+06 instructions
+   -MAP- Advancing thread 53 progress by 7e+06 instructions
+   -MAP- Advancing thread 57 progress by 7e+06 instructions
+   -MAP- Advancing thread 61 progress by 7e+06 instructions
+   -MAP- Advancing thread 2 progress by 7e+06 instructions
+   -MAP- Advancing thread 6 progress by 7e+06 instructions
+   -MAP- Advancing thread 10 progress by 7e+06 instructions
+   -MAP- Advancing thread 14 progress by 7e+06 instructions
+   -MAP- Advancing thread 3 progress by 7e+06 instructions
+   -MAP- Advancing thread 7 progress by 7e+06 instructions
+   -MAP- Advancing thread 11 progress by 7e+06 instructions
+   -MAP- Advancing thread 15 progress by 7e+06 instructions
+   -MAP- Advancing thread 18 progress by 7e+06 instructions
+   -MAP- Advancing thread 22 progress by 7e+06 instructions
+   -MAP- Advancing thread 26 progress by 7e+06 instructions
+   -MAP- Advancing thread 30 progress by 7e+06 instructions
+   -MAP- Advancing thread 19 progress by 7e+06 instructions
+   -MAP- Advancing thread 23 progress by 7e+06 instructions
+   -MAP- Advancing thread 51 progress by 7e+06 instructions
+   -MAP- Advancing thread 31 progress by 7e+06 instructions
+   -MAP- Advancing thread 34 progress by 7e+06 instructions
+   -MAP- Advancing thread 38 progress by 7e+06 instructions
+   -MAP- Advancing thread 42 progress by 7e+06 instructions
+   -MAP- Advancing thread 46 progress by 7e+06 instructions
+   -MAP- Advancing thread 35 progress by 7e+06 instructions
+   -MAP- Advancing thread 39 progress by 7e+06 instructions
+   -MAP- Advancing thread 43 progress by 7e+06 instructions
+   -MAP- Advancing thread 47 progress by 7e+06 instructions
+   -MAP- Advancing thread 50 progress by 7e+06 instructions
+   -MAP- Advancing thread 54 progress by 7e+06 instructions
+   -MAP- Advancing thread 58 progress by 7e+06 instructions
+   -MAP- Advancing thread 62 progress by 7e+06 instructions
+   -MAP- Advancing thread 27 progress by 7e+06 instructions
+   -MAP- Advancing thread 55 progress by 7e+06 instructions
+   -MAP- Advancing thread 59 progress by 7e+06 instructions
+   -MAP- Advancing thread 63 progress by 7e+06 instructions
+   -MAP- Period instantaneous QoS = 1, total QoS = 1
+ * * * 
+Task 0 ID = 0, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 1 ID = 1, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 2 ID = 2, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 3 ID = 3, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 4 ID = 4, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 5 ID = 5, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 6 ID = 6, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 7 ID = 7, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 8 ID = 8, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 9 ID = 9, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 10 ID = 10, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 11 ID = 11, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 12 ID = 12, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 13 ID = 13, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 14 ID = 14, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 15 ID = 15, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 16 ID = 16, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 17 ID = 17, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 18 ID = 18, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 19 ID = 19, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 20 ID = 20, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 21 ID = 21, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 22 ID = 22, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 23 ID = 23, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 24 ID = 24, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 25 ID = 25, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 26 ID = 26, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 27 ID = 27, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 28 ID = 28, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 29 ID = 29, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 30 ID = 30, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 31 ID = 31, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 32 ID = 32, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 33 ID = 33, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 34 ID = 34, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 35 ID = 35, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 36 ID = 36, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 37 ID = 37, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 38 ID = 38, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 39 ID = 39, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 40 ID = 40, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 41 ID = 41, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 42 ID = 42, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 43 ID = 43, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 44 ID = 44, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 45 ID = 45, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 46 ID = 46, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 47 ID = 47, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 48 ID = 48, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 49 ID = 49, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 50 ID = 50, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 51 ID = 51, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 52 ID = 52, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 53 ID = 53, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 54 ID = 54, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 55 ID = 55, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 56 ID = 56, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 57 ID = 57, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 58 ID = 58, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 59 ID = 59, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 60 ID = 60, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 61 ID = 61, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 62 ID = 62, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 63 ID = 63, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+-I- MapSim: sysElapsedPeriod = 2, system time = 0.002 sec
+   -MAP- Thread 0 from task 0 is mapped to proc 0, progress = 35%
+   -MAP- Thread 4 from task 4 is mapped to proc 1, progress = 35%
+   -MAP- Thread 8 from task 8 is mapped to proc 2, progress = 35%
+   -MAP- Thread 12 from task 12 is mapped to proc 3, progress = 35%
+   -MAP- Thread 1 from task 1 is mapped to proc 4, progress = 35%
+   -MAP- Thread 5 from task 5 is mapped to proc 5, progress = 35%
+   -MAP- Thread 9 from task 9 is mapped to proc 6, progress = 35%
+   -MAP- Thread 13 from task 13 is mapped to proc 7, progress = 35%
+   -MAP- Thread 16 from task 16 is mapped to proc 8, progress = 35%
+   -MAP- Thread 20 from task 20 is mapped to proc 9, progress = 35%
+   -MAP- Thread 24 from task 24 is mapped to proc 10, progress = 35%
+   -MAP- Thread 28 from task 28 is mapped to proc 11, progress = 35%
+   -MAP- Thread 17 from task 17 is mapped to proc 12, progress = 35%
+   -MAP- Thread 21 from task 21 is mapped to proc 13, progress = 35%
+   -MAP- Thread 25 from task 25 is mapped to proc 14, progress = 35%
+   -MAP- Thread 29 from task 29 is mapped to proc 15, progress = 35%
+   -MAP- Thread 32 from task 32 is mapped to proc 16, progress = 35%
+   -MAP- Thread 36 from task 36 is mapped to proc 17, progress = 35%
+   -MAP- Thread 40 from task 40 is mapped to proc 18, progress = 35%
+   -MAP- Thread 44 from task 44 is mapped to proc 19, progress = 35%
+   -MAP- Thread 33 from task 33 is mapped to proc 20, progress = 35%
+   -MAP- Thread 37 from task 37 is mapped to proc 21, progress = 35%
+   -MAP- Thread 41 from task 41 is mapped to proc 22, progress = 35%
+   -MAP- Thread 45 from task 45 is mapped to proc 23, progress = 35%
+   -MAP- Thread 48 from task 48 is mapped to proc 24, progress = 35%
+   -MAP- Thread 52 from task 52 is mapped to proc 25, progress = 35%
+   -MAP- Thread 56 from task 56 is mapped to proc 26, progress = 35%
+   -MAP- Thread 60 from task 60 is mapped to proc 27, progress = 35%
+   -MAP- Thread 49 from task 49 is mapped to proc 28, progress = 35%
+   -MAP- Thread 53 from task 53 is mapped to proc 29, progress = 35%
+   -MAP- Thread 57 from task 57 is mapped to proc 30, progress = 35%
+   -MAP- Thread 61 from task 61 is mapped to proc 31, progress = 35%
+   -MAP- Thread 2 from task 2 is mapped to proc 32, progress = 35%
+   -MAP- Thread 6 from task 6 is mapped to proc 33, progress = 35%
+   -MAP- Thread 10 from task 10 is mapped to proc 34, progress = 35%
+   -MAP- Thread 14 from task 14 is mapped to proc 35, progress = 35%
+   -MAP- Thread 3 from task 3 is mapped to proc 36, progress = 35%
+   -MAP- Thread 7 from task 7 is mapped to proc 37, progress = 35%
+   -MAP- Thread 11 from task 11 is mapped to proc 38, progress = 35%
+   -MAP- Thread 15 from task 15 is mapped to proc 39, progress = 35%
+   -MAP- Thread 18 from task 18 is mapped to proc 40, progress = 35%
+   -MAP- Thread 22 from task 22 is mapped to proc 41, progress = 35%
+   -MAP- Thread 26 from task 26 is mapped to proc 42, progress = 35%
+   -MAP- Thread 30 from task 30 is mapped to proc 43, progress = 35%
+   -MAP- Thread 19 from task 19 is mapped to proc 44, progress = 35%
+   -MAP- Thread 23 from task 23 is mapped to proc 45, progress = 35%
+   -MAP- Thread 51 from task 51 is mapped to proc 46, progress = 35%
+   -MAP- Thread 31 from task 31 is mapped to proc 47, progress = 35%
+   -MAP- Thread 34 from task 34 is mapped to proc 48, progress = 35%
+   -MAP- Thread 38 from task 38 is mapped to proc 49, progress = 35%
+   -MAP- Thread 42 from task 42 is mapped to proc 50, progress = 35%
+   -MAP- Thread 46 from task 46 is mapped to proc 51, progress = 35%
+   -MAP- Thread 35 from task 35 is mapped to proc 52, progress = 35%
+   -MAP- Thread 39 from task 39 is mapped to proc 53, progress = 35%
+   -MAP- Thread 43 from task 43 is mapped to proc 54, progress = 35%
+   -MAP- Thread 47 from task 47 is mapped to proc 55, progress = 35%
+   -MAP- Thread 50 from task 50 is mapped to proc 56, progress = 35%
+   -MAP- Thread 54 from task 54 is mapped to proc 57, progress = 35%
+   -MAP- Thread 58 from task 58 is mapped to proc 58, progress = 35%
+   -MAP- Thread 62 from task 62 is mapped to proc 59, progress = 35%
+   -MAP- Thread 27 from task 27 is mapped to proc 60, progress = 35%
+   -MAP- Thread 55 from task 55 is mapped to proc 61, progress = 35%
+   -MAP- Thread 59 from task 59 is mapped to proc 62, progress = 35%
+   -MAP- Thread 63 from task 63 is mapped to proc 63, progress = 35%
+   -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
+   -MAP- Mapconf after mapping: Map: 0 4 8 12 1 5 9 13 16 20 24 28 17 21 25 29 32 36 40 44 33 37 41 45 48 52 56 60 49 53 57 61 2 6 10 14 3 7 11 15 18 22 26 30 19 23 51 31 34 38 42 46 35 39 43 47 50 54 58 62 27 55 59 63; CoreActiv: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5; L3ClusterActiv: 1 1 1 1;   UncoreFreq=3.5;   Pow=820.057; Temp=0; Thr=448; Obj=448; Cost=448
+-I- Running Hotspot...
+   -MAP- Temperature of cores: 67.4991 67.9712 67.978 68.0009 67.9789 68.0088 67.9681 67.2447 67.7119 68.2079 68.2168 68.2394 68.2186 68.2473 68.2054 67.4611 67.7189 68.2175 68.2271 68.2497 68.229 68.2575 68.2143 67.4677 67.721 68.2203 68.2299 68.2521 68.2311 68.2599 68.2161 67.4695 67.7205 68.2196 68.229 68.2517 68.2307 68.2588 68.2154 67.469 67.7169 68.2144 68.2223 68.2463 68.2257 68.2517 68.2102 67.4644 67.727 68.2206 68.2278 68.2511 68.2297 68.2585 68.217 67.473 73.9268 74.6528 74.661 74.695 74.6712 74.7085 74.65 73.6092 
+   -MAP- Throughput of cores: 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+   -MAP- Frequency of cores: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 
+   -MAP- Advancing thread 0 progress by 7e+06 instructions
+   -MAP- Advancing thread 4 progress by 7e+06 instructions
+   -MAP- Advancing thread 8 progress by 7e+06 instructions
+   -MAP- Advancing thread 12 progress by 7e+06 instructions
+   -MAP- Advancing thread 1 progress by 7e+06 instructions
+   -MAP- Advancing thread 5 progress by 7e+06 instructions
+   -MAP- Advancing thread 9 progress by 7e+06 instructions
+   -MAP- Advancing thread 13 progress by 7e+06 instructions
+   -MAP- Advancing thread 16 progress by 7e+06 instructions
+   -MAP- Advancing thread 20 progress by 7e+06 instructions
+   -MAP- Advancing thread 24 progress by 7e+06 instructions
+   -MAP- Advancing thread 28 progress by 7e+06 instructions
+   -MAP- Advancing thread 17 progress by 7e+06 instructions
+   -MAP- Advancing thread 21 progress by 7e+06 instructions
+   -MAP- Advancing thread 25 progress by 7e+06 instructions
+   -MAP- Advancing thread 29 progress by 7e+06 instructions
+   -MAP- Advancing thread 32 progress by 7e+06 instructions
+   -MAP- Advancing thread 36 progress by 7e+06 instructions
+   -MAP- Advancing thread 40 progress by 7e+06 instructions
+   -MAP- Advancing thread 44 progress by 7e+06 instructions
+   -MAP- Advancing thread 33 progress by 7e+06 instructions
+   -MAP- Advancing thread 37 progress by 7e+06 instructions
+   -MAP- Advancing thread 41 progress by 7e+06 instructions
+   -MAP- Advancing thread 45 progress by 7e+06 instructions
+   -MAP- Advancing thread 48 progress by 7e+06 instructions
+   -MAP- Advancing thread 52 progress by 7e+06 instructions
+   -MAP- Advancing thread 56 progress by 7e+06 instructions
+   -MAP- Advancing thread 60 progress by 7e+06 instructions
+   -MAP- Advancing thread 49 progress by 7e+06 instructions
+   -MAP- Advancing thread 53 progress by 7e+06 instructions
+   -MAP- Advancing thread 57 progress by 7e+06 instructions
+   -MAP- Advancing thread 61 progress by 7e+06 instructions
+   -MAP- Advancing thread 2 progress by 7e+06 instructions
+   -MAP- Advancing thread 6 progress by 7e+06 instructions
+   -MAP- Advancing thread 10 progress by 7e+06 instructions
+   -MAP- Advancing thread 14 progress by 7e+06 instructions
+   -MAP- Advancing thread 3 progress by 7e+06 instructions
+   -MAP- Advancing thread 7 progress by 7e+06 instructions
+   -MAP- Advancing thread 11 progress by 7e+06 instructions
+   -MAP- Advancing thread 15 progress by 7e+06 instructions
+   -MAP- Advancing thread 18 progress by 7e+06 instructions
+   -MAP- Advancing thread 22 progress by 7e+06 instructions
+   -MAP- Advancing thread 26 progress by 7e+06 instructions
+   -MAP- Advancing thread 30 progress by 7e+06 instructions
+   -MAP- Advancing thread 19 progress by 7e+06 instructions
+   -MAP- Advancing thread 23 progress by 7e+06 instructions
+   -MAP- Advancing thread 51 progress by 7e+06 instructions
+   -MAP- Advancing thread 31 progress by 7e+06 instructions
+   -MAP- Advancing thread 34 progress by 7e+06 instructions
+   -MAP- Advancing thread 38 progress by 7e+06 instructions
+   -MAP- Advancing thread 42 progress by 7e+06 instructions
+   -MAP- Advancing thread 46 progress by 7e+06 instructions
+   -MAP- Advancing thread 35 progress by 7e+06 instructions
+   -MAP- Advancing thread 39 progress by 7e+06 instructions
+   -MAP- Advancing thread 43 progress by 7e+06 instructions
+   -MAP- Advancing thread 47 progress by 7e+06 instructions
+   -MAP- Advancing thread 50 progress by 7e+06 instructions
+   -MAP- Advancing thread 54 progress by 7e+06 instructions
+   -MAP- Advancing thread 58 progress by 7e+06 instructions
+   -MAP- Advancing thread 62 progress by 7e+06 instructions
+   -MAP- Advancing thread 27 progress by 7e+06 instructions
+   -MAP- Advancing thread 55 progress by 7e+06 instructions
+   -MAP- Advancing thread 59 progress by 7e+06 instructions
+   -MAP- Advancing thread 63 progress by 7e+06 instructions
+   -MAP- Period instantaneous QoS = 1, total QoS = 1
+ * * * 
+Task 0 ID = 0, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 1 ID = 1, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 2 ID = 2, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 3 ID = 3, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 4 ID = 4, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 5 ID = 5, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 6 ID = 6, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 7 ID = 7, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 8 ID = 8, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 9 ID = 9, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 10 ID = 10, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 11 ID = 11, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 12 ID = 12, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 13 ID = 13, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 14 ID = 14, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 15 ID = 15, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 16 ID = 16, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 17 ID = 17, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 18 ID = 18, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 19 ID = 19, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 20 ID = 20, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 21 ID = 21, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 22 ID = 22, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 23 ID = 23, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 24 ID = 24, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 25 ID = 25, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 26 ID = 26, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 27 ID = 27, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 28 ID = 28, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 29 ID = 29, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 30 ID = 30, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 31 ID = 31, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 32 ID = 32, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 33 ID = 33, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 34 ID = 34, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 35 ID = 35, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 36 ID = 36, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 37 ID = 37, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 38 ID = 38, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 39 ID = 39, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 40 ID = 40, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 41 ID = 41, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 42 ID = 42, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 43 ID = 43, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 44 ID = 44, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 45 ID = 45, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 46 ID = 46, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 47 ID = 47, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 48 ID = 48, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 49 ID = 49, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 50 ID = 50, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 51 ID = 51, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 52 ID = 52, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 53 ID = 53, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 54 ID = 54, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 55 ID = 55, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 56 ID = 56, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 57 ID = 57, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 58 ID = 58, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 59 ID = 59, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 60 ID = 60, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 61 ID = 61, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 62 ID = 62, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 63 ID = 63, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+-I- MapSim: sysElapsedPeriod = 3, system time = 0.003 sec
+   -MAP- Thread 0 from task 0 is mapped to proc 0, progress = 52%
+   -MAP- Thread 4 from task 4 is mapped to proc 1, progress = 52%
+   -MAP- Thread 8 from task 8 is mapped to proc 2, progress = 52%
+   -MAP- Thread 12 from task 12 is mapped to proc 3, progress = 52%
+   -MAP- Thread 1 from task 1 is mapped to proc 4, progress = 52%
+   -MAP- Thread 5 from task 5 is mapped to proc 5, progress = 52%
+   -MAP- Thread 9 from task 9 is mapped to proc 6, progress = 52%
+   -MAP- Thread 13 from task 13 is mapped to proc 7, progress = 52%
+   -MAP- Thread 16 from task 16 is mapped to proc 8, progress = 52%
+   -MAP- Thread 20 from task 20 is mapped to proc 9, progress = 52%
+   -MAP- Thread 24 from task 24 is mapped to proc 10, progress = 52%
+   -MAP- Thread 28 from task 28 is mapped to proc 11, progress = 52%
+   -MAP- Thread 17 from task 17 is mapped to proc 12, progress = 52%
+   -MAP- Thread 21 from task 21 is mapped to proc 13, progress = 52%
+   -MAP- Thread 25 from task 25 is mapped to proc 14, progress = 52%
+   -MAP- Thread 29 from task 29 is mapped to proc 15, progress = 52%
+   -MAP- Thread 32 from task 32 is mapped to proc 16, progress = 52%
+   -MAP- Thread 36 from task 36 is mapped to proc 17, progress = 52%
+   -MAP- Thread 40 from task 40 is mapped to proc 18, progress = 52%
+   -MAP- Thread 44 from task 44 is mapped to proc 19, progress = 52%
+   -MAP- Thread 33 from task 33 is mapped to proc 20, progress = 52%
+   -MAP- Thread 37 from task 37 is mapped to proc 21, progress = 52%
+   -MAP- Thread 41 from task 41 is mapped to proc 22, progress = 52%
+   -MAP- Thread 45 from task 45 is mapped to proc 23, progress = 52%
+   -MAP- Thread 48 from task 48 is mapped to proc 24, progress = 52%
+   -MAP- Thread 52 from task 52 is mapped to proc 25, progress = 52%
+   -MAP- Thread 56 from task 56 is mapped to proc 26, progress = 52%
+   -MAP- Thread 60 from task 60 is mapped to proc 27, progress = 52%
+   -MAP- Thread 49 from task 49 is mapped to proc 28, progress = 52%
+   -MAP- Thread 53 from task 53 is mapped to proc 29, progress = 52%
+   -MAP- Thread 57 from task 57 is mapped to proc 30, progress = 52%
+   -MAP- Thread 61 from task 61 is mapped to proc 31, progress = 52%
+   -MAP- Thread 2 from task 2 is mapped to proc 32, progress = 52%
+   -MAP- Thread 6 from task 6 is mapped to proc 33, progress = 52%
+   -MAP- Thread 10 from task 10 is mapped to proc 34, progress = 52%
+   -MAP- Thread 14 from task 14 is mapped to proc 35, progress = 52%
+   -MAP- Thread 3 from task 3 is mapped to proc 36, progress = 52%
+   -MAP- Thread 7 from task 7 is mapped to proc 37, progress = 52%
+   -MAP- Thread 11 from task 11 is mapped to proc 38, progress = 52%
+   -MAP- Thread 15 from task 15 is mapped to proc 39, progress = 52%
+   -MAP- Thread 18 from task 18 is mapped to proc 40, progress = 52%
+   -MAP- Thread 22 from task 22 is mapped to proc 41, progress = 52%
+   -MAP- Thread 26 from task 26 is mapped to proc 42, progress = 52%
+   -MAP- Thread 30 from task 30 is mapped to proc 43, progress = 52%
+   -MAP- Thread 19 from task 19 is mapped to proc 44, progress = 52%
+   -MAP- Thread 23 from task 23 is mapped to proc 45, progress = 52%
+   -MAP- Thread 51 from task 51 is mapped to proc 46, progress = 52%
+   -MAP- Thread 31 from task 31 is mapped to proc 47, progress = 52%
+   -MAP- Thread 34 from task 34 is mapped to proc 48, progress = 52%
+   -MAP- Thread 38 from task 38 is mapped to proc 49, progress = 52%
+   -MAP- Thread 42 from task 42 is mapped to proc 50, progress = 52%
+   -MAP- Thread 46 from task 46 is mapped to proc 51, progress = 52%
+   -MAP- Thread 35 from task 35 is mapped to proc 52, progress = 52%
+   -MAP- Thread 39 from task 39 is mapped to proc 53, progress = 52%
+   -MAP- Thread 43 from task 43 is mapped to proc 54, progress = 52%
+   -MAP- Thread 47 from task 47 is mapped to proc 55, progress = 52%
+   -MAP- Thread 50 from task 50 is mapped to proc 56, progress = 52%
+   -MAP- Thread 54 from task 54 is mapped to proc 57, progress = 52%
+   -MAP- Thread 58 from task 58 is mapped to proc 58, progress = 52%
+   -MAP- Thread 62 from task 62 is mapped to proc 59, progress = 52%
+   -MAP- Thread 27 from task 27 is mapped to proc 60, progress = 52%
+   -MAP- Thread 55 from task 55 is mapped to proc 61, progress = 52%
+   -MAP- Thread 59 from task 59 is mapped to proc 62, progress = 52%
+   -MAP- Thread 63 from task 63 is mapped to proc 63, progress = 52%
+   -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
+   -MAP- Mapconf after mapping: Map: 0 4 8 12 1 5 9 13 16 20 24 28 17 21 25 29 32 36 40 44 33 37 41 45 48 52 56 60 49 53 57 61 2 6 10 14 3 7 11 15 18 22 26 30 19 23 51 31 34 38 42 46 35 39 43 47 50 54 58 62 27 55 59 63; CoreActiv: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5; L3ClusterActiv: 1 1 1 1;   UncoreFreq=3.5;   Pow=821.22; Temp=0; Thr=448; Obj=448; Cost=448
+-I- Running Hotspot...
+   -MAP- Temperature of cores: 69.9036 70.7311 70.7459 70.7747 70.757 70.7832 70.7228 69.6791 70.3539 71.2424 71.2606 71.29 71.2739 71.2985 71.2342 70.1361 70.3628 71.2536 71.273 71.3026 71.2864 71.3107 71.2451 70.1446 70.3651 71.2562 71.276 71.3054 71.2889 71.3134 71.247 70.1463 70.3646 71.2555 71.2751 71.3049 71.2883 71.3123 71.2462 70.1457 70.3608 71.2507 71.2686 71.299 71.283 71.3056 71.241 70.1414 70.4205 71.3153 71.3323 71.3625 71.3461 71.3706 71.3061 70.2011 77.6411 78.9075 78.9275 78.9708 78.9543 78.9853 78.8966 77.3631 
+   -MAP- Throughput of cores: 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+   -MAP- Frequency of cores: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 
+   -MAP- Advancing thread 0 progress by 7e+06 instructions
+   -MAP- Advancing thread 4 progress by 7e+06 instructions
+   -MAP- Advancing thread 8 progress by 7e+06 instructions
+   -MAP- Advancing thread 12 progress by 7e+06 instructions
+   -MAP- Advancing thread 1 progress by 7e+06 instructions
+   -MAP- Advancing thread 5 progress by 7e+06 instructions
+   -MAP- Advancing thread 9 progress by 7e+06 instructions
+   -MAP- Advancing thread 13 progress by 7e+06 instructions
+   -MAP- Advancing thread 16 progress by 7e+06 instructions
+   -MAP- Advancing thread 20 progress by 7e+06 instructions
+   -MAP- Advancing thread 24 progress by 7e+06 instructions
+   -MAP- Advancing thread 28 progress by 7e+06 instructions
+   -MAP- Advancing thread 17 progress by 7e+06 instructions
+   -MAP- Advancing thread 21 progress by 7e+06 instructions
+   -MAP- Advancing thread 25 progress by 7e+06 instructions
+   -MAP- Advancing thread 29 progress by 7e+06 instructions
+   -MAP- Advancing thread 32 progress by 7e+06 instructions
+   -MAP- Advancing thread 36 progress by 7e+06 instructions
+   -MAP- Advancing thread 40 progress by 7e+06 instructions
+   -MAP- Advancing thread 44 progress by 7e+06 instructions
+   -MAP- Advancing thread 33 progress by 7e+06 instructions
+   -MAP- Advancing thread 37 progress by 7e+06 instructions
+   -MAP- Advancing thread 41 progress by 7e+06 instructions
+   -MAP- Advancing thread 45 progress by 7e+06 instructions
+   -MAP- Advancing thread 48 progress by 7e+06 instructions
+   -MAP- Advancing thread 52 progress by 7e+06 instructions
+   -MAP- Advancing thread 56 progress by 7e+06 instructions
+   -MAP- Advancing thread 60 progress by 7e+06 instructions
+   -MAP- Advancing thread 49 progress by 7e+06 instructions
+   -MAP- Advancing thread 53 progress by 7e+06 instructions
+   -MAP- Advancing thread 57 progress by 7e+06 instructions
+   -MAP- Advancing thread 61 progress by 7e+06 instructions
+   -MAP- Advancing thread 2 progress by 7e+06 instructions
+   -MAP- Advancing thread 6 progress by 7e+06 instructions
+   -MAP- Advancing thread 10 progress by 7e+06 instructions
+   -MAP- Advancing thread 14 progress by 7e+06 instructions
+   -MAP- Advancing thread 3 progress by 7e+06 instructions
+   -MAP- Advancing thread 7 progress by 7e+06 instructions
+   -MAP- Advancing thread 11 progress by 7e+06 instructions
+   -MAP- Advancing thread 15 progress by 7e+06 instructions
+   -MAP- Advancing thread 18 progress by 7e+06 instructions
+   -MAP- Advancing thread 22 progress by 7e+06 instructions
+   -MAP- Advancing thread 26 progress by 7e+06 instructions
+   -MAP- Advancing thread 30 progress by 7e+06 instructions
+   -MAP- Advancing thread 19 progress by 7e+06 instructions
+   -MAP- Advancing thread 23 progress by 7e+06 instructions
+   -MAP- Advancing thread 51 progress by 7e+06 instructions
+   -MAP- Advancing thread 31 progress by 7e+06 instructions
+   -MAP- Advancing thread 34 progress by 7e+06 instructions
+   -MAP- Advancing thread 38 progress by 7e+06 instructions
+   -MAP- Advancing thread 42 progress by 7e+06 instructions
+   -MAP- Advancing thread 46 progress by 7e+06 instructions
+   -MAP- Advancing thread 35 progress by 7e+06 instructions
+   -MAP- Advancing thread 39 progress by 7e+06 instructions
+   -MAP- Advancing thread 43 progress by 7e+06 instructions
+   -MAP- Advancing thread 47 progress by 7e+06 instructions
+   -MAP- Advancing thread 50 progress by 7e+06 instructions
+   -MAP- Advancing thread 54 progress by 7e+06 instructions
+   -MAP- Advancing thread 58 progress by 7e+06 instructions
+   -MAP- Advancing thread 62 progress by 7e+06 instructions
+   -MAP- Advancing thread 27 progress by 7e+06 instructions
+   -MAP- Advancing thread 55 progress by 7e+06 instructions
+   -MAP- Advancing thread 59 progress by 7e+06 instructions
+   -MAP- Advancing thread 63 progress by 7e+06 instructions
+   -MAP- Period instantaneous QoS = 1, total QoS = 1
+ * * * 
+Task 0 ID = 0, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 1 ID = 1, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 2 ID = 2, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 3 ID = 3, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 4 ID = 4, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 5 ID = 5, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 6 ID = 6, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 7 ID = 7, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 8 ID = 8, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 9 ID = 9, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 10 ID = 10, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 11 ID = 11, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 12 ID = 12, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 13 ID = 13, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 14 ID = 14, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 15 ID = 15, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 16 ID = 16, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 17 ID = 17, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 18 ID = 18, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 19 ID = 19, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 20 ID = 20, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 21 ID = 21, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 22 ID = 22, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 23 ID = 23, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 24 ID = 24, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 25 ID = 25, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 26 ID = 26, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 27 ID = 27, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 28 ID = 28, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 29 ID = 29, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 30 ID = 30, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 31 ID = 31, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 32 ID = 32, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 33 ID = 33, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 34 ID = 34, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 35 ID = 35, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 36 ID = 36, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 37 ID = 37, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 38 ID = 38, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 39 ID = 39, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 40 ID = 40, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 41 ID = 41, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 42 ID = 42, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 43 ID = 43, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 44 ID = 44, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 45 ID = 45, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 46 ID = 46, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 47 ID = 47, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 48 ID = 48, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 49 ID = 49, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 50 ID = 50, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 51 ID = 51, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 52 ID = 52, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 53 ID = 53, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 54 ID = 54, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 55 ID = 55, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 56 ID = 56, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 57 ID = 57, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 58 ID = 58, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 59 ID = 59, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 60 ID = 60, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 61 ID = 61, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 62 ID = 62, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 63 ID = 63, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+-I- MapSim: sysElapsedPeriod = 4, system time = 0.004 sec
+   -MAP- Thread 0 from task 0 is mapped to proc 0, progress = 70%
+   -MAP- Thread 4 from task 4 is mapped to proc 1, progress = 70%
+   -MAP- Thread 8 from task 8 is mapped to proc 2, progress = 70%
+   -MAP- Thread 12 from task 12 is mapped to proc 3, progress = 70%
+   -MAP- Thread 1 from task 1 is mapped to proc 4, progress = 70%
+   -MAP- Thread 5 from task 5 is mapped to proc 5, progress = 70%
+   -MAP- Thread 9 from task 9 is mapped to proc 6, progress = 70%
+   -MAP- Thread 13 from task 13 is mapped to proc 7, progress = 70%
+   -MAP- Thread 16 from task 16 is mapped to proc 8, progress = 70%
+   -MAP- Thread 20 from task 20 is mapped to proc 9, progress = 70%
+   -MAP- Thread 24 from task 24 is mapped to proc 10, progress = 70%
+   -MAP- Thread 28 from task 28 is mapped to proc 11, progress = 70%
+   -MAP- Thread 17 from task 17 is mapped to proc 12, progress = 70%
+   -MAP- Thread 21 from task 21 is mapped to proc 13, progress = 70%
+   -MAP- Thread 25 from task 25 is mapped to proc 14, progress = 70%
+   -MAP- Thread 29 from task 29 is mapped to proc 15, progress = 70%
+   -MAP- Thread 32 from task 32 is mapped to proc 16, progress = 70%
+   -MAP- Thread 36 from task 36 is mapped to proc 17, progress = 70%
+   -MAP- Thread 40 from task 40 is mapped to proc 18, progress = 70%
+   -MAP- Thread 44 from task 44 is mapped to proc 19, progress = 70%
+   -MAP- Thread 33 from task 33 is mapped to proc 20, progress = 70%
+   -MAP- Thread 37 from task 37 is mapped to proc 21, progress = 70%
+   -MAP- Thread 41 from task 41 is mapped to proc 22, progress = 70%
+   -MAP- Thread 45 from task 45 is mapped to proc 23, progress = 70%
+   -MAP- Thread 48 from task 48 is mapped to proc 24, progress = 70%
+   -MAP- Thread 52 from task 52 is mapped to proc 25, progress = 70%
+   -MAP- Thread 56 from task 56 is mapped to proc 26, progress = 70%
+   -MAP- Thread 60 from task 60 is mapped to proc 27, progress = 70%
+   -MAP- Thread 49 from task 49 is mapped to proc 28, progress = 70%
+   -MAP- Thread 53 from task 53 is mapped to proc 29, progress = 70%
+   -MAP- Thread 57 from task 57 is mapped to proc 30, progress = 70%
+   -MAP- Thread 61 from task 61 is mapped to proc 31, progress = 70%
+   -MAP- Thread 2 from task 2 is mapped to proc 32, progress = 70%
+   -MAP- Thread 6 from task 6 is mapped to proc 33, progress = 70%
+   -MAP- Thread 10 from task 10 is mapped to proc 34, progress = 70%
+   -MAP- Thread 14 from task 14 is mapped to proc 35, progress = 70%
+   -MAP- Thread 3 from task 3 is mapped to proc 36, progress = 70%
+   -MAP- Thread 7 from task 7 is mapped to proc 37, progress = 70%
+   -MAP- Thread 11 from task 11 is mapped to proc 38, progress = 70%
+   -MAP- Thread 15 from task 15 is mapped to proc 39, progress = 70%
+   -MAP- Thread 18 from task 18 is mapped to proc 40, progress = 70%
+   -MAP- Thread 22 from task 22 is mapped to proc 41, progress = 70%
+   -MAP- Thread 26 from task 26 is mapped to proc 42, progress = 70%
+   -MAP- Thread 30 from task 30 is mapped to proc 43, progress = 70%
+   -MAP- Thread 19 from task 19 is mapped to proc 44, progress = 70%
+   -MAP- Thread 23 from task 23 is mapped to proc 45, progress = 70%
+   -MAP- Thread 51 from task 51 is mapped to proc 46, progress = 70%
+   -MAP- Thread 31 from task 31 is mapped to proc 47, progress = 70%
+   -MAP- Thread 34 from task 34 is mapped to proc 48, progress = 70%
+   -MAP- Thread 38 from task 38 is mapped to proc 49, progress = 70%
+   -MAP- Thread 42 from task 42 is mapped to proc 50, progress = 70%
+   -MAP- Thread 46 from task 46 is mapped to proc 51, progress = 70%
+   -MAP- Thread 35 from task 35 is mapped to proc 52, progress = 70%
+   -MAP- Thread 39 from task 39 is mapped to proc 53, progress = 70%
+   -MAP- Thread 43 from task 43 is mapped to proc 54, progress = 70%
+   -MAP- Thread 47 from task 47 is mapped to proc 55, progress = 70%
+   -MAP- Thread 50 from task 50 is mapped to proc 56, progress = 70%
+   -MAP- Thread 54 from task 54 is mapped to proc 57, progress = 70%
+   -MAP- Thread 58 from task 58 is mapped to proc 58, progress = 70%
+   -MAP- Thread 62 from task 62 is mapped to proc 59, progress = 70%
+   -MAP- Thread 27 from task 27 is mapped to proc 60, progress = 70%
+   -MAP- Thread 55 from task 55 is mapped to proc 61, progress = 70%
+   -MAP- Thread 59 from task 59 is mapped to proc 62, progress = 70%
+   -MAP- Thread 63 from task 63 is mapped to proc 63, progress = 70%
+   -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
+   -MAP- Mapconf after mapping: Map: 0 4 8 12 1 5 9 13 16 20 24 28 17 21 25 29 32 36 40 44 33 37 41 45 48 52 56 60 49 53 57 61 2 6 10 14 3 7 11 15 18 22 26 30 19 23 51 31 34 38 42 46 35 39 43 47 50 54 58 62 27 55 59 63; CoreActiv: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5; L3ClusterActiv: 1 1 1 1;   UncoreFreq=3.5;   Pow=822.328; Temp=0; Thr=448; Obj=448; Cost=448
+-I- Running Hotspot...
+   -MAP- Temperature of cores: 71.4009 72.4995 72.5302 72.5627 72.5476 72.5712 72.4833 71.1885 72.0903 73.2576 73.2942 73.3286 73.3148 73.3372 73.2402 71.8544 72.1058 73.2761 73.3137 73.3485 73.3347 73.3566 73.2584 71.8691 72.1081 73.2788 73.3169 73.3515 73.3376 73.3595 73.2605 71.8709 72.1077 73.2781 73.3159 73.3508 73.337 73.3584 73.2597 71.8702 72.1047 73.274 73.3106 73.3459 73.3321 73.3529 73.2552 71.8667 72.2326 73.4148 73.4514 73.4865 73.4728 73.4945 73.3962 71.9906 79.967 81.5525 81.5966 81.6462 81.6331 81.6605 81.5301 79.6027 
+   -MAP- Throughput of cores: 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+   -MAP- Frequency of cores: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 
+   -MAP- Advancing thread 0 progress by 7e+06 instructions
+   -MAP- Advancing thread 4 progress by 7e+06 instructions
+   -MAP- Advancing thread 8 progress by 7e+06 instructions
+   -MAP- Advancing thread 12 progress by 7e+06 instructions
+   -MAP- Advancing thread 1 progress by 7e+06 instructions
+   -MAP- Advancing thread 5 progress by 7e+06 instructions
+   -MAP- Advancing thread 9 progress by 7e+06 instructions
+   -MAP- Advancing thread 13 progress by 7e+06 instructions
+   -MAP- Advancing thread 16 progress by 7e+06 instructions
+   -MAP- Advancing thread 20 progress by 7e+06 instructions
+   -MAP- Advancing thread 24 progress by 7e+06 instructions
+   -MAP- Advancing thread 28 progress by 7e+06 instructions
+   -MAP- Advancing thread 17 progress by 7e+06 instructions
+   -MAP- Advancing thread 21 progress by 7e+06 instructions
+   -MAP- Advancing thread 25 progress by 7e+06 instructions
+   -MAP- Advancing thread 29 progress by 7e+06 instructions
+   -MAP- Advancing thread 32 progress by 7e+06 instructions
+   -MAP- Advancing thread 36 progress by 7e+06 instructions
+   -MAP- Advancing thread 40 progress by 7e+06 instructions
+   -MAP- Advancing thread 44 progress by 7e+06 instructions
+   -MAP- Advancing thread 33 progress by 7e+06 instructions
+   -MAP- Advancing thread 37 progress by 7e+06 instructions
+   -MAP- Advancing thread 41 progress by 7e+06 instructions
+   -MAP- Advancing thread 45 progress by 7e+06 instructions
+   -MAP- Advancing thread 48 progress by 7e+06 instructions
+   -MAP- Advancing thread 52 progress by 7e+06 instructions
+   -MAP- Advancing thread 56 progress by 7e+06 instructions
+   -MAP- Advancing thread 60 progress by 7e+06 instructions
+   -MAP- Advancing thread 49 progress by 7e+06 instructions
+   -MAP- Advancing thread 53 progress by 7e+06 instructions
+   -MAP- Advancing thread 57 progress by 7e+06 instructions
+   -MAP- Advancing thread 61 progress by 7e+06 instructions
+   -MAP- Advancing thread 2 progress by 7e+06 instructions
+   -MAP- Advancing thread 6 progress by 7e+06 instructions
+   -MAP- Advancing thread 10 progress by 7e+06 instructions
+   -MAP- Advancing thread 14 progress by 7e+06 instructions
+   -MAP- Advancing thread 3 progress by 7e+06 instructions
+   -MAP- Advancing thread 7 progress by 7e+06 instructions
+   -MAP- Advancing thread 11 progress by 7e+06 instructions
+   -MAP- Advancing thread 15 progress by 7e+06 instructions
+   -MAP- Advancing thread 18 progress by 7e+06 instructions
+   -MAP- Advancing thread 22 progress by 7e+06 instructions
+   -MAP- Advancing thread 26 progress by 7e+06 instructions
+   -MAP- Advancing thread 30 progress by 7e+06 instructions
+   -MAP- Advancing thread 19 progress by 7e+06 instructions
+   -MAP- Advancing thread 23 progress by 7e+06 instructions
+   -MAP- Advancing thread 51 progress by 7e+06 instructions
+   -MAP- Advancing thread 31 progress by 7e+06 instructions
+   -MAP- Advancing thread 34 progress by 7e+06 instructions
+   -MAP- Advancing thread 38 progress by 7e+06 instructions
+   -MAP- Advancing thread 42 progress by 7e+06 instructions
+   -MAP- Advancing thread 46 progress by 7e+06 instructions
+   -MAP- Advancing thread 35 progress by 7e+06 instructions
+   -MAP- Advancing thread 39 progress by 7e+06 instructions
+   -MAP- Advancing thread 43 progress by 7e+06 instructions
+   -MAP- Advancing thread 47 progress by 7e+06 instructions
+   -MAP- Advancing thread 50 progress by 7e+06 instructions
+   -MAP- Advancing thread 54 progress by 7e+06 instructions
+   -MAP- Advancing thread 58 progress by 7e+06 instructions
+   -MAP- Advancing thread 62 progress by 7e+06 instructions
+   -MAP- Advancing thread 27 progress by 7e+06 instructions
+   -MAP- Advancing thread 55 progress by 7e+06 instructions
+   -MAP- Advancing thread 59 progress by 7e+06 instructions
+   -MAP- Advancing thread 63 progress by 7e+06 instructions
+   -MAP- Period instantaneous QoS = 1, total QoS = 1
+ * * * 
+Task 0 ID = 0, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 1 ID = 1, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 2 ID = 2, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 3 ID = 3, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 4 ID = 4, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 5 ID = 5, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 6 ID = 6, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 7 ID = 7, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 8 ID = 8, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 9 ID = 9, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 10 ID = 10, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 11 ID = 11, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 12 ID = 12, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 13 ID = 13, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 14 ID = 14, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 15 ID = 15, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 16 ID = 16, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 17 ID = 17, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 18 ID = 18, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 19 ID = 19, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 20 ID = 20, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 21 ID = 21, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 22 ID = 22, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 23 ID = 23, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 24 ID = 24, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 25 ID = 25, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 26 ID = 26, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 27 ID = 27, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 28 ID = 28, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 29 ID = 29, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 30 ID = 30, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 31 ID = 31, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 32 ID = 32, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 33 ID = 33, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 34 ID = 34, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 35 ID = 35, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 36 ID = 36, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 37 ID = 37, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 38 ID = 38, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 39 ID = 39, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 40 ID = 40, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 41 ID = 41, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 42 ID = 42, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 43 ID = 43, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 44 ID = 44, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 45 ID = 45, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 46 ID = 46, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 47 ID = 47, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 48 ID = 48, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 49 ID = 49, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 50 ID = 50, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 51 ID = 51, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 52 ID = 52, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 53 ID = 53, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 54 ID = 54, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 55 ID = 55, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 56 ID = 56, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 57 ID = 57, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 58 ID = 58, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 59 ID = 59, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 60 ID = 60, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 61 ID = 61, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 62 ID = 62, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 63 ID = 63, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+-I- MapSim: sysElapsedPeriod = 5, system time = 0.005 sec
+   -MAP- Thread 0 from task 0 is mapped to proc 0, progress = 87%
+   -MAP- Thread 4 from task 4 is mapped to proc 1, progress = 87%
+   -MAP- Thread 8 from task 8 is mapped to proc 2, progress = 87%
+   -MAP- Thread 12 from task 12 is mapped to proc 3, progress = 87%
+   -MAP- Thread 1 from task 1 is mapped to proc 4, progress = 87%
+   -MAP- Thread 5 from task 5 is mapped to proc 5, progress = 87%
+   -MAP- Thread 9 from task 9 is mapped to proc 6, progress = 87%
+   -MAP- Thread 13 from task 13 is mapped to proc 7, progress = 87%
+   -MAP- Thread 16 from task 16 is mapped to proc 8, progress = 87%
+   -MAP- Thread 20 from task 20 is mapped to proc 9, progress = 87%
+   -MAP- Thread 24 from task 24 is mapped to proc 10, progress = 87%
+   -MAP- Thread 28 from task 28 is mapped to proc 11, progress = 87%
+   -MAP- Thread 17 from task 17 is mapped to proc 12, progress = 87%
+   -MAP- Thread 21 from task 21 is mapped to proc 13, progress = 87%
+   -MAP- Thread 25 from task 25 is mapped to proc 14, progress = 87%
+   -MAP- Thread 29 from task 29 is mapped to proc 15, progress = 87%
+   -MAP- Thread 32 from task 32 is mapped to proc 16, progress = 87%
+   -MAP- Thread 36 from task 36 is mapped to proc 17, progress = 87%
+   -MAP- Thread 40 from task 40 is mapped to proc 18, progress = 87%
+   -MAP- Thread 44 from task 44 is mapped to proc 19, progress = 87%
+   -MAP- Thread 33 from task 33 is mapped to proc 20, progress = 87%
+   -MAP- Thread 37 from task 37 is mapped to proc 21, progress = 87%
+   -MAP- Thread 41 from task 41 is mapped to proc 22, progress = 87%
+   -MAP- Thread 45 from task 45 is mapped to proc 23, progress = 87%
+   -MAP- Thread 48 from task 48 is mapped to proc 24, progress = 87%
+   -MAP- Thread 52 from task 52 is mapped to proc 25, progress = 87%
+   -MAP- Thread 56 from task 56 is mapped to proc 26, progress = 87%
+   -MAP- Thread 60 from task 60 is mapped to proc 27, progress = 87%
+   -MAP- Thread 49 from task 49 is mapped to proc 28, progress = 87%
+   -MAP- Thread 53 from task 53 is mapped to proc 29, progress = 87%
+   -MAP- Thread 57 from task 57 is mapped to proc 30, progress = 87%
+   -MAP- Thread 61 from task 61 is mapped to proc 31, progress = 87%
+   -MAP- Thread 2 from task 2 is mapped to proc 32, progress = 87%
+   -MAP- Thread 6 from task 6 is mapped to proc 33, progress = 87%
+   -MAP- Thread 10 from task 10 is mapped to proc 34, progress = 87%
+   -MAP- Thread 14 from task 14 is mapped to proc 35, progress = 87%
+   -MAP- Thread 3 from task 3 is mapped to proc 36, progress = 87%
+   -MAP- Thread 7 from task 7 is mapped to proc 37, progress = 87%
+   -MAP- Thread 11 from task 11 is mapped to proc 38, progress = 87%
+   -MAP- Thread 15 from task 15 is mapped to proc 39, progress = 87%
+   -MAP- Thread 18 from task 18 is mapped to proc 40, progress = 87%
+   -MAP- Thread 22 from task 22 is mapped to proc 41, progress = 87%
+   -MAP- Thread 26 from task 26 is mapped to proc 42, progress = 87%
+   -MAP- Thread 30 from task 30 is mapped to proc 43, progress = 87%
+   -MAP- Thread 19 from task 19 is mapped to proc 44, progress = 87%
+   -MAP- Thread 23 from task 23 is mapped to proc 45, progress = 87%
+   -MAP- Thread 51 from task 51 is mapped to proc 46, progress = 87%
+   -MAP- Thread 31 from task 31 is mapped to proc 47, progress = 87%
+   -MAP- Thread 34 from task 34 is mapped to proc 48, progress = 87%
+   -MAP- Thread 38 from task 38 is mapped to proc 49, progress = 87%
+   -MAP- Thread 42 from task 42 is mapped to proc 50, progress = 87%
+   -MAP- Thread 46 from task 46 is mapped to proc 51, progress = 87%
+   -MAP- Thread 35 from task 35 is mapped to proc 52, progress = 87%
+   -MAP- Thread 39 from task 39 is mapped to proc 53, progress = 87%
+   -MAP- Thread 43 from task 43 is mapped to proc 54, progress = 87%
+   -MAP- Thread 47 from task 47 is mapped to proc 55, progress = 87%
+   -MAP- Thread 50 from task 50 is mapped to proc 56, progress = 87%
+   -MAP- Thread 54 from task 54 is mapped to proc 57, progress = 87%
+   -MAP- Thread 58 from task 58 is mapped to proc 58, progress = 87%
+   -MAP- Thread 62 from task 62 is mapped to proc 59, progress = 87%
+   -MAP- Thread 27 from task 27 is mapped to proc 60, progress = 87%
+   -MAP- Thread 55 from task 55 is mapped to proc 61, progress = 87%
+   -MAP- Thread 59 from task 59 is mapped to proc 62, progress = 87%
+   -MAP- Thread 63 from task 63 is mapped to proc 63, progress = 87%
+   -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
+   -MAP- Mapconf after mapping: Map: 0 4 8 12 1 5 9 13 16 20 24 28 17 21 25 29 32 36 40 44 33 37 41 45 48 52 56 60 49 53 57 61 2 6 10 14 3 7 11 15 18 22 26 30 19 23 51 31 34 38 42 46 35 39 43 47 50 54 58 62 27 55 59 63; CoreActiv: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5; L3ClusterActiv: 1 1 1 1;   UncoreFreq=3.5;   Pow=823.573; Temp=0; Thr=448; Obj=448; Cost=448
+-I- Running Hotspot...
+   -MAP- Temperature of cores: 72.4862 73.7488 73.8024 73.8383 73.8246 73.8456 73.7246 72.2388 73.3468 74.7057 74.7692 74.8079 74.7955 74.8149 74.6788 73.0702 73.3731 74.7369 74.8018 74.8409 74.8285 74.8475 74.7096 73.0955 73.3755 74.7399 74.8052 74.8443 74.8318 74.8507 74.7121 73.0975 73.3751 74.7392 74.8042 74.8435 74.8311 74.8496 74.7112 73.0968 73.3743 74.7376 74.8016 74.8412 74.8287 74.8467 74.7092 73.0954 73.5641 74.9504 75.0158 75.0551 75.0431 75.0616 74.9217 73.2787 81.5493 83.3772 83.4548 83.5102 83.4992 83.5218 83.3433 81.1315 
+   -MAP- Throughput of cores: 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+   -MAP- Frequency of cores: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 
+   -MAP- Advancing thread 0 progress by 7e+06 instructions
+   -MAP- Advancing thread 4 progress by 7e+06 instructions
+   -MAP- Advancing thread 8 progress by 7e+06 instructions
+   -MAP- Advancing thread 12 progress by 7e+06 instructions
+   -MAP- Advancing thread 1 progress by 7e+06 instructions
+   -MAP- Advancing thread 5 progress by 7e+06 instructions
+   -MAP- Advancing thread 9 progress by 7e+06 instructions
+   -MAP- Advancing thread 13 progress by 7e+06 instructions
+   -MAP- Advancing thread 16 progress by 7e+06 instructions
+   -MAP- Advancing thread 20 progress by 7e+06 instructions
+   -MAP- Advancing thread 24 progress by 7e+06 instructions
+   -MAP- Advancing thread 28 progress by 7e+06 instructions
+   -MAP- Advancing thread 17 progress by 7e+06 instructions
+   -MAP- Advancing thread 21 progress by 7e+06 instructions
+   -MAP- Advancing thread 25 progress by 7e+06 instructions
+   -MAP- Advancing thread 29 progress by 7e+06 instructions
+   -MAP- Advancing thread 32 progress by 7e+06 instructions
+   -MAP- Advancing thread 36 progress by 7e+06 instructions
+   -MAP- Advancing thread 40 progress by 7e+06 instructions
+   -MAP- Advancing thread 44 progress by 7e+06 instructions
+   -MAP- Advancing thread 33 progress by 7e+06 instructions
+   -MAP- Advancing thread 37 progress by 7e+06 instructions
+   -MAP- Advancing thread 41 progress by 7e+06 instructions
+   -MAP- Advancing thread 45 progress by 7e+06 instructions
+   -MAP- Advancing thread 48 progress by 7e+06 instructions
+   -MAP- Advancing thread 52 progress by 7e+06 instructions
+   -MAP- Advancing thread 56 progress by 7e+06 instructions
+   -MAP- Advancing thread 60 progress by 7e+06 instructions
+   -MAP- Advancing thread 49 progress by 7e+06 instructions
+   -MAP- Advancing thread 53 progress by 7e+06 instructions
+   -MAP- Advancing thread 57 progress by 7e+06 instructions
+   -MAP- Advancing thread 61 progress by 7e+06 instructions
+   -MAP- Advancing thread 2 progress by 7e+06 instructions
+   -MAP- Advancing thread 6 progress by 7e+06 instructions
+   -MAP- Advancing thread 10 progress by 7e+06 instructions
+   -MAP- Advancing thread 14 progress by 7e+06 instructions
+   -MAP- Advancing thread 3 progress by 7e+06 instructions
+   -MAP- Advancing thread 7 progress by 7e+06 instructions
+   -MAP- Advancing thread 11 progress by 7e+06 instructions
+   -MAP- Advancing thread 15 progress by 7e+06 instructions
+   -MAP- Advancing thread 18 progress by 7e+06 instructions
+   -MAP- Advancing thread 22 progress by 7e+06 instructions
+   -MAP- Advancing thread 26 progress by 7e+06 instructions
+   -MAP- Advancing thread 30 progress by 7e+06 instructions
+   -MAP- Advancing thread 19 progress by 7e+06 instructions
+   -MAP- Advancing thread 23 progress by 7e+06 instructions
+   -MAP- Advancing thread 51 progress by 7e+06 instructions
+   -MAP- Advancing thread 31 progress by 7e+06 instructions
+   -MAP- Advancing thread 34 progress by 7e+06 instructions
+   -MAP- Advancing thread 38 progress by 7e+06 instructions
+   -MAP- Advancing thread 42 progress by 7e+06 instructions
+   -MAP- Advancing thread 46 progress by 7e+06 instructions
+   -MAP- Advancing thread 35 progress by 7e+06 instructions
+   -MAP- Advancing thread 39 progress by 7e+06 instructions
+   -MAP- Advancing thread 43 progress by 7e+06 instructions
+   -MAP- Advancing thread 47 progress by 7e+06 instructions
+   -MAP- Advancing thread 50 progress by 7e+06 instructions
+   -MAP- Advancing thread 54 progress by 7e+06 instructions
+   -MAP- Advancing thread 58 progress by 7e+06 instructions
+   -MAP- Advancing thread 62 progress by 7e+06 instructions
+   -MAP- Advancing thread 27 progress by 7e+06 instructions
+   -MAP- Advancing thread 55 progress by 7e+06 instructions
+   -MAP- Advancing thread 59 progress by 7e+06 instructions
+   -MAP- Advancing thread 63 progress by 7e+06 instructions
+   -MAP- Thread 0 has completed
+   -MAP- Task 0 has completed
+   -MAP- Thread 4 has completed
+   -MAP- Task 4 has completed
+   -MAP- Thread 8 has completed
+   -MAP- Task 8 has completed
+   -MAP- Thread 12 has completed
+   -MAP- Task 12 has completed
+   -MAP- Thread 1 has completed
+   -MAP- Task 1 has completed
+   -MAP- Thread 5 has completed
+   -MAP- Task 5 has completed
+   -MAP- Thread 9 has completed
+   -MAP- Task 9 has completed
+   -MAP- Thread 13 has completed
+   -MAP- Task 13 has completed
+   -MAP- Thread 16 has completed
+   -MAP- Task 16 has completed
+   -MAP- Thread 20 has completed
+   -MAP- Task 20 has completed
+   -MAP- Thread 24 has completed
+   -MAP- Task 24 has completed
+   -MAP- Thread 28 has completed
+   -MAP- Task 28 has completed
+   -MAP- Thread 17 has completed
+   -MAP- Task 17 has completed
+   -MAP- Thread 21 has completed
+   -MAP- Task 21 has completed
+   -MAP- Thread 25 has completed
+   -MAP- Task 25 has completed
+   -MAP- Thread 29 has completed
+   -MAP- Task 29 has completed
+   -MAP- Thread 32 has completed
+   -MAP- Task 32 has completed
+   -MAP- Thread 36 has completed
+   -MAP- Task 36 has completed
+   -MAP- Thread 40 has completed
+   -MAP- Task 40 has completed
+   -MAP- Thread 44 has completed
+   -MAP- Task 44 has completed
+   -MAP- Thread 33 has completed
+   -MAP- Task 33 has completed
+   -MAP- Thread 37 has completed
+   -MAP- Task 37 has completed
+   -MAP- Thread 41 has completed
+   -MAP- Task 41 has completed
+   -MAP- Thread 45 has completed
+   -MAP- Task 45 has completed
+   -MAP- Thread 48 has completed
+   -MAP- Task 48 has completed
+   -MAP- Thread 52 has completed
+   -MAP- Task 52 has completed
+   -MAP- Thread 56 has completed
+   -MAP- Task 56 has completed
+   -MAP- Thread 60 has completed
+   -MAP- Task 60 has completed
+   -MAP- Thread 49 has completed
+   -MAP- Task 49 has completed
+   -MAP- Thread 53 has completed
+   -MAP- Task 53 has completed
+   -MAP- Thread 57 has completed
+   -MAP- Task 57 has completed
+   -MAP- Thread 61 has completed
+   -MAP- Task 61 has completed
+   -MAP- Thread 2 has completed
+   -MAP- Task 2 has completed
+   -MAP- Thread 6 has completed
+   -MAP- Task 6 has completed
+   -MAP- Thread 10 has completed
+   -MAP- Task 10 has completed
+   -MAP- Thread 14 has completed
+   -MAP- Task 14 has completed
+   -MAP- Thread 3 has completed
+   -MAP- Task 3 has completed
+   -MAP- Thread 7 has completed
+   -MAP- Task 7 has completed
+   -MAP- Thread 11 has completed
+   -MAP- Task 11 has completed
+   -MAP- Thread 15 has completed
+   -MAP- Task 15 has completed
+   -MAP- Thread 18 has completed
+   -MAP- Task 18 has completed
+   -MAP- Thread 22 has completed
+   -MAP- Task 22 has completed
+   -MAP- Thread 26 has completed
+   -MAP- Task 26 has completed
+   -MAP- Thread 30 has completed
+   -MAP- Task 30 has completed
+   -MAP- Thread 19 has completed
+   -MAP- Task 19 has completed
+   -MAP- Thread 23 has completed
+   -MAP- Task 23 has completed
+   -MAP- Thread 51 has completed
+   -MAP- Task 51 has completed
+   -MAP- Thread 31 has completed
+   -MAP- Task 31 has completed
+   -MAP- Thread 34 has completed
+   -MAP- Task 34 has completed
+   -MAP- Thread 38 has completed
+   -MAP- Task 38 has completed
+   -MAP- Thread 42 has completed
+   -MAP- Task 42 has completed
+   -MAP- Thread 46 has completed
+   -MAP- Task 46 has completed
+   -MAP- Thread 35 has completed
+   -MAP- Task 35 has completed
+   -MAP- Thread 39 has completed
+   -MAP- Task 39 has completed
+   -MAP- Thread 43 has completed
+   -MAP- Task 43 has completed
+   -MAP- Thread 47 has completed
+   -MAP- Task 47 has completed
+   -MAP- Thread 50 has completed
+   -MAP- Task 50 has completed
+   -MAP- Thread 54 has completed
+   -MAP- Task 54 has completed
+   -MAP- Thread 58 has completed
+   -MAP- Task 58 has completed
+   -MAP- Thread 62 has completed
+   -MAP- Task 62 has completed
+   -MAP- Thread 27 has completed
+   -MAP- Task 27 has completed
+   -MAP- Thread 55 has completed
+   -MAP- Task 55 has completed
+   -MAP- Thread 59 has completed
+   -MAP- Task 59 has completed
+   -MAP- Thread 63 has completed
+   -MAP- Task 63 has completed
+   -MAP- Period instantaneous QoS = 1, total QoS = 1
+ * * * 
+Task 0 ID = 0, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 1 ID = 1, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 2 ID = 2, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 3 ID = 3, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 4 ID = 4, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 5 ID = 5, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 6 ID = 6, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 7 ID = 7, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 8 ID = 8, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 9 ID = 9, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 10 ID = 10, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 11 ID = 11, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 12 ID = 12, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 13 ID = 13, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 14 ID = 14, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 15 ID = 15, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 16 ID = 16, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 17 ID = 17, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 18 ID = 18, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 19 ID = 19, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 20 ID = 20, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 21 ID = 21, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 22 ID = 22, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 23 ID = 23, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 24 ID = 24, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 25 ID = 25, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 26 ID = 26, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 27 ID = 27, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 28 ID = 28, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 29 ID = 29, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 30 ID = 30, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 31 ID = 31, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 32 ID = 32, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 33 ID = 33, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 34 ID = 34, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 35 ID = 35, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 36 ID = 36, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 37 ID = 37, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 38 ID = 38, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 39 ID = 39, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 40 ID = 40, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 41 ID = 41, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 42 ID = 42, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 43 ID = 43, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 44 ID = 44, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 45 ID = 45, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 46 ID = 46, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 47 ID = 47, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 48 ID = 48, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 49 ID = 49, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 50 ID = 50, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 51 ID = 51, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 52 ID = 52, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 53 ID = 53, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 54 ID = 54, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 55 ID = 55, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 56 ID = 56, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 57 ID = 57, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 58 ID = 58, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 59 ID = 59, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 60 ID = 60, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 61 ID = 61, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 62 ID = 62, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+Task 63 ID = 63, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
+-I- All tasks completed after 6 periods (0.006 sec)
