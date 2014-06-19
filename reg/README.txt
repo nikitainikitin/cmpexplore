@@ -4,7 +4,11 @@
 
 How to run regression:
 
-1. Run './runreg'
+1. Run in one of the three modes:
+   - './runreg' (no parameters) runs all tests
+   - './runreg <list_of_test_names>' runs only specified tests
+   - './runreg -s <list_of_test_names>' runs all tests, but skips the specified ones
+
 2. The status of every test will be printed out (OK/FAILED).
    To debug a particular test go to the test directory and
    check file 'diff.txt' to see the reason of failure.
@@ -23,6 +27,8 @@ How to add a new test:
    test output (already filtered).
    This will be passed to "diff" with the test output
    to determine the test status (OK/FAILED).
+5. (Optional)
+   Add file 'descr.txt' with a brief description of the test.
 
-As an example, see test_fastforward-4x4.
+As an example, see test_4x4_64t_ideal.
 
