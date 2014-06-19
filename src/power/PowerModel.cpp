@@ -174,11 +174,19 @@ double PowerModel::GetTotalPower(Component * cmp)
     // l1D
     double l1dwr = 0.333; // FIXME
     double l1drd = 0.667; // FIXME
-    double l1dmr = proc->L2AccessProbability();
+    /*double l1dmr = proc->L2AccessProbability();
     L1DPower_[p] = proc->Active() ?
       (proc->L1DErda()*l1drd + proc->L1DEwra()*l1dwr + 
        l1dmr * (proc->L1DErdm()*l1drd + proc->L1DEwrm()*l1dwr) ) * 
       VScalDynPowerProc(proc->Volt()) * proc->Lambda()*proc->L1AccessProbability() +
+      proc->L1DPleakOfTemp(273.15+l1dtemp) * VScalLeakPowerProc(proc->Volt()) : 
+      proc->L1DPgPleakOfTemp(273.15+l1dtemp) * VScalLeakPowerProc(proc->Volt());*/
+    double l1dhr = proc->L1AccessProbability(); // hitrate
+    double l1dmr = 1-l1dhr; // missrate = 1 - hitrate
+    L1DPower_[p] = proc->Active() ?
+      (proc->L1DErda()*l1drd + proc->L1DEwra()*l1dwr + 
+       l1dmr * (proc->L1DErdm()*l1drd + proc->L1DEwrm()*l1dwr) ) * 
+      VScalDynPowerProc(proc->Volt()) * proc->Lambda() +
       proc->L1DPleakOfTemp(273.15+l1dtemp) * VScalLeakPowerProc(proc->Volt()) : 
       proc->L1DPgPleakOfTemp(273.15+l1dtemp) * VScalLeakPowerProc(proc->Volt());
 
@@ -189,16 +197,37 @@ double PowerModel::GetTotalPower(Component * cmp)
       proc->L2PleakOfTemp(300.0) * VScalLeakPowerProc(proc->Volt()) : 
       proc->L2PgPleakOfTemp(300.0) * VScalLeakPowerProc(proc->Volt()); */
 
+    // DEBUG
+    //cout << endl << "DEBUG: PROC MPI RATE = " << proc->Lambda() << endl;
+    //cout << "DEBUG: L2 ACTIVITY = " << proc->Lambda()*proc->L2AccessProbability() << endl;
+    //cout << "DEBUG: L2 ACCESS PROBABILITY = " << proc->L2AccessProbability() << endl;
+    //cout << "DEBUG: L3 ACCESS PROBABILITY = " << proc->L3AccessProbability() << endl << endl;
+    //cout << "DEBUG: L2 LEAKAGE POWER = " << proc->L2PleakOfTemp(273.15+l2temp) << endl;
+    //cout << "DEBUG: L2 LEAKAGE POWER x SCALED V = " << proc->L2PleakOfTemp(273.15+l2temp) * VScalLeakPowerProc(proc->Volt()) << endl;
+    //cout << "DEBUG: L2 PG LEAKAGE PWR x SCALED V = " << proc->L2PgPleakOfTemp(273.15+l2temp) * VScalLeakPowerProc(proc->Volt()) << endl;
+
+
     // l2
     double l2wr = 0.333; // FIXME
     double l2rd = 0.667; // FIXME
-    double l2mr = proc->L3AccessProbability();
+    /*double l2mr = proc->L3AccessProbability();
     L2Power_[p] = proc->Active() ?
       (proc->L2Erda()*l2rd + proc->L2Ewra()*l2wr + 
        l2mr * (proc->L2Erdm()*l2rd + proc->L2Ewrm()*l2wr) ) * 
       VScalDynPowerProc(proc->Volt()) * proc->Lambda()*proc->L2AccessProbability() +
       proc->L2PleakOfTemp(273.15+l2temp) * VScalLeakPowerProc(proc->Volt()) : 
+      proc->L2PgPleakOfTemp(273.15+l2temp) * VScalLeakPowerProc(proc->Volt());*/
+    double l2hr = proc->L2AccessProbability(); // hitrate
+    double l2mr = 1-l2hr; // 1 - missrate
+    L2Power_[p] = proc->Active() ?
+      (proc->L2Erda()*l2rd + proc->L2Ewra()*l2wr + 
+       l2mr * (proc->L2Erdm()*l2rd + proc->L2Ewrm()*l2wr) ) * 
+      VScalDynPowerProc(proc->Volt()) * proc->Lambda()*(l1dmr + l1imr) +
+      proc->L2PleakOfTemp(273.15+l2temp) * VScalLeakPowerProc(proc->Volt()) : 
       proc->L2PgPleakOfTemp(273.15+l2temp) * VScalLeakPowerProc(proc->Volt());
+
+    //cout << "DEBUG: L2 ACTIVE = " << proc->Active() << endl;
+    //cout << "DEBUG: L2 POWER = " << L2Power_[p] << endl;
 
   }
 
@@ -226,13 +255,22 @@ double PowerModel::GetTotalPower(Component * cmp)
     }
     //cout << " L3["<<m<<"] Temperature = " << l3temp << endl;
 
+    //DEBUG
+    //cout << "DEBUG: L3 ACTIVITY = " << mem->Lambda() << endl;
+
     double l3wr = 0.333; // FIXME
     double l3rd = 0.667; // FIXME
-    double l3mr = 0.0; // FIXME
+    /*double l3mr = 0.0; // FIXME
     L3Power_[m] = mem->Active() ?
       (mem->Erda()*l3rd + mem->Ewra()*l3wr + 
        l3mr * (mem->Erdm()*l3rd + mem->Ewrm()*l3wr) ) * 
       VScalDynPowerUncore(cmpConfig.UVolt()) * mem->Lambda() +
+      mem->PleakOfTemp(273.15+l3temp) * VScalLeakPowerUncore(cmpConfig.UVolt()) :
+      mem->PgPleakOfTemp(273.15+l3temp) * VScalLeakPowerUncore(cmpConfig.UVolt());*/ 
+    L3Power_[m] = mem->Active() ?
+      ( (mem->Erda()*l3rd + mem->Ewra()*l3wr) * mem->LambdaAccess() + 
+	(mem->Erdm()*l3rd + mem->Ewrm()*l3wr) * mem->LambdaMiss() ) * 
+      VScalDynPowerUncore(cmpConfig.UVolt()) +
       mem->PleakOfTemp(273.15+l3temp) * VScalLeakPowerUncore(cmpConfig.UVolt()) :
       mem->PgPleakOfTemp(273.15+l3temp) * VScalLeakPowerUncore(cmpConfig.UVolt());
   }
@@ -255,6 +293,9 @@ double PowerModel::GetTotalPower(Component * cmp)
       mctemp = PTsim::MCTemp(mc);    
     }
     //cout << " MC["<<mc<<"] Temperature = " << mctemp << endl;
+
+    // DEBUG
+    //cout << "DEBUG: MC ACTIVITY = " << memCtrl->lambda << endl;
 
 
     MCPower_[mc] = memCtrl->active ? 
@@ -414,6 +455,9 @@ double PowerModel::MeshPower(MeshIc * ic)
 	+ ic->LinkPleakOfTemp(273.15+linktemp) * VScalLeakPowerUncore(cmpConfig.UVolt()) :
 	ic->LinkPgPleakOfTemp(273.15+linktemp) * VScalLeakPowerUncore(cmpConfig.UVolt());*/
 
+    // DEBUG
+    //cout << "DEBUG: NOC TRAFFIC = " << traffic << endl;
+    
       double router_power = ic->Active(r) ? ic->RouterEpf() * traffic * VScalDynPowerUncore(cmpConfig.UVolt())
 	+ ic->RouterPleakOfTemp(273.15+rtrtemp) * VScalLeakPowerUncore(cmpConfig.UVolt()) :
 	+ ic->RouterPgPleakOfTemp(273.15+rtrtemp) * VScalLeakPowerUncore(cmpConfig.UVolt());

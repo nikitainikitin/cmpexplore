@@ -553,7 +553,9 @@ void IterativePerfModel::MarkPathsNoCC (const vector<double>& procRates)
     for (int m = 0; m < cmpConfig.MemCnt(); ++m) {
       Memory * mem = cmpConfig.GetMemory(m);
 
+      double trafficToMemMiss = procRates[p]*proc->MainMemAccessProbability()*proc->L3ProbDistr()[m];//pa[m];
       double trafficToMem = procRates[p]*proc->L3AccessProbability()*proc->L3ProbDistr()[m];//pa[m];
+      double trafficToMemAccess = trafficToMem + trafficToMemMiss;
 
       // in clusters
       if (!cmpConfig.FlatMeshIc()) {
@@ -591,6 +593,8 @@ void IterativePerfModel::MarkPathsNoCC (const vector<double>& procRates)
 
       // L3
       mem->Lambda(mem->Lambda()+trafficToMem);
+      mem->LambdaMiss(mem->LambdaMiss()+trafficToMemMiss);
+      mem->LambdaAccess(mem->LambdaAccess()+trafficToMemAccess);
     } // L3 memories
 
     // handle memory controllers
@@ -770,6 +774,8 @@ void IterativePerfModel::InitModels ()
   // caches
   for (int m = 0; m < cmpConfig.MemCnt(); ++m) {
     cmpConfig.GetMemory(m)->Lambda(0.0);
+    cmpConfig.GetMemory(m)->LambdaMiss(0.0);
+    cmpConfig.GetMemory(m)->LambdaAccess(0.0);
     cmpConfig.GetMemory(m)->BufDelay(0.0);
   }
 

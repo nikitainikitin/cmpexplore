@@ -487,8 +487,7 @@ void PTsim::WritePowerTempTraces(cmp::Component * cmp, double * power_sim, doubl
 
     // LinkW
     pout << power_sim[cnt] << "\t";
-    tout << temp_sim[cnt] << "\t";
-    ++cnt;
+    tout << temp_sim[cnt++] << "\t";
 
     // RTR
     pout << power_sim[cnt] << "\t";
@@ -500,8 +499,7 @@ void PTsim::WritePowerTempTraces(cmp::Component * cmp, double * power_sim, doubl
 
     // LinkN
     pout << power_sim[cnt] << "\t";
-    tout << temp_sim[cnt] << "\t";
-    ++cnt;
+    tout << temp_sim[cnt++] << "\t";
 
     // L2
     pout << power_sim[cnt] << "\t";

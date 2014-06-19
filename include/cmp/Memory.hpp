@@ -61,6 +61,14 @@ namespace cmpex {
 
       inline void Lambda(double l);
 
+      inline double LambdaAccess() const;
+
+      inline void LambdaAccess(double l);
+
+      inline double LambdaMiss() const;
+
+      inline void LambdaMiss(double l);
+
       inline double BufDelay() const;
 
       inline void BufDelay(double d);
@@ -163,7 +171,11 @@ namespace cmpex {
 
       // Runtime parameters
 
-      double lambda_; // number of requests per ns
+      double lambda_; // number of requests per ns that hit 
+
+      double lambdaAccess_; // number of requests per ns
+
+      double lambdaMiss_; // number of requests per ns that miss
 
       double bufDelay_; // contention delays in the input buffer
 
@@ -225,6 +237,22 @@ namespace cmpex {
 
     void Memory::Lambda(double l) {
       lambda_ = l;
+    }
+
+    double Memory::LambdaAccess() const {
+      return lambdaAccess_;
+    }
+
+    void Memory::LambdaAccess(double l) {
+      lambdaAccess_ = l;
+    }
+
+    double Memory::LambdaMiss() const {
+      return lambdaMiss_;
+    }
+
+    void Memory::LambdaMiss(double l) {
+      lambdaMiss_ = l;
     }
 
     double Memory::BufDelay() const {
