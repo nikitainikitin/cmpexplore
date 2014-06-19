@@ -242,7 +242,7 @@ double MapEngine::CalcNewQoSObjPenalty(MapConf * mc) const
   int procCnt = cmpConfig.ProcCnt();
   double run_dl_viol_pen_at_start = double(procCnt-1)/(procCnt-1+1.0/sch_dl_viol_penalty);
   run_dl_viol_pen_at_start *= run_dl_viol_pen_at_start;
-  double run_dl_viol_pen_at_end = 1.0 - run_dl_viol_pen_at_start;
+  double run_dl_viol_pen_at_end = 1.0 - 2*run_dl_viol_pen_at_start;
 
   vector<double> run_thr_penalties;
   for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
@@ -262,8 +262,10 @@ double MapEngine::CalcNewQoSObjPenalty(MapConf * mc) const
       else if (ms_to_complete > slack_avail_ms) {
         double task_rel_progr = double(thread->task->task_elapsed)/thread->task->task_deadline;
         assert(task_rel_progr <= 1.0);
-        thread_penalty = sqrt(1.0-task_rel_progr)*run_dl_viol_pen_at_start +
-                         sqrt(task_rel_progr)*run_dl_viol_pen_at_end;
+        //thread_penalty = sqrt(1.0-task_rel_progr)*run_dl_viol_pen_at_start +
+        //                 sqrt(task_rel_progr)*run_dl_viol_pen_at_end;
+        thread_penalty = (1.0-task_rel_progr)*run_dl_viol_pen_at_start +
+                         task_rel_progr*run_dl_viol_pen_at_end;
       }
       assert(thread_penalty <= 1.0);
       //cout << "thread_penalty = " << thread_penalty << endl;

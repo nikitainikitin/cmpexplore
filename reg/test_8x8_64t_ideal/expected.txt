@@ -131,6 +131,7 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Mapping new task (id = 61) with DOP = 1
    -MAP- Mapping new task (id = 62) with DOP = 1
    -MAP- Mapping new task (id = 63) with DOP = 1
+   -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Running SA mapping...
    -MAP- Running Hotspot warmup (first invocation)... done.
    -MAP- Mapconf after mapping: Map: 0 4 8 12 1 5 9 13 16 20 24 28 17 21 25 29 32 36 40 44 33 37 41 45 48 52 56 60 49 53 57 61 2 6 10 14 3 7 11 15 18 22 26 30 19 23 51 31 34 38 42 46 35 39 43 47 50 54 58 62 27 55 59 63; CoreActiv: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5; L3ClusterActiv: 1 1 1 1;   UncoreFreq=3.5;   Pow=821.214; Temp=0; Thr=448; Obj=448; Cost=448
@@ -202,7 +203,6 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Advancing thread 55 progress by 7e+06 instructions
    -MAP- Advancing thread 59 progress by 7e+06 instructions
    -MAP- Advancing thread 63 progress by 7e+06 instructions
-   -MAP- Period instantaneous QoS = 1, total QoS = 1
  * * * 
 Task 0 ID = 0, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
 Task 1 ID = 1, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
@@ -333,6 +333,7 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, 
    -MAP- Thread 55 from task 55 is mapped to proc 61, progress = 17%
    -MAP- Thread 59 from task 59 is mapped to proc 62, progress = 17%
    -MAP- Thread 63 from task 63 is mapped to proc 63, progress = 17%
+   -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
    -MAP- Mapconf after mapping: Map: 0 4 8 12 1 5 9 13 16 20 24 28 17 21 25 29 32 36 40 44 33 37 41 45 48 52 56 60 49 53 57 61 2 6 10 14 3 7 11 15 18 22 26 30 19 23 51 31 34 38 42 46 35 39 43 47 50 54 58 62 27 55 59 63; CoreActiv: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5; L3ClusterActiv: 1 1 1 1;   UncoreFreq=3.5;   Pow=821.214; Temp=0; Thr=448; Obj=448; Cost=448
 -I- Running Hotspot...
@@ -403,7 +404,6 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, 
    -MAP- Advancing thread 55 progress by 7e+06 instructions
    -MAP- Advancing thread 59 progress by 7e+06 instructions
    -MAP- Advancing thread 63 progress by 7e+06 instructions
-   -MAP- Period instantaneous QoS = 1, total QoS = 1
  * * * 
 Task 0 ID = 0, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
 Task 1 ID = 1, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
@@ -534,6 +534,7 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, 
    -MAP- Thread 55 from task 55 is mapped to proc 61, progress = 35%
    -MAP- Thread 59 from task 59 is mapped to proc 62, progress = 35%
    -MAP- Thread 63 from task 63 is mapped to proc 63, progress = 35%
+   -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
    -MAP- Mapconf after mapping: Map: 0 4 8 12 1 5 9 13 16 20 24 28 17 21 25 29 32 36 40 44 33 37 41 45 48 52 56 60 49 53 57 61 2 6 10 14 3 7 11 15 18 22 26 30 19 23 51 31 34 38 42 46 35 39 43 47 50 54 58 62 27 55 59 63; CoreActiv: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5; L3ClusterActiv: 1 1 1 1;   UncoreFreq=3.5;   Pow=820.057; Temp=0; Thr=448; Obj=448; Cost=448
 -I- Running Hotspot...
@@ -604,7 +605,6 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, 
    -MAP- Advancing thread 55 progress by 7e+06 instructions
    -MAP- Advancing thread 59 progress by 7e+06 instructions
    -MAP- Advancing thread 63 progress by 7e+06 instructions
-   -MAP- Period instantaneous QoS = 1, total QoS = 1
  * * * 
 Task 0 ID = 0, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
 Task 1 ID = 1, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
@@ -735,6 +735,7 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, 
    -MAP- Thread 55 from task 55 is mapped to proc 61, progress = 52%
    -MAP- Thread 59 from task 59 is mapped to proc 62, progress = 52%
    -MAP- Thread 63 from task 63 is mapped to proc 63, progress = 52%
+   -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
    -MAP- Mapconf after mapping: Map: 0 4 8 12 1 5 9 13 16 20 24 28 17 21 25 29 32 36 40 44 33 37 41 45 48 52 56 60 49 53 57 61 2 6 10 14 3 7 11 15 18 22 26 30 19 23 51 31 34 38 42 46 35 39 43 47 50 54 58 62 27 55 59 63; CoreActiv: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5; L3ClusterActiv: 1 1 1 1;   UncoreFreq=3.5;   Pow=821.22; Temp=0; Thr=448; Obj=448; Cost=448
 -I- Running Hotspot...
@@ -805,7 +806,6 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, 
    -MAP- Advancing thread 55 progress by 7e+06 instructions
    -MAP- Advancing thread 59 progress by 7e+06 instructions
    -MAP- Advancing thread 63 progress by 7e+06 instructions
-   -MAP- Period instantaneous QoS = 1, total QoS = 1
  * * * 
 Task 0 ID = 0, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
 Task 1 ID = 1, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
@@ -936,6 +936,7 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, 
    -MAP- Thread 55 from task 55 is mapped to proc 61, progress = 70%
    -MAP- Thread 59 from task 59 is mapped to proc 62, progress = 70%
    -MAP- Thread 63 from task 63 is mapped to proc 63, progress = 70%
+   -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
    -MAP- Mapconf after mapping: Map: 0 4 8 12 1 5 9 13 16 20 24 28 17 21 25 29 32 36 40 44 33 37 41 45 48 52 56 60 49 53 57 61 2 6 10 14 3 7 11 15 18 22 26 30 19 23 51 31 34 38 42 46 35 39 43 47 50 54 58 62 27 55 59 63; CoreActiv: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5; L3ClusterActiv: 1 1 1 1;   UncoreFreq=3.5;   Pow=822.328; Temp=0; Thr=448; Obj=448; Cost=448
 -I- Running Hotspot...
@@ -1006,7 +1007,6 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, 
    -MAP- Advancing thread 55 progress by 7e+06 instructions
    -MAP- Advancing thread 59 progress by 7e+06 instructions
    -MAP- Advancing thread 63 progress by 7e+06 instructions
-   -MAP- Period instantaneous QoS = 1, total QoS = 1
  * * * 
 Task 0 ID = 0, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
 Task 1 ID = 1, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
@@ -1137,6 +1137,7 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, 
    -MAP- Thread 55 from task 55 is mapped to proc 61, progress = 87%
    -MAP- Thread 59 from task 59 is mapped to proc 62, progress = 87%
    -MAP- Thread 63 from task 63 is mapped to proc 63, progress = 87%
+   -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
    -MAP- Mapconf after mapping: Map: 0 4 8 12 1 5 9 13 16 20 24 28 17 21 25 29 32 36 40 44 33 37 41 45 48 52 56 60 49 53 57 61 2 6 10 14 3 7 11 15 18 22 26 30 19 23 51 31 34 38 42 46 35 39 43 47 50 54 58 62 27 55 59 63; CoreActiv: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5; L3ClusterActiv: 1 1 1 1;   UncoreFreq=3.5;   Pow=823.573; Temp=0; Thr=448; Obj=448; Cost=448
 -I- Running Hotspot...
@@ -1335,7 +1336,6 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, 
    -MAP- Task 59 has completed
    -MAP- Thread 63 has completed
    -MAP- Task 63 has completed
-   -MAP- Period instantaneous QoS = 1, total QoS = 1
  * * * 
 Task 0 ID = 0, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
 Task 1 ID = 1, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1

@@ -1,0 +1,1 @@
+4x4 CMP, 130W power budget, 64 ideal tasks, 50% with 6ms deadlines and 50% with 8ms deadlines

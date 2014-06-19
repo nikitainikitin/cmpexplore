@@ -139,6 +139,9 @@ void MapSim::Run() {
       lastPeriodWlChanged = true;
     }
 
+    cout << "   -MAP- Period instantaneous QoS = " << wlConfig.GetInstantQoS()
+         << ", total QoS = " << wlConfig.GetTotalQoS() << endl;
+
     // 2. Find the new best mapping
     //cout << "***** Mapconf before mapping: "; mconf->Print();
     SaMapEngine me;
@@ -255,8 +258,8 @@ void MapSim::Run() {
       }
     }
 
-    cout << "   -MAP- Period instantaneous QoS = " << wlConfig.GetInstantQoS()
-         << ", total QoS = " << wlConfig.GetTotalQoS() << endl;
+    //cout << "   -MAP- Period instantaneous QoS = " << wlConfig.GetInstantQoS()
+    //     << ", total QoS = " << wlConfig.GetTotalQoS() << endl;
 
     // advance system time
     ++sysElapsedPeriod;

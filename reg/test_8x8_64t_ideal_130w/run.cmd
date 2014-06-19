@@ -1,2 +1,2 @@
-./cmpexplore -test ./test/cmp8x8_test.cmp -tmap -tasks ./tasks.txt -newqos -max_power 130
+./cmpexplore -test ./test/cmp8x8_test.cmp -tmap -tasks ./reg/test_8x8_64t_ideal_130w/tasks.txt -newqos -max_power 130
 

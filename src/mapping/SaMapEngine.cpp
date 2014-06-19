@@ -187,8 +187,8 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
       // minimum improvement in objective to change mapping with respect to initial
       double min_impr = 1.01;
 
-      if (curMap->obj > bestObj+E_DOUBLE &&
-          curMap->obj > initObj*min_impr && cur_budgets_met) {
+      if (curMap->obj > bestObj+E_DOUBLE /*&&
+          curMap->obj > initObj*min_impr*/ && cur_budgets_met) {
         last_impr = oIter*lIterCnt + iter;
         if (bestMap) delete bestMap;
         bestMap = curMap;
