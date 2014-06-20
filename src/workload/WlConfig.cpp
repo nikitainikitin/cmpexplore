@@ -249,17 +249,21 @@ int WlConfig::ReadTasks ( const string & fname )
     task->task_elapsed = 0;
     task->task_ipc = ipc;
     task->task_mpi = mpi;
-    if (((dop >> 1) << 1) == dop) {// dop is even
-      task->task_dop = dop >> 1; // dop is divided by 2 because of two-thread parallelism in our core
+    if (((dop >> LOG2_MAX_SMT_DEG) << LOG2_MAX_SMT_DEG) == dop) {// dop is an exact multiple of 8
+      task->task_dop = dop >> LOG2_MAX_SMT_DEG; // dop is divided by 8 because of 8-thread parallelism in our core
     }
-    else { // dop is odd
-      task->task_dop = (dop >> 1)+1; // dop is divided by 2, but we need to consider the extra thread (remainder)
+    else { // dop is not an exact multiple of 8
+      task->task_dop = (dop >> LOG2_MAX_SMT_DEG)+1; // dop is divided by 8, but we need to consider the extra thread
     }
+    int num_superthreads = task->task_dop;
     task->missRatioOfMemSize = new Powerlaw(mr_alpha, mr_exp);
     AddTask(task);
 
-    for(int j = 0; j < task->task_dop; j++) {
-      Thread * thread = new Thread();
+    int threads_quotient = dop / num_superthreads;
+    int threads_remainder = dop % num_superthreads;
+    int extra_threads = threads_remainder;
+    for(int j = 0; j < num_superthreads; j++) {
+      Thread * thread = new WlConfig::Thread;
       thread->thread_id = j;
       thread->thread_gid = thread_gid;
       thread->task = task;
@@ -267,18 +271,19 @@ int WlConfig::ReadTasks ( const string & fname )
       thread->thread_xyloc.x= -1; // unmapped, default value
       thread->thread_xyloc.y= -1; // unmapped, default value
       thread->thread_progress = 0;
-      if (j != (dop >> 1)) {
-        thread->thread_instructions = 2 * instr; //two threads in parallel
-        thread->thread_ipc = 2 * task->task_ipc; // two threads in parallel
+      if (extra_threads > 0) {
+	thread->thread_dop = threads_quotient + 1;
+	extra_threads--;
       }
       else {
-        thread->thread_instructions = instr; //one thread remainder
-        thread->thread_ipc = task->task_ipc; // one thread remainder
+	thread->thread_dop = threads_quotient;
       }
+      thread->thread_instructions = thread->thread_dop * instr; // threads in parallel
+      thread->thread_ipc = thread->thread_dop * task->task_ipc; // threads in parallel
       thread->thread_mpi = task->task_mpi; // inherited
       thread->missRatioOfMemSize = task->missRatioOfMemSize; // inherited
       if (thread) AddThread(thread,task_id);
-      XYloc * xyloc = new XYloc;
+      XYloc * xyloc = new WlConfig::XYloc;
       xyloc->x = -1;
       xyloc->y = -1;
       if (xyloc) AddThreadLoc(xyloc,task_id);
