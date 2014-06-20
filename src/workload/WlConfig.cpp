@@ -6,6 +6,7 @@
 #include "WlConfig.hpp"
 #include "model/Function.hpp"
 #include "Parser.hpp"
+#include "Processor.hpp"
 
 using std::vector;
 using std::string;
@@ -72,13 +73,13 @@ int WlConfig::CreateTasks ( int ntasks, bool predefined )
     task->task_ipc = predefined ? TASK_IPC[i] : IPC_MIN+(IPC_MAX-IPC_MIN)*RandUDouble(); // in [IPC_MIN,IPC_MAX]
     task->task_mpi = predefined ? TASK_MPI[i] : MPI_MIN+(MPI_MAX-MPI_MIN)*RandUDouble(); // in [IPC_MIN,IPC_MAX]
     dop = predefined ? TASK_DOP[i] : 1 << RandInt(LOG2_DOP_MAX+1); // in [1,2**(LOG2_DOP_MAX)]
-    if (((dop >> 1) << 1) == dop) {// dop is even
-      task->task_dop = dop >> 1; // dop is divided by 2 because of two-thread parallelism in our core
+    if (((dop >> LOG2_MAX_SMT_DEG) << LOG2_MAX_SMT_DEG) == dop) {// dop is an exact multiple of 8
+      task->task_dop = dop >> LOG2_MAX_SMT_DEG; // dop is divided by 8 because of 8-thread parallelism in our core
     }
-    else { // dop is odd
-      task->task_dop = (dop >> 1)+1; // dop is divided by 2, but we need to consider the extra thread (remainder)
+    else { // dop is not an exact multiple of 8
+      task->task_dop = (dop >> LOG2_MAX_SMT_DEG)+1; // dop is divided by 8, but we need to consider the extra thread
     }
-    int num_threads = task->task_dop;
+    int num_superthreads = task->task_dop;
     // use randomly generated powerlaw functions for missRatioOfMemSize
     double alpha = predefined ? TASK_MR_ALPHA[i] : MR_ALPHA_MIN + (MR_ALPHA_MAX-MR_ALPHA_MIN)*RandUDouble();
     double exp = predefined ? TASK_MR_EXP[i] : MR_EXP_MIN + (MR_EXP_MAX-MR_EXP_MIN)*RandUDouble();
@@ -87,7 +88,11 @@ int WlConfig::CreateTasks ( int ntasks, bool predefined )
     //task->task_finish = -1;
 
     if (task) AddTask(task);
-    for(j = 0; j < num_threads; j++) {
+
+    int threads_quotient = dop / num_superthreads;
+    int threads_remainder = dop % num_superthreads;
+    int extra_threads = threads_remainder;
+    for(j = 0; j < num_superthreads; j++) {
       thread = new WlConfig::Thread;
       thread->thread_id = j;
       thread->thread_gid = thread_gid;
@@ -96,14 +101,15 @@ int WlConfig::CreateTasks ( int ntasks, bool predefined )
       thread->thread_xyloc.x= -1; // unmapped, default value
       thread->thread_xyloc.y= -1; // unmapped, default value
       thread->thread_progress = 0;
-      if (j != (dop >> 1)) { 
-	thread->thread_instructions = 2 * instr; //two threads in parallel
-	thread->thread_ipc = 2 * task->task_ipc; // two threads in parallel
+      if (extra_threads > 0) {
+	thread->thread_dop = threads_quotient + 1;
+	extra_threads--;
       }
       else {
-	thread->thread_instructions = instr; //one thread remainder
-	thread->thread_ipc = task->task_ipc; // one thread remainder
+	thread->thread_dop = threads_quotient;
       }
+      thread->thread_instructions = thread->thread_dop * instr; // threads in parallel
+      thread->thread_ipc = thread->thread_dop * task->task_ipc; // threads in parallel
       thread->thread_mpi = task->task_mpi; // inherited
       thread->missRatioOfMemSize = task->missRatioOfMemSize; // inherited
       if (thread) AddThread(thread,i);

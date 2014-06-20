@@ -30,7 +30,9 @@ namespace cmpex {
     const int INSTR_MIN = 1000000;
     const int INSTR_MAX = 2000000;
     const int DEADLINE = 12; // ms
-    const int LOG2_DOP_MAX = 2; // max 2**6 = 64 threads per task
+    const int LOG2_DOP_MAX = 6; // max 2**6 = 64 threads per task
+    const int MAX_SMT_DEG = 8; // max 8 threads per core (simultaneous multithreading)
+    const int LOG2_MAX_SMT_DEG = 3; // log2(MAX_SMT_DEG)
 
     // predefined tasks
     /*const double TASK_IPC [] = {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
@@ -154,6 +156,7 @@ namespace cmpex {
       struct Thread {
         int thread_id; // thread local id within the task
         int thread_gid; // thread global id
+	int thread_dop; // superthread degree of parallelism
         Task * task; // parent task
         XYloc thread_xyloc; //0(1) is x(y) coordinate in cmp
         int thread_instructions;

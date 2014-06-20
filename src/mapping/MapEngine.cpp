@@ -366,8 +366,7 @@ void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
       proc->SetActive(mc->coreActiv[p]);
       proc->SetFreq(mc->coreFreq[p]);
       proc->SetVolt(PowerModel::VoltAtFreqProc(mc->coreFreq[p]));
-      /// TODO: set SMT degree from thread->dop
-      proc->SetSMTDegree(1);
+      proc->SetSMTDegree(thread->thread_dop);
     }
     else {
       proc->SetActive(false);

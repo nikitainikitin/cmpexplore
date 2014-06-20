@@ -95,6 +95,7 @@ namespace cmpex {
 
       inline void SetSMTDegree ( int d );
 
+
       // Implementations of the Component interface.
       
       // Returns true if component contains the processor 'idx'.
@@ -765,6 +766,7 @@ namespace cmpex {
     void Processor::SetSMTDegree ( int d ) {
       smtdegree_ = d;
     }
+
 
   } // namespace cmp
   
