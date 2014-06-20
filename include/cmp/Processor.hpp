@@ -89,6 +89,12 @@ namespace cmpex {
 
       inline bool Sleep () const;
 
+      inline int PLWidth () const;
+
+      inline int SMTDegree () const;
+
+      inline void SetSMTDegree ( int d );
+
       // Implementations of the Component interface.
       
       // Returns true if component contains the processor 'idx'.
@@ -318,6 +324,10 @@ namespace cmpex {
       bool active_; // whether the core is on or off
 
       bool sleep_; // whether the core is asleep or not
+
+      int plwidth_; // pipeline width, defines max performance in SMT model
+
+      int smtdegree_; // number of threads in SMT model
 
       // Power parameters
 
@@ -742,6 +752,18 @@ namespace cmpex {
 
     void Processor::SetSleep ( bool s ) {
       sleep_ = s;
+    }
+
+    int Processor::PLWidth() const {
+      return plwidth_;
+    }
+
+    int Processor::SMTDegree() const {
+      return smtdegree_;
+    }
+
+    void Processor::SetSMTDegree ( int d ) {
+      smtdegree_ = d;
     }
 
   } // namespace cmp

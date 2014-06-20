@@ -37,7 +37,8 @@ namespace cmpex {
 
 Processor::Processor ( UShort idx, UShort clIdx, Component * parent ) :
   Device (idx, clIdx, CTPROCESSOR, parent), l1Size_ (0), l2Size_ (0),
-  l3SizeEff_(0), active_ (true), thr_ (0.0), lambda_ (0.0), type_ (-1) {}
+  l3SizeEff_(0), active_ (true), plwidth_ (2), smtdegree_ (1),
+  thr_ (0.0), lambda_ (0.0), type_ (-1) {}
 
 Processor::~Processor () {}
 

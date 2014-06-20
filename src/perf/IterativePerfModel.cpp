@@ -140,8 +140,6 @@ StatMetrics * IterativePerfModel::RunFixedPoint(double statThr, double statInj)
     if (config.SimulateCC()) PrecalcL3ToMcLatencies(iter ? true : false);
 
     // calculate traffic rates
-    vector<double> procLat;
-    vector<double> procThr;
     vector<double> procRate;
     for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
       Processor * proc = cmpConfig.GetProcessor(p);
@@ -150,16 +148,16 @@ StatMetrics * IterativePerfModel::RunFixedPoint(double statThr, double statInj)
                      CalculateProcLatency(p, iter ? true : false) : 0.0;
       DEBUG(2, "P" << p << ": avg lat = " << lat << " cycles" << endl);
       systemLat += lat;
-      procLat.push_back(lat);
 
+      // per-thread throughput in SMT core model
       double thr = (proc->Active() && proc->Freq() > E_DOUBLE) ?
                      CalcThr(proc->Ipc()*proc->Freq(), proc->Mpi(), lat) : 0.0;
-      proc->Thr(thr);
-      DEBUG(2, "P" << p << ": thr = " << thr << endl);
-      systemThr += thr;
-      procThr.push_back(thr);
+      double proc_thr = std::min(proc->SMTDegree()*thr, proc->PLWidth()*proc->Freq());
+      proc->Thr(proc_thr);
+      DEBUG(2, "P" << p << ": thr = " << proc_thr << endl);
+      systemThr += proc_thr;
 
-      double totalTraffic = thr*proc->Mpi();
+      double totalTraffic = thr*proc->Mpi()*proc->SMTDegree();
       proc->Lambda(totalTraffic);
       DEBUG(2, "P" << p << ": total memory traffic = " << totalTraffic << endl);
       systemTr += totalTraffic;
@@ -238,16 +236,19 @@ StatMetrics * IterativePerfModel::RunSubgradient ()
                      CalculateProcLatency(p, true) : 0.0;
       systemLat += lat;
 
+      // per-thread throughput in SMT core model
       double thr = (proc->Active() && proc->Freq() > E_DOUBLE) ?
                      CalcThr(proc->Ipc()*proc->Freq(), proc->Mpi(), lat) : 0.0;
-      proc->Thr(thr);
-      systemThr += thr;
+      double proc_thr = std::min(proc->SMTDegree()*thr, proc->PLWidth()*proc->Freq());
+      proc->Thr(proc_thr);
+      systemThr += proc_thr;
 
-      double totalTraffic = thr*proc->Mpi();
+      double totalTraffic = thr*proc->Mpi()*proc->SMTDegree();
       proc->Lambda(totalTraffic);
       systemTr += totalTraffic;
 
-      double lat_star = 1.0/procRateCur[p] - 1.0/(proc->Mpi()*proc->Ipc()*proc->Freq());
+      double lat_star = proc->SMTDegree()/procRateCur[p] -
+                        1.0/(proc->Mpi()*proc->Ipc()*proc->Freq());
 
       double gap = lat - lat_star;
       totalGap += fabs(gap);
@@ -357,8 +358,6 @@ StatMetrics * IterativePerfModel::RunBisectionFp ()
   if (config.SimulateCC()) PrecalcL3ToMcLatencies(false);
 
   // calculate traffic rates
-  vector<double> procLat;
-  vector<double> procThr;
   vector<double> procRate;
   for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
     Processor * proc = cmpConfig.GetProcessor(p);
@@ -367,16 +366,16 @@ StatMetrics * IterativePerfModel::RunBisectionFp ()
                    CalculateProcLatency(p, false) : 0.0;
     DEBUG(2, "P" << p << ": avg lat = " << lat << " cycles" << endl);
     systemLat += lat;
-    procLat.push_back(lat);
 
+    // per-thread throughput in SMT core model
     double thr = (proc->Active() && proc->Freq() > E_DOUBLE) ?
                    CalcThr(proc->Ipc()*proc->Freq(), proc->Mpi(), lat) : 0.0;
-    proc->Thr(thr);
-    DEBUG(2, "P" << p << ": thr = " << thr << endl);
-    systemThr += thr;
-    procThr.push_back(thr);
+    double proc_thr = std::min(proc->SMTDegree()*thr, proc->PLWidth()*proc->Freq());
+    proc->Thr(proc_thr);
+    DEBUG(2, "P" << p << ": thr = " << proc_thr << endl);
+    systemThr += proc_thr;
 
-    double totalTraffic = thr*proc->Mpi();
+    double totalTraffic = thr*proc->Mpi()*proc->SMTDegree();
     proc->Lambda(totalTraffic);
     DEBUG(2, "P" << p << ": total memory traffic = " << totalTraffic << endl);
     systemTr += totalTraffic;
@@ -473,19 +472,21 @@ StatMetrics * IterativePerfModel::RunBisectionFp ()
       double lat = (proc->Active() && proc->Freq() > E_DOUBLE) ?
                      CalculateProcLatency(p, true) : 0.0;
       double lat_star = (proc->Active() && proc->Freq() > E_DOUBLE) ?
-                          1.0/procRateAvg[p] - 1.0/(proc->Mpi()*proc->Ipc()*proc->Freq()) : 0.0;
+                        proc->SMTDegree()/procRateAvg[p] - 1.0/(proc->Mpi()*proc->Ipc()*proc->Freq()) : 0.0;
 
       double lat_avg = lat;
       DEBUG(2, "P" << p << ": avg lat = " << lat_avg << " cycles" << endl);
       systemLat += lat_avg;
 
+      // per-thread throughput in SMT core model
       double thr = (proc->Active() && proc->Freq() > E_DOUBLE) ?
                      CalcThr(proc->Ipc()*proc->Freq(), proc->Mpi(), lat_avg): 0.0;
-      proc->Thr(thr);
-      DEBUG(2, "P" << p << ": thr = " << thr << endl);
-      systemThr += thr;
+      double proc_thr = std::min(proc->SMTDegree()*thr, proc->PLWidth()*proc->Freq());
+      proc->Thr(proc_thr);
+      DEBUG(2, "P" << p << ": thr = " << proc_thr << endl);
+      systemThr += proc_thr;
 
-      double totalTraffic = thr*proc->Mpi();
+      double totalTraffic = thr*proc->Mpi()*proc->SMTDegree();
       proc->Lambda(totalTraffic);
       DEBUG(2, "P" << p << ": total memory traffic = " << totalTraffic << endl);
       systemTr += totalTraffic;
