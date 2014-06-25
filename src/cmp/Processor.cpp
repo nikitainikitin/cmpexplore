@@ -155,6 +155,18 @@ void Processor::SetMemAccessProbabilities ( model::Function * mr ) {
   SetMMAccProb(L3SizeEff() < E_DOUBLE || !L3IsOn ?
                 mr->eval(L2Size()+L1Size()) :
                 mr->eval(L3SizeEff()+L2Size()+L1Size()));
+
+  SetL1DMissRate(mr->eval(L1Size()));
+  SetL1IMissRate(mr->eval(L1Size()));
+  SetL2MissRate(mr->eval(L2Size()));
+  SetL3MissRate(mr->eval(L3SizeEff()));
+
+  // DEBUG
+  /*cout << "L1SIZE = " << L1Size() << ", L2SIZE = " << L2Size() << ", L3SIZEEFF = " << L3SizeEff() << endl;
+  cout << "L1ACC = " << 1.0 << ", L1MR = " << L1DMissRate() << endl;
+  cout << "L2ACC = " << L1IMissRate() << ", L2MR = " << L2MissRate() << endl;
+  cout << "L3ACC = " << L1DMissRate()*L2MissRate() << ", L3MR = " << L3MissRate() << endl;
+  cout << "MMACC = " << L1DMissRate()*L2MissRate()*L3MissRate() << ", MMHR = " << mr->eval(L3SizeEff()+L2Size()+L1Size()) << endl;*/
 }
 
 //=======================================================================

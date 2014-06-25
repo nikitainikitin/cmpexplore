@@ -157,7 +157,8 @@ StatMetrics * IterativePerfModel::RunFixedPoint(double statThr, double statInj)
       DEBUG(2, "P" << p << ": thr = " << proc_thr << endl);
       systemThr += proc_thr;
 
-      double totalTraffic = thr*proc->Mpi()*proc->SMTDegree();
+      //double totalTraffic = thr*proc->Mpi()*proc->SMTDegree();
+      double totalTraffic = proc_thr*proc->Mpi();
       proc->Lambda(totalTraffic);
       DEBUG(2, "P" << p << ": total memory traffic = " << totalTraffic << endl);
       systemTr += totalTraffic;
@@ -243,7 +244,8 @@ StatMetrics * IterativePerfModel::RunSubgradient ()
       proc->Thr(proc_thr);
       systemThr += proc_thr;
 
-      double totalTraffic = thr*proc->Mpi()*proc->SMTDegree();
+      //double totalTraffic = thr*proc->Mpi()*proc->SMTDegree();
+      double totalTraffic = proc_thr*proc->Mpi();
       proc->Lambda(totalTraffic);
       systemTr += totalTraffic;
 
@@ -375,7 +377,8 @@ StatMetrics * IterativePerfModel::RunBisectionFp ()
     DEBUG(2, "P" << p << ": thr = " << proc_thr << endl);
     systemThr += proc_thr;
 
-    double totalTraffic = thr*proc->Mpi()*proc->SMTDegree();
+    //double totalTraffic = thr*proc->Mpi()*proc->SMTDegree();
+    double totalTraffic = proc_thr*proc->Mpi();
     proc->Lambda(totalTraffic);
     DEBUG(2, "P" << p << ": total memory traffic = " << totalTraffic << endl);
     systemTr += totalTraffic;
@@ -486,7 +489,8 @@ StatMetrics * IterativePerfModel::RunBisectionFp ()
       DEBUG(2, "P" << p << ": thr = " << proc_thr << endl);
       systemThr += proc_thr;
 
-      double totalTraffic = thr*proc->Mpi()*proc->SMTDegree();
+      //double totalTraffic = thr*proc->Mpi()*proc->SMTDegree();
+      double totalTraffic = proc_thr*proc->Mpi();
       proc->Lambda(totalTraffic);
       DEBUG(2, "P" << p << ": total memory traffic = " << totalTraffic << endl);
       systemTr += totalTraffic;
@@ -554,9 +558,12 @@ void IterativePerfModel::MarkPathsNoCC (const vector<double>& procRates)
     for (int m = 0; m < cmpConfig.MemCnt(); ++m) {
       Memory * mem = cmpConfig.GetMemory(m);
 
-      double trafficToMemMiss = procRates[p]*proc->MainMemAccessProbability()*proc->L3ProbDistr()[m];//pa[m];
+      //double trafficToMemMiss = procRates[p]*proc->MainMemAccessProbability()*proc->L3ProbDistr()[m];//pa[m];
       double trafficToMem = procRates[p]*proc->L3AccessProbability()*proc->L3ProbDistr()[m];//pa[m];
-      double trafficToMemAccess = trafficToMem + trafficToMemMiss;
+      //double trafficToMemAccess = trafficToMem + trafficToMemMiss;
+      double trafficToMemAccess = procRates[p]*(proc->L1DMissRate()+proc->L1IMissRate())*proc->L2MissRate()*proc->L3ProbDistr()[m];//pa[m];
+      double trafficToMemMiss = procRates[p]*(proc->L1DMissRate()+proc->L1IMissRate())*proc->L2MissRate()*proc->L3MissRate()*proc->L3ProbDistr()[m];//pa[m];
+
 
       // in clusters
       if (!cmpConfig.FlatMeshIc()) {
@@ -844,8 +851,13 @@ bool IterativePerfModel::EstimateDelays(bool fixNegDelays)
 
     // Pollaczek-Khinchin formula for an M/D/1 server.
     //double sTime = cmpConfig.UFreq()/cmpConfig.McFreq(); // [uncore cycles]
-    double sTime = 1.0/cmpConfig.McFreq(); // [ns]
-    DASSERT(memCtrl->lambda*sTime < 1.0);
+    //double sTime = 1.0/cmpConfig.McFreq(); // [ns]
+    double sTime = 1.0/(4*2.133); // 4 channels at 2.1333 GT/s
+
+    //DEBUG
+    //DASSERT(memCtrl->lambda*sTime < 1.0);
+    if (memCtrl->lambda*sTime > 1.0)
+      cout << "MC UNSTABLE: ARRIVAL_RATE > 1/SERVICE_TIME: " << memCtrl->lambda << " > " << 1/sTime << endl;
     double delay = memCtrl->lambda*sTime*sTime/(2.0*(1.0-memCtrl->lambda*sTime));
 
     if (delay < -E_DOUBLE) {

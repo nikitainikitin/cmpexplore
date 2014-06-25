@@ -104,7 +104,7 @@ double CmpAnalytPerfModel::CalculateProcLatencyNoCC (
       DEBUG(3, "prob[" << mc << "] = " << (1.0/cmpConfig.MemCtrlCnt())
              << ", latency = " << LatencyProcToMemCtrl(idx, mc, dynamic) << endl);
     mainMemLatency += (1.0/cmpConfig.MemCtrlCnt()) *
-                        LatencyProcToMemCtrl(idx, mc, dynamic);
+                       LatencyProcToMemCtrl(idx, mc, dynamic);
   }
 
   const double L1AccProb = proc->L1AccessProbability();

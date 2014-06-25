@@ -108,8 +108,8 @@ int WlConfig::CreateTasks ( int ntasks, bool predefined )
       else {
 	thread->thread_dop = threads_quotient;
       }
-      thread->thread_instructions = thread->thread_dop * instr; // threads in parallel
-      thread->thread_ipc = thread->thread_dop * task->task_ipc; // threads in parallel
+      thread->thread_instructions = thread->thread_dop * instr;
+      thread->thread_ipc = task->task_ipc;
       thread->thread_mpi = task->task_mpi; // inherited
       thread->missRatioOfMemSize = task->missRatioOfMemSize; // inherited
       if (thread) AddThread(thread,i);
@@ -278,8 +278,8 @@ int WlConfig::ReadTasks ( const string & fname )
       else {
 	thread->thread_dop = threads_quotient;
       }
-      thread->thread_instructions = thread->thread_dop * instr; // threads in parallel
-      thread->thread_ipc = thread->thread_dop * task->task_ipc; // threads in parallel
+      thread->thread_instructions = thread->thread_dop * instr;
+      thread->thread_ipc = task->task_ipc;
       thread->thread_mpi = task->task_mpi; // inherited
       thread->missRatioOfMemSize = task->missRatioOfMemSize; // inherited
       if (thread) AddThread(thread,task_id);

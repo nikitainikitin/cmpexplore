@@ -143,6 +143,14 @@ namespace cmpex {
 
       inline vector<double>& L3ProbDistr();
 
+      inline double L1DMissRate() const;
+
+      inline double L1IMissRate() const;
+
+      inline double L2MissRate() const;
+
+      inline double L3MissRate() const;
+
       // Power
       inline double Epi() const;
 
@@ -209,6 +217,14 @@ namespace cmpex {
       inline void SetL3AccProb(double p);
 
       inline void SetMMAccProb(double p);
+
+      inline void SetL1DMissRate(double m);
+      
+      inline void SetL1IMissRate(double m);
+      
+      inline void SetL2MissRate(double m);
+
+      inline void SetL3MissRate(double m);
 
       inline void SetFreq(double f);
 
@@ -313,6 +329,14 @@ namespace cmpex {
       double l3AccProb_;
 
       double mmAccProb_;
+
+      double l1dMissRate_;
+
+      double l1iMissRate_;
+
+      double l2MissRate_;
+
+      double l3MissRate_;
 
       vector<double> l3ProbDistr_; // prob. to access distributed L3 p/cluster
 
@@ -514,6 +538,52 @@ namespace cmpex {
     vector<double>& Processor::L3ProbDistr() {
       return l3ProbDistr_;
     }
+
+    void Processor::SetL1DMissRate(double m) {
+      l1dMissRate_ = m;
+    }
+
+    void Processor::SetL1IMissRate(double m) {
+      l1iMissRate_ = m;
+    }
+
+    void Processor::SetL2MissRate(double m) {
+      l2MissRate_ = m;
+    }
+
+    void Processor::SetL3MissRate(double m) {
+      l3MissRate_ = m;
+    }
+
+    double Processor::L1DMissRate() const {
+      if (config.Tmap())
+        return l1dMissRate_;
+      else
+	return cmpConfig.EvalCurWlMissRate(L1Size());
+    }
+
+    double Processor::L1IMissRate() const {
+      if (config.Tmap())
+        return l1iMissRate_;
+      else
+	return cmpConfig.EvalCurWlMissRate(L1Size());
+    }
+
+    double Processor::L2MissRate() const {
+      if (config.Tmap())
+        return l2MissRate_;
+      else
+	return cmpConfig.EvalCurWlMissRate(L2Size());
+    }
+
+    double Processor::L3MissRate() const {
+      if (config.Tmap())
+        return l3MissRate_;
+      else
+        return (L3SizeEff() < E_DOUBLE) ? 0.0 :
+	  cmpConfig.EvalCurWlMissRate(L3SizeEff());
+    }
+
 
     double Processor::Thr() const {
       return thr_;
