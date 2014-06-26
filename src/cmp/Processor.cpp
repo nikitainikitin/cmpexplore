@@ -144,17 +144,32 @@ double Processor::ULatIfaceToMem (UShort mIdx, bool dynamic, UShort pSize, UShor
  */
 
 void Processor::SetMemAccessProbabilities ( model::Function * mr ) {
-  SetL1AccProb(1.0 - mr->eval(L1Size()));
-  SetL2AccProb(mr->eval(L1Size()) - mr->eval(L2Size()+L1Size()));
+  // adjust effective sizes of private caches depending on SMTDegree,
+  // assume it changes linearly with SMTDegree(), similar to L3SizeEff
+  double L1SizeEff = L1Size()/(1 + 0.5*(SMTDegree()-1));
+  double L2SizeEff = L2Size()/(1 + 0.5*(SMTDegree()-1));
+
+  SetL1AccProb(1.0 - mr->eval(L1SizeEff));
+  //SetL2AccProb(mr->eval(L1Size()) - mr->eval(L2Size()+L1Size()));
+  // AMAT:
+  SetL2AccProb( mr->eval(L1SizeEff)*(1.0-mr->eval(L2SizeEff)) );
 
   bool L3IsOn = cmpConfig.GetMemory(Idx())->Active();
 
+  //SetL3AccProb(L3SizeEff() < E_DOUBLE || !L3IsOn ? 0.0 :
+  //              (mr->eval(L2Size()+L1Size()) -
+  //              mr->eval(L3SizeEff()+L2Size()+L1Size())));
+  //SetMMAccProb(L3SizeEff() < E_DOUBLE || !L3IsOn ?
+  //              mr->eval(L2Size()+L1Size()) :
+  //              mr->eval(L3SizeEff()+L2Size()+L1Size()));
+  // AMAT:
   SetL3AccProb(L3SizeEff() < E_DOUBLE || !L3IsOn ? 0.0 :
-               (mr->eval(L2Size()+L1Size()) -
-                mr->eval(L3SizeEff()+L2Size()+L1Size())));
+                mr->eval(L1SizeEff)*mr->eval(L2SizeEff) *
+                (1.0 - mr->eval(L3SizeEff())));
   SetMMAccProb(L3SizeEff() < E_DOUBLE || !L3IsOn ?
-                mr->eval(L2Size()+L1Size()) :
-                mr->eval(L3SizeEff()+L2Size()+L1Size()));
+                mr->eval(L1SizeEff) * mr->eval(L2SizeEff) :
+                  mr->eval(L1SizeEff) * mr->eval(L2SizeEff) *
+                  mr->eval(L3SizeEff()));
 }
 
 //=======================================================================

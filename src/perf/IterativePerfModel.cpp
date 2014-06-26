@@ -127,6 +127,8 @@ StatMetrics * IterativePerfModel::RunFixedPoint(double statThr, double statInj)
   int iter = 0;
   bool cont = false;
 
+  int max_iter = 1000;
+
   do {
     prevThr = systemThr;
 
@@ -157,7 +159,7 @@ StatMetrics * IterativePerfModel::RunFixedPoint(double statThr, double statInj)
       DEBUG(2, "P" << p << ": thr = " << proc_thr << endl);
       systemThr += proc_thr;
 
-      double totalTraffic = thr*proc->Mpi()*proc->SMTDegree();
+      double totalTraffic = proc_thr*proc->Mpi();
       proc->Lambda(totalTraffic);
       DEBUG(2, "P" << p << ": total memory traffic = " << totalTraffic << endl);
       systemTr += totalTraffic;
@@ -177,7 +179,7 @@ StatMetrics * IterativePerfModel::RunFixedPoint(double statThr, double statInj)
     MarkPaths(procRate);
 
     // run models
-    if(EstimateDelays())
+    if (EstimateDelays() || iter > max_iter)
       return new StatMetrics(0.0, MAX_DOUBLE);
 
     ++iter;
@@ -243,11 +245,11 @@ StatMetrics * IterativePerfModel::RunSubgradient ()
       proc->Thr(proc_thr);
       systemThr += proc_thr;
 
-      double totalTraffic = thr*proc->Mpi()*proc->SMTDegree();
+      double totalTraffic = proc_thr*proc->Mpi();
       proc->Lambda(totalTraffic);
       systemTr += totalTraffic;
 
-      double lat_star = proc->SMTDegree()/procRateCur[p] -
+      double lat_star = 1.0/procRateCur[p] -
                         1.0/(proc->Mpi()*proc->Ipc()*proc->Freq());
 
       double gap = lat - lat_star;
@@ -375,7 +377,7 @@ StatMetrics * IterativePerfModel::RunBisectionFp ()
     DEBUG(2, "P" << p << ": thr = " << proc_thr << endl);
     systemThr += proc_thr;
 
-    double totalTraffic = thr*proc->Mpi()*proc->SMTDegree();
+    double totalTraffic = proc_thr*proc->Mpi();
     proc->Lambda(totalTraffic);
     DEBUG(2, "P" << p << ": total memory traffic = " << totalTraffic << endl);
     systemTr += totalTraffic;
@@ -472,7 +474,7 @@ StatMetrics * IterativePerfModel::RunBisectionFp ()
       double lat = (proc->Active() && proc->Freq() > E_DOUBLE) ?
                      CalculateProcLatency(p, true) : 0.0;
       double lat_star = (proc->Active() && proc->Freq() > E_DOUBLE) ?
-                        proc->SMTDegree()/procRateAvg[p] - 1.0/(proc->Mpi()*proc->Ipc()*proc->Freq()) : 0.0;
+                        1.0/procRateAvg[p] - 1.0/(proc->Mpi()*proc->Ipc()*proc->Freq()) : 0.0;
 
       double lat_avg = lat;
       DEBUG(2, "P" << p << ": avg lat = " << lat_avg << " cycles" << endl);
@@ -486,7 +488,7 @@ StatMetrics * IterativePerfModel::RunBisectionFp ()
       DEBUG(2, "P" << p << ": thr = " << proc_thr << endl);
       systemThr += proc_thr;
 
-      double totalTraffic = thr*proc->Mpi()*proc->SMTDegree();
+      double totalTraffic = proc_thr*proc->Mpi();
       proc->Lambda(totalTraffic);
       DEBUG(2, "P" << p << ": total memory traffic = " << totalTraffic << endl);
       systemTr += totalTraffic;
@@ -844,7 +846,7 @@ bool IterativePerfModel::EstimateDelays(bool fixNegDelays)
 
     // Pollaczek-Khinchin formula for an M/D/1 server.
     //double sTime = cmpConfig.UFreq()/cmpConfig.McFreq(); // [uncore cycles]
-    double sTime = 1.0/cmpConfig.McFreq(); // [ns]
+    double sTime = 1.0/(cmpConfig.McChlCnt()*cmpConfig.McFreq()); // [ns]
     DASSERT(memCtrl->lambda*sTime < 1.0);
     double delay = memCtrl->lambda*sTime*sTime/(2.0*(1.0-memCtrl->lambda*sTime));
 

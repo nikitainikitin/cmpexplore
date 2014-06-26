@@ -17,6 +17,7 @@ using std::ifstream;
 namespace cmpex {
 
   using model::Powerlaw;
+  using model::Function;
 
   namespace workload {
 
@@ -108,8 +109,8 @@ int WlConfig::CreateTasks ( int ntasks, bool predefined )
       else {
 	thread->thread_dop = threads_quotient;
       }
-      thread->thread_instructions = thread->thread_dop * instr; // threads in parallel
-      thread->thread_ipc = thread->thread_dop * task->task_ipc; // threads in parallel
+      thread->thread_instructions = thread->thread_dop * instr;
+      thread->thread_ipc = task->task_ipc;
       thread->thread_mpi = task->task_mpi; // inherited
       thread->missRatioOfMemSize = task->missRatioOfMemSize; // inherited
       if (thread) AddThread(thread,i);
@@ -229,11 +230,13 @@ int WlConfig::ReadTasks ( const string & fname )
     int instr, deadl, dop;
     ValueParser::ExtractValue(line, ipc);
     ValueParser::ExtractValue(line, mpi);
-    ValueParser::ExtractValue(line, mr_alpha);
-    ValueParser::ExtractValue(line, mr_exp);
+    //ValueParser::ExtractValue(line, mr_alpha);
+    //ValueParser::ExtractValue(line, mr_exp);
     ValueParser::ExtractValue(line, instr_dbl);
     ValueParser::ExtractValue(line, deadl);
     ValueParser::ExtractValue(line, dop);
+    Function * mrFunc = Function::ParseFunction(line);
+
     instr = int(instr_dbl);
 
     // create a task
@@ -256,7 +259,8 @@ int WlConfig::ReadTasks ( const string & fname )
       task->task_dop = (dop >> LOG2_MAX_SMT_DEG)+1; // dop is divided by 8, but we need to consider the extra thread
     }
     int num_superthreads = task->task_dop;
-    task->missRatioOfMemSize = new Powerlaw(mr_alpha, mr_exp);
+    //task->missRatioOfMemSize = new Powerlaw(mr_alpha, mr_exp);
+    task->missRatioOfMemSize = mrFunc;
     AddTask(task);
 
     int threads_quotient = dop / num_superthreads;
