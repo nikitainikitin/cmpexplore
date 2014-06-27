@@ -509,26 +509,41 @@ namespace cmpex {
       if (config.Tmap())
         return l2AccProb_;
       else
-        return cmpConfig.EvalCurWlMissRate(L1Size()) -
-               cmpConfig.EvalCurWlMissRate(L2Size()+L1Size());
+        //return cmpConfig.EvalCurWlMissRate(L1Size()) -
+        //       cmpConfig.EvalCurWlMissRate(L2Size()+L1Size());
+        // AMAT:
+        return cmpConfig.EvalCurWlMissRate(L1Size()) *
+            (1.0 - cmpConfig.EvalCurWlMissRate(L2Size()));
     }
 
     double Processor::L3AccessProbability() const {
       if (config.Tmap())
         return l3AccProb_;
       else
+        //return (L3SizeEff() < E_DOUBLE) ? 0.0 :
+        //       (cmpConfig.EvalCurWlMissRate(L2Size()+L1Size()) -
+        //        cmpConfig.EvalCurWlMissRate(L3SizeEff()+L2Size()+L1Size()));
+        // AMAT:
         return (L3SizeEff() < E_DOUBLE) ? 0.0 :
-               (cmpConfig.EvalCurWlMissRate(L2Size()+L1Size()) -
-                cmpConfig.EvalCurWlMissRate(L3SizeEff()+L2Size()+L1Size()));
+            cmpConfig.EvalCurWlMissRate(L1Size()) *
+            cmpConfig.EvalCurWlMissRate(L2Size()) *
+            (1.0 - cmpConfig.EvalCurWlMissRate(L3SizeEff()));
     }
 
     double Processor::MainMemAccessProbability() const {
       if (config.Tmap())
         return mmAccProb_;
       else
+        //return (L3SizeEff() < E_DOUBLE) ?
+        //       cmpConfig.EvalCurWlMissRate(L2Size()+L1Size()) :
+        //       cmpConfig.EvalCurWlMissRate(L3SizeEff()+L2Size()+L1Size());
+        // AMAT:
         return (L3SizeEff() < E_DOUBLE) ?
-               cmpConfig.EvalCurWlMissRate(L2Size()+L1Size()) :
-               cmpConfig.EvalCurWlMissRate(L3SizeEff()+L2Size()+L1Size());
+            cmpConfig.EvalCurWlMissRate(L1Size()) *
+            cmpConfig.EvalCurWlMissRate(L2Size()) :
+              cmpConfig.EvalCurWlMissRate(L1Size()) *
+              cmpConfig.EvalCurWlMissRate(L2Size()) *
+              cmpConfig.EvalCurWlMissRate(L3SizeEff());
     }
 
     const vector<double>& Processor::L3ProbDistr() const {

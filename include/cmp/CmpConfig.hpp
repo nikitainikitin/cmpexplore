@@ -157,6 +157,10 @@ namespace cmpex {
 
       inline void McFreqMax ( double f );
 
+      inline int McChlCnt () const;
+
+      inline void McChlCnt ( int c );
+
       inline double McVolt () const;
 
       inline void McVolt ( double v );
@@ -341,6 +345,8 @@ namespace cmpex {
 
       double mcFreqMax_; // max frequency of MCs [GHz]
 
+      int mcChlCnt_; // number of MC channels
+
       double mcVolt_; // MCs voltage [V]
 
       double mcVoltMax_; // MCs max voltage [V]
@@ -500,6 +506,14 @@ namespace cmpex {
 
     void CmpConfig::McFreqMax ( double f ) {
       mcFreqMax_ = f;
+    }
+
+    int CmpConfig::McChlCnt () const {
+      return mcChlCnt_;
+    }
+
+    void CmpConfig::McChlCnt ( int c ) {
+      mcChlCnt_ = c;
     }
 
     double CmpConfig::McVolt () const {

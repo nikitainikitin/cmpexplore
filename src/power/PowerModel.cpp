@@ -221,7 +221,9 @@ double PowerModel::GetTotalPower(Component * cmp)
       proc->L2PleakOfTemp(273.15+l2temp) * VScalLeakPowerProc(proc->Volt()) : 
       proc->L2PgPleakOfTemp(273.15+l2temp) * VScalLeakPowerProc(proc->Volt());*/
     //double l2hr = proc->L2AccessProbability(); // hitrate
-    double l2mr = proc->L2MissRate(); 
+    //double l2mr = 1-l2hr; // 1 - missrate
+    // AMAT: MissRate(L2Size)
+    double l2mr = 1.0 - proc->L2AccessProbability()/(1.0 - proc->L1AccessProbability());
     L2Power_[p] = proc->Active() ?
       (proc->L2Erda()*l2rd + proc->L2Ewra()*l2wr + 
        l2mr * (proc->L2Erdm()*l2rd + proc->L2Ewrm()*l2wr) ) * 

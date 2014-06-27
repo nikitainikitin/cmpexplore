@@ -360,13 +360,14 @@ void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
     Thread * thread = (mc->map[p] != MapConf::IDX_UNASSIGNED) ?
         wlConfig.GetThreadByGid(mc->map[p]) : 0;
     if (thread) {
-      proc->SetIpc(thread->thread_ipc);
-      proc->SetMpi(thread->thread_mpi);
-      proc->SetMemAccessProbabilities(thread->missRatioOfMemSize);
       proc->SetActive(mc->coreActiv[p]);
       proc->SetFreq(mc->coreFreq[p]);
       proc->SetVolt(PowerModel::VoltAtFreqProc(mc->coreFreq[p]));
+      proc->SetIpc(thread->thread_ipc);
+      proc->SetMpi(thread->thread_mpi);
+      // NOTICE: set SMTDegree before updating memory access probabilities
       proc->SetSMTDegree(thread->thread_dop);
+      proc->SetMemAccessProbabilities(thread->missRatioOfMemSize);
     }
     else {
       proc->SetActive(false);
