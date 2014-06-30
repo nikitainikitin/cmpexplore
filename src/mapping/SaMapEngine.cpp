@@ -120,8 +120,8 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
     }
   }
 
-  /// TODO: check max temperature here as well
-  bool cur_budgets_met = (config.MaxPower() - curMap->power > 0);
+  bool cur_budgets_met = (config.MaxPower() - curMap->power > 0) &&
+                         (config.MaxTemp() - curMap->temp > 0);
   bestMap = cur_budgets_met ? curMap : 0;
 
   if (!silent_mode) {
@@ -182,8 +182,8 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
       // 2d. Update best mapping
       double bestObj = bestMap ? bestMap->obj : 0.0;
       //bool cur_budgets_met = (fabs(curMap->cost-curMap->thr) < E_DOUBLE);
-      /// TODO: check max temperature here as well
-      bool cur_budgets_met = (config.MaxPower() - curMap->power > 0);
+      bool cur_budgets_met = (config.MaxPower() - curMap->power > 0) &&
+                             (config.MaxTemp() - curMap->temp > 0);
       // minimum improvement in objective to change mapping with respect to initial
       double min_impr = 1.01;
 

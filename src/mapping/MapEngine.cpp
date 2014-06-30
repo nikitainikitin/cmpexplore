@@ -333,6 +333,34 @@ double MapEngine::CalcTempPenalty(double lambda) const
 
 //=======================================================================
 /*
+ * Returns predicted temperature of the mapping solution.
+ * Calculates maximum temperature on the chip.
+ */
+
+double MapEngine::GetTemperature() const
+{
+  Cluster * clCmp = static_cast<Cluster*>(cmpConfig.Cmp());
+  MeshIc * mic = static_cast<MeshIc*>(clCmp->Ic());
+
+  double max_temp = 0.0;
+
+  // MCs
+  for (int mc = 0; mc < cmpConfig.MemCtrlCnt(); ++mc) {
+    double mc_temp = PTsim::MCTempEst(mc);
+    max_temp = max(max_temp, mc_temp);
+  }
+
+  // Tiles
+  for (int tile = 0; tile < mic->TCnt(); ++tile) {
+    double tile_temp = PTsim::GetMaxEstTempInTile(tile);
+    max_temp = max(max_temp, tile_temp);
+  }
+
+  return max_temp;
+}
+
+//=======================================================================
+/*
  * Evaluates cost of the provided mapping solution.
  */
 
@@ -417,7 +445,7 @@ void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
   // 3. Save evaluation within the mapping object
   mc->thr = pSm->Throughput();
   mc->power = power;
-
+  mc->temp = GetTemperature();
   mc->obj = mc->thr*obj_penalty;
 
   // cost including hard penalties
