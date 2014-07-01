@@ -76,7 +76,8 @@ SaMapEngine::~SaMapEngine() {}
  * Main method that invokes the mapping.
  */
 
-void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
+void SaMapEngine::Map(MapConf * mconf, MapConf * prevMap,
+                      const vector<double>& prevProcThr, bool silent_mode)
 {
   MapConf *curMap, *bestMap;
 
@@ -86,7 +87,7 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
   double lambda = 0.5;
 
   // 1. Initialize mapping with mconf or a greedy mapping.
-  curMap = (mconf ? new MapConf(*mconf) : CreateGreedyMapping());
+  curMap = new MapConf(*mconf);
   // In the tightBudget mode prioritize feasible mapping vs
   // optimal mapping, hence reset all activities to off-state.
   if (tightBudget == TS_ON) {
@@ -96,7 +97,7 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
     curMap->L3ClusterActiv.assign(curMap->L3ClusterCnt, false);
   }
 
-  EvalMappingCost(curMap, lambda);
+  EvalMappingCost(curMap, prevMap, prevProcThr, lambda);
 
   // assume that the initial solution has all cores and L3 off,
   // hence the evaluated power is a lower bound static power
@@ -159,7 +160,7 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
       //if (idx == 1) cout << "NM:::"; newMap->Print();
 
       // 2b. Estimate cost of new mapping
-      EvalMappingCost(newMap, lambda);
+      EvalMappingCost(newMap, prevMap, prevProcThr, lambda);
 
       // 2c. Decide acceptance
       lambda = 0.5*tInit/tCur;

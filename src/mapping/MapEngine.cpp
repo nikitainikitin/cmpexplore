@@ -201,7 +201,7 @@ double MapEngine::CalcQoSObjPenalty(MapConf * mc) const
  * Returns New QoS-penalty for the mapping objective.
  */
 
-double MapEngine::CalcNewQoSObjPenalty(MapConf * mc) const
+double MapEngine::CalcNewQoSObjPenalty(MapConf * mc, const vector<double>& prevProcThr) const
 {
   // 1. Penalty for scheduled active tasks
   const double sch_dl_viol_penalty = 1.0/(2.0*cmpConfig.ProcCnt());
@@ -238,7 +238,7 @@ double MapEngine::CalcNewQoSObjPenalty(MapConf * mc) const
   assert(qos_sch > 0);
 
 
-  // 2. Penalty for running tasks
+  // 2. Penalty for running and suspended tasks
   int procCnt = cmpConfig.ProcCnt();
   double run_dl_viol_pen_at_start = double(procCnt-1)/(procCnt-1+1.0/sch_dl_viol_penalty);
   run_dl_viol_pen_at_start *= run_dl_viol_pen_at_start;
@@ -248,13 +248,19 @@ double MapEngine::CalcNewQoSObjPenalty(MapConf * mc) const
   for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
     Thread * thread = (mc->map[p] != MapConf::IDX_UNASSIGNED) ?
         wlConfig.GetThreadByGid(mc->map[p]) : 0;
-    if (thread && thread->thread_status == WlConfig::RUNNING) {
+    if (thread && (thread->thread_status == WlConfig::RUNNING ||
+                   thread->thread_status == WlConfig::SUSPENDED)) {
       //cout << "Thread id " << thread->thread_gid << " is running" << endl;
       double instr_to_complete = thread->thread_instructions - thread->thread_progress;
-      double ms_to_complete = cmpConfig.GetProcessor(p)->Thr() > E_DOUBLE ?
-            instr_to_complete/(cmpConfig.GetProcessor(p)->Thr()*1e6) : MAX_DOUBLE;
+      // thr. to estimate exec. time for suspended task is taken from the previous period
+      double thr = (thread->thread_status == WlConfig::RUNNING) ?
+                     cmpConfig.GetProcessor(p)->Thr() : prevProcThr[p];
+      double ms_to_complete = thr > E_DOUBLE ? instr_to_complete/(thr*1e6) : MAX_DOUBLE;
       assert(ms_to_complete >= 0);
-      double slack_avail_ms = thread->task->task_deadline - thread->task->task_elapsed;
+      // deadline for suspended task is reduced by migration period of 1 ms
+      double deadline = (thread->thread_status == WlConfig::RUNNING) ?
+                          thread->task->task_deadline : thread->task->task_deadline-1;
+      double slack_avail_ms = deadline - thread->task->task_elapsed;
       double thread_penalty = 1.0;
       if (slack_avail_ms <= 0) {
         thread_penalty = run_dl_viol_pen_at_end;
@@ -270,6 +276,9 @@ double MapEngine::CalcNewQoSObjPenalty(MapConf * mc) const
       assert(thread_penalty <= 1.0);
       //cout << "thread_penalty = " << thread_penalty << endl;
       run_thr_penalties.push_back(thread_penalty);
+    }
+    else if (thread && thread->thread_status == WlConfig::SUSPENDED) {
+
     }
   }
 
@@ -364,9 +373,37 @@ double MapEngine::GetTemperature() const
  * Evaluates cost of the provided mapping solution.
  */
 
-void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
+void MapEngine::EvalMappingCost(MapConf * mc, MapConf * prevMap,
+                                const vector<double>& prevProcThr, double lambda) const
 {
   // 1. Prepare configuration: initialize processors according to the mapping
+
+  // create list of migrating threads to be suspended
+  vector<Thread*> suspendedThreads;
+  for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
+    Thread * thread = (mc->map[p] != MapConf::IDX_UNASSIGNED) ?
+        wlConfig.GetThreadByGid(mc->map[p]) : 0;
+    if (thread && thread->thread_status == WlConfig::RUNNING) {
+      // check if thread has migrated to another cluster
+      std::vector<int>::const_iterator it =
+          find(prevMap->map.begin(), prevMap->map.end(), mc->map[p]);
+      if (it != prevMap->map.end()) {
+        int prevProcIdx = it - prevMap->map.begin();
+        assert(prevProcIdx < cmpConfig.ProcCnt());
+        // assume one memory per proc per tile
+        if (cmpConfig.GetMemory(p)->L3ClusterIdx() !=
+            cmpConfig.GetMemory(prevProcIdx)->L3ClusterIdx()) {
+          suspendedThreads.push_back(thread);
+        }
+      }
+    }
+  }
+
+  // temporarily set suspended state
+  for (int th = 0; th < suspendedThreads.size(); ++th) {
+    suspendedThreads[th]->thread_status = WlConfig::SUSPENDED;
+  }
+
 
   // update L3 activities
   for (int m = 0; m < cmpConfig.MemCnt(); ++m) {
@@ -387,7 +424,7 @@ void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
     Processor * proc = cmpConfig.GetProcessor(p);
     Thread * thread = (mc->map[p] != MapConf::IDX_UNASSIGNED) ?
         wlConfig.GetThreadByGid(mc->map[p]) : 0;
-    if (thread) {
+    if (thread && thread->thread_status != WlConfig::SUSPENDED) {
       proc->SetActive(mc->coreActiv[p]);
       proc->SetFreq(mc->coreFreq[p]);
       proc->SetVolt(PowerModel::VoltAtFreqProc(mc->coreFreq[p]));
@@ -399,8 +436,8 @@ void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
     }
     else {
       proc->SetActive(false);
-      proc->SetFreq(0.0);
-      proc->SetVolt(PowerModel::VoltAtFreqProc(mc->coreFreq[p]));
+      //proc->SetFreq(0.0);
+      //proc->SetVolt(PowerModel::VoltAtFreqProc(mc->coreFreq[p]));
     }
   }
 
@@ -440,7 +477,7 @@ void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
 
   // 2d. Delay/qos
   double obj_penalty = config.QoS() ?
-        (config.NewQoS() ? CalcNewQoSObjPenalty(mc) : CalcQoSObjPenalty(mc)) : 1.0;
+        (config.NewQoS() ? CalcNewQoSObjPenalty(mc, prevProcThr) : CalcQoSObjPenalty(mc)) : 1.0;
 
   // 3. Save evaluation within the mapping object
   mc->thr = pSm->Throughput();
@@ -452,6 +489,11 @@ void MapEngine::EvalMappingCost(MapConf * mc, double lambda) const
   double cost = mc->obj * power_penalty * temp_penalty;
   mc->cost = cost;
   delete pSm;
+
+  // restore threads which were temporarily suspended
+  for (int th = 0; th < suspendedThreads.size(); ++th) {
+    suspendedThreads[th]->thread_status = WlConfig::RUNNING;
+  }
 }
 
 //=======================================================================

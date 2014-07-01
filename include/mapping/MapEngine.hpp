@@ -57,7 +57,8 @@ namespace cmpex {
       inline const MapTrArray& Transforms() const;
 
       // Main method that invokes mapping.
-      virtual void Map(MapConf * mconf = 0, bool silent_mode = false) = 0;
+      virtual void Map(MapConf * mconf, MapConf * prevMap,
+                       const vector<double>& prevProcThr, bool silent_mode = false) = 0;
 
       // --- Service functions ---
 
@@ -66,14 +67,15 @@ namespace cmpex {
 
       double CalcQoSObjPenalty(MapConf * mc) const;
 
-      double CalcNewQoSObjPenalty(MapConf * mc) const;
+      double CalcNewQoSObjPenalty(MapConf * mc, const vector<double>& prevProcThr) const;
 
       double CalcTempPenalty(double lambda = 1.0) const;
 
       double GetTemperature() const;
 
       // Evaluate cost of the provided mapping
-      void EvalMappingCost(MapConf * mc, double lambda = 1.0) const;
+      void EvalMappingCost(MapConf * mc, MapConf * prevMap,
+                           const vector<double>& prevProcThr, double lambda = 1.0) const;
 
     private:
 
