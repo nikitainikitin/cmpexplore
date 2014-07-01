@@ -205,17 +205,6 @@ void SaMapEngine::Map(MapConf * mconf, MapConf * prevMap,
     ++oIter;
   } while (oIter*lIterCnt - last_impr < no_impr_limit);
 
-  // if this assert fails it is probably that no feasible solution has been found,
-  // check if the constraints are too strict
-  if (!bestMap) {
-    cout << "-E- SAMapEngine: no feasible mapping found.";
-    cout << " It is likely that the power budget is too strict." << endl;
-    cout << "    The lower bound for power (no active cores/L3) at current temperature is "
-         << powerLB << " W" << endl;
-    cout << "    Try running with higher -max_power. Exiting..." << endl;
-    exit(1);
-  }
-
   if (!silent_mode) {
     cout << "Finished search (no improvement during the last "
          << no_impr_limit << " iterations)" << endl;
@@ -224,14 +213,32 @@ void SaMapEngine::Map(MapConf * mconf, MapConf * prevMap,
     cout << "Params: tCur = " << tCur << endl;
   }
 
+  // if this assert fails it is probably that no feasible solution has been found,
+  // check if the constraints are too strict
+  if (!bestMap) {
+    if (config.MaxTemp() > 1.0e5) { // failure due to the power constraint
+      cout << "-E- SAMapEngine: no feasible mapping found.";
+      cout << " It is likely that the power budget is too strict." << endl;
+      cout << "    The lower bound for power (no active cores/L3) at current temperature is "
+           << powerLB << " W" << endl;
+      cout << "    Try running with higher -max_power. Exiting..." << endl;
+      exit(1);
+    }
+    else { // failure is likely to be due to the temperature constraint
+      // Last resort: accept the all-cores-off solution
+      cout << "-W- SAMapEngine: no feasible mapping found under the temperature constraint." << endl;
+      cout << "-W- SAMapEngine: trying the all-off solution." << endl;
+      curMap->coreActiv.assign(curMap->coreCnt, false);
+      EvalMappingCost(curMap, prevMap, prevProcThr, -0.1);
+      bestMap = curMap;
+    }
+  }
+
   // cleanup
   if (curMap != bestMap) delete curMap;
-  if (mconf) { // copy data back to config
-    if (mconf != bestMap) *mconf = *bestMap;
-  }
-  else {
-    delete bestMap;
-  }
+  assert(mconf != bestMap);
+  *mconf = *bestMap; // copy data back to config
+  delete bestMap;
 }
 
 //=======================================================================
