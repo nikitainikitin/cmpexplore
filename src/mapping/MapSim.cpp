@@ -315,6 +315,18 @@ void MapSim::Run() {
 bool MapSim::SkipRemapping(bool lastPeriodWlChanged) {
   if (lastPeriodWlChanged) return false;
 
+  // never skip mapping if in the all-cores-off state
+  bool all_cores_off = true;
+  for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
+    if (cmpConfig.GetProcessor(p)->Thr() > E_DOUBLE) {
+      all_cores_off = false;
+      break;
+    }
+  }
+
+  if (all_cores_off) return false;
+
+
   // evaluate temperature at the end of the next period
   // if running with the same mapping
 
