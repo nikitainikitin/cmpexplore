@@ -135,7 +135,10 @@ namespace cmpex {
       // Maximum estimated temperature among components in the given tile
       static double GetMaxEstTempInTile(int tileIdx);
       
-      // get temperature for one core
+       // Maximum temperature among components in the given tile
+      static double GetMaxTempInTile(int tileIdx);
+      
+     // get temperature for one core
       inline static double CoreTemp(int core_idx) {
         return coreTemp_[core_idx];
       }

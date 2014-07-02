@@ -191,9 +191,15 @@ void MapSim::Run() {
       cout << "-I- Running Hotspot..." << endl;
       PTsim::CallHotSpot(cmpConfig.Cmp(), &power_vec, true);
 
-      cout << "   -MAP- Temperature of cores: ";
+      cout << endl;
+      cout << "   -MAP- Temperature of cores (real values): ";
       for (int p = 0; p < mconf->map.size(); ++p) {
         cout << PTsim::CoreTemp(p) << ' ';
+      }
+      cout << endl;
+      cout << "   -MAP- Temperature of cores (est. values): ";
+      for (int p = 0; p < mconf->map.size(); ++p) {
+        cout << PTsim::CoreTempEst(p) << ' ';
       }
       cout << endl;
     }
@@ -322,14 +328,14 @@ bool MapSim::SkipRemapping(bool lastPeriodWlChanged) {
 
   // MCs
   for (int mc = 0; mc < cmpConfig.MemCtrlCnt(); ++mc) {
-    max_temp = max(max_temp, PTsim::MCTempEst(mc));
+    max_temp = max(max_temp, PTsim::MCTemp(mc));
   }
 
   // Tiles
   Cluster * clCmp = static_cast<Cluster*>(cmpConfig.Cmp());
   MeshIc * mic = static_cast<MeshIc*>(clCmp->Ic());
   for (int tile = 0; tile < mic->TCnt(); ++tile) {
-    max_temp = max(max_temp, PTsim::GetMaxEstTempInTile(tile));
+    max_temp = max(max_temp, PTsim::GetMaxTempInTile(tile));
   }
 
   bool temp_satisfied = (max_temp <= config.MaxTemp());
