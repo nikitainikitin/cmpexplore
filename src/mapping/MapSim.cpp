@@ -69,9 +69,11 @@ namespace cmpex {
  * Constructors and destructor
  */
 
-MapSim::MapSim(int period_us) : period_ (period_us) {}
+MapSim::MapSim(int period_us) : period_ (period_us), prevMap(0) {}
 
-MapSim::~MapSim() {}
+MapSim::~MapSim() {
+  if (prevMap) delete prevMap;
+}
 
 //=======================================================================
 /*
@@ -144,10 +146,24 @@ void MapSim::Run() {
 
     // 2. Find the new best mapping
     //cout << "***** Mapconf before mapping: "; mconf->Print();
+
+    // 2.a. Unset suspended state for migrated cores - assume migration penalty is 1 period
+    for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
+      Thread * thread = (mconf->map[p] != MapConf::IDX_UNASSIGNED) ?
+          wlConfig.GetThreadByGid(mconf->map[p]) : 0;
+      if (thread && thread->thread_status == WlConfig::SUSPENDED) {
+        cout << "   -MAP- MIGRATION: Restoring suspended thread with id "
+             << thread->thread_gid << endl;
+        thread->thread_status = WlConfig::RUNNING;
+        lastPeriodWlChanged = true;
+      }
+    }
+
+    // 2.b. Run SA-based remapping
     SaMapEngine me;
     if (sysElapsedPeriod == 0 || !SkipRemapping(lastPeriodWlChanged)) {
       cout << "   -MAP- Running SA mapping..." << endl;
-      me.Map(mconf, true); // run SA mapping
+      me.Map(mconf, prevMap, prevProcThr, true); // run SA mapping
     }
     else {
       cout << "   -MAP- Skipped SA mapping for this period: "
@@ -156,9 +172,14 @@ void MapSim::Run() {
     lastPeriodWlChanged = false; // period change history is reset after mapping
     cout << "   -MAP- Mapconf after mapping: "; mconf->Print();
 
-    // 3. Run performance model with the new mapping;
+    // 3.a. Run performance model with the new mapping;
     //    reuse cost estimation function from mapping
-    me.EvalMappingCost(mconf);
+    me.EvalMappingCost(mconf, prevMap, prevProcThr);
+
+    // 3.b. Suspend migrating threads
+    SuspendMigratingThreads(mconf);
+
+    PrintMappingChange(mconf);
 
     // Run Hotspot every hs_period_sec
     //double hs_period_sec = 0.01;
@@ -194,8 +215,9 @@ void MapSim::Run() {
     // 4. Advance every task
     for (int p = 0; p < mconf->map.size(); ++p) {
       int thr_id = mconf->map[p];
-      if (thr_id != MapConf::IDX_UNASSIGNED) {
-        Thread * thread = wlConfig.GetThreadByGid(thr_id);
+      Thread * thread = (mconf->map[p] != MapConf::IDX_UNASSIGNED) ?
+          wlConfig.GetThreadByGid(mconf->map[p]) : 0;
+      if (thread && thread->thread_status != WlConfig::SUSPENDED) {
         // increment number of completed instructions
         // by instr_per_ns * length_period_ns
         cout << "   -MAP- Advancing thread " << thr_id << " progress by "
@@ -258,6 +280,9 @@ void MapSim::Run() {
       }
     }
 
+    // 6. Save history mapping and throughput
+    SaveHistory(mconf);
+
     //cout << "   -MAP- Period instantaneous QoS = " << wlConfig.GetInstantQoS()
     //     << ", total QoS = " << wlConfig.GetTotalQoS() << endl;
 
@@ -309,6 +334,109 @@ bool MapSim::SkipRemapping(bool lastPeriodWlChanged) {
 
   bool temp_satisfied = (max_temp <= config.MaxTemp());
   return temp_satisfied;
+}
+
+//=======================================================================
+/*
+ * Saves mapping history for previous period.
+ */
+
+void MapSim::SaveHistory ( MapConf * mconf ) {
+  int coreCnt = cmpConfig.ProcCnt();
+
+  // processor throughput
+  if (!prevMap) {
+    prevProcThr.resize(coreCnt);
+  }
+  for (int p = 0; p < coreCnt; ++p) {
+    prevProcThr[p] = cmpConfig.GetProcessor(p)->Thr();
+  }
+
+  // mapping configuration
+  if (prevMap) {
+    delete prevMap;
+  }
+  prevMap = new MapConf(*mconf);
+
+}
+
+//=======================================================================
+/*
+ * Prints changes in mapping, w.r.t the previous mapping.
+ */
+
+void MapSim::PrintMappingChange ( MapConf * mconf )  const {
+  if (!prevMap) return;
+
+  int coreCnt = cmpConfig.ProcCnt();
+  int L3ClusterCnt = cmpConfig.ProcCnt()/cmpConfig.L3ClusterSize();
+
+  int mapChangedCnt = 0;
+  int activChangedCnt = 0;
+  int freqChangedCnt = 0;
+  for (int p = 0; p < coreCnt; ++p) {
+    if (mconf->coreActiv[p] != prevMap->coreActiv[p]) ++activChangedCnt;
+    if (mconf->coreActiv[p] &&
+          mconf->map[p] != prevMap->map[p]) ++mapChangedCnt;
+    if (mconf->coreActiv[p] &&
+          mconf->coreFreq[p] != prevMap->coreFreq[p]) ++freqChangedCnt;
+  }
+
+  int L3ActivChangedCnt = 0;
+  for (int c = 0; c < L3ClusterCnt; ++c) {
+    if (mconf->L3ClusterActiv[c] != prevMap->L3ClusterActiv[c]) ++L3ActivChangedCnt;
+  }
+
+  cout << "   -MAP- Number of processors changed values w.r.t. prevMap:"
+       << " mapping = " << mapChangedCnt << "; activity = " << activChangedCnt
+       << "; frequency = " << freqChangedCnt << "; L3activity = " << L3ActivChangedCnt
+       << endl;
+}
+
+//=======================================================================
+/*
+ * Suspends threads which are migrating between the clusters
+ * during the next period.
+ */
+
+void MapSim::SuspendMigratingThreads ( MapConf * mconf ) {
+  if (!prevMap) return;
+
+  // identify migrating threads: those whose map indices change
+  // so that they migrate between the clusters
+  for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
+    Thread * thread = (mconf->map[p] != MapConf::IDX_UNASSIGNED) ?
+        wlConfig.GetThreadByGid(mconf->map[p]) : 0;
+    // NOTICE: we perform check only for RUNNING threads.
+    // Since the status of the thread has not been updated for this period,
+    // this check will only apply to the threads which ran at previous period.
+    // This is fine, because we don't consider migration penalty for the
+    // scheduled threads.
+    if (thread && thread->thread_status == WlConfig::RUNNING) {
+      // check if thread has migrated to another cluster
+      bool migratedToOtherCluster = false;
+      std::vector<int>::const_iterator it =
+          find(prevMap->map.begin(), prevMap->map.end(), mconf->map[p]);
+      int prevProcIdx = -1;
+      if (it != prevMap->map.end()) {
+        prevProcIdx = it - prevMap->map.begin();
+        assert(prevProcIdx >= 0 && prevProcIdx < cmpConfig.ProcCnt());
+        // assume one memory per proc per tile
+        if (cmpConfig.GetMemory(p)->L3ClusterIdx() !=
+            cmpConfig.GetMemory(prevProcIdx)->L3ClusterIdx()) {
+          migratedToOtherCluster = true;
+        }
+      }
+
+      if (migratedToOtherCluster) {
+        cout << "   -MAP- MIGRATION: Thread id " << thread->thread_gid
+             << " has migrated between L3 clusters "
+             << cmpConfig.GetMemory(prevProcIdx)->L3ClusterIdx() << " and "
+             << cmpConfig.GetMemory(p)->L3ClusterIdx() << " and will be suspended" << endl;
+        thread->thread_status = WlConfig::SUSPENDED;
+      }
+    }
+  }
 }
 
 //=======================================================================

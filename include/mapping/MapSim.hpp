@@ -27,6 +27,8 @@ namespace cmpex {
 
   namespace mapping {
 
+    class MapConf;
+
     //======================================================================
     // MapSim is a mapping simulator, which emulates the behavior of a CMP.
     // It performs the following actions at the beginning of every period:
@@ -55,7 +57,13 @@ namespace cmpex {
       // Main method that invokes simulation.
       virtual void Run();
 
-      bool SkipRemapping(bool lastPeriodWlChanged);
+      bool SkipRemapping (bool lastPeriodWlChanged);
+
+      void SaveHistory ( MapConf * mconf );
+
+      void PrintMappingChange ( MapConf * mconf ) const;
+
+      void SuspendMigratingThreads ( MapConf * mconf );
 
       // --- Service functions ---
 
@@ -71,6 +79,12 @@ namespace cmpex {
     private:
 
       int period_; // duration of remapping period in us
+
+      // --- Mapping history ---
+
+      MapConf * prevMap; // mapping at previous pereiod
+
+      vector<double> prevProcThr; // processor throughput at previous mapping
 
     };
 

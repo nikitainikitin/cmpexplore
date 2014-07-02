@@ -86,7 +86,7 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Running SA mapping...
    -MAP- Running Hotspot warmup (first invocation)... done.
-   -MAP- Mapconf after mapping: Map: 0 4 11 14 8 5 12 7 1 9 3 2 6 13 10 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=128.81; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 0 4 11 14 8 5 12 7 1 9 3 2 6 13 10 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=128.81; Temp=64.2334; Thr=70; Obj=70; Cost=70
 -I- Running Hotspot...
    -MAP- Temperature of cores: 45.46 45.44 45.44 45.47 45.47 45.45 45.45 45.47 45.47 45.45 45.45 45.47 45.46 45.44 45.44 45.47 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -191,7 +191,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 0 4 11 14 8 5 12 7 1 9 3 2 6 13 10 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=128.81; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 0 4 11 14 8 5 12 7 1 9 3 2 6 13 10 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=128.81; Temp=64.2334; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 61.9037 49.6417 62.1984 62.0998 61.9386 49.6678 61.8853 48.4181 62.2005 62.1377 49.6433 61.8624 50.9561 65.9522 65.8462 49.3655 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -296,7 +297,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 0 4 11 14 8 5 12 7 1 9 3 2 6 13 10 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=128.606; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 0 4 11 14 8 5 12 7 1 9 3 2 6 13 10 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=128.606; Temp=49.6431; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 66.0136 51.8746 66.926 66.5291 66.2617 52.0184 66.0338 50.6482 66.9116 66.8677 52.0163 65.7939 54.4736 73.4924 73.2006 52.44 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -401,7 +403,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 0 4 11 14 8 5 12 7 1 9 3 2 6 13 10 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=128.767; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 0 4 11 14 8 5 12 7 1 9 3 2 6 13 10 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=128.767; Temp=70.0523; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 67.8094 53.1912 69.1689 68.6212 68.3248 53.4799 67.9907 52.115 69.1857 69.2975 53.4967 67.4515 56.5285 77.1845 76.7855 54.2337 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -506,7 +509,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 0 4 11 14 8 5 12 7 1 9 3 2 6 13 10 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=128.899; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 0 4 11 14 8 5 12 7 1 9 3 2 6 13 10 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=128.899; Temp=77.4145; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 68.8344 54.0923 70.5002 69.8448 69.5719 54.5069 69.2046 53.1225 70.6066 70.8517 54.5239 68.4066 57.8816 79.3728 78.8397 55.3922 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -611,7 +615,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 0 4 11 14 8 5 12 7 1 9 3 2 6 13 10 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.01; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 0 4 11 14 8 5 12 7 1 9 3 2 6 13 10 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.01; Temp=81.0045; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 69.5186 54.7602 71.3986 70.6563 70.4204 55.277 70.0592 53.8412 71.5763 71.9427 55.2848 69.0638 58.8428 80.8278 80.2012 56.2067 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -736,7 +741,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Mapping new task (id = 25) with DOP = 1
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Running SA mapping...
-   -MAP- Mapconf after mapping: Map: 16 4 17 18 19 5 20 7 21 22 3 23 6 24 25 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.202; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 16 4 17 18 19 5 20 7 21 22 3 23 6 24 25 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.202; Temp=84.4349; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 10; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 70.0131 55.2758 72.0527 71.2396 71.0366 55.8769 70.6985 54.384 72.2833 72.753 55.8666 69.5515 59.5572 81.8586 81.1678 56.8101 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -841,7 +847,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 16 4 17 18 19 5 20 7 21 22 3 23 6 24 25 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.202; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 16 4 17 18 19 5 20 7 21 22 3 23 6 24 25 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.202; Temp=84.4349; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 70.3926 55.6836 72.5447 71.6757 71.5087 56.3533 71.2002 54.8005 72.8198 73.3767 56.3291 69.9367 60.1033 82.6234 81.8868 57.2719 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -946,7 +953,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 16 4 17 18 19 5 20 7 21 22 3 23 6 24 25 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.262; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 16 4 17 18 19 5 20 7 21 22 3 23 6 24 25 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.262; Temp=85.4058; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 70.6892 56.0132 72.9319 72.0188 71.8752 56.7409 71.5953 55.1399 73.2441 73.8674 56.6934 70.2386 60.53 83.209 82.4391 57.6345 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -1051,7 +1059,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 16 4 17 18 19 5 20 7 21 22 3 23 6 24 25 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.308; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 16 4 17 18 19 5 20 7 21 22 3 23 6 24 25 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.308; Temp=86.128; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 70.9293 56.2823 73.2399 72.2905 72.1708 57.058 71.9173 55.4135 73.5833 74.2614 56.9916 70.4866 60.8699 83.6681 82.873 57.9244 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -1156,7 +1165,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 16 4 17 18 19 5 20 7 21 22 3 23 6 24 25 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.345; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 16 4 17 18 19 5 20 7 21 22 3 23 6 24 25 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.345; Temp=86.6827; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 71.1275 56.5037 73.4874 72.5077 72.4146 57.3188 72.1869 55.6339 73.8587 74.5822 57.2424 70.6965 61.1451 84.0349 83.2202 58.16 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -1261,7 +1271,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 16 4 17 18 19 5 20 7 21 22 3 23 6 24 25 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.374; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 16 4 17 18 19 5 20 7 21 22 3 23 6 24 25 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.374; Temp=87.1184; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 71.2901 56.6919 73.6974 72.693 72.6133 57.5426 72.4035 55.8292 74.0895 74.8482 57.4428 70.8629 61.3715 84.333 83.5029 58.3548 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -1386,7 +1397,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Mapping new task (id = 35) with DOP = 1
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Running SA mapping...
-   -MAP- Mapconf after mapping: Map: 26 4 27 28 29 5 30 7 31 32 3 33 6 34 35 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.418; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 26 4 27 28 29 5 30 7 31 32 3 33 6 34 35 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.418; Temp=87.751; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 10; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 71.4297 56.8491 73.868 72.8419 72.7843 57.7281 72.5955 55.9844 74.2811 75.0705 57.6219 71.0134 61.5605 84.5789 83.7363 58.5177 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -1491,7 +1503,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 26 4 27 28 29 5 30 7 31 32 3 33 6 34 35 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.418; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 26 4 27 28 29 5 30 7 31 32 3 33 6 34 35 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.418; Temp=87.751; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 71.5484 56.9855 74.0152 72.9707 72.9294 57.89 72.7571 56.1221 74.4453 75.2601 57.7725 71.1395 61.7206 84.785 83.9321 58.6562 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -1596,7 +1609,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 26 4 27 28 29 5 30 7 31 32 3 33 6 34 35 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.435; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 26 4 27 28 29 5 30 7 31 32 3 33 6 34 35 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.435; Temp=87.9854; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 71.6514 57.1048 74.1425 73.0821 73.0552 58.0316 72.8973 56.243 74.5874 75.4239 57.9033 71.2489 61.8582 84.96 84.0986 58.7755 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -1701,7 +1715,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 26 4 27 28 29 5 30 7 31 32 3 33 6 34 35 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.45; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 26 4 27 28 29 5 30 7 31 32 3 33 6 34 35 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.45; Temp=88.1821; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 71.7423 57.21 74.2533 73.1786 73.1663 58.1566 73.022 56.3485 74.7115 75.5672 58.0199 71.3468 61.9781 85.1108 84.2421 58.8797 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -1806,7 +1821,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 26 4 27 28 29 5 30 7 31 32 3 33 6 34 35 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.462; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 26 4 27 28 29 5 30 7 31 32 3 33 6 34 35 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.462; Temp=88.3493; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 71.8236 57.3038 74.3506 73.2632 73.2658 58.268 73.1349 56.4415 74.8216 75.6942 58.132 71.4357 62.0838 85.2424 84.3674 58.9718 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -1911,7 +1927,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 26 4 27 28 29 5 30 7 31 32 3 33 6 34 35 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.473; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 26 4 27 28 29 5 30 7 31 32 3 33 6 34 35 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.473; Temp=88.4935; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 71.8967 57.3894 74.4389 73.34 73.3556 58.3698 73.2358 56.5278 74.921 75.8084 58.2432 71.515 62.1784 85.3588 84.4784 59.0544 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -2036,7 +2053,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Mapping new task (id = 45) with DOP = 1
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Running SA mapping...
-   -MAP- Mapconf after mapping: Map: 36 4 37 38 39 5 40 7 41 42 3 43 6 44 45 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.491; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 36 4 37 38 39 5 40 7 41 42 3 43 6 44 45 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.491; Temp=88.7308; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 10; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 71.9631 57.4686 74.5205 73.4113 73.4395 58.4648 73.3261 56.6092 75.0119 75.9126 58.3459 71.5855 62.2639 85.4629 84.5779 59.1294 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -2141,7 +2159,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 36 4 37 38 39 5 40 7 41 42 3 43 6 44 45 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.491; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 36 4 37 38 39 5 40 7 41 42 3 43 6 44 45 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.491; Temp=88.7308; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 72.0249 57.5418 74.5949 73.476 73.5165 58.5522 73.411 56.6835 75.0953 76.0083 58.4398 71.6522 62.3421 85.5573 84.668 59.198 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -2246,7 +2265,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 36 4 37 38 39 5 40 7 41 42 3 43 6 44 45 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.499; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 36 4 37 38 39 5 40 7 41 42 3 43 6 44 45 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.499; Temp=88.8307; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 72.0831 57.6098 74.6629 73.5348 73.5875 58.6334 73.492 56.7509 75.1721 76.0972 58.5263 71.7165 62.4143 85.6436 84.7505 59.2615 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -2351,7 +2371,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 36 4 37 38 39 5 40 7 41 42 3 43 6 44 45 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.506; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 36 4 37 38 39 5 40 7 41 42 3 43 6 44 45 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.506; Temp=88.9211; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 72.1371 57.6745 74.7279 73.5914 73.6557 58.7109 73.5665 56.8172 75.2453 76.1802 58.6085 71.775 62.4816 85.7233 84.8268 59.3209 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -2456,7 +2477,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 36 4 37 38 39 5 40 7 41 42 3 43 6 44 45 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.513; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 36 4 37 38 39 5 40 7 41 42 3 43 6 44 45 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.513; Temp=89.004; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 72.1879 57.7364 74.7902 73.646 73.7211 58.7854 73.6361 56.8821 75.3151 76.2586 58.6869 71.8292 62.5448 85.7977 84.8981 59.3769 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -2561,7 +2583,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 36 4 37 38 39 5 40 7 41 42 3 43 6 44 45 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.519; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 36 4 37 38 39 5 40 7 41 42 3 43 6 44 45 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.519; Temp=89.0807; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 72.2378 57.7948 74.8473 73.6952 73.7816 58.855 73.706 56.9396 75.3799 76.3333 58.7596 71.885 62.6047 85.8676 84.9651 59.43 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -2686,7 +2709,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Mapping new task (id = 55) with DOP = 1
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Running SA mapping...
-   -MAP- Mapconf after mapping: Map: 46 4 47 48 49 5 50 7 51 52 3 53 6 54 55 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.531; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 46 4 47 48 49 5 50 7 51 52 3 53 6 54 55 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.531; Temp=89.2195; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 10; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 72.2853 57.8514 74.9031 73.7436 73.8407 58.9228 73.7717 56.9973 75.4429 76.4046 58.8301 71.937 62.6617 85.9337 85.0285 59.4807 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -2791,7 +2815,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 46 4 47 48 49 5 50 7 51 52 3 53 6 54 55 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.531; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 46 4 47 48 49 5 50 7 51 52 3 53 6 54 55 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.531; Temp=89.2195; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 72.3314 57.9059 74.9563 73.7897 73.8974 58.988 73.836 57.0521 75.5032 76.4731 58.8974 71.9882 62.7164 85.9967 85.089 59.5293 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -2896,7 +2921,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 46 4 47 48 49 5 50 7 51 52 3 53 6 54 55 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.536; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 46 4 47 48 49 5 50 7 51 52 3 53 6 54 55 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.536; Temp=89.2833; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 72.3756 57.9596 75.0093 73.836 73.9533 59.0526 73.8961 57.1083 75.5622 76.5395 58.9638 72.0355 62.7689 86.057 85.147 59.5763 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -3001,7 +3027,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 46 4 47 48 49 5 50 7 51 52 3 53 6 54 55 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.541; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 46 4 47 48 49 5 50 7 51 52 3 53 6 54 55 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.541; Temp=89.344; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 72.4191 58.0111 75.0595 73.8795 74.0071 59.1142 73.9567 57.1605 75.619 76.6035 59.0269 72.0838 62.8196 86.1149 85.2028 59.6217 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -3106,7 +3133,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 46 4 47 48 49 5 50 7 51 52 3 53 6 54 55 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.546; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 46 4 47 48 49 5 50 7 51 52 3 53 6 54 55 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.546; Temp=89.4022; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 72.4615 58.0621 75.1093 73.9229 74.0598 59.1755 74.0143 57.2133 75.6744 76.666 59.0891 72.1296 62.8688 86.1709 85.2567 59.6659 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -3211,7 +3239,8 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 46 4 47 48 49 5 50 7 51 52 3 53 6 54 55 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.551; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 46 4 47 48 49 5 50 7 51 52 3 53 6 54 55 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 0; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=1;   Pow=129.551; Temp=89.4582; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 72.5032 58.1115 75.1573 73.9645 74.1113 59.2346 74.0719 57.2637 75.7284 76.7267 59.149 72.1756 62.9167 86.225 85.3089 59.709 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 7 0 
@@ -3334,11 +3363,12 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = PENDING, ipc = 1, mpi = 0, 
    -MAP- Mapping new task (id = 63) with DOP = 1
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Running SA mapping...
-   -MAP- Mapconf after mapping: Map: 56 -1 57 58 59 5 60 7 61 62 3 63 6 4 -1 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=0.5;   Pow=129.332; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 56 -1 57 58 59 5 60 7 61 62 3 63 6 4 -1 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=0.5;   Pow=129.332; Temp=88.5736; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 9; activity = 1; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 72.5435 58.1584 75.2022 74.0031 74.1614 59.29 74.1308 57.3098 75.7811 76.7832 59.1351 72.2643 62.9604 85.5412 69.8495 71.7705 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 0 7 
-   -MAP- Frequency of cores: 3.5 0 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 0 3.5 
+   -MAP- Frequency of cores: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5 
    -MAP- Advancing thread 56 progress by 7e+06 instructions
    -MAP- Advancing thread 57 progress by 7e+06 instructions
    -MAP- Advancing thread 58 progress by 7e+06 instructions
@@ -3435,11 +3465,12 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 17%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 56 -1 57 58 59 5 60 7 61 62 3 63 6 4 -1 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=0.5;   Pow=129.332; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 56 -1 57 58 59 5 60 7 61 62 3 63 6 4 -1 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=0.5;   Pow=129.332; Temp=88.5736; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 72.5828 58.2072 75.2501 74.0447 74.2101 59.3491 74.1821 57.3621 75.8317 76.8167 59.0522 72.5179 62.9566 84.4811 65.1961 76.9012 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 0 7 
-   -MAP- Frequency of cores: 3.5 0 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 0 3.5 
+   -MAP- Frequency of cores: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5 
    -MAP- Advancing thread 56 progress by 7e+06 instructions
    -MAP- Advancing thread 57 progress by 7e+06 instructions
    -MAP- Advancing thread 58 progress by 7e+06 instructions
@@ -3536,11 +3567,12 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 35%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 56 -1 57 58 59 5 60 7 61 62 3 63 6 4 -1 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=0.5;   Pow=129.286; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 56 -1 57 58 59 5 60 7 61 62 3 63 6 4 -1 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=0.5;   Pow=129.286; Temp=87.8909; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 72.6213 58.2522 75.2931 74.0816 74.2589 59.4007 74.2385 57.4065 75.8793 76.8106 59.0648 72.7788 62.8974 83.7142 63.2704 78.8677 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 0 7 
-   -MAP- Frequency of cores: 3.5 0 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 0 3.5 
+   -MAP- Frequency of cores: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5 
    -MAP- Advancing thread 56 progress by 7e+06 instructions
    -MAP- Advancing thread 57 progress by 7e+06 instructions
    -MAP- Advancing thread 58 progress by 7e+06 instructions
@@ -3637,11 +3669,12 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 52%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 56 -1 57 58 59 5 60 7 61 62 3 63 6 4 -1 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=0.5;   Pow=129.291; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 56 -1 57 58 59 5 60 7 61 62 3 63 6 4 -1 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=0.5;   Pow=129.291; Temp=86.8295; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 72.66 58.2996 75.3394 74.1217 74.3056 59.454 74.2858 57.4575 75.9195 76.7928 59.0829 72.9738 62.8258 83.2999 62.5578 79.7854 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 0 7 
-   -MAP- Frequency of cores: 3.5 0 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 0 3.5 
+   -MAP- Frequency of cores: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5 
    -MAP- Advancing thread 56 progress by 7e+06 instructions
    -MAP- Advancing thread 57 progress by 7e+06 instructions
    -MAP- Advancing thread 58 progress by 7e+06 instructions
@@ -3738,11 +3771,12 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 70%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 56 -1 57 58 59 5 60 7 61 62 3 63 6 4 -1 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=0.5;   Pow=129.31; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 56 -1 57 58 59 5 60 7 61 62 3 63 6 4 -1 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=0.5;   Pow=129.31; Temp=86.0617; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 72.6982 58.3452 75.3834 74.16 74.3518 59.5017 74.3332 57.5056 75.9549 76.7762 59.1126 73.1217 62.7662 83.0482 62.5247 80.2953 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 0 7 
-   -MAP- Frequency of cores: 3.5 0 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 0 3.5 
+   -MAP- Frequency of cores: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5 
    -MAP- Advancing thread 56 progress by 7e+06 instructions
    -MAP- Advancing thread 57 progress by 7e+06 instructions
    -MAP- Advancing thread 58 progress by 7e+06 instructions
@@ -3839,11 +3873,12 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = RUNNING, ipc = 1, mpi = 0, 
    -MAP- Thread 15 from task 15 is mapped to proc 15, progress = 87%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 56 -1 57 58 59 5 60 7 61 62 3 63 6 4 -1 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=0.5;   Pow=129.32; Temp=0; Thr=70; Obj=70; Cost=70
+   -MAP- Mapconf after mapping: Map: 56 -1 57 58 59 5 60 7 61 62 3 63 6 4 -1 15; CoreActiv: 1 0 1 1 1 0 1 0 1 1 0 1 0 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=0.5;   Pow=129.32; Temp=85.647; Thr=70; Obj=70; Cost=70
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
    -MAP- Temperature of cores: 72.7356 58.3893 75.426 74.1973 74.3972 59.5461 74.3804 57.5521 75.9878 76.768 59.1491 73.2375 62.7247 82.8911 62.522 80.6194 
    -MAP- Throughput of cores: 7 0 7 7 7 0 7 0 7 7 0 7 0 7 0 7 
-   -MAP- Frequency of cores: 3.5 0 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 0 3.5 
+   -MAP- Frequency of cores: 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5 
    -MAP- Advancing thread 56 progress by 7e+06 instructions
    -MAP- Advancing thread 57 progress by 7e+06 instructions
    -MAP- Advancing thread 58 progress by 7e+06 instructions
@@ -3950,15 +3985,16 @@ Task 63 ID = 63, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0
    -MAP- Thread 6 from task 6 is mapped to proc 12, progress = 0%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Running SA mapping...
-   -MAP- Mapconf after mapping: Map: 7 -1 -1 -1 -1 -1 -1 -1 -1 6 -1 -1 -1 5 -1 3; CoreActiv: 1 1 1 1 1 1 0 0 1 1 0 1 0 1 1 1; CoreFreq: 3.5 3.5 3.5 3 3.5 3.5 3.5 3.5 2.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=0.5;   Pow=53.0068; Temp=0; Thr=28; Obj=28; Cost=28
+   -MAP- Mapconf after mapping: Map: 5 -1 -1 -1 3 -1 -1 7 -1 -1 -1 -1 -1 -1 6 -1; CoreActiv: 1 0 1 1 1 0 1 1 1 0 0 0 1 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5 3.5 3.5 2 3.5 3.5 3.5; L3ClusterActiv: 1;   UncoreFreq=0.5;   Pow=53.026; Temp=82.3823; Thr=28; Obj=28; Cost=28
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 4; activity = 4; frequency = 2; L3activity = 1
 -I- Running Hotspot...
-   -MAP- Temperature of cores: 72.7287 56.2747 59.0211 58.5723 58.0852 56.0919 58.0861 55.0688 64.3663 76.4303 58.4557 57.1986 62.6965 82.7935 62.531 80.8403 
-   -MAP- Throughput of cores: 7 0 0 0 0 0 0 0 0 7 0 0 0 7 0 7 
-   -MAP- Frequency of cores: 3.5 0 0 0 0 0 0 0 0 3.5 0 0 0 3.5 0 3.5 
-   -MAP- Advancing thread 7 progress by 7e+06 instructions
-   -MAP- Advancing thread 6 progress by 7e+06 instructions
+   -MAP- Temperature of cores: 72.7762 56.2935 59.0413 58.6101 74.395 58.262 60.2126 68.5389 60.1535 60.3487 55.6733 57.0014 57.19 65.087 75.0336 62.7413 
+   -MAP- Throughput of cores: 7 0 0 0 7 0 0 7 0 0 0 0 0 0 7 0 
+   -MAP- Frequency of cores: 3.5 2 3.5 3.5 3.5 0.5 0.5 3.5 2 0.5 3.5 0.5 2.5 3.5 3.5 2.5 
    -MAP- Advancing thread 5 progress by 7e+06 instructions
    -MAP- Advancing thread 3 progress by 7e+06 instructions
+   -MAP- Advancing thread 7 progress by 7e+06 instructions
+   -MAP- Advancing thread 6 progress by 7e+06 instructions
  * * * 
 Task 0 ID = 0, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
 Task 1 ID = 1, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
@@ -4025,21 +4061,22 @@ Task 61 ID = 61, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0
 Task 62 ID = 62, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
 Task 63 ID = 63, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
 -I- MapSim: sysElapsedPeriod = 37, system time = 0.037 sec
-   -MAP- Thread 7 from task 7 is mapped to proc 0, progress = 17%
-   -MAP- Thread 6 from task 6 is mapped to proc 9, progress = 17%
-   -MAP- Thread 5 from task 5 is mapped to proc 13, progress = 17%
-   -MAP- Thread 3 from task 3 is mapped to proc 15, progress = 17%
+   -MAP- Thread 5 from task 5 is mapped to proc 0, progress = 17%
+   -MAP- Thread 3 from task 3 is mapped to proc 4, progress = 17%
+   -MAP- Thread 7 from task 7 is mapped to proc 7, progress = 17%
+   -MAP- Thread 6 from task 6 is mapped to proc 14, progress = 17%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 7 -1 -1 -1 -1 -1 -1 -1 -1 6 -1 -1 -1 5 -1 3; CoreActiv: 1 1 1 1 1 1 0 0 1 1 0 1 0 1 1 1; CoreFreq: 3.5 3.5 3.5 3 3.5 3.5 3.5 3.5 2.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=0.5;   Pow=53.0068; Temp=0; Thr=28; Obj=28; Cost=28
+   -MAP- Mapconf after mapping: Map: 5 -1 -1 -1 3 -1 -1 7 -1 -1 -1 -1 -1 -1 6 -1; CoreActiv: 1 0 1 1 1 0 1 1 1 0 0 0 1 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5 3.5 3.5 2 3.5 3.5 3.5; L3ClusterActiv: 1;   UncoreFreq=0.5;   Pow=52.8065; Temp=82.4208; Thr=28; Obj=28; Cost=28
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
-   -MAP- Temperature of cores: 72.5198 56.1058 54.2463 53.8695 54.3408 54.2216 53.9827 52.7315 61.6116 75.8546 58.22 53.9833 62.6133 82.7175 62.4939 80.9087 
-   -MAP- Throughput of cores: 7 0 0 0 0 0 0 0 0 7 0 0 0 7 0 7 
-   -MAP- Frequency of cores: 3.5 0 0 0 0 0 0 0 0 3.5 0 0 0 3.5 0 3.5 
-   -MAP- Advancing thread 7 progress by 7e+06 instructions
-   -MAP- Advancing thread 6 progress by 7e+06 instructions
+   -MAP- Temperature of cores: 72.8141 56.2483 54.5405 54.4192 74.1438 57.8547 59.1772 71.26 55.6498 55.523 54.1304 53.4573 54.0072 63.7632 79.6972 60.9068 
+   -MAP- Throughput of cores: 7 0 0 0 7 0 0 7 0 0 0 0 0 0 7 0 
+   -MAP- Frequency of cores: 3.5 2 3.5 3.5 3.5 0.5 0.5 3.5 2 0.5 3.5 0.5 2.5 3.5 3.5 2.5 
    -MAP- Advancing thread 5 progress by 7e+06 instructions
    -MAP- Advancing thread 3 progress by 7e+06 instructions
+   -MAP- Advancing thread 7 progress by 7e+06 instructions
+   -MAP- Advancing thread 6 progress by 7e+06 instructions
  * * * 
 Task 0 ID = 0, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
 Task 1 ID = 1, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
@@ -4106,21 +4143,22 @@ Task 61 ID = 61, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0
 Task 62 ID = 62, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
 Task 63 ID = 63, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
 -I- MapSim: sysElapsedPeriod = 38, system time = 0.038 sec
-   -MAP- Thread 7 from task 7 is mapped to proc 0, progress = 35%
-   -MAP- Thread 6 from task 6 is mapped to proc 9, progress = 35%
-   -MAP- Thread 5 from task 5 is mapped to proc 13, progress = 35%
-   -MAP- Thread 3 from task 3 is mapped to proc 15, progress = 35%
+   -MAP- Thread 5 from task 5 is mapped to proc 0, progress = 35%
+   -MAP- Thread 3 from task 3 is mapped to proc 4, progress = 35%
+   -MAP- Thread 7 from task 7 is mapped to proc 7, progress = 35%
+   -MAP- Thread 6 from task 6 is mapped to proc 14, progress = 35%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 7 -1 -1 -1 -1 -1 -1 -1 -1 6 -1 -1 -1 5 -1 3; CoreActiv: 1 1 1 1 1 1 0 0 1 1 0 1 0 1 1 1; CoreFreq: 3.5 3.5 3.5 3 3.5 3.5 3.5 3.5 2.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=0.5;   Pow=52.8748; Temp=0; Thr=28; Obj=28; Cost=28
+   -MAP- Mapconf after mapping: Map: 5 -1 -1 -1 3 -1 -1 7 -1 -1 -1 -1 -1 -1 6 -1; CoreActiv: 1 0 1 1 1 0 1 1 1 0 0 0 1 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5 3.5 3.5 2 3.5 3.5 3.5; L3ClusterActiv: 1;   UncoreFreq=0.5;   Pow=52.6649; Temp=78.2998; Thr=28; Obj=28; Cost=28
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
-   -MAP- Temperature of cores: 72.2771 55.8444 51.9493 51.6165 52.8992 53.1481 52.4948 51.1792 60.3025 75.3416 57.8834 52.694 62.4618 82.6271 62.3906 80.8484 
-   -MAP- Throughput of cores: 7 0 0 0 0 0 0 0 0 7 0 0 0 7 0 7 
-   -MAP- Frequency of cores: 3.5 0 0 0 0 0 0 0 0 3.5 0 0 0 3.5 0 3.5 
-   -MAP- Advancing thread 7 progress by 7e+06 instructions
-   -MAP- Advancing thread 6 progress by 7e+06 instructions
+   -MAP- Temperature of cores: 72.8406 56.1448 52.5702 52.6193 73.8269 57.3811 58.4672 71.8502 53.7102 53.4519 53.1692 52.3143 52.1143 63.0916 80.8893 60.1595 
+   -MAP- Throughput of cores: 7 0 0 0 7 0 0 7 0 0 0 0 0 0 7 0 
+   -MAP- Frequency of cores: 3.5 2 3.5 3.5 3.5 0.5 0.5 3.5 2 0.5 3.5 0.5 2.5 3.5 3.5 2.5 
    -MAP- Advancing thread 5 progress by 7e+06 instructions
    -MAP- Advancing thread 3 progress by 7e+06 instructions
+   -MAP- Advancing thread 7 progress by 7e+06 instructions
+   -MAP- Advancing thread 6 progress by 7e+06 instructions
  * * * 
 Task 0 ID = 0, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
 Task 1 ID = 1, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
@@ -4187,21 +4225,22 @@ Task 61 ID = 61, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0
 Task 62 ID = 62, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
 Task 63 ID = 63, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
 -I- MapSim: sysElapsedPeriod = 39, system time = 0.039 sec
-   -MAP- Thread 7 from task 7 is mapped to proc 0, progress = 52%
-   -MAP- Thread 6 from task 6 is mapped to proc 9, progress = 52%
-   -MAP- Thread 5 from task 5 is mapped to proc 13, progress = 52%
-   -MAP- Thread 3 from task 3 is mapped to proc 15, progress = 52%
+   -MAP- Thread 5 from task 5 is mapped to proc 0, progress = 52%
+   -MAP- Thread 3 from task 3 is mapped to proc 4, progress = 52%
+   -MAP- Thread 7 from task 7 is mapped to proc 7, progress = 52%
+   -MAP- Thread 6 from task 6 is mapped to proc 14, progress = 52%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 7 -1 -1 -1 -1 -1 -1 -1 -1 6 -1 -1 -1 5 -1 3; CoreActiv: 1 1 1 1 1 1 0 0 1 1 0 1 0 1 1 1; CoreFreq: 3.5 3.5 3.5 3 3.5 3.5 3.5 3.5 2.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=0.5;   Pow=52.8533; Temp=0; Thr=28; Obj=28; Cost=28
+   -MAP- Mapconf after mapping: Map: 5 -1 -1 -1 3 -1 -1 7 -1 -1 -1 -1 -1 -1 6 -1; CoreActiv: 1 0 1 1 1 0 1 1 1 0 0 0 1 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5 3.5 3.5 2 3.5 3.5 3.5; L3ClusterActiv: 1;   UncoreFreq=0.5;   Pow=52.7093; Temp=82.9667; Thr=28; Obj=28; Cost=28
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
-   -MAP- Temperature of cores: 72.0769 55.5924 50.6396 50.3284 52.1244 52.5173 51.711 50.1662 59.5513 74.9409 57.5648 52.0198 62.3027 82.5267 62.2704 80.7555 
-   -MAP- Throughput of cores: 7 0 0 0 0 0 0 0 0 7 0 0 0 7 0 7 
-   -MAP- Frequency of cores: 3.5 0 0 0 0 0 0 0 0 3.5 0 0 0 3.5 0 3.5 
-   -MAP- Advancing thread 7 progress by 7e+06 instructions
-   -MAP- Advancing thread 6 progress by 7e+06 instructions
+   -MAP- Temperature of cores: 72.8514 56.0264 51.4773 51.641 73.5967 56.9747 57.955 71.904 52.6306 52.342 52.6019 51.7312 50.9341 62.6019 81.1487 59.7066 
+   -MAP- Throughput of cores: 7 0 0 0 7 0 0 7 0 0 0 0 0 0 7 0 
+   -MAP- Frequency of cores: 3.5 2 3.5 3.5 3.5 0.5 0.5 3.5 2 0.5 3.5 0.5 2.5 3.5 3.5 2.5 
    -MAP- Advancing thread 5 progress by 7e+06 instructions
    -MAP- Advancing thread 3 progress by 7e+06 instructions
+   -MAP- Advancing thread 7 progress by 7e+06 instructions
+   -MAP- Advancing thread 6 progress by 7e+06 instructions
  * * * 
 Task 0 ID = 0, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
 Task 1 ID = 1, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
@@ -4268,21 +4307,22 @@ Task 61 ID = 61, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0
 Task 62 ID = 62, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
 Task 63 ID = 63, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
 -I- MapSim: sysElapsedPeriod = 40, system time = 0.04 sec
-   -MAP- Thread 7 from task 7 is mapped to proc 0, progress = 70%
-   -MAP- Thread 6 from task 6 is mapped to proc 9, progress = 70%
-   -MAP- Thread 5 from task 5 is mapped to proc 13, progress = 70%
-   -MAP- Thread 3 from task 3 is mapped to proc 15, progress = 70%
+   -MAP- Thread 5 from task 5 is mapped to proc 0, progress = 70%
+   -MAP- Thread 3 from task 3 is mapped to proc 4, progress = 70%
+   -MAP- Thread 7 from task 7 is mapped to proc 7, progress = 70%
+   -MAP- Thread 6 from task 6 is mapped to proc 14, progress = 70%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 7 -1 -1 -1 -1 -1 -1 -1 -1 6 -1 -1 -1 5 -1 3; CoreActiv: 1 1 1 1 1 1 0 0 1 1 0 1 0 1 1 1; CoreFreq: 3.5 3.5 3.5 3 3.5 3.5 3.5 3.5 2.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=0.5;   Pow=52.8388; Temp=0; Thr=28; Obj=28; Cost=28
+   -MAP- Mapconf after mapping: Map: 5 -1 -1 -1 3 -1 -1 7 -1 -1 -1 -1 -1 -1 6 -1; CoreActiv: 1 0 1 1 1 0 1 1 1 0 0 0 1 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5 3.5 3.5 2 3.5 3.5 3.5; L3ClusterActiv: 1;   UncoreFreq=0.5;   Pow=52.7213; Temp=84.1604; Thr=28; Obj=28; Cost=28
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
-   -MAP- Temperature of cores: 71.9202 55.3744 49.8167 49.4983 51.6279 52.0599 51.1639 49.5152 59.0649 74.6301 57.3062 51.6064 62.1636 82.4283 62.161 80.6706 
-   -MAP- Throughput of cores: 7 0 0 0 0 0 0 0 0 7 0 0 0 7 0 7 
-   -MAP- Frequency of cores: 3.5 0 0 0 0 0 0 0 0 3.5 0 0 0 3.5 0 3.5 
-   -MAP- Advancing thread 7 progress by 7e+06 instructions
-   -MAP- Advancing thread 6 progress by 7e+06 instructions
+   -MAP- Temperature of cores: 72.8475 55.9109 50.7879 51.0533 73.4118 56.6666 57.5732 71.8329 51.9444 51.7508 52.2146 51.3497 50.1615 62.2092 81.1279 59.3806 
+   -MAP- Throughput of cores: 7 0 0 0 7 0 0 7 0 0 0 0 0 0 7 0 
+   -MAP- Frequency of cores: 3.5 2 3.5 3.5 3.5 0.5 0.5 3.5 2 0.5 3.5 0.5 2.5 3.5 3.5 2.5 
    -MAP- Advancing thread 5 progress by 7e+06 instructions
    -MAP- Advancing thread 3 progress by 7e+06 instructions
+   -MAP- Advancing thread 7 progress by 7e+06 instructions
+   -MAP- Advancing thread 6 progress by 7e+06 instructions
  * * * 
 Task 0 ID = 0, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
 Task 1 ID = 1, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
@@ -4349,29 +4389,30 @@ Task 61 ID = 61, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0
 Task 62 ID = 62, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
 Task 63 ID = 63, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
 -I- MapSim: sysElapsedPeriod = 41, system time = 0.041 sec
-   -MAP- Thread 7 from task 7 is mapped to proc 0, progress = 87%
-   -MAP- Thread 6 from task 6 is mapped to proc 9, progress = 87%
-   -MAP- Thread 5 from task 5 is mapped to proc 13, progress = 87%
-   -MAP- Thread 3 from task 3 is mapped to proc 15, progress = 87%
+   -MAP- Thread 5 from task 5 is mapped to proc 0, progress = 87%
+   -MAP- Thread 3 from task 3 is mapped to proc 4, progress = 87%
+   -MAP- Thread 7 from task 7 is mapped to proc 7, progress = 87%
+   -MAP- Thread 6 from task 6 is mapped to proc 14, progress = 87%
    -MAP- Period instantaneous QoS = 1, total QoS = 1
    -MAP- Skipped SA mapping for this period: no change in workload, all budgets satisfied
-   -MAP- Mapconf after mapping: Map: 7 -1 -1 -1 -1 -1 -1 -1 -1 6 -1 -1 -1 5 -1 3; CoreActiv: 1 1 1 1 1 1 0 0 1 1 0 1 0 1 1 1; CoreFreq: 3.5 3.5 3.5 3 3.5 3.5 3.5 3.5 2.5 3.5 3.5 3.5 3 3.5 3.5 3.5; L3ClusterActiv: 0;   UncoreFreq=0.5;   Pow=52.8275; Temp=0; Thr=28; Obj=28; Cost=28
+   -MAP- Mapconf after mapping: Map: 5 -1 -1 -1 3 -1 -1 7 -1 -1 -1 -1 -1 -1 6 -1; CoreActiv: 1 0 1 1 1 0 1 1 1 0 0 0 1 1 1 1; CoreFreq: 3.5 3.5 3.5 3.5 3.5 3.5 3 3.5 3.5 3.5 3.5 3.5 2 3.5 3.5 3.5; L3ClusterActiv: 1;   UncoreFreq=0.5;   Pow=52.7199; Temp=84.4205; Thr=28; Obj=28; Cost=28
+   -MAP- Number of processors changed values w.r.t. prevMap: mapping = 0; activity = 0; frequency = 0; L3activity = 0
 -I- Running Hotspot...
-   -MAP- Temperature of cores: 71.7963 55.194 49.3139 48.9244 51.283 51.7183 50.7619 49.0905 58.727 74.3899 57.1056 51.3274 62.0489 82.3389 62.0693 80.6023 
-   -MAP- Throughput of cores: 7 0 0 0 0 0 0 0 0 7 0 0 0 7 0 7 
-   -MAP- Frequency of cores: 3.5 0 0 0 0 0 0 0 0 3.5 0 0 0 3.5 0 3.5 
-   -MAP- Advancing thread 7 progress by 7e+06 instructions
-   -MAP- Advancing thread 6 progress by 7e+06 instructions
+   -MAP- Temperature of cores: 72.8367 55.8104 50.319 50.6593 73.2613 56.4268 57.2798 71.7366 51.4877 51.3169 51.9161 51.0766 49.6269 61.891 81.0277 59.1325 
+   -MAP- Throughput of cores: 7 0 0 0 7 0 0 7 0 0 0 0 0 0 7 0 
+   -MAP- Frequency of cores: 3.5 2 3.5 3.5 3.5 0.5 0.5 3.5 2 0.5 3.5 0.5 2.5 3.5 3.5 2.5 
    -MAP- Advancing thread 5 progress by 7e+06 instructions
    -MAP- Advancing thread 3 progress by 7e+06 instructions
-   -MAP- Thread 7 has completed
-   -MAP- Task 7 has completed
-   -MAP- Thread 6 has completed
-   -MAP- Task 6 has completed
+   -MAP- Advancing thread 7 progress by 7e+06 instructions
+   -MAP- Advancing thread 6 progress by 7e+06 instructions
    -MAP- Thread 5 has completed
    -MAP- Task 5 has completed
    -MAP- Thread 3 has completed
    -MAP- Task 3 has completed
+   -MAP- Thread 7 has completed
+   -MAP- Task 7 has completed
+   -MAP- Thread 6 has completed
+   -MAP- Task 6 has completed
  * * * 
 Task 0 ID = 0, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1
 Task 1 ID = 1, DOP = 1, instr = 40000000, status = COMPLETED, ipc = 1, mpi = 0, mr = Powerlaw 0.1 -0.1, QoS = 1

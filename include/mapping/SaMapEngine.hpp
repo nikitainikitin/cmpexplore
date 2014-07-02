@@ -44,7 +44,8 @@ namespace cmpex {
       virtual ~SaMapEngine ();
       
       // Main method that invokes the mapping.
-      void Map(MapConf * mconf = 0, bool silent_mode = false);
+      void Map(MapConf * mconf, MapConf * prevMap,
+               const vector<double>& prevProcThr, bool silent_mode = false);
 
     private:
 

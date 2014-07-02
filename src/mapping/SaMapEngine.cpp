@@ -76,7 +76,8 @@ SaMapEngine::~SaMapEngine() {}
  * Main method that invokes the mapping.
  */
 
-void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
+void SaMapEngine::Map(MapConf * mconf, MapConf * prevMap,
+                      const vector<double>& prevProcThr, bool silent_mode)
 {
   MapConf *curMap, *bestMap;
 
@@ -86,7 +87,7 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
   double lambda = 0.5;
 
   // 1. Initialize mapping with mconf or a greedy mapping.
-  curMap = (mconf ? new MapConf(*mconf) : CreateGreedyMapping());
+  curMap = new MapConf(*mconf);
   // In the tightBudget mode prioritize feasible mapping vs
   // optimal mapping, hence reset all activities to off-state.
   if (tightBudget == TS_ON) {
@@ -96,7 +97,7 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
     curMap->L3ClusterActiv.assign(curMap->L3ClusterCnt, false);
   }
 
-  EvalMappingCost(curMap, lambda);
+  EvalMappingCost(curMap, prevMap, prevProcThr, lambda);
 
   // assume that the initial solution has all cores and L3 off,
   // hence the evaluated power is a lower bound static power
@@ -159,7 +160,7 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
       //if (idx == 1) cout << "NM:::"; newMap->Print();
 
       // 2b. Estimate cost of new mapping
-      EvalMappingCost(newMap, lambda);
+      EvalMappingCost(newMap, prevMap, prevProcThr, lambda);
 
       // 2c. Decide acceptance
       lambda = 0.5*tInit/tCur;
@@ -204,17 +205,6 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
     ++oIter;
   } while (oIter*lIterCnt - last_impr < no_impr_limit);
 
-  // if this assert fails it is probably that no feasible solution has been found,
-  // check if the constraints are too strict
-  if (!bestMap) {
-    cout << "-E- SAMapEngine: no feasible mapping found.";
-    cout << " It is likely that the power budget is too strict." << endl;
-    cout << "    The lower bound for power (no active cores/L3) at current temperature is "
-         << powerLB << " W" << endl;
-    cout << "    Try running with higher -max_power. Exiting..." << endl;
-    exit(1);
-  }
-
   if (!silent_mode) {
     cout << "Finished search (no improvement during the last "
          << no_impr_limit << " iterations)" << endl;
@@ -223,14 +213,32 @@ void SaMapEngine::Map(MapConf * mconf, bool silent_mode)
     cout << "Params: tCur = " << tCur << endl;
   }
 
+  // if this assert fails it is probably that no feasible solution has been found,
+  // check if the constraints are too strict
+  if (!bestMap) {
+    if (config.MaxTemp() > 1.0e5) { // failure due to the power constraint
+      cout << "-E- SAMapEngine: no feasible mapping found.";
+      cout << " It is likely that the power budget is too strict." << endl;
+      cout << "    The lower bound for power (no active cores/L3) at current temperature is "
+           << powerLB << " W" << endl;
+      cout << "    Try running with higher -max_power. Exiting..." << endl;
+      exit(1);
+    }
+    else { // failure is likely to be due to the temperature constraint
+      // Last resort: accept the all-cores-off solution
+      cout << "-W- SAMapEngine: no feasible mapping found under the temperature constraint." << endl;
+      cout << "-W- SAMapEngine: trying the all-off solution." << endl;
+      curMap->coreActiv.assign(curMap->coreCnt, false);
+      EvalMappingCost(curMap, prevMap, prevProcThr, -0.1);
+      bestMap = curMap;
+    }
+  }
+
   // cleanup
   if (curMap != bestMap) delete curMap;
-  if (mconf) { // copy data back to config
-    if (mconf != bestMap) *mconf = *bestMap;
-  }
-  else {
-    delete bestMap;
-  }
+  assert(mconf != bestMap);
+  *mconf = *bestMap; // copy data back to config
+  delete bestMap;
 }
 
 //=======================================================================
