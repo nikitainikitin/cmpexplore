@@ -163,7 +163,11 @@ void MapSim::Run() {
     SaMapEngine me;
     if (sysElapsedPeriod == 0 || !SkipRemapping(lastPeriodWlChanged)) {
       cout << "   -MAP- Running SA mapping..." << endl;
-      me.Map(mconf, prevMap, prevProcThr, true); // run SA mapping
+      //me.Map(mconf, prevMap, prevProcThr, true); // run SA mapping
+      if(!(me.Map(mconf, prevMap, prevProcThr, true))) {// failure due to temperature violation
+	cout << "-MAP- Re-running SA with all off initial condition..." << endl;
+	me.Map(mconf, prevMap, prevProcThr, true); // re-run SA mapping starting with
+      }
     }
     else {
       cout << "   -MAP- Skipped SA mapping for this period: "
@@ -319,23 +323,84 @@ void MapSim::Run() {
  */
 
 bool MapSim::SkipRemapping(bool lastPeriodWlChanged) {
+  // DEBUG
+  cout << "ENTERING SKIP REMAPPING...";
+
   if (lastPeriodWlChanged) return false;
+
+  int num_cores_on = 0;
+  //bool all_cores_off = true;
+  for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
+    if (cmpConfig.GetProcessor(p)->Thr() > E_DOUBLE) {
+      //all_cores_off = false;
+      num_cores_on++;
+      //break;
+    }
+  }
+  
+  //if (all_cores_off) return false;
+  if (num_cores_on == 0) return false;
 
   // evaluate temperature at the end of the next period
   // if running with the same mapping
+
+  // DEBUG
+  cout << "ESTIMATING TEMPERATURE...";
+
+  // obtaining the previous power pattern
+  vector<double> power_vec;
+  PowerModel::CreatePTsimPowerVector(cmpConfig.Cmp(), power_vec);
+
+  // updating the predicted temperatures
+  PTsim::PredictTemp(cmpConfig.Cmp(), &power_vec);  
 
   double max_temp = 0.0;
 
   // MCs
   for (int mc = 0; mc < cmpConfig.MemCtrlCnt(); ++mc) {
-    max_temp = max(max_temp, PTsim::MCTemp(mc));
+    max_temp = max(max_temp, PTsim::MCTempEst(mc));
   }
 
   // Tiles
   Cluster * clCmp = static_cast<Cluster*>(cmpConfig.Cmp());
   MeshIc * mic = static_cast<MeshIc*>(clCmp->Ic());
   for (int tile = 0; tile < mic->TCnt(); ++tile) {
-    max_temp = max(max_temp, PTsim::GetMaxTempInTile(tile));
+    max_temp = max(max_temp, PTsim::GetMaxEstTempInTile(tile));
+  }
+  
+  // DEBUG
+  cout << "MAX TEMP = " << max_temp << endl;
+
+
+  double temp_slack = config.MaxTemp() - max_temp;
+  double min_temp_slack = 10.0;
+  double total_power = 0;
+  for (int i=0 ; i < power_vec.size(); i++) {
+    total_power += power_vec[i];
+  }
+  double power_slack = config.MaxPower() - total_power;
+  double min_power_slack_fraction = 0.2;
+
+  if ((num_cores_on < cmpConfig.ProcCnt()) &&
+      (wlConfig.HasPendingTasks()) &&
+      (temp_slack > min_temp_slack) && 
+      (power_slack > min_power_slack_fraction*config.MaxPower())) {
+    return false;
+  }
+
+  double min_freq = MAX_FREQ;
+  for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
+    if (cmpConfig.GetProcessor(p)->Freq() < min_freq) {
+      min_freq = cmpConfig.GetProcessor(p)->Freq();
+      break;
+    }
+  }
+
+  if ((min_freq < MAX_FREQ) &&
+      (!wlConfig.HasPendingTasks()) &&
+      (temp_slack > min_temp_slack) && 
+      (power_slack > min_power_slack_fraction*config.MaxPower())) {
+    return false;
   }
 
   bool temp_satisfied = (max_temp <= config.MaxTemp());

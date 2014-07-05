@@ -746,6 +746,8 @@ void PTsim::PredictTemp(cmp::Component * cmp, vector<double> * power_vec) {
 
   double TEXT = 45.0; // ambient temperature
 
+  double maxtemp = 0.0;
+
   // MC
   for (int mc = 0; mc < cmpConfig.MemCtrlCnt(); ++mc) {
     //acctemp = MCTemp_[mc];
@@ -754,6 +756,7 @@ void PTsim::PredictTemp(cmp::Component * cmp, vector<double> * power_vec) {
       acctemp += MCTempPredictorCoeff_[mc][idx]*(*power_vec)[MCTempPredictorIdx_[mc][idx]];
     }
     MCTempEst_[mc]=acctemp;
+    maxtemp = max(maxtemp,acctemp);
   }
 
   // TILES
@@ -766,6 +769,7 @@ void PTsim::PredictTemp(cmp::Component * cmp, vector<double> * power_vec) {
       acctemp += MeshLinkWTempPredictorCoeff_[tile][idx]*(*power_vec)[MeshLinkWTempPredictorIdx_[tile][idx]];
     }
     MeshLinkWTempEst_[tile]=acctemp;
+    maxtemp = max(maxtemp,acctemp);
 
     //RTR
     //acctemp = MeshRouterTemp_[tile];
@@ -774,6 +778,7 @@ void PTsim::PredictTemp(cmp::Component * cmp, vector<double> * power_vec) {
       acctemp += MeshRouterTempPredictorCoeff_[tile][idx]*(*power_vec)[MeshRouterTempPredictorIdx_[tile][idx]];
     }
     MeshRouterTempEst_[tile]=acctemp;
+    maxtemp = max(maxtemp,acctemp);
 
     //L3
     //acctemp = L3Temp_[tile];
@@ -782,6 +787,7 @@ void PTsim::PredictTemp(cmp::Component * cmp, vector<double> * power_vec) {
       acctemp += L3TempPredictorCoeff_[tile][idx]*(*power_vec)[L3TempPredictorIdx_[tile][idx]];
     }
     L3TempEst_[tile]=acctemp;
+    maxtemp = max(maxtemp,acctemp);
 
     //LINKN
     //acctemp = MeshLinkNTemp_[tile];
@@ -790,6 +796,7 @@ void PTsim::PredictTemp(cmp::Component * cmp, vector<double> * power_vec) {
       acctemp += MeshLinkNTempPredictorCoeff_[tile][idx]*(*power_vec)[MeshLinkNTempPredictorIdx_[tile][idx]];
     }
     MeshLinkNTempEst_[tile]=acctemp;
+    maxtemp = max(maxtemp,acctemp);
 
     //L2
     //acctemp = L2Temp_[tile];
@@ -798,6 +805,7 @@ void PTsim::PredictTemp(cmp::Component * cmp, vector<double> * power_vec) {
       acctemp += L2TempPredictorCoeff_[tile][idx]*(*power_vec)[L2TempPredictorIdx_[tile][idx]];
     }
     L2TempEst_[tile]=acctemp;
+    maxtemp = max(maxtemp,acctemp);
 
     //CORE
     //acctemp = coreTemp_[tile];
@@ -806,6 +814,7 @@ void PTsim::PredictTemp(cmp::Component * cmp, vector<double> * power_vec) {
       acctemp += coreTempPredictorCoeff_[tile][idx]*(*power_vec)[coreTempPredictorIdx_[tile][idx]];
     }
     coreTempEst_[tile]=acctemp;
+    maxtemp = max(maxtemp,acctemp);
 
     //L1D
     //acctemp = L1DTemp_[tile];
@@ -814,6 +823,7 @@ void PTsim::PredictTemp(cmp::Component * cmp, vector<double> * power_vec) {
       acctemp += L1DTempPredictorCoeff_[tile][idx]*(*power_vec)[L1DTempPredictorIdx_[tile][idx]];
     }
     L1DTempEst_[tile]=acctemp;
+    maxtemp = max(maxtemp,acctemp);
 
     //L1I
     //acctemp = L1ITemp_[tile];
@@ -822,8 +832,10 @@ void PTsim::PredictTemp(cmp::Component * cmp, vector<double> * power_vec) {
       acctemp += L1ITempPredictorCoeff_[tile][idx]*(*power_vec)[L1ITempPredictorIdx_[tile][idx]];
     }
     L1ITempEst_[tile]=acctemp;
+    maxtemp = max(maxtemp,acctemp);
 
   }
+
 }
 
 //=======================================================================

@@ -311,6 +311,9 @@ double MapEngine::CalcTempPenalty(double lambda) const
 {
   double temp_penalty = 1.0;
 
+  double delta_temp = 5.0; // 5 DEGREE MARGIN
+  double MaxTemp = config.MaxTemp()-delta_temp;
+
   lambda = 1.0;
 
   Cluster * clCmp = static_cast<Cluster*>(cmpConfig.Cmp());
@@ -321,19 +324,22 @@ double MapEngine::CalcTempPenalty(double lambda) const
   // MCs
   for (int mc = 0; mc < cmpConfig.MemCtrlCnt(); ++mc) {
     double mc_temp = PTsim::MCTempEst(mc);
-    double temp_excess = max(0.0, mc_temp - config.MaxTemp());
+    //double temp_excess = max(0.0, mc_temp - config.MaxTemp());
+    double temp_excess = max(0.0, mc_temp - MaxTemp);
     max_temp_excess = max(max_temp_excess, temp_excess);
   }
 
   // Tiles
   for (int tile = 0; tile < mic->TCnt(); ++tile) {
     double tile_temp = PTsim::GetMaxEstTempInTile(tile);
-    double temp_excess = max(0.0, tile_temp - config.MaxTemp());
+    //double temp_excess = max(0.0, tile_temp - config.MaxTemp());
+    double temp_excess = max(0.0, tile_temp - MaxTemp);
     max_temp_excess = max(max_temp_excess, temp_excess);
   }
 
   // use square of maximum temp access
-  temp_penalty = 1.0/(1.0 + lambda*max_temp_excess*max_temp_excess/config.MaxTemp());
+  //temp_penalty = 1.0/(1.0 + lambda*max_temp_excess*max_temp_excess/config.MaxTemp());
+  temp_penalty = 1.0/(1.0 + lambda*max_temp_excess*max_temp_excess/MaxTemp);
 
   //cout << "   -MAP-DEBUG- Temperature penalty = " << temp_penalty << endl;
 

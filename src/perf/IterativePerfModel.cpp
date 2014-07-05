@@ -82,6 +82,11 @@ StatMetrics * IterativePerfModel::Run ()
   }
   if (!active_core_exists) {
     //cout << "-W- There are no actively runnning cores, throughput is 0" << endl;
+    for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
+      Processor * proc = cmpConfig.GetProcessor(p);
+      proc->Thr(0.0);
+      proc->Lambda(0.0);
+    }
     InitModels(); // for the power model to work
     return new StatMetrics(0.0, MAX_DOUBLE);
   }
