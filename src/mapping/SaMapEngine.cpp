@@ -88,38 +88,11 @@ void SaMapEngine::Map(MapConf * mconf, MapConf * prevMap,
 
   // 1. Initialize mapping with mconf or a greedy mapping.
   curMap = new MapConf(*mconf);
-  // In the tightBudget mode prioritize feasible mapping vs
-  // optimal mapping, hence reset all activities to off-state.
-  if (tightBudget == TS_ON) {
-    curMap->coreActiv.assign(curMap->coreCnt, false);
-    curMap->coreFreq.assign(curMap->coreCnt, MIN_FREQ);
-    curMap->uncoreFreq = MIN_FREQ;
-    curMap->L3ClusterActiv.assign(curMap->L3ClusterCnt, false);
-  }
+
+  // 1a. Run a heuristic to choose active cores and their frequencies
+  ChooseActiveCores(curMap, prevMap, prevProcThr);
 
   EvalMappingCost(curMap, prevMap, prevProcThr, lambda);
-
-  // assume that the initial solution has all cores and L3 off,
-  // hence the evaluated power is a lower bound static power
-  double powerLB = curMap->power;
-
-  if (tightBudget == TS_UNDEF) { // first call
-    // check if the power budget is tight,
-    // meaning not more than 1/3 is left for dynamic power.
-    if (config.MaxPower() / powerLB < 1.5) {
-      cout << "   -MAP- TightBudget mode is on.";
-      cout << " The lower bound for power (no active cores/L3) is = " << powerLB << " W" << endl;
-      tightBudget = TS_ON;
-    }
-    else {
-      tightBudget = TS_OFF;
-      // initialize mapping with a high-performance solution
-      curMap->coreActiv.assign(curMap->coreCnt, true);
-      curMap->coreFreq.assign(curMap->coreCnt, MAX_FREQ);
-      curMap->uncoreFreq = MAX_FREQ;
-      curMap->L3ClusterActiv.assign(curMap->L3ClusterCnt, true);
-    }
-  }
 
   bool cur_budgets_met = (config.MaxPower() - curMap->power > 0) &&
                          (config.MaxTemp() - curMap->temp > 0);
@@ -219,8 +192,6 @@ void SaMapEngine::Map(MapConf * mconf, MapConf * prevMap,
     if (config.MaxTemp() > 1.0e5) { // failure due to the power constraint
       cout << "-E- SAMapEngine: no feasible mapping found.";
       cout << " It is likely that the power budget is too strict." << endl;
-      cout << "    The lower bound for power (no active cores/L3) at current temperature is "
-           << powerLB << " W" << endl;
       cout << "    Try running with higher -max_power. Exiting..." << endl;
       exit(1);
     }

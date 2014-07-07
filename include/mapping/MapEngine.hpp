@@ -73,6 +73,9 @@ namespace cmpex {
 
       double GetTemperature() const;
 
+      void ChooseActiveCores(MapConf * mc, MapConf * prevMap,
+                             const vector<double>& prevProcThr) const;
+
       // Evaluate cost of the provided mapping
       void EvalMappingCost(MapConf * mc, MapConf * prevMap,
                            const vector<double>& prevProcThr, double lambda = 1.0) const;

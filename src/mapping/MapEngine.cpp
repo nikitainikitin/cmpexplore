@@ -497,6 +497,42 @@ void MapEngine::EvalMappingCost(MapConf * mc, MapConf * prevMap,
 }
 
 //=======================================================================
+/*
+ * A heuristic that chooses active cores and their frequencies.
+ */
+
+void MapEngine::ChooseActiveCores(MapConf * mc, MapConf * prevMap,
+                                  const vector<double>& prevProcThr) const
+{
+  vector<double> corePriorities;
+  corePriorities.assign(cmpConfig.ProcCnt(), -1.0);
+
+  // 1. Go over all cores and assign priorities to the respective threads
+  for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
+    Thread * thread = (mc->map[p] != MapConf::IDX_UNASSIGNED) ?
+        wlConfig.GetThreadByGid(mc->map[p]) : 0;
+    if (!thread) continue;
+    if (thread->thread_status == WlConfig::RUNNING) {
+      double instr_to_complete = thread->thread_instructions - thread->thread_progress;
+      double slack_avail_ms = thread->task->task_deadline - thread->task->task_elapsed;
+      bool deadline_not_passed = (slack_avail_ms > 0);
+      // approximate slack_avail_ms = 0.5 ms (< 1 ms) if the deadline has passed
+      double req_thr_ipns = deadline_not_passed ? instr_to_complete/(slack_avail_ms*1e6) :
+                                                  instr_to_complete/(0.5*1e6);
+    }
+    else if (thread->thread_status == WlConfig::SCHEDULED) {
+      // TBD
+    }
+    else {
+      cout << "-E- ChooseActiveCores: Thread status is different from SCHEDULED and RUNNING"
+           << " -> Exiting..." << endl;
+      exit(1);
+    }
+  }
+
+}
+
+//=======================================================================
 
   } // namespace mapping
 
