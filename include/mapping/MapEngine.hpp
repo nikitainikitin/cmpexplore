@@ -25,6 +25,10 @@ using std::vector;
 
 namespace cmpex {
 
+  namespace cmp {
+    class Processor;
+  }
+
   namespace mapping {
 
     class MapTransform;
@@ -75,6 +79,11 @@ namespace cmpex {
 
       void ChooseActiveCores(MapConf * mc, MapConf * prevMap,
                              const vector<double>& prevProcThr) const;
+
+      double MapCorePriorityToFreq ( double core_priority ) const;
+
+      double CalcMinReqFreq ( cmp::Processor * proc, double req_thr_ipns,
+                                                     double wc_cpi_thread ) const;
 
       // Evaluate cost of the provided mapping
       void EvalMappingCost(MapConf * mc, MapConf * prevMap,

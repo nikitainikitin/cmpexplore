@@ -83,6 +83,8 @@ namespace cmpex {
           core2_idx = tiles[RandInt(tiles.size())];
 
         std::swap(mConf.map[core1_idx], mConf.map[core2_idx]);
+        mConf.coreActiv.swap(mConf.coreActiv[core1_idx], mConf.coreActiv[core2_idx]);
+        std::swap(mConf.coreFreq[core1_idx], mConf.coreFreq[core2_idx]);
         return true;
       }
     };
@@ -118,7 +120,7 @@ namespace cmpex {
     struct MapTrDecreaseCoreFreq : public MapTransform {
       bool UpdateMap(MapConf& mConf) const {
         int core_idx = RandInt(mConf.coreCnt);
-        if (mConf.coreFreq[core_idx] >= 2*FREQ_STEP) {
+        if (mConf.coreFreq[core_idx] >= MIN_FREQ + FREQ_STEP) {
           mConf.coreFreq[core_idx] -= FREQ_STEP;
         }
         return true;
@@ -319,7 +321,7 @@ namespace cmpex {
     //======================================================================
     struct MapTrDecreaseUncoreFreq : public MapTransform {
       bool UpdateMap(MapConf& mConf) const {
-        if (mConf.uncoreFreq >= 2*FREQ_STEP) {
+        if (mConf.uncoreFreq >= MIN_FREQ + FREQ_STEP) {
           mConf.uncoreFreq -= FREQ_STEP;
         }
         return true;

@@ -20,6 +20,7 @@
 #include <fstream>
 #include <iomanip>
 #include <set>
+#include <algorithm>
 
 #include "MapEngine.hpp"
 #include "MapConf.hpp"
@@ -74,13 +75,13 @@ MapEngine::MapEngine() {
   if (cmpConfig.L3ClusterSize() > 1)
     AddTransform(new MapTrSwapThreadPairInL3Cluster());
 
-  AddTransform(new MapTrChangeCoreActiv());
-  AddTransform(new MapTrIncreaseCoreFreq());
-  AddTransform(new MapTrDecreaseCoreFreq());
+  //AddTransform(new MapTrChangeCoreActiv());
+  //AddTransform(new MapTrIncreaseCoreFreq());
+  //AddTransform(new MapTrDecreaseCoreFreq());
   AddTransform(new MapTrChangeL3ClusterActiv());
 
-  if (cmpConfig.L3ClusterCnt() > 1)
-    AddTransform(new MapTrMoveTaskToOtherL3Cluster());
+  //if (cmpConfig.L3ClusterCnt() > 1)
+  //  AddTransform(new MapTrMoveTaskToOtherL3Cluster());
 
   AddTransform(new MapTrIncreaseUncoreFreq());
   AddTransform(new MapTrDecreaseUncoreFreq());
@@ -476,14 +477,14 @@ void MapEngine::EvalMappingCost(MapConf * mc, MapConf * prevMap,
   //double temp_penalty = 1.0;
 
   // 2d. Delay/qos
-  double obj_penalty = config.QoS() ?
-        (config.NewQoS() ? CalcNewQoSObjPenalty(mc, prevProcThr) : CalcQoSObjPenalty(mc)) : 1.0;
+  //double obj_penalty = config.QoS() ?
+  //      (config.NewQoS() ? CalcNewQoSObjPenalty(mc, prevProcThr) : CalcQoSObjPenalty(mc)) : 1.0;
 
   // 3. Save evaluation within the mapping object
   mc->thr = pSm->Throughput();
   mc->power = power;
   mc->temp = GetTemperature();
-  mc->obj = mc->thr*obj_penalty;
+  mc->obj = mc->thr/**obj_penalty*/;
 
   // cost including hard penalties
   double cost = mc->obj * power_penalty * temp_penalty;
@@ -505,23 +506,49 @@ void MapEngine::ChooseActiveCores(MapConf * mc, MapConf * prevMap,
                                   const vector<double>& prevProcThr) const
 {
   vector<double> corePriorities;
-  corePriorities.assign(cmpConfig.ProcCnt(), -1.0);
+  const double UNASSIGNED_PRIORITY = -1.0;
+  corePriorities.assign(cmpConfig.ProcCnt(), UNASSIGNED_PRIORITY);
+
+  Cluster * clCmp = static_cast<Cluster*>(cmpConfig.Cmp());
+  MeshIc * mic = static_cast<MeshIc*>(clCmp->Ic());
 
   // 1. Go over all cores and assign priorities to the respective threads
   for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
+    Processor * proc = cmpConfig.GetProcessor(p);
     Thread * thread = (mc->map[p] != MapConf::IDX_UNASSIGNED) ?
         wlConfig.GetThreadByGid(mc->map[p]) : 0;
     if (!thread) continue;
-    if (thread->thread_status == WlConfig::RUNNING) {
+    if (thread->thread_status == WlConfig::RUNNING ||
+        thread->thread_status == WlConfig::SCHEDULED) {
       double instr_to_complete = thread->thread_instructions - thread->thread_progress;
       double slack_avail_ms = thread->task->task_deadline - thread->task->task_elapsed;
       bool deadline_not_passed = (slack_avail_ms > 0);
       // approximate slack_avail_ms = 0.5 ms (< 1 ms) if the deadline has passed
       double req_thr_ipns = deadline_not_passed ? instr_to_complete/(slack_avail_ms*1e6) :
                                                   instr_to_complete/(0.5*1e6);
-    }
-    else if (thread->thread_status == WlConfig::SCHEDULED) {
-      // TBD
+      // calculate minimum req freq under worst-case uncore latency
+      proc->SetSMTDegree(thread->thread_dop);
+      proc->SetMemAccessProbabilities(thread->missRatioOfMemSize);
+      double cont_coeff = 1.2;
+      double wc_l3_noc_hops = 2.0*sqrt(cmpConfig.L3ClusterSize())-1.0;
+      double wc_l3_noc_lat_cyc = wc_l3_noc_hops*(mic->LinkDelay()+mic->RouterDelay());
+      double wc_l3_lat_cyc = cmpConfig.GetMemory(p)->Latency() + wc_l3_noc_lat_cyc*cont_coeff;
+      double wc_mc_noc_hops = sqrt(cmpConfig.ProcCnt())-1.0;
+      double wc_mc_noc_lat_cyc = wc_mc_noc_hops*(mic->LinkDelay()+mic->RouterDelay());
+      double wc_mc_lat_cyc = cmpConfig.GetMemCtrl(0)->latency + wc_mc_noc_lat_cyc*cont_coeff;
+      double wc_lat_pen_cyc = proc->L1AccessProbability()*proc->L1Lat() +
+                              proc->L2AccessProbability()*proc->L2Lat() +
+                              proc->L3AccessProbability()*wc_l3_lat_cyc +
+                              proc->MainMemAccessProbability()*wc_mc_lat_cyc;
+      double wc_cpi = 1.0/thread->thread_ipc + thread->thread_mpi*wc_lat_pen_cyc;
+      double req_freq = CalcMinReqFreq(proc, req_thr_ipns, wc_cpi);
+      // use minimum req freq as priority
+      corePriorities[p] = req_freq;
+      //cout << "core " << p << ": req_thr_ipns = " << req_thr_ipns
+      //     << ", wc_lat_pen = " << wc_lat_pen_cyc << ", wc_cpi = " << wc_cpi << endl;
+      // decrease the priority of scheduled threads by 50%
+      if (thread->thread_status == WlConfig::SCHEDULED)
+        corePriorities[p] /= 2.0;
     }
     else {
       cout << "-E- ChooseActiveCores: Thread status is different from SCHEDULED and RUNNING"
@@ -530,6 +557,84 @@ void MapEngine::ChooseActiveCores(MapConf * mc, MapConf * prevMap,
     }
   }
 
+  cout << "   -MAP- Core priorities:";
+  for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
+    cout << ' ' << corePriorities[p];
+  }
+  cout << endl;
+
+  // 2. Iteratively choose cores with the highest priorities and activate them,
+  //    as long as within the budgets
+  int tasks_available_cnt = 0;
+  for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
+    if (corePriorities[p] != UNASSIGNED_PRIORITY) {
+      ++tasks_available_cnt;
+    }
+  }
+
+  mc->coreActiv.assign(cmpConfig.ProcCnt(), false);
+  bool budgets_met = true;
+  while (tasks_available_cnt > 0 && budgets_met) {
+    // get the core with the highest priority
+    int core_idx = max_element(corePriorities.begin(), corePriorities.end()) -
+                     corePriorities.begin();
+    // activate the core and set its frequency
+    Thread * thread = wlConfig.GetThreadByGid(mc->map[core_idx]);
+    mc->coreActiv[core_idx] = true;
+    double core_priority = corePriorities[core_idx];
+    if (thread->thread_status == WlConfig::SCHEDULED) core_priority *= 2.0;
+    mc->coreFreq[core_idx] = MapCorePriorityToFreq(core_priority);
+    //cout << "Priority = " << core_priority << ", freq = " << mc->coreFreq[core_idx] << endl;
+    // remove the core from priority list
+    corePriorities[core_idx] = UNASSIGNED_PRIORITY;
+    // evaluate the system state
+    EvalMappingCost(mc, prevMap, prevProcThr, 1.0);
+    budgets_met = (config.MaxPower() - mc->power > 0) &&
+                  (config.MaxTemp() - mc->temp > 0);
+    if (!budgets_met)
+      mc->coreActiv[core_idx] = false;
+    else {
+      //cout << "Enabling core " << core_idx << " at freq " << mc->coreFreq[core_idx];
+      //cout << ", pow =  " << mc->power << endl;
+    }
+    --tasks_available_cnt;
+  }
+}
+
+//=======================================================================
+/*
+ * Return frequency of the core corresponding to the provided priority.
+ */
+
+double MapEngine::MapCorePriorityToFreq ( double core_priority ) const
+{
+  if (core_priority >= MAX_FREQ)
+    return MAX_FREQ;
+  if (core_priority <= MIN_FREQ)
+    return MIN_FREQ;
+
+  double freq = MIN_FREQ;
+  while (core_priority > freq) freq += FREQ_STEP;
+  return freq;
+}
+
+//=======================================================================
+/*
+ * Calculates required minimum frequency for the processor.
+ */
+
+double MapEngine::CalcMinReqFreq ( Processor * proc,
+                 double req_thr_ipns, double wc_cpi_thread ) const
+{
+  // if min == SMT/CPI_thread
+  double freq1 = req_thr_ipns * wc_cpi_thread / proc->SMTDegree();
+
+  // if min == PW*freq
+  double freq2 = req_thr_ipns / proc->PLWidth();
+
+  //cout << "freq1 = " << freq1 << ", freq2 = " << freq2 << endl;
+
+  return max(freq1, freq2);
 }
 
 //=======================================================================

@@ -32,7 +32,7 @@ namespace cmpex {
 
   const double MIN_FREQ = 0.5; // Minimum on-chip frequency [GHz]
 
-  const double FREQ_STEP = 0.5; // Dynamic frequency scaling step [GHz]
+  const double FREQ_STEP = 0.2; // Dynamic frequency scaling step [GHz]
 
 } // namespace cmpex
 

@@ -129,11 +129,17 @@ void SaMapEngine::Map(MapConf * mconf, MapConf * prevMap,
 
       int idx = int(RandUDouble()*Transforms().size());
       Transforms()[idx]->UpdateMap(*newMap);
-
       //if (idx == 1) cout << "NM:::"; newMap->Print();
 
       // 2b. Estimate cost of new mapping
       EvalMappingCost(newMap, prevMap, prevProcThr, lambda);
+
+      /*if (idx == 2) {
+        cout << "IncreaseUncoreFreq: before F = " << curMap->uncoreFreq
+             << " thr = " << curMap->thr << ", pow = " << curMap->power
+             << "; now F = " << newMap->uncoreFreq
+             << " thr = " << newMap->thr << ", pow = " << newMap->power << endl;
+      }*/
 
       // 2c. Decide acceptance
       lambda = 0.5*tInit/tCur;
