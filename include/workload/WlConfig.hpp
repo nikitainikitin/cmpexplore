@@ -159,8 +159,8 @@ namespace cmpex {
 	int thread_dop; // superthread degree of parallelism
         Task * task; // parent task
         XYloc thread_xyloc; //0(1) is x(y) coordinate in cmp
-        int thread_instructions;
-        int thread_progress;
+        long long int thread_instructions;
+        long long int thread_progress;
         Status thread_status;
         double thread_ipc;
         double thread_mpi;

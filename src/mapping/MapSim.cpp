@@ -89,7 +89,7 @@ void MapSim::Run() {
   // this is current mapping configuration
   MapConf * mconf = new MapConf(coreCnt, L3ClusterCnt);
 
-  int maxPeriods = 1000;
+  int maxPeriods = 1000000;
 
   cout << "-I- MapSim: starting mapping simulator for " << maxPeriods << " periods" << endl;
   cout << "-I- MapSim: one period simulates " << PeriodUs() << " usec ("
@@ -381,8 +381,12 @@ bool MapSim::SkipRemapping(bool lastPeriodWlChanged) {
   double power_slack = config.MaxPower() - total_power;
   double min_power_slack_fraction = 0.2;
 
+  bool pending = wlConfig.HasPendingTasks();
+  if (pending) cout << "DEBUG: PENDING TASKS = TRUE" << endl;
+  else cout << "DEBUG: PENDING TASKS = FALSE" << endl;
+
   if ((num_cores_on < cmpConfig.ProcCnt()) &&
-      (wlConfig.HasPendingTasks()) &&
+      (pending) &&
       (temp_slack > min_temp_slack) && 
       (power_slack > min_power_slack_fraction*config.MaxPower())) {
     return false;
@@ -390,14 +394,17 @@ bool MapSim::SkipRemapping(bool lastPeriodWlChanged) {
 
   double min_freq = MAX_FREQ;
   for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
-    if (cmpConfig.GetProcessor(p)->Freq() < min_freq) {
+    if ((cmpConfig.GetProcessor(p)->Freq() < min_freq)  && 
+	(cmpConfig.GetProcessor(p)->Freq() > 0) &&
+	(cmpConfig.GetProcessor(p)->Thr() > E_DOUBLE)) {
       min_freq = cmpConfig.GetProcessor(p)->Freq();
       break;
     }
   }
+  cout << "DEBUG: CHECKING MIN FREQ" << endl;
 
   if ((min_freq < MAX_FREQ) &&
-      (!wlConfig.HasPendingTasks()) &&
+      (!pending) &&
       (temp_slack > min_temp_slack) && 
       (power_slack > min_power_slack_fraction*config.MaxPower())) {
     return false;

@@ -183,16 +183,49 @@ int PTsim::CallHotSpot(cmp::Component * cmp, vector<double> * power_vec, bool si
   // create power vector
   power_sim = new double[n_blocks];
   warmup_power = new double[n_blocks];
-  // set warmup power: in this example it is set to block_power
-  for(i=0;i<n_blocks;i++){
-    warmup_power[i]=0;
-    //warmup_power[i]=block_power[i];
+  // set warmup power:
+  if (!warmupDone_) {
+    //double max_power = config.MaxPower();
+    double tdp = 130.0;
+    double max_power = 0.5*tdp; // using half a typical TDP to warm up the system
+    double proc_power = max_power * 0.85;
+    double uncore_power = max_power * 0.1;
+    double mc_power = max_power * 0.05 / cmpConfig.MemCtrlCnt();
+    double core_power = proc_power * 0.5 / cmpConfig.ProcCnt();
+    double l1i_power = proc_power * 0.3 / cmpConfig.ProcCnt();
+    double l1d_power = proc_power * 0.1 / cmpConfig.ProcCnt();
+    double l2_power = proc_power * 0.1 / cmpConfig.ProcCnt();
+    double l3_power = uncore_power * 0.3 / cmpConfig.MemCnt();
+    double rtr_power = uncore_power * 0.7 / cmpConfig.ProcCnt();
+    double linkw_power = uncore_power * 0.0 / cmpConfig.ProcCnt();
+    double linkn_power = uncore_power * 0.0 / cmpConfig.ProcCnt();
+    for(i=0;i<cmpConfig.MemCtrlCnt();i++){
+      warmup_power[i]=mc_power;
+    }
+    int n_tiles = (n_blocks - cmpConfig.MemCtrlCnt()) / 8;
+    for(i=0;i<n_tiles;i++) {
+      warmup_power[i*8+cmpConfig.MemCtrlCnt()+0]=linkw_power;
+      warmup_power[i*8+cmpConfig.MemCtrlCnt()+1]=rtr_power;
+      warmup_power[i*8+cmpConfig.MemCtrlCnt()+2]=l3_power;
+      warmup_power[i*8+cmpConfig.MemCtrlCnt()+3]=linkn_power;
+      warmup_power[i*8+cmpConfig.MemCtrlCnt()+4]=l2_power;
+      warmup_power[i*8+cmpConfig.MemCtrlCnt()+5]=core_power;
+      warmup_power[i*8+cmpConfig.MemCtrlCnt()+6]=l1d_power;
+      warmup_power[i*8+cmpConfig.MemCtrlCnt()+7]=l1i_power;
+    }
+    //for(i=0;i<n_blocks;i++){
+    //if (!power_vec)
+    //	warmup_power[i]=0;
+    //else
+    //	warmup_power[i]=(*power_vec)[i];
+    ////warmup_power[i]=block_power[i];
+    //}
+    // set block_power to warmup_power
+    for(i=0;i<n_blocks;i++){
+      power_sim[i]=warmup_power[i];
+    }
   }
 
-  // set block_power to warmup_power
-  for(i=0;i<n_blocks;i++){
-    power_sim[i]=warmup_power[i];
-  }
 
 
   // create temperature vector
@@ -201,7 +234,7 @@ int PTsim::CallHotSpot(cmp::Component * cmp, vector<double> * power_vec, bool si
   // trace file opening
   tout.open(ttrace_filename.c_str());
 
-
+  if (warmupDone_) {
     //input power (from CMPexplore
     if (!power_vec) { // no power vector - read values from file
       pin.open("ptsim_power.txt");
@@ -229,19 +262,20 @@ int PTsim::CallHotSpot(cmp::Component * cmp, vector<double> * power_vec, bool si
       pin.close();
     }
     else { // power vector provided
-      for (int i = 0; i < power_vec->size(); ++i) {
+      for (i = 0; i < power_vec->size(); ++i) {
 	power_sim[i] = (*power_vec)[i];
 	//cout << power_sim[i] << ' ';
       }
       //cout << endl;
     }
-    
     if (!silent_mode) cout << "TOTAL POWER = " << total_power << endl;
     if(i != n_blocks){
       cout << "\nERROR: power elements /= number of blocks\n\n";
       cout << i << ' ' << n_blocks << endl;
       return -1;
     }
+  }
+    
     
     // set block power to transient values
     //for(i=0;i<n_blocks;i++){
@@ -302,7 +336,9 @@ int PTsim::CallHotSpot(cmp::Component * cmp, vector<double> * power_vec, bool si
   }
 
   SaveSimTemp(cmp, temp_sim);
-  WritePowerTempTraces(cmp, power_sim, temp_sim);
+  if (initHotspotDone_) {
+    WritePowerTempTraces(cmp, power_sim, temp_sim);
+  }
   //PrintTemp();
 
   delete [] power_sim;

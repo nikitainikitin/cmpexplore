@@ -51,7 +51,8 @@ int WlConfig::CreateTasks ( int ntasks, bool predefined )
   Task * task = 0;
   Thread * thread = 0;
   XYloc * xyloc = 0;
-  int instr, dop;
+  int dop;
+  long long int instr;
 
   if (predefined) ntasks = sizeof(TASK_IPC)/sizeof(double);
 
@@ -227,7 +228,7 @@ int WlConfig::ReadTasks ( const string & fname )
 
     // parse task parameters
     double ipc, mpi, mr_alpha, mr_exp, instr_dbl;
-    int instr, deadl, dop;
+    long long int instr, deadl, dop;
     ValueParser::ExtractValue(line, ipc);
     ValueParser::ExtractValue(line, mpi);
     //ValueParser::ExtractValue(line, mr_alpha);
@@ -237,7 +238,7 @@ int WlConfig::ReadTasks ( const string & fname )
     ValueParser::ExtractValue(line, dop);
     Function * mrFunc = Function::ParseFunction(line);
 
-    instr = int(instr_dbl);
+    instr = (long long int)(instr_dbl);
 
     // create a task
     /// NOTE: any changes to the task generation below
