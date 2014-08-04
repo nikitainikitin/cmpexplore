@@ -599,6 +599,35 @@ void MapEngine::ChooseActiveCores(MapConf * mc, MapConf * prevMap,
     }
     --tasks_available_cnt;
   }
+
+  // 3. If there is power budget left, distribute it among the active cores.
+  if (budgets_met) {
+    int core_idx = 0;
+    while (budgets_met) {
+      int prev_core_idx = core_idx;
+      bool core_found = true;
+      while (!mc->coreActiv[core_idx] || mc->coreFreq[core_idx] > MAX_FREQ-FREQ_STEP) {
+        core_idx = (core_idx+1)%mc->coreActiv.size();
+        if (prev_core_idx == core_idx) {
+          core_found = false;
+          break;
+        }
+      }
+      if (!core_found) break;
+
+      mc->coreFreq[core_idx] += FREQ_STEP;
+      // evaluate the system state
+      EvalMappingCost(mc, prevMap, prevProcThr, 1.0);
+      budgets_met = (config.MaxPower() - mc->power > 0) &&
+                    (config.MaxTemp() - mc->temp > 0);
+      if (!budgets_met) {
+        mc->coreFreq[core_idx] -= FREQ_STEP;
+        break;
+      }
+      ++core_idx;
+    }
+  }
+  cout << "!!!!!!!!!! Core activity seletion finished" << endl;
 }
 
 //=======================================================================
