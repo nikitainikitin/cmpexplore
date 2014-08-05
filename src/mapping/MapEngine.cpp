@@ -607,6 +607,7 @@ void MapEngine::ChooseActiveCores(MapConf * mc, MapConf * prevMap,
       int prev_core_idx = core_idx;
       bool core_found = true;
       while (!mc->coreActiv[core_idx] || mc->coreFreq[core_idx] > MAX_FREQ-FREQ_STEP) {
+        //cout << "core_idx = " << core_idx << ' ';
         core_idx = (core_idx+1)%mc->coreActiv.size();
         if (prev_core_idx == core_idx) {
           core_found = false;
@@ -624,10 +625,9 @@ void MapEngine::ChooseActiveCores(MapConf * mc, MapConf * prevMap,
         mc->coreFreq[core_idx] -= FREQ_STEP;
         break;
       }
-      ++core_idx;
+      core_idx = (core_idx+1)%mc->coreActiv.size();
     }
   }
-  cout << "!!!!!!!!!! Core activity seletion finished" << endl;
 }
 
 //=======================================================================
