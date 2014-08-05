@@ -183,16 +183,49 @@ int PTsim::CallHotSpot(cmp::Component * cmp, vector<double> * power_vec, bool si
   // create power vector
   power_sim = new double[n_blocks];
   warmup_power = new double[n_blocks];
-  // set warmup power: in this example it is set to block_power
-  for(i=0;i<n_blocks;i++){
-    warmup_power[i]=0;
-    //warmup_power[i]=block_power[i];
+  // set warmup power:
+  if (!warmupDone_) {
+    //double max_power = config.MaxPower();
+    double tdp = 130.0;
+    double max_power = 0.5*tdp; // using half a typical TDP to warm up the system
+    double proc_power = max_power * 0.85;
+    double uncore_power = max_power * 0.1;
+    double mc_power = max_power * 0.05 / cmpConfig.MemCtrlCnt();
+    double core_power = proc_power * 0.5 / cmpConfig.ProcCnt();
+    double l1i_power = proc_power * 0.3 / cmpConfig.ProcCnt();
+    double l1d_power = proc_power * 0.1 / cmpConfig.ProcCnt();
+    double l2_power = proc_power * 0.1 / cmpConfig.ProcCnt();
+    double l3_power = uncore_power * 0.3 / cmpConfig.MemCnt();
+    double rtr_power = uncore_power * 0.7 / cmpConfig.ProcCnt();
+    double linkw_power = uncore_power * 0.0 / cmpConfig.ProcCnt();
+    double linkn_power = uncore_power * 0.0 / cmpConfig.ProcCnt();
+    for(i=0;i<cmpConfig.MemCtrlCnt();i++){
+      warmup_power[i]=mc_power;
+    }
+    int n_tiles = (n_blocks - cmpConfig.MemCtrlCnt()) / 8;
+    for(i=0;i<n_tiles;i++) {
+      warmup_power[i*8+cmpConfig.MemCtrlCnt()+0]=linkw_power;
+      warmup_power[i*8+cmpConfig.MemCtrlCnt()+1]=rtr_power;
+      warmup_power[i*8+cmpConfig.MemCtrlCnt()+2]=l3_power;
+      warmup_power[i*8+cmpConfig.MemCtrlCnt()+3]=linkn_power;
+      warmup_power[i*8+cmpConfig.MemCtrlCnt()+4]=l2_power;
+      warmup_power[i*8+cmpConfig.MemCtrlCnt()+5]=core_power;
+      warmup_power[i*8+cmpConfig.MemCtrlCnt()+6]=l1d_power;
+      warmup_power[i*8+cmpConfig.MemCtrlCnt()+7]=l1i_power;
+    }
+    //for(i=0;i<n_blocks;i++){
+    //if (!power_vec)
+    //	warmup_power[i]=0;
+    //else
+    //	warmup_power[i]=(*power_vec)[i];
+    ////warmup_power[i]=block_power[i];
+    //}
+    // set block_power to warmup_power
+    for(i=0;i<n_blocks;i++){
+      power_sim[i]=warmup_power[i];
+    }
   }
 
-  // set block_power to warmup_power
-  for(i=0;i<n_blocks;i++){
-    power_sim[i]=warmup_power[i];
-  }
 
 
   // create temperature vector
@@ -201,7 +234,7 @@ int PTsim::CallHotSpot(cmp::Component * cmp, vector<double> * power_vec, bool si
   // trace file opening
   tout.open(ttrace_filename.c_str());
 
-
+  if (warmupDone_) {
     //input power (from CMPexplore
     if (!power_vec) { // no power vector - read values from file
       pin.open("ptsim_power.txt");
@@ -229,19 +262,20 @@ int PTsim::CallHotSpot(cmp::Component * cmp, vector<double> * power_vec, bool si
       pin.close();
     }
     else { // power vector provided
-      for (int i = 0; i < power_vec->size(); ++i) {
+      for (i = 0; i < power_vec->size(); ++i) {
 	power_sim[i] = (*power_vec)[i];
 	//cout << power_sim[i] << ' ';
       }
       //cout << endl;
     }
-    
     if (!silent_mode) cout << "TOTAL POWER = " << total_power << endl;
     if(i != n_blocks){
       cout << "\nERROR: power elements /= number of blocks\n\n";
       cout << i << ' ' << n_blocks << endl;
       return -1;
     }
+  }
+    
     
     // set block power to transient values
     //for(i=0;i<n_blocks;i++){
@@ -302,7 +336,9 @@ int PTsim::CallHotSpot(cmp::Component * cmp, vector<double> * power_vec, bool si
   }
 
   SaveSimTemp(cmp, temp_sim);
-  WritePowerTempTraces(cmp, power_sim, temp_sim);
+  if (initHotspotDone_) {
+    WritePowerTempTraces(cmp, power_sim, temp_sim);
+  }
   //PrintTemp();
 
   delete [] power_sim;
@@ -744,75 +780,98 @@ void PTsim::PredictTemp(cmp::Component * cmp, vector<double> * power_vec) {
 
   double acctemp;
 
+  double TEXT = 45.0; // ambient temperature
+
+  double maxtemp = 0.0;
+
   // MC
   for (int mc = 0; mc < cmpConfig.MemCtrlCnt(); ++mc) {
-    acctemp = MCTemp_[mc];
+    //acctemp = MCTemp_[mc];
+    acctemp = TEXT + MCTempPredictorCoeff_[mc][MCTempPredictorCoeff_[mc].size()-1]*(MCTemp_[mc]-TEXT);
     for (int idx = 0; idx < MCTempPredictorIdx_[mc].size(); idx++) {
       acctemp += MCTempPredictorCoeff_[mc][idx]*(*power_vec)[MCTempPredictorIdx_[mc][idx]];
     }
     MCTempEst_[mc]=acctemp;
+    maxtemp = max(maxtemp,acctemp);
   }
 
   // TILES
   for (int tile = 0; tile < mic->ColNum()*mic->RowNum(); ++tile) {
 
     //LINKW
-    acctemp = MeshLinkWTemp_[tile];
+    //acctemp = MeshLinkWTemp_[tile];
+    acctemp = TEXT + MeshLinkWTempPredictorCoeff_[tile][MeshLinkWTempPredictorCoeff_[tile].size()-1]*(MeshLinkWTemp_[tile]-TEXT);
     for (int idx = 0; idx < MeshLinkWTempPredictorIdx_[tile].size(); idx++) {
       acctemp += MeshLinkWTempPredictorCoeff_[tile][idx]*(*power_vec)[MeshLinkWTempPredictorIdx_[tile][idx]];
     }
     MeshLinkWTempEst_[tile]=acctemp;
+    maxtemp = max(maxtemp,acctemp);
 
     //RTR
-    acctemp = MeshRouterTemp_[tile];
+    //acctemp = MeshRouterTemp_[tile];
+    acctemp = TEXT + MeshRouterTempPredictorCoeff_[tile][MeshRouterTempPredictorCoeff_[tile].size()-1]*(MeshRouterTemp_[tile]-TEXT);
     for (int idx = 0; idx < MeshRouterTempPredictorIdx_[tile].size(); idx++) {
       acctemp += MeshRouterTempPredictorCoeff_[tile][idx]*(*power_vec)[MeshRouterTempPredictorIdx_[tile][idx]];
     }
     MeshRouterTempEst_[tile]=acctemp;
+    maxtemp = max(maxtemp,acctemp);
 
     //L3
-    acctemp = L3Temp_[tile];
+    //acctemp = L3Temp_[tile];
+    acctemp = TEXT + L3TempPredictorCoeff_[tile][L3TempPredictorCoeff_[tile].size()-1]*(L3Temp_[tile]-TEXT);
     for (int idx = 0; idx < L3TempPredictorIdx_[tile].size(); idx++) {
       acctemp += L3TempPredictorCoeff_[tile][idx]*(*power_vec)[L3TempPredictorIdx_[tile][idx]];
     }
     L3TempEst_[tile]=acctemp;
+    maxtemp = max(maxtemp,acctemp);
 
     //LINKN
-    acctemp = MeshLinkNTemp_[tile];
+    //acctemp = MeshLinkNTemp_[tile];
+    acctemp = TEXT + MeshLinkNTempPredictorCoeff_[tile][MeshLinkNTempPredictorCoeff_[tile].size()-1]*(MeshLinkNTemp_[tile]-TEXT);
     for (int idx = 0; idx < MeshLinkNTempPredictorIdx_[tile].size(); idx++) {
       acctemp += MeshLinkNTempPredictorCoeff_[tile][idx]*(*power_vec)[MeshLinkNTempPredictorIdx_[tile][idx]];
     }
     MeshLinkNTempEst_[tile]=acctemp;
+    maxtemp = max(maxtemp,acctemp);
 
     //L2
-    acctemp = L2Temp_[tile];
+    //acctemp = L2Temp_[tile];
+    acctemp = TEXT + L2TempPredictorCoeff_[tile][L2TempPredictorCoeff_[tile].size()-1]*(L2Temp_[tile]-TEXT);
     for (int idx = 0; idx < L2TempPredictorIdx_[tile].size(); idx++) {
       acctemp += L2TempPredictorCoeff_[tile][idx]*(*power_vec)[L2TempPredictorIdx_[tile][idx]];
     }
     L2TempEst_[tile]=acctemp;
+    maxtemp = max(maxtemp,acctemp);
 
     //CORE
-    acctemp = coreTemp_[tile];
+    //acctemp = coreTemp_[tile];
+    acctemp = TEXT + coreTempPredictorCoeff_[tile][coreTempPredictorCoeff_[tile].size()-1]*(coreTemp_[tile]-TEXT);
     for (int idx = 0; idx < coreTempPredictorIdx_[tile].size(); idx++) {
       acctemp += coreTempPredictorCoeff_[tile][idx]*(*power_vec)[coreTempPredictorIdx_[tile][idx]];
     }
     coreTempEst_[tile]=acctemp;
+    maxtemp = max(maxtemp,acctemp);
 
     //L1D
-    acctemp = L1DTemp_[tile];
+    //acctemp = L1DTemp_[tile];
+    acctemp = TEXT + L1DTempPredictorCoeff_[tile][L1DTempPredictorCoeff_[tile].size()-1]*(L1DTemp_[tile]-TEXT);
     for (int idx = 0; idx < L1DTempPredictorIdx_[tile].size(); idx++) {
       acctemp += L1DTempPredictorCoeff_[tile][idx]*(*power_vec)[L1DTempPredictorIdx_[tile][idx]];
     }
     L1DTempEst_[tile]=acctemp;
+    maxtemp = max(maxtemp,acctemp);
 
     //L1I
-    acctemp = L1ITemp_[tile];
+    //acctemp = L1ITemp_[tile];
+    acctemp = TEXT + L1ITempPredictorCoeff_[tile][L1ITempPredictorCoeff_[tile].size()-1]*(L1ITemp_[tile]-TEXT);
     for (int idx = 0; idx < L1ITempPredictorIdx_[tile].size(); idx++) {
       acctemp += L1ITempPredictorCoeff_[tile][idx]*(*power_vec)[L1ITempPredictorIdx_[tile][idx]];
     }
     L1ITempEst_[tile]=acctemp;
+    maxtemp = max(maxtemp,acctemp);
 
   }
+
 }
 
 //=======================================================================
@@ -831,6 +890,26 @@ double PTsim::GetMaxEstTempInTile(int tileIdx) {
   maxTemp = max(MeshRouterTempEst(tileIdx), maxTemp);
   maxTemp = max(MeshLinkNTempEst(tileIdx), maxTemp);
   maxTemp = max(MeshLinkWTempEst(tileIdx), maxTemp);
+
+  return maxTemp;
+}
+
+//=======================================================================
+/*
+ * Get maximum temperature among components in the given tile.
+ */
+
+double PTsim::GetMaxTempInTile(int tileIdx) {
+  double maxTemp = 0.0;
+
+  maxTemp = max(CoreTemp(tileIdx), maxTemp);
+  maxTemp = max(L1DTemp(tileIdx), maxTemp);
+  maxTemp = max(L1ITemp(tileIdx), maxTemp);
+  maxTemp = max(L2Temp(tileIdx), maxTemp);
+  maxTemp = max(L3Temp(tileIdx), maxTemp);
+  maxTemp = max(MeshRouterTemp(tileIdx), maxTemp);
+  maxTemp = max(MeshLinkNTemp(tileIdx), maxTemp);
+  maxTemp = max(MeshLinkWTemp(tileIdx), maxTemp);
 
   return maxTemp;
 }

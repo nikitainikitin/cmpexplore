@@ -561,9 +561,12 @@ void IterativePerfModel::MarkPathsNoCC (const vector<double>& procRates)
     for (int m = 0; m < cmpConfig.MemCnt(); ++m) {
       Memory * mem = cmpConfig.GetMemory(m);
 
-      double trafficToMemMiss = procRates[p]*proc->MainMemAccessProbability()*proc->L3ProbDistr()[m];//pa[m];
+      //double trafficToMemMiss = procRates[p]*proc->MainMemAccessProbability()*proc->L3ProbDistr()[m];//pa[m];
       double trafficToMem = procRates[p]*proc->L3AccessProbability()*proc->L3ProbDistr()[m];//pa[m];
-      double trafficToMemAccess = trafficToMem + trafficToMemMiss;
+      //double trafficToMemAccess = trafficToMem + trafficToMemMiss;
+      double trafficToMemAccess = procRates[p]*(proc->L1DMissRate()+proc->L1IMissRate())*proc->L2MissRate()*proc->L3ProbDistr()[m];//pa[m];
+      double trafficToMemMiss = procRates[p]*(proc->L1DMissRate()+proc->L1IMissRate())*proc->L2MissRate()*proc->L3MissRate()*proc->L3ProbDistr()[m];//pa[m];
+
 
       // in clusters
       if (!cmpConfig.FlatMeshIc()) {

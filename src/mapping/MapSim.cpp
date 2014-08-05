@@ -89,7 +89,7 @@ void MapSim::Run() {
   // this is current mapping configuration
   MapConf * mconf = new MapConf(coreCnt, L3ClusterCnt);
 
-  int maxPeriods = 1000;
+  int maxPeriods = 1000000;
 
   cout << "-I- MapSim: starting mapping simulator for " << maxPeriods << " periods" << endl;
   cout << "-I- MapSim: one period simulates " << PeriodUs() << " usec ("
@@ -163,7 +163,11 @@ void MapSim::Run() {
     SaMapEngine me;
     if (sysElapsedPeriod == 0 || !SkipRemapping(lastPeriodWlChanged)) {
       cout << "   -MAP- Running SA mapping..." << endl;
-      me.Map(mconf, prevMap, prevProcThr, true); // run SA mapping
+      //me.Map(mconf, prevMap, prevProcThr, true); // run SA mapping
+      if(!(me.Map(mconf, prevMap, prevProcThr, true))) {// failure due to temperature violation
+	cout << "-MAP- Re-running SA with all off initial condition..." << endl;
+	me.Map(mconf, prevMap, prevProcThr, true); // re-run SA mapping starting with
+      }
     }
     else {
       cout << "   -MAP- Skipped SA mapping for this period: "
@@ -191,9 +195,15 @@ void MapSim::Run() {
       cout << "-I- Running Hotspot..." << endl;
       PTsim::CallHotSpot(cmpConfig.Cmp(), &power_vec, true);
 
-      cout << "   -MAP- Temperature of cores: ";
+      cout << endl;
+      cout << "   -MAP- Temperature of cores (real values): ";
       for (int p = 0; p < mconf->map.size(); ++p) {
         cout << PTsim::CoreTemp(p) << ' ';
+      }
+      cout << endl;
+      cout << "   -MAP- Temperature of cores (est. values): ";
+      for (int p = 0; p < mconf->map.size(); ++p) {
+        cout << PTsim::CoreTempEst(p) << ' ';
       }
       cout << endl;
     }
@@ -313,22 +323,36 @@ void MapSim::Run() {
  */
 
 bool MapSim::SkipRemapping(bool lastPeriodWlChanged) {
+  // DEBUG
+  cout << "ENTERING SKIP REMAPPING...";
+
   if (lastPeriodWlChanged) return false;
 
-  // never skip mapping if in the all-cores-off state
-  bool all_cores_off = true;
+  int num_cores_on = 0;
+  //bool all_cores_off = true;
   for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
     if (cmpConfig.GetProcessor(p)->Thr() > E_DOUBLE) {
-      all_cores_off = false;
-      break;
+      //all_cores_off = false;
+      num_cores_on++;
+      //break;
     }
   }
-
-  if (all_cores_off) return false;
-
+  
+  //if (all_cores_off) return false;
+  if (num_cores_on == 0) return false;
 
   // evaluate temperature at the end of the next period
   // if running with the same mapping
+
+  // DEBUG
+  cout << "ESTIMATING TEMPERATURE...";
+
+  // obtaining the previous power pattern
+  vector<double> power_vec;
+  PowerModel::CreatePTsimPowerVector(cmpConfig.Cmp(), power_vec);
+
+  // updating the predicted temperatures
+  PTsim::PredictTemp(cmpConfig.Cmp(), &power_vec);  
 
   double max_temp = 0.0;
 
@@ -342,6 +366,48 @@ bool MapSim::SkipRemapping(bool lastPeriodWlChanged) {
   MeshIc * mic = static_cast<MeshIc*>(clCmp->Ic());
   for (int tile = 0; tile < mic->TCnt(); ++tile) {
     max_temp = max(max_temp, PTsim::GetMaxEstTempInTile(tile));
+  }
+  
+  // DEBUG
+  cout << "MAX TEMP = " << max_temp << endl;
+
+
+  double temp_slack = config.MaxTemp() - max_temp;
+  double min_temp_slack = 10.0;
+  double total_power = 0;
+  for (int i=0 ; i < power_vec.size(); i++) {
+    total_power += power_vec[i];
+  }
+  double power_slack = config.MaxPower() - total_power;
+  double min_power_slack_fraction = 0.2;
+
+  bool pending = wlConfig.HasPendingTasks();
+  if (pending) cout << "DEBUG: PENDING TASKS = TRUE" << endl;
+  else cout << "DEBUG: PENDING TASKS = FALSE" << endl;
+
+  if ((num_cores_on < cmpConfig.ProcCnt()) &&
+      (pending) &&
+      (temp_slack > min_temp_slack) && 
+      (power_slack > min_power_slack_fraction*config.MaxPower())) {
+    return false;
+  }
+
+  double min_freq = MAX_FREQ;
+  for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
+    if ((cmpConfig.GetProcessor(p)->Freq() < min_freq)  && 
+	(cmpConfig.GetProcessor(p)->Freq() > 0) &&
+	(cmpConfig.GetProcessor(p)->Thr() > E_DOUBLE)) {
+      min_freq = cmpConfig.GetProcessor(p)->Freq();
+      break;
+    }
+  }
+  cout << "DEBUG: CHECKING MIN FREQ" << endl;
+
+  if ((min_freq < MAX_FREQ) &&
+      (!pending) &&
+      (temp_slack > min_temp_slack) && 
+      (power_slack > min_power_slack_fraction*config.MaxPower())) {
+    return false;
   }
 
   bool temp_satisfied = (max_temp <= config.MaxTemp());

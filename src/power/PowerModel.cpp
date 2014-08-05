@@ -171,6 +171,8 @@ double PowerModel::GetTotalPower(Component * cmp)
       proc->L1IPleakOfTemp(273.15+l1itemp) * VScalLeakPowerProc(proc->Volt()) : 
       proc->L1IPgPleakOfTemp(273.15+l1itemp) * VScalLeakPowerProc(proc->Volt());
 
+    //cout << "DEBUG: L1I ACCESS TRAFFIC = " << proc->Thr() << endl;
+
     // l1D
     double l1dwr = 0.333; // FIXME
     double l1drd = 0.667; // FIXME
@@ -181,8 +183,8 @@ double PowerModel::GetTotalPower(Component * cmp)
       VScalDynPowerProc(proc->Volt()) * proc->Lambda()*proc->L1AccessProbability() +
       proc->L1DPleakOfTemp(273.15+l1dtemp) * VScalLeakPowerProc(proc->Volt()) : 
       proc->L1DPgPleakOfTemp(273.15+l1dtemp) * VScalLeakPowerProc(proc->Volt());*/
-    double l1dhr = proc->L1AccessProbability(); // hitrate
-    double l1dmr = 1-l1dhr; // missrate = 1 - hitrate
+    //double l1dhr = proc->L1AccessProbability(); // hitrate
+    double l1dmr = proc->L1DMissRate();
     L1DPower_[p] = proc->Active() ?
       (proc->L1DErda()*l1drd + proc->L1DEwra()*l1dwr + 
        l1dmr * (proc->L1DErdm()*l1drd + proc->L1DEwrm()*l1dwr) ) * 
@@ -190,6 +192,7 @@ double PowerModel::GetTotalPower(Component * cmp)
       proc->L1DPleakOfTemp(273.15+l1dtemp) * VScalLeakPowerProc(proc->Volt()) : 
       proc->L1DPgPleakOfTemp(273.15+l1dtemp) * VScalLeakPowerProc(proc->Volt());
 
+    //cout << "DEBUG: L1D ACCESS TRAFFIC = " << proc->Lambda() << endl;
     /*
     // l2
     L2Power_[p] = proc->Active() ?
@@ -230,6 +233,7 @@ double PowerModel::GetTotalPower(Component * cmp)
 
     //cout << "DEBUG: L2 ACTIVE = " << proc->Active() << endl;
     //cout << "DEBUG: L2 POWER = " << L2Power_[p] << endl;
+    //cout << "DEBUG: L2 ACCESS TRAFFIC = " << proc->Lambda()*(l1dmr + l1imr) << endl;
 
   }
 
@@ -242,6 +246,7 @@ double PowerModel::GetTotalPower(Component * cmp)
   power += core_power;
 
   //cout << "Core power = " << core_power << "W; ";
+
 
   // L3 leakage and dynamic
   double l3PowerTot = 0.0;
@@ -275,6 +280,9 @@ double PowerModel::GetTotalPower(Component * cmp)
       VScalDynPowerUncore(cmpConfig.UVolt()) +
       mem->PleakOfTemp(273.15+l3temp) * VScalLeakPowerUncore(cmpConfig.UVolt()) :
       mem->PgPleakOfTemp(273.15+l3temp) * VScalLeakPowerUncore(cmpConfig.UVolt());
+
+    //cout << "DEBUG: L3 ACCESS TRAFFIC = " << mem->LambdaAccess() << endl;
+    //cout << "DEBUG: L3 MISS TRAFFIC = " << mem->LambdaMiss() << endl;
   }
 
   double l3Power = 0.0;
@@ -305,6 +313,8 @@ double PowerModel::GetTotalPower(Component * cmp)
       memCtrl->eacc * VScalDynPowerMc(cmpConfig.UVolt()) * memCtrl->lambda +
       McPleakOfTemp(273.15+mctemp) * VScalLeakPowerMc(cmpConfig.UVolt()) :
       McPgPleakOfTemp(273.15+mctemp) * VScalLeakPowerMc(cmpConfig.UVolt());
+
+    //cout << "DEBUG: MC ACCESS TRAFFIC = " << memCtrl->lambda << endl;
   }
 
   double mcPower = 0.0;

@@ -353,16 +353,25 @@ void sim_exit()
 {
         double total_elapsed_cycles = (double)epochs; 	/* set this to be the correct time elapsed  (in cycles) */
 	int i, j, base;
+	double total_power=0;
 
 	/* find the average power dissipated in the elapsed time */
 	if (model->type == BLOCK_MODEL)
-		for (i = 0; i < flp->n_units; i++)
-			overall_power[i] /= total_elapsed_cycles;
+	  for (i = 0; i < flp->n_units; i++) {
+	    overall_power[i] /= total_elapsed_cycles;
+	    total_power+=overall_power[i];
+	    // DEBUG
+	    //printf("STEADY-STATE TEMP: TOTAL POWER = %f\n",total_power);
+	  }
 	else		
 		for(i=0, base=0; i < model->grid->n_layers; i++) {
 			if(model->grid->layers[i].has_power)
-				for(j=0; j < model->grid->layers[i].flp->n_units; j++)
-					overall_power[base+j] /= total_elapsed_cycles;
+			  for(j=0; j < model->grid->layers[i].flp->n_units; j++) {
+			    overall_power[base+j] /= total_elapsed_cycles;
+			    total_power+=overall_power[base+j];
+			    // DEBUG
+			    //printf("STEADY-STATE TEMP: TOTAL POWER = %f\n",total_power);
+			  }
 			base += model->grid->layers[i].flp->n_units;
 		}
 

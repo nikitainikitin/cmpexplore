@@ -76,9 +76,11 @@ SaMapEngine::~SaMapEngine() {}
  * Main method that invokes the mapping.
  */
 
-void SaMapEngine::Map(MapConf * mconf, MapConf * prevMap,
+bool SaMapEngine::Map(MapConf * mconf, MapConf * prevMap,
                       const vector<double>& prevProcThr, bool silent_mode)
 {
+  bool SA_failed = false;
+
   MapConf *curMap, *bestMap;
 
   Timer timer;
@@ -205,9 +207,11 @@ void SaMapEngine::Map(MapConf * mconf, MapConf * prevMap,
       // Last resort: accept the all-cores-off solution
       cout << "-W- SAMapEngine: no feasible mapping found under the temperature constraint." << endl;
       cout << "-W- SAMapEngine: trying the all-off solution." << endl;
+      *curMap = *mconf;
       curMap->coreActiv.assign(curMap->coreCnt, false);
       EvalMappingCost(curMap, prevMap, prevProcThr, -0.1);
       bestMap = curMap;
+      SA_failed = true;
     }
   }
 
@@ -216,6 +220,8 @@ void SaMapEngine::Map(MapConf * mconf, MapConf * prevMap,
   assert(mconf != bestMap);
   *mconf = *bestMap; // copy data back to config
   delete bestMap;
+
+  return !SA_failed;
 }
 
 //=======================================================================
