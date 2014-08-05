@@ -324,7 +324,7 @@ void MapSim::Run() {
 
 bool MapSim::SkipRemapping(bool lastPeriodWlChanged) {
   // DEBUG
-  cout << "ENTERING SKIP REMAPPING...";
+  cout << "ENTERING SKIP REMAPPING..." << endl;
 
   if (lastPeriodWlChanged) return false;
 
@@ -345,7 +345,7 @@ bool MapSim::SkipRemapping(bool lastPeriodWlChanged) {
   // if running with the same mapping
 
   // DEBUG
-  cout << "ESTIMATING TEMPERATURE...";
+  cout << "ESTIMATING TEMPERATURE... ";
 
   // obtaining the previous power pattern
   vector<double> power_vec;
