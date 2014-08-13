@@ -518,7 +518,7 @@ void MapEngine::ChooseActiveCores(MapConf * mc, MapConf * prevMap,
   Cluster * clCmp = static_cast<Cluster*>(cmpConfig.Cmp());
   MeshIc * mic = static_cast<MeshIc*>(clCmp->Ic());
 
-  // 1. Go over all cores and assign priorities to the respective threads
+  // 1. Go over all cores and assign priorities to respective threads
   for (int p = 0; p < cmpConfig.ProcCnt(); ++p) {
     Processor * proc = cmpConfig.GetProcessor(p);
     Thread * thread = (mc->map[p] != MapConf::IDX_UNASSIGNED) ?
@@ -579,42 +579,86 @@ void MapEngine::ChooseActiveCores(MapConf * mc, MapConf * prevMap,
   }
 
   mc->coreActiv.assign(cmpConfig.ProcCnt(), false);
-  bool budgets_met = true;
-  while (tasks_available_cnt > 0 && budgets_met) {
-    // get the core with the highest priority
+  bool power_budget_met = true;
+  while (tasks_available_cnt > 0 && power_budget_met) {
+    // get the core of the task with the highest priority
     int core_idx = max_element(corePriorities.begin(), corePriorities.end()) -
                      corePriorities.begin();
-    // activate the core and set its frequency
-    Thread * thread = wlConfig.GetThreadByGid(mc->map[core_idx]);
-    mc->coreActiv[core_idx] = true;
-    double core_priority = corePriorities[core_idx];
-    if (thread->thread_status == WlConfig::SCHEDULED) core_priority *= 2.0;
-    mc->coreFreq[core_idx] = MapCorePriorityToFreq(core_priority);
-    //cout << "Priority = " << core_priority << ", freq = " << mc->coreFreq[core_idx] << endl;
-    // remove the core from priority list
-    corePriorities[core_idx] = UNASSIGNED_PRIORITY;
-    // evaluate the system state
-    EvalMappingCost(mc, prevMap, prevProcThr, 1.0);
-    budgets_met = (config.MaxPower() - mc->power > 0) &&
-                  (config.MaxTemp() - mc->temp > 0);
-    if (!budgets_met)
-      mc->coreActiv[core_idx] = false;
-    else {
-      //cout << "Enabling core " << core_idx << " at freq " << mc->coreFreq[core_idx];
-      //cout << ", pow =  " << mc->power << endl;
+    //cout << "---> Assigning thread gid = "
+    //     << wlConfig.GetThreadByGid(mc->map[core_idx])->thread_gid
+    //     << " from core idx = " << core_idx << endl;
+    IdxArray coresInCluster = cmpConfig.GetTilesOfL3Cluster(
+                                cmpConfig.GetMemory(core_idx)->L3ClusterIdx());
+    bool taskAssigned = false;
+    while (!taskAssigned) {
+      // choose the coldest available core within the cluster for this task
+      int coldestCoreIdx = -1;
+      for (int i = 0; i < coresInCluster.size(); ++i) {
+        if (!mc->coreActiv[coresInCluster[i]]) {
+          coldestCoreIdx = coresInCluster[i];
+          break;
+        }
+      }
+      if (coldestCoreIdx == -1) { // no available core exist - fail to assign this task
+        break;
+      }
+      if (!PTsim::WarmupDone()) {
+        cout << "   -MAP- Running Hotspot warmup (first invocation)... " << flush;
+        PTsim::CallHotSpot(cmpConfig.Cmp(), 0, true);
+        cout << "done." << endl;
+      }
+      for (int i = 0; i < coresInCluster.size(); ++i) {
+        if (!mc->coreActiv[coresInCluster[i]] &&
+              PTsim::CoreTemp(coresInCluster[i]) < PTsim::CoreTemp(coldestCoreIdx))
+          coldestCoreIdx = coresInCluster[i];
+      }
+      //cout << "Coldest core idx selected: idx = " << coldestCoreIdx << endl;
+
+      // move the task to the coldest core
+      std::swap(mc->map[core_idx], mc->map[coldestCoreIdx]);
+      std::swap(corePriorities[core_idx], corePriorities[coldestCoreIdx]);
+
+      // activate the core and set its frequency
+      Thread * thread = wlConfig.GetThreadByGid(mc->map[coldestCoreIdx]);
+      mc->coreActiv[coldestCoreIdx] = true;
+      double core_priority = corePriorities[coldestCoreIdx];
+      if (thread->thread_status == WlConfig::SCHEDULED) core_priority *= 2.0;
+      mc->coreFreq[coldestCoreIdx] = MapCorePriorityToFreq(core_priority);
+      // evaluate the system state
+      EvalMappingCost(mc, prevMap, prevProcThr, 1.0);
+      //cout << "Trying core: Priority = " << core_priority << ", freq = " << mc->coreFreq[coldestCoreIdx];
+      //cout << " power = " << mc->power << " W, temp = " << mc->temp << endl;
+      power_budget_met = (config.MaxPower() - mc->power > 0);
+      bool temp_budget_met = (config.MaxTemp() - mc->temp > 0);
+      bool budgets_met = power_budget_met && temp_budget_met;
+      remove(coresInCluster.begin(), coresInCluster.end(), coldestCoreIdx);
+      if (!budgets_met)
+        mc->coreActiv[coldestCoreIdx] = false;
+      if (!power_budget_met)
+        break;
+      else {
+        taskAssigned = true;
+        // remove the core from priority list
+        corePriorities[coldestCoreIdx] = UNASSIGNED_PRIORITY;
+        //cout << "Enabling core " << coldestCoreIdx << " at freq " << mc->coreFreq[coldestCoreIdx];
+        //cout << ", pow =  " << mc->power << endl;
+      }
     }
     --tasks_available_cnt;
+    //cout << "Tasks left = " << tasks_available_cnt << endl;
   }
 
   // 3. If there is power budget left, distribute it among the active cores.
-  if (budgets_met) {
+  vector<bool> candidateCores(mc->coreActiv);
+  EvalMappingCost(mc, prevMap, prevProcThr, 1.0);
+  power_budget_met = (config.MaxPower() - mc->power > 0);
+  if (power_budget_met) {
     int core_idx = 0;
-    while (budgets_met) {
+    while (power_budget_met) {
       int prev_core_idx = core_idx;
       bool core_found = true;
-      while (!mc->coreActiv[core_idx] || mc->coreFreq[core_idx] > MAX_FREQ-FREQ_STEP) {
-        //cout << "core_idx = " << core_idx << ' ';
-        core_idx = (core_idx+1)%mc->coreActiv.size();
+      while (!candidateCores[core_idx] || mc->coreFreq[core_idx] > MAX_FREQ-FREQ_STEP) {
+        core_idx = (core_idx+1)%candidateCores.size();
         if (prev_core_idx == core_idx) {
           core_found = false;
           break;
@@ -625,11 +669,12 @@ void MapEngine::ChooseActiveCores(MapConf * mc, MapConf * prevMap,
       mc->coreFreq[core_idx] += FREQ_STEP;
       // evaluate the system state
       EvalMappingCost(mc, prevMap, prevProcThr, 1.0);
-      budgets_met = (config.MaxPower() - mc->power > 0) &&
-                    (config.MaxTemp() - mc->temp > 0);
+      power_budget_met = (config.MaxPower() - mc->power > 0);
+      bool temp_budget_met = (config.MaxTemp() - mc->temp > 0);
+      bool budgets_met = power_budget_met && temp_budget_met;
       if (!budgets_met) {
         mc->coreFreq[core_idx] -= FREQ_STEP;
-        break;
+        candidateCores[core_idx] = false;
       }
       core_idx = (core_idx+1)%mc->coreActiv.size();
     }
