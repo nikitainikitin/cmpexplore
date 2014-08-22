@@ -93,8 +93,12 @@ bool SaMapEngine::Map(MapConf * mconf, MapConf * prevMap,
 
   // 1a. Run a heuristic to choose active cores and their frequencies
   ChooseActiveCores(curMap, prevMap, prevProcThr);
-
   EvalMappingCost(curMap, prevMap, prevProcThr, lambda);
+  cout << "   -> Mapping before SA:" << endl;
+  curMap->Print();
+
+  // temp variable, store the original config for debug
+  MapConf *origMap = new MapConf(*curMap);
 
   bool cur_budgets_met = (config.MaxPower() - curMap->power > 0) &&
                          (config.MaxTemp() - curMap->temp > 0);
@@ -214,6 +218,11 @@ bool SaMapEngine::Map(MapConf * mconf, MapConf * prevMap,
       SA_failed = true;
     }
   }
+
+  cout << "   -> Mapping after SA:" << endl;
+  bestMap->Print();
+  //assert((*origMap) == (*bestMap));
+  delete origMap;
 
   // cleanup
   if (curMap != bestMap) delete curMap;

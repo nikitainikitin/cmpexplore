@@ -18,6 +18,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <cmath>
 
 #include "Util.hpp"
 
@@ -132,6 +133,16 @@ bool FileExists ( const std::string& fname )
   bool exists = f.good();
   f.close();
   return exists;
+}
+
+//=======================================================================
+/*
+ * Returns true of two doubles are equal.
+ */
+
+bool DoublesAreEqual ( const double& d1, const double& d2 )
+{
+  return std::fabs(d1 - d2) < E_DOUBLE;
 }
 
 //=======================================================================

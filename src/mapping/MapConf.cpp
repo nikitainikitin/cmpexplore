@@ -23,6 +23,7 @@
 #include "cmp/Processor.hpp"
 #include "TechDefs.hpp"
 #include "workload/WlConfig.hpp"
+#include "Util.hpp"
 
 using namespace std;
 
@@ -58,6 +59,20 @@ MapConf::MapConf (int core_cnt, int l3_cl_cnt,
 }
 
 MapConf::~MapConf () {}
+
+//=======================================================================
+/*
+ * Comparison operator
+ */
+
+bool MapConf::operator == (const MapConf& mc)
+{
+  return std::equal(map.begin(), map.end(), mc.map.begin()) &&
+         std::equal(coreActiv.begin(), coreActiv.end(), mc.coreActiv.begin()) &&
+         std::equal(coreFreq.begin(), coreFreq.end(), mc.coreFreq.begin(), DoublesAreEqual) &&
+         std::equal(L3ClusterActiv.begin(), L3ClusterActiv.end(), mc.L3ClusterActiv.begin()) &&
+         (fabs(uncoreFreq - mc.uncoreFreq) < E_DOUBLE);
+}
 
 //=======================================================================
 /*

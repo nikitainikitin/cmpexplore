@@ -52,6 +52,9 @@ namespace cmpex {
   // Check file for existence
   bool FileExists ( const std::string& fname );
 
+  // Returns true of two doubles are equal
+  bool DoublesAreEqual ( const double& d1, const double& d2 );
+
 } // namespace cmpex
 
 #endif // _UTIL_H_

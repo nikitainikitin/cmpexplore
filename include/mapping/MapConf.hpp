@@ -54,6 +54,8 @@ namespace cmpex {
 
     ~MapConf ();
 
+    bool operator == (const MapConf&);
+
     // --- Service functions ---
 
     inline int GetUnassignedProcCnt() const;
